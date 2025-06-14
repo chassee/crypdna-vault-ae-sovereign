@@ -28,16 +28,16 @@ const MemberCard = () => {
       
       <div className="mt-6 grid grid-cols-3 gap-4">
         <div className="text-center p-4 bg-gradient-to-r from-purple-100 to-blue-100 rounded-xl">
-          <p className="text-sm text-gray-600">Available Credit</p>
-          <p className="text-lg font-bold text-purple-600">$25,000</p>
+          <p className="text-sm text-gray-600">Monthly Limit</p>
+          <p className="text-lg font-bold text-purple-600">$50,000</p>
         </div>
         <div className="text-center p-4 bg-gradient-to-r from-blue-100 to-cyan-100 rounded-xl">
-          <p className="text-sm text-gray-600">Rewards Points</p>
-          <p className="text-lg font-bold text-blue-600">847</p>
+          <p className="text-sm text-gray-600">Cash Back</p>
+          <p className="text-lg font-bold text-blue-600">3.5%</p>
         </div>
         <div className="text-center p-4 bg-gradient-to-r from-cyan-100 to-green-100 rounded-xl">
-          <p className="text-sm text-gray-600">Next Tier</p>
-          <p className="text-lg font-bold text-green-600">Elite</p>
+          <p className="text-sm text-gray-600">Status</p>
+          <p className="text-lg font-bold text-green-600">Active</p>
         </div>
       </div>
     </div>
