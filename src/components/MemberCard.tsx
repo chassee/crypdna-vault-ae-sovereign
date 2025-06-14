@@ -2,6 +2,12 @@
 import React from 'react';
 import PawCard from './PawCard';
 
+// Placeholder logic: use this for now (replace with real user from context/auth later)
+const MEMBER_NAME = 'Parris Johnson';
+const CARD_LAST4 = '2044';
+const EXP_DATE = '12/28';
+const CVV = '428';
+
 const MemberCard = () => {
   const cardBalance = 12847.50;
   const memberSince = "2024";
@@ -22,8 +28,16 @@ const MemberCard = () => {
         </div>
       </div>
       
+      {/* Updated - pass member info to card */}
       <div className="flex justify-center mb-4">
-        <PawCard balance={cardBalance} memberTier={memberTier} />
+        <PawCard
+          balance={cardBalance}
+          memberTier={memberTier}
+          memberName={MEMBER_NAME}
+          cardLast4={CARD_LAST4}
+          expDate={EXP_DATE}
+          cvv={CVV}
+        />
       </div>
       
       <div className="text-center mb-6">
@@ -49,3 +63,4 @@ const MemberCard = () => {
 };
 
 export default MemberCard;
+
