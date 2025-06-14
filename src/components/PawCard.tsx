@@ -1,6 +1,5 @@
 
 import React, { useState } from 'react';
-import { CreditCard } from 'lucide-react';
 
 interface PawCardProps {
   memberName?: string;
@@ -10,12 +9,12 @@ interface PawCardProps {
 }
 
 const formatCardNumber = (num?: string) => {
-  if (!num) return "4242 2044 0000 9911";
+  if (!num) return "4242 2044 0000 9912";
   return num.replace(/(\d{4})(?=\d)/g, '$1 ').trim();
 };
 
 const PawCard = ({
-  memberName = "VAULT MEMBER",
+  memberName = "PARRIS JOHNSON",
   cardLast4 = "2044",
   fullCardNumber,
   expDate = "12/28",
@@ -25,7 +24,7 @@ const PawCard = ({
   // Fallback to a default number if not provided
   const fullNum = fullCardNumber
     ? formatCardNumber(fullCardNumber)
-    : "4242 2044 0000 9911";
+    : "4242 2044 0000 9912";
 
   return (
     <div className="relative w-80 h-48 perspective-1000 select-none">
@@ -35,99 +34,91 @@ const PawCard = ({
         tabIndex={0}
         aria-label="Flip card"
       >
-        {/* FRONT OF CARD */}
-        <div className="absolute inset-0 w-full h-full backface-hidden rounded-2xl shadow-lg overflow-hidden"
+        {/* FRONT OF CARD - Pure minimalist black */}
+        <div className="absolute inset-0 w-full h-full backface-hidden rounded-2xl shadow-xl overflow-hidden"
              style={{
-               background: '#111214', // luxury matte black
-               boxShadow: '0 4px 16px 0 rgba(15,16,20,0.09)'
+               background: '#0a0a0a', // Pure matte black
+               boxShadow: '0 8px 32px rgba(0,0,0,0.3)'
              }}
         >
-          {/* Subtle embossed paw print watermark (SVG, top-right on desktop, center on small) */}
-          <div className="absolute top-4 right-4 md:top-3 md:right-3 opacity-10 pointer-events-none z-0">
+          {/* Large centered paw print silhouette - embossed and surreal */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-15">
             <svg
-              width="48" height="48"
-              viewBox="0 0 48 48"
+              width="120" height="120"
+              viewBox="0 0 120 120"
               fill="none"
               aria-hidden="true"
+              className="drop-shadow-2xl"
             >
-              <ellipse cx="24" cy="30" rx="12" ry="11" fill="#fff" fillOpacity="0.27"/>
-              <ellipse cx="13" cy="18" rx="5" ry="6" fill="#fff" fillOpacity="0.22"/>
-              <ellipse cx="24" cy="12.5" rx="4.5" ry="5" fill="#fff" fillOpacity="0.25"/>
-              <ellipse cx="35" cy="17.5" rx="5" ry="6" fill="#fff" fillOpacity="0.22"/>
-              <ellipse cx="10.3" cy="29.7" rx="3" ry="3" fill="#fff" fillOpacity="0.18"/>
-              <ellipse cx="37.7" cy="28.9" rx="2.8" ry="2.9" fill="#fff" fillOpacity="0.15"/>
+              {/* Main paw pad - larger and more stylized */}
+              <ellipse cx="60" cy="75" rx="28" ry="25" fill="#1a1a1a" fillOpacity="0.8"/>
+              
+              {/* Toe pads - arranged in artistic formation */}
+              <ellipse cx="35" cy="45" rx="12" ry="14" fill="#1a1a1a" fillOpacity="0.7"/>
+              <ellipse cx="60" cy="35" rx="11" ry="13" fill="#1a1a1a" fillOpacity="0.75"/>
+              <ellipse cx="85" cy="44" rx="12" ry="14" fill="#1a1a1a" fillOpacity="0.7"/>
+              
+              {/* Side detail pads for surreal effect */}
+              <ellipse cx="25" cy="70" rx="8" ry="9" fill="#1a1a1a" fillOpacity="0.5"/>
+              <ellipse cx="95" cy="69" rx="7" ry="8" fill="#1a1a1a" fillOpacity="0.5"/>
             </svg>
-          </div>
-          {/* Smart chip icon, top-left */}
-          <div className="absolute top-4 left-5 flex items-center z-10">
-            <CreditCard size={32} color="#BBB" strokeWidth={1.5} className="opacity-70" />
-          </div>
-          {/* Member Name - centered */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
-            <span
-              className="font-bold text-white text-xl md:text-2xl tracking-wide"
-              style={{
-                fontFamily: 'system-ui, sans-serif',
-                letterSpacing: '0.07em',
-                textShadow: `
-                  0 0 7px #6665, 
-                  0 0 18px #fff2, 
-                  0 1.5px 0 #232323
-                `,
-                filter: 'brightness(1.25)',
-              }}
-            >
-              {memberName || "VAULT MEMBER"}
-            </span>
-          </div>
-          {/* Crypdawgs Debit Label, bottom-right */}
-          <div className="absolute bottom-3 right-5 flex flex-col items-end z-10">
-            <span
-              className="text-white text-[0.82rem] uppercase tracking-[0.20em] font-extrabold opacity-75"
-              style={{
-                fontFamily: 'system-ui, sans-serif',
-                letterSpacing: '0.22em',
-                textShadow: '0 0 2px #aaa9, 0 0 8px #4442',
-                fontSize: '0.83rem'
-              }}
-            >
-              Crypdawgs™
-            </span>
-            <span className="text-gray-300 text-xs tracking-widest font-bold opacity-75">
-              DEBIT
-            </span>
           </div>
         </div>
 
-        {/* BACK OF CARD */}
-        <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-2xl shadow-lg"
+        {/* BACK OF CARD - Clean white with sharp contrast */}
+        <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-2xl shadow-xl overflow-hidden"
              style={{
-               background: '#181819',
-               boxShadow: '0 4px 16px 0 rgba(15,16,20,0.10)'
+               background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+               boxShadow: '0 8px 32px rgba(0,0,0,0.15)'
              }}
         >
-          {/* Black magnetic stripe */}
-          <div className="absolute top-5 left-0 w-full h-6 bg-black/85" />
-          {/* White signature field */}
-          <div className="absolute top-16 left-7 h-5 w-44 bg-white/90 rounded-[3px] shadow-inner flex items-center px-2 text-xs text-gray-500 font-mono">
-            {/* Optionally: "AUTHORIZED SIGNATURE", but leave blank for minimal look */}
-          </div>
-          {/* Card number - centered */}
-          <div className="absolute top-28 left-1/2 -translate-x-1/2 w-[90%] flex flex-col items-center z-10">
+          {/* Card Number - centered and prominent */}
+          <div className="absolute top-16 left-1/2 -translate-x-1/2 w-full flex justify-center z-10">
             <span
-              className="font-mono text-xl md:text-2xl tracking-wider text-white drop-shadow-[0_0_7px_rgba(255,255,255,0.17)]"
+              className="font-mono text-2xl tracking-[0.2em] text-gray-900"
               style={{
-                fontWeight: 700,
-                textShadow: '0 0 6px #cfd4ed22, 0 1.5px 0 #3332',
-                letterSpacing: '0.17em'
+                fontWeight: 300,
+                letterSpacing: '0.25em',
+                textShadow: '0 1px 2px rgba(0,0,0,0.1)'
               }}
             >
               {fullNum}
             </span>
           </div>
-          {/* Expiry, bottom-left */}
-          <div className="absolute bottom-6 left-7 text-xs text-gray-200 font-semibold">
-            Exp: {expDate || "12/28"}
+          
+          {/* Member Name - upper area */}
+          <div className="absolute top-6 left-1/2 -translate-x-1/2 flex justify-center z-10">
+            <span
+              className="text-sm font-light text-gray-700 tracking-[0.15em] uppercase"
+              style={{
+                fontWeight: 300,
+                letterSpacing: '0.2em'
+              }}
+            >
+              {memberName}
+            </span>
+          </div>
+          
+          {/* Expiration - bottom right with elegant spacing */}
+          <div className="absolute bottom-8 right-8 text-right z-10">
+            <div className="text-xs text-gray-500 font-light mb-1 tracking-wider">
+              EXPIRES
+            </div>
+            <div className="text-lg font-light text-gray-900 tracking-widest">
+              {expDate}
+            </div>
+          </div>
+          
+          {/* Subtle brand mark - bottom left */}
+          <div className="absolute bottom-8 left-8 z-10">
+            <span
+              className="text-xs text-gray-400 font-light tracking-[0.3em] uppercase"
+              style={{
+                letterSpacing: '0.35em'
+              }}
+            >
+              VAULT
+            </span>
           </div>
         </div>
       </div>
