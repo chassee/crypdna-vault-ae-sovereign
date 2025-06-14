@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Chip } from 'lucide-react';
+import { CreditCard } from 'lucide-react';
 
 interface PawCardProps {
   memberName?: string;
@@ -60,7 +60,7 @@ const PawCard = ({
           </div>
           {/* Smart chip icon, top-left */}
           <div className="absolute top-4 left-5 flex items-center z-10">
-            <Chip size={32} color="#BBB" strokeWidth={1.5} className="opacity-70" />
+            <CreditCard size={32} color="#BBB" strokeWidth={1.5} className="opacity-70" />
           </div>
           {/* Member Name - centered */}
           <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
@@ -136,4 +136,3 @@ const PawCard = ({
 };
 
 export default PawCard;
-
