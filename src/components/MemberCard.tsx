@@ -22,11 +22,15 @@ const MemberCard = () => {
         </div>
       </div>
       
-      <div className="flex justify-center">
+      <div className="flex justify-center mb-4">
         <PawCard balance={cardBalance} memberTier={memberTier} />
       </div>
       
-      <div className="mt-6 grid grid-cols-3 gap-4">
+      <div className="text-center mb-6">
+        <p className="text-xs text-gray-500 italic">Tap card to view details</p>
+      </div>
+      
+      <div className="grid grid-cols-3 gap-4">
         <div className="text-center p-4 bg-gradient-to-r from-purple-100 to-blue-100 rounded-xl">
           <p className="text-sm text-gray-600">Monthly Limit</p>
           <p className="text-lg font-bold text-purple-600">$50,000</p>
