@@ -6,6 +6,7 @@ import CrypDNACard from './CrypDNACard';
 import VaultFiles from './VaultFiles';
 import DuffleBagsPreview from './DuffleBagsPreview';
 import TruckerHatsPreview from './TruckerHatsPreview';
+import VinylCollectiblesPreview from './VinylCollectiblesPreview';
 
 const Dashboard = () => {
   // Generate unique CrypDNA file number
@@ -119,6 +120,9 @@ const Dashboard = () => {
 
         {/* Drop 1 Preview – Trucker Hats */}
         <TruckerHatsPreview />
+
+        {/* Drop 1 Preview – Vinyl Collectibles */}
+        <VinylCollectiblesPreview />
         
         {/* Member Perks Section */}
         <div className="mt-12 mb-8">
