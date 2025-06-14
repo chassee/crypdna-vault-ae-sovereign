@@ -42,40 +42,26 @@ const PawCard = ({ balance, memberTier }: PawCardProps) => {
           {/* Magnetic stripe */}
           <div className="w-full h-10 bg-gray-800 mt-4"></div>
           
-          {/* Card Details - moved higher and better centered */}
-          <div className="p-5 space-y-3 flex flex-col justify-center h-full pt-2">
-            <div className="flex justify-between items-start">
-              <div>
-                <p className="text-xs text-gray-300 uppercase tracking-wider">Card Holder</p>
-                <p className="text-sm font-bold">VAULT MEMBER</p>
-                <p className="text-xs text-purple-300">{memberTier} TIER</p>
-              </div>
-              <div className="text-right">
-                <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-xs font-bold">
-                  CD
-                </div>
-              </div>
+          {/* Card Details - minimal layout */}
+          <div className="p-5 space-y-4 flex flex-col justify-center h-full pt-2">
+            {/* User's Name */}
+            <div className="text-center">
+              <p className="text-lg font-bold">VAULT MEMBER</p>
             </div>
             
-            <div>
-              <p className="text-xs text-gray-300">Card Number</p>
+            {/* Card Number */}
+            <div className="text-center">
               <p className="text-sm font-mono tracking-wider">•••• •••• •••• 2044</p>
             </div>
             
-            <div className="flex justify-between">
-              <div>
-                <p className="text-xs text-gray-300">Expires</p>
-                <p className="text-sm font-medium">12/28</p>
-              </div>
-              <div>
-                <p className="text-xs text-gray-300">CVV</p>
-                <p className="text-sm font-medium">•••</p>
-              </div>
+            {/* Expiration Date */}
+            <div className="text-center">
+              <p className="text-sm font-medium">Expires 12/28</p>
             </div>
             
-            <div className="pt-2 border-t border-gray-700">
+            <div className="pt-2 border-t border-gray-700 text-center">
               <p className="text-xs text-gray-400">CrypDNA Vault Access</p>
-              <div className="flex items-center space-x-2 mt-1">
+              <div className="flex items-center justify-center space-x-2 mt-1">
                 <div className="w-6 h-6 bg-gradient-to-r from-purple-500 to-blue-500 rounded"></div>
                 <p className="text-xs text-purple-300 font-medium">Verified Member</p>
               </div>
