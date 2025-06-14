@@ -1,10 +1,10 @@
-
 import React from 'react';
 import { User, FileText, Vault, Shield, Star } from 'lucide-react';
 import Navigation from './Navigation';
 import MemberCard from './MemberCard';
 import CrypDNACard from './CrypDNACard';
 import VaultFiles from './VaultFiles';
+import DuffleBagsPreview from './DuffleBagsPreview';
 
 const Dashboard = () => {
   // Generate unique CrypDNA file number
@@ -112,6 +112,9 @@ const Dashboard = () => {
 
         {/* Vault Files Section */}
         <VaultFiles />
+
+        {/* Drop 1 Preview – Duffle Bags */}
+        <DuffleBagsPreview />
         
         {/* Member Perks Section */}
         <div className="mt-12 mb-8">
