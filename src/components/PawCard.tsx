@@ -1,110 +1,134 @@
 
 import React, { useState } from 'react';
+import { Chip } from 'lucide-react';
 
 interface PawCardProps {
-  balance: number;
-  memberTier: string;
   memberName?: string;
   cardLast4?: string;
-  expDate?: string;
-  cvv?: string;
+  fullCardNumber?: string; // e.g. "4242 2044 0000 9911"
+  expDate?: string; // e.g. "12/28"
 }
 
+const formatCardNumber = (num?: string) => {
+  if (!num) return "4242 2044 0000 9911";
+  return num.replace(/(\d{4})(?=\d)/g, '$1 ').trim();
+};
+
 const PawCard = ({
-  balance,
-  memberTier,
   memberName = "VAULT MEMBER",
   cardLast4 = "2044",
+  fullCardNumber,
   expDate = "12/28",
-  cvv = "428",
 }: PawCardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
-  const handleCardFlip = () => {
-    setIsFlipped(!isFlipped);
-  };
+  // Fallback to a default number if not provided
+  const fullNum = fullCardNumber
+    ? formatCardNumber(fullCardNumber)
+    : "4242 2044 0000 9911";
 
   return (
-    <div className="relative w-80 h-48 perspective-1000">
-      <div 
-        className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d cursor-pointer ${
-          isFlipped ? 'rotate-y-180' : ''
-        }`}
-        onClick={handleCardFlip}
+    <div className="relative w-80 h-48 perspective-1000 select-none">
+      <div
+        className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d cursor-pointer ${isFlipped ? 'rotate-y-180' : ''}`}
+        onClick={() => setIsFlipped((f) => !f)}
+        tabIndex={0}
+        aria-label="Flip card"
       >
-        {/* Front of Card */}
-        <div className="absolute inset-0 w-full h-full backface-hidden rounded-2xl shadow-2xl overflow-hidden">
-          <img 
-            src="/lovable-uploads/465e64f1-4ce2-464a-8f88-560ba4cb0ced.png" 
-            alt="Crypdawgs Debit Card"
-            className="w-full h-full object-cover"
-          />
-          
-          {/* Digital name glow */}
-          <div className="absolute left-5 top-5 z-10">
-            <span className="font-bold text-white text-lg tracking-wide drop-shadow-[0_0_8px_rgba(93,72,255,0.30)] shadow-purple-400/60 transition-all duration-300 select-none">
+        {/* FRONT OF CARD */}
+        <div className="absolute inset-0 w-full h-full backface-hidden rounded-2xl shadow-lg overflow-hidden"
+             style={{
+               background: '#111214', // luxury matte black
+               boxShadow: '0 4px 16px 0 rgba(15,16,20,0.09)'
+             }}
+        >
+          {/* Subtle embossed paw print watermark (SVG, top-right on desktop, center on small) */}
+          <div className="absolute top-4 right-4 md:top-3 md:right-3 opacity-10 pointer-events-none z-0">
+            <svg
+              width="48" height="48"
+              viewBox="0 0 48 48"
+              fill="none"
+              aria-hidden="true"
+            >
+              <ellipse cx="24" cy="30" rx="12" ry="11" fill="#fff" fillOpacity="0.27"/>
+              <ellipse cx="13" cy="18" rx="5" ry="6" fill="#fff" fillOpacity="0.22"/>
+              <ellipse cx="24" cy="12.5" rx="4.5" ry="5" fill="#fff" fillOpacity="0.25"/>
+              <ellipse cx="35" cy="17.5" rx="5" ry="6" fill="#fff" fillOpacity="0.22"/>
+              <ellipse cx="10.3" cy="29.7" rx="3" ry="3" fill="#fff" fillOpacity="0.18"/>
+              <ellipse cx="37.7" cy="28.9" rx="2.8" ry="2.9" fill="#fff" fillOpacity="0.15"/>
+            </svg>
+          </div>
+          {/* Smart chip icon, top-left */}
+          <div className="absolute top-4 left-5 flex items-center z-10">
+            <Chip size={32} color="#BBB" strokeWidth={1.5} className="opacity-70" />
+          </div>
+          {/* Member Name - centered */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
+            <span
+              className="font-bold text-white text-xl md:text-2xl tracking-wide"
+              style={{
+                fontFamily: 'system-ui, sans-serif',
+                letterSpacing: '0.07em',
+                textShadow: `
+                  0 0 7px #6665, 
+                  0 0 18px #fff2, 
+                  0 1.5px 0 #232323
+                `,
+                filter: 'brightness(1.25)',
+              }}
+            >
               {memberName || "VAULT MEMBER"}
             </span>
-            <div className="absolute left-0 top-0 w-full h-full rounded bg-purple-500/10 blur-[6px] -z-10"></div>
           </div>
-          
-          {/* Card number, bottom center */}
-          <div className="absolute bottom-9 left-1/2 -translate-x-1/2 flex flex-col items-center w-full">
-            <span className="font-[900] text-[1.2rem] md:text-[1.4rem] tracking-widest text-gray-200 font-mono drop-shadow-[0_0_14px_rgba(87,191,255,0.22)] select-none">
-              **** **** **** {cardLast4}
+          {/* Crypdawgs Debit Label, bottom-right */}
+          <div className="absolute bottom-3 right-5 flex flex-col items-end z-10">
+            <span
+              className="text-white text-[0.82rem] uppercase tracking-[0.20em] font-extrabold opacity-75"
+              style={{
+                fontFamily: 'system-ui, sans-serif',
+                letterSpacing: '0.22em',
+                textShadow: '0 0 2px #aaa9, 0 0 8px #4442',
+                fontSize: '0.83rem'
+              }}
+            >
+              Crypdawgs™
             </span>
-          </div>
-          
-          {/* Exp + CVV, bottom-right */}
-          <div className="absolute bottom-5 right-6 flex flex-col items-end space-y-1">
-            <span className="text-xs text-slate-300 font-semibold tracking-wider">
-              Expires {expDate}
+            <span className="text-gray-300 text-xs tracking-widest font-bold opacity-75">
+              DEBIT
             </span>
-            <span className="text-xs text-slate-400 font-semibold tracking-wider backdrop-blur-sm px-2 py-0.5 rounded bg-black/30 blur-[0.5px]">
-              CVV: <span className="blur-sm select-none">{cvv}</span>
-            </span>
-          </div>
-
-          {/* Subtle overlay for tap hint */}
-          <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/5 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-            <div className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs text-gray-800 font-medium">
-              Tap to flip
-            </div>
           </div>
         </div>
 
-        {/* Back of Card */}
-        <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-2xl shadow-2xl bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white overflow-hidden">
-          {/* Magnetic stripe */}
-          <div className="w-full h-10 bg-gray-800 mt-4"></div>
-          
-          {/* Card Details - minimal back layout */}
-          <div className="p-5 space-y-4 flex flex-col justify-center h-full pt-2">
-            {/* User's Name */}
-            <div className="text-center">
-              <p className="text-lg font-bold">{memberName || "VAULT MEMBER"}</p>
-            </div>
-            
-            {/* Card Number */}
-            <div className="text-center">
-              <p className="text-sm font-mono tracking-wider">**** **** **** {cardLast4}</p>
-            </div>
-            
-            {/* Expiration Date */}
-            <div className="text-center">
-              <p className="text-sm font-medium">Expires {expDate}</p>
-            </div>
-            
-            <div className="pt-2 border-t border-gray-700 text-center">
-              <p className="text-xs text-gray-400">CrypDNA Vault Access</p>
-              <div className="flex items-center justify-center space-x-2 mt-1">
-                <div className="w-6 h-6 bg-gradient-to-r from-purple-500 to-blue-500 rounded"></div>
-                <p className="text-xs text-purple-300 font-medium">Verified Member</p>
-              </div>
-            </div>
+        {/* BACK OF CARD */}
+        <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-2xl shadow-lg"
+             style={{
+               background: '#181819',
+               boxShadow: '0 4px 16px 0 rgba(15,16,20,0.10)'
+             }}
+        >
+          {/* Black magnetic stripe */}
+          <div className="absolute top-5 left-0 w-full h-6 bg-black/85" />
+          {/* White signature field */}
+          <div className="absolute top-16 left-7 h-5 w-44 bg-white/90 rounded-[3px] shadow-inner flex items-center px-2 text-xs text-gray-500 font-mono">
+            {/* Optionally: "AUTHORIZED SIGNATURE", but leave blank for minimal look */}
           </div>
-          {/* Holographic glow */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-500/10 to-transparent transform skew-x-12 -translate-x-full animate-pulse"></div>
+          {/* Card number - centered */}
+          <div className="absolute top-28 left-1/2 -translate-x-1/2 w-[90%] flex flex-col items-center z-10">
+            <span
+              className="font-mono text-xl md:text-2xl tracking-wider text-white drop-shadow-[0_0_7px_rgba(255,255,255,0.17)]"
+              style={{
+                fontWeight: 700,
+                textShadow: '0 0 6px #cfd4ed22, 0 1.5px 0 #3332',
+                letterSpacing: '0.17em'
+              }}
+            >
+              {fullNum}
+            </span>
+          </div>
+          {/* Expiry, bottom-left */}
+          <div className="absolute bottom-6 left-7 text-xs text-gray-200 font-semibold">
+            Exp: {expDate || "12/28"}
+          </div>
         </div>
       </div>
     </div>
