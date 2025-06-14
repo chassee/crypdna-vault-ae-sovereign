@@ -40,10 +40,10 @@ const PawCard = ({ balance, memberTier }: PawCardProps) => {
         {/* Back of Card */}
         <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-2xl shadow-2xl bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white overflow-hidden">
           {/* Magnetic stripe */}
-          <div className="w-full h-12 bg-gray-800 mt-6"></div>
+          <div className="w-full h-10 bg-gray-800 mt-4"></div>
           
-          {/* Card Details */}
-          <div className="p-6 space-y-4">
+          {/* Card Details - moved higher and better centered */}
+          <div className="p-5 space-y-3 flex flex-col justify-center h-full pt-2">
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-xs text-gray-300 uppercase tracking-wider">Card Holder</p>
