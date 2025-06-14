@@ -1,123 +1,87 @@
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 interface PawCardProps {
   memberName?: string;
-  cardLast4?: string;
-  fullCardNumber?: string; // e.g. "4242 2044 0000 9911"
-  expDate?: string; // e.g. "12/28"
+  cardNumber?: string;
+  expDate?: string;
+  vaultTag?: string; // e.g. VAULT LEGEND #XXX
 }
 
-const formatCardNumber = (num?: string) => {
-  if (!num) return "4242 2044 0000 9912";
-  return num.replace(/(\d{4})(?=\d)/g, '$1 ').trim();
-};
-
 const PawCard = ({
-  memberName = "PARRIS JOHNSON",
-  cardLast4 = "2044",
-  fullCardNumber,
+  memberName = "Parris Johnson",
+  cardNumber = "4242 2044 0000 9912",
   expDate = "12/28",
+  vaultTag = "VAULT LEGEND #001",
 }: PawCardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
-  // Fallback to a default number if not provided
-  const fullNum = fullCardNumber
-    ? formatCardNumber(fullCardNumber)
-    : "4242 2044 0000 9912";
+  // Helper for signature strip font
+  const signatureFont =
+    "font-mono text-xs tracking-wider text-gray-900 whitespace-nowrap";
 
   return (
-    <div className="relative w-80 h-48 perspective-1000 select-none">
+    <div
+      className="relative w-[350px] h-[220px] perspective-1000 select-none"
+      style={{ borderRadius: "26px 80px 80px 26px / 26px 80px 80px 26px" }}
+    >
       <div
-        className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d cursor-pointer ${isFlipped ? 'rotate-y-180' : ''}`}
-        onClick={() => setIsFlipped((f) => !f)}
+        className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d cursor-pointer ${isFlipped ? "rotate-y-180" : ""}`}
         tabIndex={0}
         aria-label="Flip card"
+        onClick={() => setIsFlipped((f) => !f)}
+        style={{ borderRadius: "26px 80px 80px 26px / 26px 80px 80px 26px" }}
       >
-        {/* FRONT OF CARD - Pure minimalist black */}
-        <div className="absolute inset-0 w-full h-full backface-hidden rounded-2xl shadow-xl overflow-hidden"
-             style={{
-               background: '#0a0a0a', // Pure matte black
-               boxShadow: '0 8px 32px rgba(0,0,0,0.3)'
-             }}
-        >
-          {/* Large centered paw print silhouette - embossed and surreal */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-15">
-            <svg
-              width="120" height="120"
-              viewBox="0 0 120 120"
-              fill="none"
-              aria-hidden="true"
-              className="drop-shadow-2xl"
-            >
-              {/* Main paw pad - larger and more stylized */}
-              <ellipse cx="60" cy="75" rx="28" ry="25" fill="#1a1a1a" fillOpacity="0.8"/>
-              
-              {/* Toe pads - arranged in artistic formation */}
-              <ellipse cx="35" cy="45" rx="12" ry="14" fill="#1a1a1a" fillOpacity="0.7"/>
-              <ellipse cx="60" cy="35" rx="11" ry="13" fill="#1a1a1a" fillOpacity="0.75"/>
-              <ellipse cx="85" cy="44" rx="12" ry="14" fill="#1a1a1a" fillOpacity="0.7"/>
-              
-              {/* Side detail pads for surreal effect */}
-              <ellipse cx="25" cy="70" rx="8" ry="9" fill="#1a1a1a" fillOpacity="0.5"/>
-              <ellipse cx="95" cy="69" rx="7" ry="8" fill="#1a1a1a" fillOpacity="0.5"/>
-            </svg>
-          </div>
-        </div>
+        {/* CARD FRONT: Uploaded image as background, 100% fill */}
+        <div
+          className="absolute inset-0 w-full h-full backface-hidden overflow-hidden"
+          style={{
+            borderRadius: "26px 80px 80px 26px / 26px 80px 80px 26px",
+            background: `url(/lovable-uploads/71039c98-cfb2-4e43-ade1-7237d24c1fb5.png) center center / cover no-repeat, #111`,
+            boxShadow: "0 4px 36px rgba(10,10,10,0.18)",
+          }}
+        ></div>
 
-        {/* BACK OF CARD - Clean white with sharp contrast */}
-        <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-2xl shadow-xl overflow-hidden"
-             style={{
-               background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
-               boxShadow: '0 8px 32px rgba(0,0,0,0.15)'
-             }}
+        {/* CARD BACK: Modern minimal back layout */}
+        <div
+          className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 overflow-hidden flex flex-col justify-between"
+          style={{
+            borderRadius: "26px 80px 80px 26px / 26px 80px 80px 26px",
+            background: "linear-gradient(112deg, #fff 85%, #f3f6fa 100%)",
+            boxShadow: "0 4px 36px rgba(20,30,80,0.11)",
+          }}
         >
-          {/* Card Number - centered and prominent */}
-          <div className="absolute top-16 left-1/2 -translate-x-1/2 w-full flex justify-center z-10">
-            <span
-              className="font-mono text-2xl tracking-[0.2em] text-gray-900"
-              style={{
-                fontWeight: 300,
-                letterSpacing: '0.25em',
-                textShadow: '0 1px 2px rgba(0,0,0,0.1)'
-              }}
-            >
-              {fullNum}
-            </span>
-          </div>
-          
-          {/* Member Name - upper area */}
-          <div className="absolute top-6 left-1/2 -translate-x-1/2 flex justify-center z-10">
-            <span
-              className="text-sm font-light text-gray-700 tracking-[0.15em] uppercase"
-              style={{
-                fontWeight: 300,
-                letterSpacing: '0.2em'
-              }}
-            >
+          {/* Signature strip */}
+          <div className="w-[80%] h-7 bg-gray-100 rounded-md mx-auto mt-9 flex items-center px-4 shadow-sm border border-gray-200">
+            <span className={`${signatureFont} opacity-70`}>
               {memberName}
             </span>
           </div>
-          
-          {/* Expiration - bottom right with elegant spacing */}
-          <div className="absolute bottom-8 right-8 text-right z-10">
-            <div className="text-xs text-gray-500 font-light mb-1 tracking-wider">
-              EXPIRES
+
+          {/* Card data */}
+          <div className="flex flex-col items-center gap-3">
+            {/* Card Number */}
+            <div className="text-xl md:text-2xl font-mono tracking-wider text-gray-800 py-2 px-6 rounded-md bg-white/90 shadow-sm border border-gray-100">
+              {cardNumber}
             </div>
-            <div className="text-lg font-light text-gray-900 tracking-widest">
-              {expDate}
+            {/* Expiry + Vault */}
+            <div className="flex justify-between items-end w-[80%]">
+              <div className="flex flex-col">
+                <span className="text-[11px] text-gray-500 font-light uppercase tracking-wide">
+                  Exp
+                </span>
+                <span className="text-base font-semibold tracking-widest text-gray-700">{expDate}</span>
+              </div>
+              <div className="text-xs text-gray-600 font-medium tracking-wider whitespace-nowrap">
+                {vaultTag}
+              </div>
             </div>
           </div>
-          
-          {/* Subtle brand mark - bottom left */}
-          <div className="absolute bottom-8 left-8 z-10">
-            <span
-              className="text-xs text-gray-400 font-light tracking-[0.3em] uppercase"
-              style={{
-                letterSpacing: '0.35em'
-              }}
-            >
-              VAULT
+
+          {/* Member Name shown below for symmetry—subtle */}
+          <div className="w-full flex justify-center pb-6">
+            <span className="text-gray-500 text-xs font-light tracking-wide">
+              {memberName}
             </span>
           </div>
         </div>
