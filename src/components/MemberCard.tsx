@@ -4,7 +4,7 @@ import PawCard from './PawCard';
 
 // Placeholder logic: use this for now (replace with real user from context/auth later)
 const MEMBER_NAME = 'Parris Johnson';
-const CARD_LAST4 = '2044';
+const CARD_NUMBER = '4242 2044 0000 9912';
 const EXP_DATE = '12/28';
 
 const MemberCard = () => {
@@ -27,11 +27,11 @@ const MemberCard = () => {
         </div>
       </div>
       
-      {/* Updated - pass only valid props to card */}
+      {/* Fixed - pass correct props to PawCard */}
       <div className="flex justify-center mb-4">
         <PawCard
           memberName={MEMBER_NAME}
-          cardLast4={CARD_LAST4}
+          cardNumber={CARD_NUMBER}
           expDate={EXP_DATE}
         />
       </div>
