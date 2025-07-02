@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { User, FileText, Vault, Shield, Star } from 'lucide-react';
 import Navigation from './Navigation';
@@ -7,6 +8,9 @@ import VaultFiles from './VaultFiles';
 import DuffleBagsPreview from './DuffleBagsPreview';
 import TruckerHatsPreview from './TruckerHatsPreview';
 import VinylCollectiblesPreview from './VinylCollectiblesPreview';
+import VaultVerification from './VaultVerification';
+import BalanceBreakdown from './BalanceBreakdown';
+import CrypbotCompanion from './CrypbotCompanion';
 
 const Dashboard = () => {
   // Generate unique CrypDNA file number
@@ -41,12 +45,19 @@ const Dashboard = () => {
           {/* Member Card Balance */}
           <div className="lg:col-span-2">
             <MemberCard />
+            <BalanceBreakdown />
           </div>
           
-          {/* CrypDNA File */}
-          <div>
+          {/* Right Column - CrypDNA File and new components */}
+          <div className="space-y-6">
             <CrypDNACard fileNumber={crypDNANumber} />
+            <CrypbotCompanion />
           </div>
+        </div>
+
+        {/* Vault Verification Section */}
+        <div className="mb-8">
+          <VaultVerification />
         </div>
 
         {/* Credit Dashboard Stats */}

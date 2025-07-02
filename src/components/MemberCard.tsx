@@ -1,6 +1,7 @@
 
 import React from 'react';
 import PawCard from './PawCard';
+import VaultTierBadge from './VaultTierBadge';
 
 // Placeholder logic: use this for now (replace with real user from context/auth later)
 const MEMBER_NAME = 'Parris Johnson';
@@ -11,13 +12,17 @@ const MemberCard = () => {
   const cardBalance = 12847.50;
   const memberSince = "2024";
   const memberTier = "Legend";
+  const hasBalance = cardBalance > 0;
 
   return (
     <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-8 border border-purple-200 shadow-lg hover:shadow-xl transition-all duration-300">
       <div className="flex justify-between items-start mb-6">
         <div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Crypdawgs Card Balance</h2>
-          <p className="text-gray-600">Member since {memberSince} • {memberTier} Tier</p>
+          <div className="flex items-center gap-3 mb-2">
+            <h2 className="text-2xl font-bold text-gray-800">Crypdawgs Card Balance</h2>
+            <VaultTierBadge tier={memberTier as any} />
+          </div>
+          <p className="text-gray-600">Member since {memberSince}</p>
         </div>
         <div className="text-right">
           <p className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
@@ -27,13 +32,18 @@ const MemberCard = () => {
         </div>
       </div>
       
-      {/* Fixed - pass correct props to PawCard */}
+      {/* Card with conditional glow animation */}
       <div className="flex justify-center mb-4">
-        <PawCard
-          memberName={MEMBER_NAME}
-          cardNumber={CARD_NUMBER}
-          expDate={EXP_DATE}
-        />
+        <div className={`relative ${hasBalance ? 'animate-pulse' : ''}`}>
+          {hasBalance && (
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-blue-400/20 rounded-3xl blur-lg animate-pulse"></div>
+          )}
+          <PawCard
+            memberName={MEMBER_NAME}
+            cardNumber={CARD_NUMBER}
+            expDate={EXP_DATE}
+          />
+        </div>
       </div>
       
       <div className="text-center mb-6">
