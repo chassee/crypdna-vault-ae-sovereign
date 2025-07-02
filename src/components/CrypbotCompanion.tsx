@@ -19,7 +19,7 @@ const CrypbotCompanion = () => {
           </div>
           
           <div className="flex justify-between items-center">
-            <span className="text-gray-500">NeuroLink ID:</span>
+            <span className="text-gray-500">Cryplink ID:</span>
             <span className="text-gray-500 flex items-center gap-1">🔒 Not Connected</span>
           </div>
         </div>
