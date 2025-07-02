@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { FileText, Upload, Users, Activity, CreditCard } from 'lucide-react';
+import { FileText, Upload, Users, Activity, CreditCard, Lock, Loader2 } from 'lucide-react';
 
 const VaultFiles = () => {
   const activities = [
@@ -9,16 +9,6 @@ const VaultFiles = () => {
     { id: 3, type: 'Tradeline', description: 'Tradeline boost activated', amount: '+75 pts', date: '1 week ago', status: 'active' },
     { id: 4, type: 'Payment', description: 'Auto-payment processed', amount: '$2,450', date: '2 weeks ago', status: 'completed' },
     { id: 5, type: 'Benefit', description: 'Vault tier upgrade qualified', amount: 'Elite Ready', date: '3 weeks ago', status: 'pending' },
-  ];
-
-  const benefits = [
-    'Premium Credit Monitoring',
-    'Elite Tradeline Access',
-    'Personalized Credit Coaching',
-    'Exclusive Member Rewards',
-    'Priority Customer Support',
-    'Advanced Score Analytics',
-    'Vault Tier Progression'
   ];
 
   return (
@@ -80,31 +70,51 @@ const VaultFiles = () => {
           </div>
         </div>
 
-        {/* Tradeline Benefits */}
-        <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-purple-200 shadow-lg">
-          <div className="flex items-center space-x-3 mb-6">
-            <CreditCard className="w-6 h-6 text-purple-600" />
-            <h3 className="text-xl font-bold text-gray-800">Tradeline Benefits</h3>
-          </div>
-          <div className="space-y-3">
-            {benefits.map((benefit, index) => (
-              <div key={index} className="flex items-center space-x-3 p-3 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200 hover:shadow-md transition-all duration-300">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <p className="text-gray-800 font-medium">{benefit}</p>
-              </div>
-            ))}
+        {/* Business Credit Snapshot */}
+        <div className="bg-gray-100 rounded-2xl p-6 border border-gray-300 relative">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center space-x-3">
+              <CreditCard className="w-6 h-6 text-gray-500" />
+              <h3 className="text-xl font-bold text-gray-600">Business Credit Snapshot (Coming Soon)</h3>
+            </div>
+            <Loader2 className="w-5 h-5 text-gray-400 animate-spin" />
           </div>
           
-          <div className="mt-6 p-4 bg-gradient-to-r from-purple-100 to-blue-100 rounded-xl border border-purple-200">
-            <p className="text-sm text-gray-700 mb-2">
-              <span className="font-bold">Current Score Impact:</span> +127 points
-            </p>
-            <p className="text-xs text-gray-600 mb-2">
-              Your tradeline benefits are actively boosting your credit profile
-            </p>
-            <div className="bg-white/50 rounded-lg p-2 mt-2">
-              <p className="text-xs text-purple-600 font-medium">Next boost estimated: +25 pts in 30 days</p>
+          <div className="space-y-4 text-gray-500">
+            <div className="flex justify-between items-center">
+              <span>DUNS Number:</span>
+              <span className="font-medium">82-XXXX-9321</span>
             </div>
+            
+            <div className="flex justify-between items-center">
+              <span>D&B PAYDEX Score:</span>
+              <span className="font-medium">80 (Good)</span>
+            </div>
+            
+            <div className="flex justify-between items-center">
+              <span>Number of Reporting Tradelines:</span>
+              <span className="font-medium">3 Active</span>
+            </div>
+            
+            <div className="flex justify-between items-center">
+              <span>CrypDNA Tier Impact:</span>
+              <span className="font-medium">+14 Net 30 Points</span>
+            </div>
+            
+            <div className="flex justify-between items-center">
+              <span>Next Tradeline Report Date:</span>
+              <span className="font-medium">July 18, 2025</span>
+            </div>
+          </div>
+          
+          <div className="mt-6 p-4 bg-gray-200/50 rounded-lg border border-gray-300">
+            <div className="flex items-center space-x-2 mb-2">
+              <Lock className="w-4 h-4 text-gray-400" />
+              <p className="text-sm text-gray-400 font-medium">Coming Soon</p>
+            </div>
+            <p className="text-xs text-gray-400 italic">
+              Live reporting from Crypdawgs Card + FDF system will appear here soon.
+            </p>
           </div>
         </div>
       </div>
