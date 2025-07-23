@@ -59,29 +59,20 @@ const Index = () => {
             <Shield className="w-12 h-12 text-white" />
           </div>
           <h1 className="text-5xl font-bold text-white mb-6">
-            Welcome to <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">CrypDNA Vault</span>
+            Welcome to <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">CrypDNA Vault</span> – Your secure gateway to credit building, identity management, and exclusive Crypdawgs benefits.
           </h1>
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Your secure gateway to the future of digital identity and cryptocurrency management. 
-            Access your vault, manage your assets, and unlock exclusive benefits.
+            Access your vault, manage your CrypDNA File, and unlock exclusive rewards.
           </p>
           
-          <div className="flex justify-center gap-4 mb-12">
+          <div className="flex justify-center mb-12">
             <Button 
-              onClick={() => navigate('/auth')}
+              onClick={() => navigate('/vault')}
               size="lg"
               className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-3 text-lg"
             >
               <Lock className="w-5 h-5 mr-2" />
               Access Vault
-            </Button>
-            <Button 
-              onClick={() => navigate('/viewer-onboarding')}
-              variant="outline"
-              size="lg"
-              className="border-white/30 text-white hover:bg-white/10 px-8 py-3 text-lg"
-            >
-              Learn More
             </Button>
           </div>
         </div>
