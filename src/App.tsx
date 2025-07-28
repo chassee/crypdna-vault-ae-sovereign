@@ -9,6 +9,8 @@ import Auth from "./pages/Auth";
 import DashboardPage from "./pages/Dashboard";
 import VaultViewerPage from "./pages/VaultViewer";
 import ViewerOnboarding from "./pages/ViewerOnboarding";
+import VaultSignup from "./pages/VaultSignup";
+import VaultDashboard from "./pages/VaultDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +27,8 @@ const App = () => (
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/vault-viewer" element={<VaultViewerPage />} />
           <Route path="/viewer-onboarding" element={<ViewerOnboarding />} />
+          <Route path="/vault-signup" element={<VaultSignup />} />
+          <Route path="/vault-dashboard" element={<VaultDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
