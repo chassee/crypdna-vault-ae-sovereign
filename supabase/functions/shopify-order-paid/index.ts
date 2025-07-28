@@ -150,7 +150,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Send email with vault login link
-    const loginUrl = `${supabaseUrl.replace('.supabase.co', '')}.vercel.app/vault-login?token=${token}`;
+    const loginUrl = `https://vault.crypdawgs.com/vault-login?token=${token}`;
     
     const emailResponse = await resend.emails.send({
       from: "CrypDNA Vault <onboarding@resend.dev>",
