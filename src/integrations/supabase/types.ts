@@ -14,6 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_controls: {
+        Row: {
+          action_type: string
+          admin_id: string
+          id: string
+          new_value: string | null
+          old_value: string | null
+          target_user_id: string
+          timestamp: string
+        }
+        Insert: {
+          action_type: string
+          admin_id: string
+          id?: string
+          new_value?: string | null
+          old_value?: string | null
+          target_user_id: string
+          timestamp?: string
+        }
+        Update: {
+          action_type?: string
+          admin_id?: string
+          id?: string
+          new_value?: string | null
+          old_value?: string | null
+          target_user_id?: string
+          timestamp?: string
+        }
+        Relationships: []
+      }
+      balances: {
+        Row: {
+          available_credit: number | null
+          card_balance: number | null
+          cash_back_rate: number | null
+          created_at: string
+          id: string
+          monthly_limit: number | null
+          pending_balance: number | null
+          score_boost: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          available_credit?: number | null
+          card_balance?: number | null
+          cash_back_rate?: number | null
+          created_at?: string
+          id?: string
+          monthly_limit?: number | null
+          pending_balance?: number | null
+          score_boost?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          available_credit?: number | null
+          card_balance?: number | null
+          cash_back_rate?: number | null
+          created_at?: string
+          id?: string
+          monthly_limit?: number | null
+          pending_balance?: number | null
+          score_boost?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -38,6 +107,126 @@ export type Database = {
           updated_at?: string
           user_id?: string
           username?: string
+        }
+        Relationships: []
+      }
+      rewards: {
+        Row: {
+          created_at: string
+          id: string
+          next_tier: string | null
+          points: number | null
+          progress_percent: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          next_tier?: string | null
+          points?: number | null
+          progress_percent?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          next_tier?: string | null
+          points?: number | null
+          progress_percent?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      signup_tokens: {
+        Row: {
+          created_at: string
+          email: string
+          expires_at: string
+          id: string
+          shopify_order_id: string | null
+          token: string
+          used: boolean | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          expires_at: string
+          id?: string
+          shopify_order_id?: string | null
+          token: string
+          used?: boolean | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          expires_at?: string
+          id?: string
+          shopify_order_id?: string | null
+          token?: string
+          used?: boolean | null
+        }
+        Relationships: []
+      }
+      transactions: {
+        Row: {
+          amount: number
+          description: string | null
+          id: string
+          timestamp: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          description?: string | null
+          id?: string
+          timestamp?: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          description?: string | null
+          id?: string
+          timestamp?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      users: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          name: string | null
+          tier: string | null
+          updated_at: string
+          user_id: string
+          vault_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          name?: string | null
+          tier?: string | null
+          updated_at?: string
+          user_id: string
+          vault_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string | null
+          tier?: string | null
+          updated_at?: string
+          user_id?: string
+          vault_id?: string | null
         }
         Relationships: []
       }
@@ -77,6 +266,39 @@ export type Database = {
           notes?: string | null
           tally_id?: string | null
           vault_tier?: string | null
+        }
+        Relationships: []
+      }
+      verification: {
+        Row: {
+          business_docs_url: string | null
+          created_at: string
+          id: string
+          photo_id_url: string | null
+          status: string | null
+          updated_at: string
+          user_id: string
+          utility_bill_url: string | null
+        }
+        Insert: {
+          business_docs_url?: string | null
+          created_at?: string
+          id?: string
+          photo_id_url?: string | null
+          status?: string | null
+          updated_at?: string
+          user_id: string
+          utility_bill_url?: string | null
+        }
+        Update: {
+          business_docs_url?: string | null
+          created_at?: string
+          id?: string
+          photo_id_url?: string | null
+          status?: string | null
+          updated_at?: string
+          user_id?: string
+          utility_bill_url?: string | null
         }
         Relationships: []
       }
