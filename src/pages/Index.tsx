@@ -16,9 +16,8 @@ const Index = () => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isLogin, setIsLogin] = useState(true);
-  const [emailOrUsername, setEmailOrUsername] = useState('');
-  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -42,26 +41,14 @@ const Index = () => {
     if (authChecked && user && session) navigate('/vault-dashboard');
   }, [authChecked, user, session, navigate]);
 
-  const resolveUsernameToEmail = async (input: string) => {
-    if (input.includes('@')) return input;
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('email')
-      .eq('username', input)
-      .single();
-    if (error || !data) throw new Error('Username not found');
-    return data.email;
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
       if (isLogin) {
-        const loginEmail = await resolveUsernameToEmail(emailOrUsername);
         const { error } = await supabase.auth.signInWithPassword({
-          email: loginEmail,
+          email,
           password,
         });
         if (error) throw new Error(error.message);
@@ -87,11 +74,11 @@ const Index = () => {
   };
 
   const handleForgotPassword = async () => {
-    if (!emailOrUsername.includes('@')) {
+    if (!email.includes('@')) {
       toast.error('Enter your email to reset password');
       return;
     }
-    const { error } = await supabase.auth.resetPasswordForEmail(emailOrUsername, {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/reset-password`,
     });
     if (error) return toast.error(error.message);
@@ -129,13 +116,13 @@ const Index = () => {
               <form onSubmit={handleSubmit} className="space-y-4">
                 {isLogin ? (
                   <div className="space-y-2">
-                    <Label htmlFor="login" className="text-white">Email or Username</Label>
+                    <Label htmlFor="login" className="text-white">Email</Label>
                     <Input
                       id="login"
-                      type="text"
-                      placeholder="Enter your email or username"
-                      value={emailOrUsername}
-                      onChange={(e) => setEmailOrUsername(e.target.value)}
+                      type="email"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       required
                       className="bg-white/20 border-white/30 text-white placeholder:text-gray-400"
                     />
