@@ -5,7 +5,7 @@ import { Resend } from "npm:resend@2.0.0";
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
 const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-const webhookSecret = Deno.env.get("SHOPIFY_WEBHOOK_SECRET");
+const webhookSecret = "775f9613af05dbdba171db703d6074f7";
 
 const supabase = createClient(supabaseUrl, supabaseServiceKey, {
   auth: { persistSession: false }
@@ -149,13 +149,13 @@ const handler = async (req: Request): Promise<Response> => {
       });
     }
 
-    // Send email with signup link
-    const signupUrl = `${supabaseUrl.replace('.supabase.co', '')}.vercel.app/vault-signup?token=${token}`;
+    // Send email with vault login link
+    const loginUrl = `${supabaseUrl.replace('.supabase.co', '')}.vercel.app/vault-login?token=${token}`;
     
     const emailResponse = await resend.emails.send({
       from: "CrypDNA Vault <onboarding@resend.dev>",
       to: [customerEmail],
-      subject: "🔐 Your CrypDNA Vault Access is Ready!",
+      subject: "Welcome to the Vault",
       html: `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="text-align: center; margin-bottom: 30px;">
@@ -165,8 +165,8 @@ const handler = async (req: Request): Promise<Response> => {
           
           <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 12px; text-align: center; margin-bottom: 30px;">
             <h2 style="color: white; font-size: 24px; margin: 0 0 15px 0;">Welcome to the Vault!</h2>
-            <p style="color: rgba(255,255,255,0.9); font-size: 16px; margin: 0 0 25px 0;">Your payment has been confirmed. Create your secure vault account now.</p>
-            <a href="${signupUrl}" style="display: inline-block; background: white; color: #667eea; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">Create Vault Account</a>
+            <p style="color: rgba(255,255,255,0.9); font-size: 16px; margin: 0 0 25px 0;">Your payment has been confirmed. Access your vault now.</p>
+            <a href="${loginUrl}" style="display: inline-block; background: white; color: #667eea; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">Access Your Vault</a>
           </div>
           
           <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
