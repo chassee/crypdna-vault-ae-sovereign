@@ -1,10 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { User, Session } from '@supabase/supabase-js';
 import LoadingScreen from '../components/LoadingScreen';
-import Dashboard from '../components/Dashboard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -13,46 +11,47 @@ import { Lock, Shield, Database, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
 
 const Index = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+  const [authChecked, setAuthChecked] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState('');
+  const [emailOrUsername, setEmailOrUsername] = useState('');
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 4000);
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      setUser(data.session?.user ?? null);
+      setAuthChecked(true);
+    });
 
-    // Check authentication state
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-      }
-    );
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
       setSession(session);
       setUser(session?.user ?? null);
     });
 
-    return () => {
-      clearTimeout(timer);
-      subscription.unsubscribe();
-    };
+    return () => subscription.unsubscribe();
   }, []);
 
   useEffect(() => {
-    if (user && session) {
-      navigate('/vault-dashboard');
-    }
-  }, [user, session, navigate]);
+    if (authChecked && user && session) navigate('/vault-dashboard');
+  }, [authChecked, user, session, navigate]);
+
+  const resolveUsernameToEmail = async (input: string) => {
+    if (input.includes('@')) return input;
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('email')
+      .eq('username', input)
+      .single();
+    if (error || !data) throw new Error('Username not found');
+    return data.email;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,74 +59,51 @@ const Index = () => {
 
     try {
       if (isLogin) {
-        // Login with email/username
+        const loginEmail = await resolveUsernameToEmail(emailOrUsername);
         const { error } = await supabase.auth.signInWithPassword({
-          email: email.includes('@') ? email : `${email}@temp.com`, // Allow username login
+          email: loginEmail,
           password,
         });
-
-        if (error) {
-          toast.error(error.message);
-        } else {
-          toast.success('Login successful!');
-        }
+        if (error) throw new Error(error.message);
+        toast.success('Vault access granted – welcome back!');
       } else {
-        // Sign up
-        if (!username) {
-          toast.error('Username is required for signup');
-          return;
-        }
-
+        if (!username) throw new Error('Username is required');
         const { error } = await supabase.auth.signUp({
           email,
           password,
           options: {
             emailRedirectTo: `${window.location.origin}/vault-dashboard`,
-            data: {
-              username,
-            }
-          }
+            data: { username },
+          },
         });
-
-        if (error) {
-          toast.error(error.message);
-        } else {
-          toast.success('Account created successfully!');
-        }
+        if (error) throw new Error(error.message);
+        toast.success('Vault created successfully – check your email to verify!');
       }
-    } catch (error: any) {
-      toast.error('An unexpected error occurred');
+    } catch (err: any) {
+      toast.error(err.message || 'Unexpected error occurred');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleForgotPassword = async () => {
-    if (!email) {
-      toast.error('Please enter your email address');
+    if (!emailOrUsername.includes('@')) {
+      toast.error('Enter your email to reset password');
       return;
     }
-
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/vault-dashboard`,
+    const { error } = await supabase.auth.resetPasswordForEmail(emailOrUsername, {
+      redirectTo: `${window.location.origin}/reset-password`,
     });
-
-    if (error) {
-      toast.error(error.message);
-    } else {
-      toast.success('Password reset email sent!');
-    }
+    if (error) return toast.error(error.message);
+    toast.success('Password reset email sent!');
   };
 
-  if (isLoading) {
-    return <LoadingScreen />;
-  }
+  if (!authChecked) return <LoadingScreen />;
 
-  // If not authenticated, show landing page with login option
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/10 opacity-20"></div>
-      
+
       <div className="max-w-4xl mx-auto text-center relative z-10">
         <div className="mb-12">
           <div className="mx-auto w-24 h-24 bg-gradient-to-br from-purple-500 to-blue-600 rounded-full flex items-center justify-center mb-6">
@@ -139,8 +115,8 @@ const Index = () => {
           <p className="text-lg text-gray-300 mb-8 max-w-xl mx-auto">
             Your secure gateway to credit building, identity management, and exclusive Crypdawgs benefits.
           </p>
-          
-          {/* Login/Signup Form */}
+
+          {/* Auth Form */}
           <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-white max-w-md mx-auto mb-8">
             <CardHeader className="text-center">
               <Lock className="w-8 h-8 mx-auto mb-2 text-purple-400" />
@@ -151,34 +127,48 @@ const Index = () => {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-white">Email {!isLogin && '/ Username'}</Label>
-                  <Input
-                    id="email"
-                    type={isLogin ? 'email' : 'text'}
-                    placeholder={isLogin ? 'Enter your email' : 'Enter email or username'}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="bg-white/20 border-white/30 text-white placeholder:text-gray-400"
-                  />
-                </div>
-                
-                {!isLogin && (
+                {isLogin ? (
                   <div className="space-y-2">
-                    <Label htmlFor="username" className="text-white">Username</Label>
+                    <Label htmlFor="login" className="text-white">Email or Username</Label>
                     <Input
-                      id="username"
+                      id="login"
                       type="text"
-                      placeholder="Choose a unique username"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      placeholder="Enter your email or username"
+                      value={emailOrUsername}
+                      onChange={(e) => setEmailOrUsername(e.target.value)}
                       required
                       className="bg-white/20 border-white/30 text-white placeholder:text-gray-400"
                     />
                   </div>
+                ) : (
+                  <>
+                    <div className="space-y-2">
+                      <Label htmlFor="email" className="text-white">Email</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="Enter your email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className="bg-white/20 border-white/30 text-white placeholder:text-gray-400"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="username" className="text-white">Username</Label>
+                      <Input
+                        id="username"
+                        type="text"
+                        placeholder="Choose a unique username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                        className="bg-white/20 border-white/30 text-white placeholder:text-gray-400"
+                      />
+                    </div>
+                  </>
                 )}
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="password" className="text-white">Password</Label>
                   <div className="relative">
@@ -200,7 +190,7 @@ const Index = () => {
                     </button>
                   </div>
                 </div>
-                
+
                 <Button 
                   type="submit" 
                   disabled={isSubmitting}
@@ -208,7 +198,7 @@ const Index = () => {
                 >
                   {isSubmitting ? 'Processing...' : isLogin ? 'Access Vault' : 'Create Vault'}
                 </Button>
-                
+
                 {isLogin && (
                   <button
                     type="button"
@@ -218,7 +208,7 @@ const Index = () => {
                     Forgot your password?
                   </button>
                 )}
-                
+
                 <div className="text-center">
                   <button
                     type="button"
@@ -233,6 +223,7 @@ const Index = () => {
           </Card>
         </div>
 
+        {/* Features */}
         <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
           <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-white">
             <CardHeader className="text-center">
