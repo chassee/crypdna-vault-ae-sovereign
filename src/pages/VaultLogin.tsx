@@ -18,8 +18,7 @@ const VaultLogin = () => {
   const [userEmail, setUserEmail] = useState('');
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
-  const [signupPassword, setSignupPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  // Signup functionality removed
   
   const token = searchParams.get('token');
 
@@ -132,87 +131,7 @@ const VaultLogin = () => {
     }
   };
 
-  const handleSignup = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (signupPassword !== confirmPassword) {
-      toast({
-        title: "Password Mismatch",
-        description: "Passwords do not match.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (signupPassword.length < 6) {
-      toast({
-        title: "Weak Password",
-        description: "Password must be at least 6 characters long.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      const signupEmail = userEmail || loginEmail;
-      
-      const { data, error } = await supabase.auth.signUp({
-        email: signupEmail,
-        password: signupPassword,
-        options: {
-          emailRedirectTo: `${window.location.origin}/vault-dashboard`
-        }
-      });
-
-      if (error) {
-        if (error.message.includes('already registered')) {
-          toast({
-            title: "Account Exists",
-            description: "An account with this email already exists. Please login instead.",
-            variant: "destructive",
-          });
-        } else {
-          toast({
-            title: "Signup Failed",
-            description: error.message,
-            variant: "destructive",
-          });
-        }
-        return;
-      }
-
-      if (data.user) {
-        // Mark the token as used if it exists
-        if (token) {
-          await supabase
-            .from('signup_tokens')
-            .update({ used: true })
-            .eq('token', token);
-        }
-
-        toast({
-          title: "Vault Account Created!",
-          description: "Welcome to your CrypDNA Vault. Redirecting to dashboard...",
-        });
-
-        // Small delay for toast to show, then redirect
-        setTimeout(() => {
-          navigate('/vault-dashboard');
-        }, 1500);
-      }
-    } catch (error) {
-      console.error('Signup error:', error);
-      toast({
-        title: "Error",
-        description: "An unexpected error occurred during signup.",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Signup removed - login only for existing accounts
 
   if (validatingToken) {
     return (
@@ -238,7 +157,7 @@ const VaultLogin = () => {
           </div>
           <CardTitle className="text-2xl font-bold">🔐 CrypDNA Vault</CardTitle>
           <CardDescription>
-            {token ? "Access your exclusive financial vault" : "Login to your vault or create an account"}
+            Access your exclusive financial vault
           </CardDescription>
         </CardHeader>
         
@@ -269,118 +188,53 @@ const VaultLogin = () => {
             </div>
           )}
 
-          <Tabs defaultValue="login" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="login">Login</TabsTrigger>
-              <TabsTrigger value="signup">Create Account</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="login">
-              <form onSubmit={handleLogin} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="loginEmail">Email</Label>
-                  <Input
-                    id="loginEmail"
-                    type="email"
-                    value={loginEmail}
-                    onChange={(e) => setLoginEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    required
-                  />
-                </div>
+          {/* Login Only - No Signup */}
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="loginEmail">Email</Label>
+              <Input
+                id="loginEmail"
+                type="email"
+                value={loginEmail}
+                onChange={(e) => setLoginEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+              />
+            </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="loginPassword">Password</Label>
-                  <Input
-                    id="loginPassword"
-                    type="password"
-                    value={loginPassword}
-                    onChange={(e) => setLoginPassword(e.target.value)}
-                    placeholder="Enter your password"
-                    required
-                  />
-                </div>
+            <div className="space-y-2">
+              <Label htmlFor="loginPassword">Password</Label>
+              <Input
+                id="loginPassword"
+                type="password"
+                value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)}
+                placeholder="Enter your password"
+                required
+              />
+            </div>
 
-                <Button
-                  type="submit"
-                  className="w-full"
-                  disabled={loading || !loginEmail || !loginPassword}
-                >
-                  {loading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Logging In...
-                    </>
-                  ) : (
-                    'Access Vault'
-                  )}
-                </Button>
-              </form>
-            </TabsContent>
-            
-            <TabsContent value="signup">
-              <form onSubmit={handleSignup} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="signupEmail">Email</Label>
-                  <Input
-                    id="signupEmail"
-                    type="email"
-                    value={userEmail || loginEmail}
-                    onChange={(e) => !userEmail && setLoginEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    disabled={!!userEmail}
-                    required
-                  />
-                  {userEmail && (
-                    <p className="text-xs text-muted-foreground">
-                      This email is linked to your purchase
-                    </p>
-                  )}
-                </div>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={loading || !loginEmail || !loginPassword}
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Logging In...
+                </>
+              ) : (
+                'Access Vault'
+              )}
+            </Button>
+          </form>
 
-                <div className="space-y-2">
-                  <Label htmlFor="signupPassword">Password</Label>
-                  <Input
-                    id="signupPassword"
-                    type="password"
-                    value={signupPassword}
-                    onChange={(e) => setSignupPassword(e.target.value)}
-                    placeholder="Create a secure password"
-                    required
-                    minLength={6}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirm Password</Label>
-                  <Input
-                    id="confirmPassword"
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Confirm your password"
-                    required
-                    minLength={6}
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  className="w-full"
-                  disabled={loading || !signupPassword || !confirmPassword}
-                >
-                  {loading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Creating Account...
-                    </>
-                  ) : (
-                    'Create Vault Account'
-                  )}
-                </Button>
-              </form>
-            </TabsContent>
-          </Tabs>
+          <div className="mt-4 text-center">
+            <p className="text-xs text-muted-foreground">
+              Access is restricted to approved members only.
+            </p>
+          </div>
 
           <div className="mt-6 pt-4 border-t text-center">
             <p className="text-xs text-muted-foreground">

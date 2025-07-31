@@ -8,10 +8,9 @@ import LoadingScreen from '@/components/LoadingScreen';
 import Navigation from '@/components/Navigation';
 import MemberCard from '@/components/MemberCard';
 import CrypDNACard from '@/components/CrypDNACard';
-import VaultFiles from '@/components/VaultFiles';
 import BalanceBreakdown from '@/components/BalanceBreakdown';
-import CrypbotCompanion from '@/components/CrypbotCompanion';
 import VaultVerification from '@/components/VaultVerification';
+import CreditActivity from '@/components/CreditActivity';
 import { LogOut } from 'lucide-react';
 
 const VaultDashboard = () => {
@@ -28,7 +27,7 @@ const VaultDashboard = () => {
         setSession(session);
         setUser(session?.user ?? null);
         if (!session?.user) {
-          navigate('/auth');
+          navigate('/vault-login');
         } else {
           // Fetch user profile data after authentication
           setTimeout(() => {
@@ -43,7 +42,7 @@ const VaultDashboard = () => {
       setSession(session);
       setUser(session?.user ?? null);
       if (!session?.user) {
-        navigate('/auth');
+        navigate('/vault-login');
       } else {
         fetchUserProfile(session.user.id);
       }
@@ -86,7 +85,7 @@ const VaultDashboard = () => {
           title: "Signed Out",
           description: "You have been successfully signed out.",
         });
-        navigate('/auth');
+        navigate('/vault-login');
       }
     } catch (error) {
       console.error('Sign out error:', error);
@@ -135,78 +134,17 @@ const VaultDashboard = () => {
           </Button>
         </div>
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        {/* Simplified Cash App Style Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left Column */}
-          <div className="lg:col-span-2 space-y-6">
-            <MemberCard />
-            <CrypDNACard fileNumber="DNA-2024-0001" />
+          <div className="space-y-6">
             <BalanceBreakdown />
+            <VaultVerification />
           </div>
 
           {/* Right Column */}
           <div className="space-y-6">
-            <VaultFiles />
-            <VaultVerification />
-            <CrypbotCompanion />
-          </div>
-        </div>
-
-        {/* Bottom Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Upcoming Features Preview */}
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-            <h3 className="text-lg font-bold text-white mb-4">🎒 Digital Assets</h3>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-purple-200">Duffle Bags:</span>
-                <span className="text-purple-100">Coming Soon</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-purple-200">Trucker Hats:</span>
-                <span className="text-purple-100">Coming Soon</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-purple-200">Vinyl Records:</span>
-                <span className="text-purple-100">Coming Soon</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-            <h3 className="text-lg font-bold text-white mb-4">🏆 Member Perks</h3>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-purple-200">Exclusive Drops:</span>
-                <span className="text-purple-100">Active</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-purple-200">Early Access:</span>
-                <span className="text-purple-100">Active</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-purple-200">VIP Support:</span>
-                <span className="text-purple-100">Active</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-            <h3 className="text-lg font-bold text-white mb-4">🚀 Future Tech</h3>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-purple-200">AI Assistant:</span>
-                <span className="text-purple-100">Q2 2025</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-purple-200">Neurotech:</span>
-                <span className="text-purple-100">Q3 2025</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-purple-200">Quantum Sync:</span>
-                <span className="text-purple-100">Q4 2025</span>
-              </div>
-            </div>
+            <CreditActivity />
           </div>
         </div>
       </div>
