@@ -4,17 +4,19 @@ import { supabase } from '@/integrations/supabase/client';
 import { User, Session } from '@supabase/supabase-js';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
-import LoadingScreen from '@/components/LoadingScreen';
-import Navigation from '@/components/Navigation';
-import MemberCard from '@/components/MemberCard';
-import CrypDNACard from '@/components/CrypDNACard';
+import LuxuryLoadingScreen from '@/components/LuxuryLoadingScreen';
+import { LuxuryThemeProvider } from '@/components/LuxuryThemeProvider';
+import LuxuryDebitCard from '@/components/LuxuryDebitCard';
+import LuxuryTierBadge from '@/components/LuxuryTierBadge';
 import BalanceBreakdown from '@/components/BalanceBreakdown';
 import VaultVerification from '@/components/VaultVerification';
 import CreditActivity from '@/components/CreditActivity';
-import { LogOut } from 'lucide-react';
+import { LogOut, Moon, Sun } from 'lucide-react';
+import { useTheme } from '@/components/LuxuryThemeProvider';
 
 const VaultDashboard = () => {
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
@@ -98,7 +100,7 @@ const VaultDashboard = () => {
   };
 
   if (loading) {
-    return <LoadingScreen />;
+    return <LuxuryLoadingScreen />;
   }
 
   if (!user) {
@@ -107,43 +109,67 @@ const VaultDashboard = () => {
 
   const vaultId = userProfile?.vault_id || 'VAULT-LOADING...';
   const userName = userProfile?.name || user.email?.split('@')[0] || 'Member';
+  const userTier = userProfile?.tier || 'Viewer';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      <Navigation />
-      
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-white mb-2">
-              Welcome to your Vault, {userName}
-            </h1>
-            <p className="text-purple-200">
-              Vault ID: <span className="font-mono text-purple-100">{vaultId}</span>
-            </p>
+    <div className="min-h-screen bg-background luxury-transition">
+      {/* Luxury Header */}
+      <div className="luxury-card border-b sticky top-0 z-40 backdrop-blur-xl">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-4">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-luxury-purple to-luxury-gold bg-clip-text text-transparent">
+                CrypDNA Vault
+              </h1>
+              <LuxuryTierBadge tier={userTier} />
+            </div>
+            <div className="flex items-center space-x-3">
+              <Button
+                onClick={toggleTheme}
+                variant="ghost"
+                size="sm"
+                className="luxury-transition"
+              >
+                {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </Button>
+              <Button
+                onClick={handleSignOut}
+                variant="outline"
+                size="sm"
+                className="luxury-button"
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                Sign Out
+              </Button>
+            </div>
           </div>
-          <Button
-            onClick={handleSignOut}
-            variant="outline"
-            size="sm"
-            className="text-white border-white/20 hover:bg-white/10"
-          >
-            <LogOut className="mr-2 h-4 w-4" />
-            Sign Out
-          </Button>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-6 py-8 space-y-12">
+        {/* Welcome Section */}
+        <div className="text-center space-y-4 animate-fade-in">
+          <h2 className="text-4xl font-bold">Welcome back, {userName}</h2>
+          <p className="text-muted-foreground text-lg">
+            Vault ID: <span className="font-mono text-luxury-purple">{vaultId}</span>
+          </p>
         </div>
 
-        {/* Simplified Cash App Style Layout */}
+        {/* Luxury Debit Card Section */}
+        <div className="animate-scale-in">
+          <LuxuryDebitCard 
+            userName={userName}
+            vaultId={vaultId}
+          />
+        </div>
+
+        {/* Dashboard Sections */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left Column */}
-          <div className="space-y-6">
+          <div className="space-y-8 animate-slide-up">
             <BalanceBreakdown />
             <VaultVerification />
           </div>
-
-          {/* Right Column */}
-          <div className="space-y-6">
+          <div className="space-y-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
             <CreditActivity />
           </div>
         </div>
@@ -152,4 +178,10 @@ const VaultDashboard = () => {
   );
 };
 
-export default VaultDashboard;
+const WrappedVaultDashboard = () => (
+  <LuxuryThemeProvider>
+    <VaultDashboard />
+  </LuxuryThemeProvider>
+);
+
+export default WrappedVaultDashboard;

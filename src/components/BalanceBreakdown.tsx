@@ -52,12 +52,12 @@ const BalanceBreakdown = () => {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-2xl p-6 border border-gray-300">
+      <div className="luxury-card rounded-2xl p-6">
         <div className="animate-pulse">
-          <div className="h-4 bg-gray-200 rounded w-1/3 mb-4"></div>
+          <div className="h-4 bg-muted rounded w-1/3 mb-4"></div>
           <div className="space-y-4">
-            <div className="h-6 bg-gray-200 rounded"></div>
-            <div className="h-6 bg-gray-200 rounded"></div>
+            <div className="h-6 bg-muted rounded"></div>
+            <div className="h-6 bg-muted rounded"></div>
           </div>
         </div>
       </div>
@@ -68,37 +68,37 @@ const BalanceBreakdown = () => {
   const pendingBalance = balance?.pending_balance || 0;
 
   return (
-    <div className="bg-white rounded-2xl p-6 border border-gray-300 mt-6">
-      <h3 className="text-lg font-bold text-gray-800 mb-4">💳 Balance Breakdown</h3>
+    <div className="luxury-card rounded-2xl p-6 mt-6">
+      <h3 className="text-lg font-bold mb-4 bg-gradient-to-r from-luxury-purple to-luxury-gold bg-clip-text text-transparent">💳 Balance Overview</h3>
       
       <div className="space-y-4">
-        <div className="flex justify-between items-center">
-          <span className="text-gray-600">Available Balance</span>
-          <span className="text-xl font-bold text-green-600">${availableBalance.toLocaleString()}</span>
+        <div className="flex justify-between items-center p-4 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-lg border border-green-500/20">
+          <span className="text-foreground">Available Balance</span>
+          <span className="text-xl font-bold text-green-500">${availableBalance.toLocaleString()}</span>
         </div>
         
-        <div className="flex justify-between items-center">
-          <span className="text-gray-600">Pending Balance</span>
-          <span className="text-xl font-bold text-orange-600">${pendingBalance.toLocaleString()}</span>
+        <div className="flex justify-between items-center p-4 bg-gradient-to-r from-orange-500/10 to-yellow-500/10 rounded-lg border border-orange-500/20">
+          <span className="text-foreground">Pending Balance</span>
+          <span className="text-xl font-bold text-orange-500">${pendingBalance.toLocaleString()}</span>
         </div>
         
-        <div className="border-t border-gray-200 pt-4">
+        <div className="border-t border-border pt-4">
           <div className="flex justify-between items-center">
-            <span className="text-gray-600">Card Balance</span>
-            <span className="text-sm font-medium text-gray-800">${(balance?.card_balance || 0).toLocaleString()}</span>
+            <span className="text-muted-foreground">Card Balance</span>
+            <span className="text-sm font-medium">${(balance?.card_balance || 0).toLocaleString()}</span>
           </div>
         </div>
 
         {balance?.lastTransaction && (
-          <div className="border-t border-gray-200 pt-4">
-            <h4 className="text-sm font-semibold text-gray-700 mb-2">Last Transaction</h4>
+          <div className="border-t border-border pt-4">
+            <h4 className="text-sm font-semibold mb-2">Last Transaction</h4>
             <div className="flex justify-between items-center">
               <div>
-                <span className="text-sm text-gray-600">{balance.lastTransaction.description || 'Transaction'}</span>
-                <p className="text-xs text-gray-500">{new Date(balance.lastTransaction.timestamp).toLocaleDateString()}</p>
+                <span className="text-sm">{balance.lastTransaction.description || 'Transaction'}</span>
+                <p className="text-xs text-muted-foreground">{new Date(balance.lastTransaction.timestamp).toLocaleDateString()}</p>
               </div>
               <span className={`text-sm font-medium ${
-                balance.lastTransaction.type === 'credit' ? 'text-green-600' : 'text-red-600'
+                balance.lastTransaction.type === 'credit' ? 'text-green-500' : 'text-red-500'
               }`}>
                 {balance.lastTransaction.type === 'credit' ? '+' : '-'}${balance.lastTransaction.amount.toLocaleString()}
               </span>
