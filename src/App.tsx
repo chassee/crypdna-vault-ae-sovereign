@@ -13,6 +13,7 @@ import VaultSignup from "./pages/VaultSignup";
 import VaultLogin from "./pages/VaultLogin";
 import VaultDashboard from "./pages/VaultDashboard";
 import NotFound from "./pages/NotFound";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -25,12 +26,12 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/vault-viewer" element={<VaultViewerPage />} />
+          <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+          <Route path="/vault-viewer" element={<ProtectedRoute><VaultViewerPage /></ProtectedRoute>} />
           <Route path="/viewer-onboarding" element={<ViewerOnboarding />} />
         <Route path="/vault-signup" element={<VaultSignup />} />
         <Route path="/vault-login" element={<VaultLogin />} />
-        <Route path="/vault-dashboard" element={<VaultDashboard />} />
+        <Route path="/vault-dashboard" element={<ProtectedRoute><VaultDashboard /></ProtectedRoute>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

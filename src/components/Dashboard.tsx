@@ -123,8 +123,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Vault Files Section */}
-        <VaultFiles />
+        {/* Note: Old VaultFiles component removed - replaced with VaultVerification in VaultDashboard */}
 
         {/* Drop 1 Preview – Duffle Bags */}
         <DuffleBagsPreview />

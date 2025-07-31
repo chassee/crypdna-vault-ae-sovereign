@@ -238,6 +238,9 @@ const VaultLogin = () => {
 
           <div className="mt-6 pt-4 border-t text-center">
             <p className="text-xs text-muted-foreground">
+              Don't have access? <a href="https://crypdawgs.com" className="text-primary hover:underline">Visit Crypdawgs.com</a> to purchase vault access.
+            </p>
+            <p className="text-xs text-muted-foreground mt-2">
               Secure • Encrypted • Your financial data stays private
             </p>
           </div>

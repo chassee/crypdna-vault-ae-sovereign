@@ -21,13 +21,24 @@ const VaultSignup = () => {
   const token = searchParams.get('token');
 
   useEffect(() => {
+    // Check if user is already logged in
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        navigate('/vault-dashboard');
+        return;
+      }
+    };
+    checkAuth();
+
     if (!token) {
       toast({
-        title: "Invalid Access",
-        description: "No signup token provided.",
+        title: "Access Restricted",
+        description: "Account creation requires an invitation. Please visit Crypdawgs.com to purchase access.",
         variant: "destructive",
       });
-      navigate('/');
+      // Redirect to Crypdawgs homepage
+      window.location.href = 'https://crypdawgs.com';
       return;
     }
 
@@ -44,31 +55,31 @@ const VaultSignup = () => {
 
       if (error || !data) {
         toast({
-          title: "Invalid Token",
-          description: "This signup link is not valid.",
+          title: "Invalid Invitation",
+          description: "This signup link is not valid. Please visit Crypdawgs.com to purchase access.",
           variant: "destructive",
         });
-        navigate('/');
+        window.location.href = 'https://crypdawgs.com';
         return;
       }
 
       if (data.used) {
         toast({
-          title: "Token Already Used",
-          description: "This signup link has already been used.",
+          title: "Invitation Already Used",
+          description: "This signup link has already been used. Please visit Crypdawgs.com for assistance.",
           variant: "destructive",
         });
-        navigate('/');
+        window.location.href = 'https://crypdawgs.com';
         return;
       }
 
       if (new Date(data.expires_at) < new Date()) {
         toast({
-          title: "Token Expired",
-          description: "This signup link has expired.",
+          title: "Invitation Expired",
+          description: "This signup link has expired. Please visit Crypdawgs.com to purchase new access.",
           variant: "destructive",
         });
-        navigate('/');
+        window.location.href = 'https://crypdawgs.com';
         return;
       }
 
@@ -77,11 +88,11 @@ const VaultSignup = () => {
     } catch (error) {
       console.error('Error validating token:', error);
       toast({
-        title: "Error",
-        description: "Failed to validate signup link.",
+        title: "Access Error",
+        description: "Failed to validate signup link. Please visit Crypdawgs.com for assistance.",
         variant: "destructive",
       });
-      navigate('/');
+      window.location.href = 'https://crypdawgs.com';
     } finally {
       setValidatingToken(false);
     }

@@ -26,9 +26,9 @@ export default function Index() {
         <div className="max-w-md mx-auto mb-12 text-center">
           <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-white">
             <CardHeader className="text-center">
-              <CardTitle className="text-2xl">Ready to Access Your Vault?</CardTitle>
+              <CardTitle className="text-2xl">Access Your Secure Vault</CardTitle>
               <CardDescription className="text-gray-300">
-                Login to your existing account or create a new vault account
+                Sign in to your CrypDNA Vault account
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -36,8 +36,11 @@ export default function Index() {
                 onClick={() => navigate('/vault-login')}
                 className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-lg py-6"
               >
-                Access Your Vault
+                Login to Your Vault
               </Button>
+              <p className="text-xs text-gray-400 mt-3">
+                Don't have an account? <a href="https://crypdawgs.com" className="text-purple-400 hover:text-purple-300">Visit Crypdawgs.com</a>
+              </p>
             </CardContent>
           </Card>
         </div>
