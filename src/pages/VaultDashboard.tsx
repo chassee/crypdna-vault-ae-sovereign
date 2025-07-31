@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from '@/hooks/use-toast';
 import LuxuryLoadingScreen from '@/components/LuxuryLoadingScreen';
 import { LuxuryThemeProvider } from '@/components/LuxuryThemeProvider';
-import LuxuryDebitCard from '@/components/LuxuryDebitCard';
+import PawDebitCard from '@/components/PawDebitCard';
 import LuxuryTierBadge from '@/components/LuxuryTierBadge';
 import BalanceBreakdown from '@/components/BalanceBreakdown';
 import VaultVerification from '@/components/VaultVerification';
@@ -160,11 +160,12 @@ const VaultDashboard = () => {
           </p>
         </div>
 
-        {/* Luxury Debit Card Section */}
+        {/* Paw Debit Card Section */}
         <div className="animate-scale-in">
-          <LuxuryDebitCard 
+          <PawDebitCard 
             userName={userName}
             vaultId={vaultId}
+            crypDnaScore={750}
           />
         </div>
 
