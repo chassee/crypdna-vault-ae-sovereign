@@ -69,7 +69,9 @@ export default {
 					gold: 'hsl(var(--luxury-gold))',
 					platinum: 'hsl(var(--luxury-platinum))',
 					charcoal: 'hsl(var(--luxury-charcoal))'
-				}
+				},
+				'warm-white': 'hsl(var(--warm-white))',
+				'dark-grey': 'hsl(var(--dark-grey))'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

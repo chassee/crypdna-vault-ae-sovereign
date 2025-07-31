@@ -42,7 +42,7 @@ const VaultDrops: React.FC = () => {
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="text-center space-y-2">
-        <h3 className="text-2xl font-bold bg-gradient-to-r from-luxury-purple to-luxury-gold bg-clip-text text-transparent">
+        <h3 className="text-2xl font-bold text-dark-grey border-b-2 border-luxury-purple inline-block pb-1">
           Exclusive Drops
         </h3>
         <p className="text-muted-foreground">Ultra-rare collectibles for vault members</p>
@@ -55,20 +55,20 @@ const VaultDrops: React.FC = () => {
           return (
             <div
               key={drop.id}
-              className="luxury-card group hover:scale-[1.02] luxury-transition hover:shadow-glow relative overflow-hidden"
+              className="luxury-card group hover:scale-[1.02] luxury-transition hover:shadow-glow relative overflow-hidden hover-card"
             >
-              {/* Blurred silhouette placeholder */}
-              <div className="relative h-48 bg-gradient-to-br from-gray-900 to-gray-800 overflow-hidden">
+              {/* Clean gradient placeholder */}
+              <div className="relative h-48 bg-gradient-to-br from-purple-100 to-pink-100 overflow-hidden">
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-24 h-24 bg-gradient-to-br from-white/20 to-white/5 rounded-full blur-xl" />
-                  <div className="absolute w-16 h-20 bg-gradient-to-br from-white/10 to-white/5 rounded-lg blur-lg" />
+                  <div className="w-24 h-24 bg-gradient-to-br from-purple-200/50 to-pink-200/50 rounded-full blur-lg" />
+                  <div className="absolute w-16 h-20 bg-gradient-to-br from-purple-300/30 to-pink-300/30 rounded-lg blur-md" />
                 </div>
                 
                 {/* Overlay with lock icon */}
-                <div className="absolute inset-0 bg-black/60 flex items-center justify-center backdrop-blur-sm">
+                <div className="absolute inset-0 bg-gradient-to-t from-purple-500/40 to-transparent flex items-center justify-center backdrop-blur-sm">
                   <div className="text-center space-y-2">
-                    <Lock className="w-8 h-8 text-white/80 mx-auto" />
-                    <div className="text-xs text-white/60">Mystery Item</div>
+                    <Lock className="w-8 h-8 text-purple-600 mx-auto" />
+                    <div className="text-xs text-purple-700 font-medium">Coming Soon</div>
                   </div>
                 </div>
 
@@ -81,8 +81,8 @@ const VaultDrops: React.FC = () => {
               <div className="p-6 space-y-4">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <h4 className="text-lg font-semibold">{drop.title}</h4>
-                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-orange-400/20 text-orange-400">
+                    <h4 className="text-lg font-semibold text-dark-grey">{drop.title}</h4>
+                    <span className="px-3 py-1 rounded-full text-xs font-medium bg-purple-500 text-white glow-purple">
                       Coming Soon
                     </span>
                   </div>
@@ -106,17 +106,16 @@ const VaultDrops: React.FC = () => {
         })}
       </div>
 
-      <div className="luxury-card bg-gradient-to-r from-luxury-purple/10 to-luxury-gold/10 border-luxury-purple/20">
+      <div className="luxury-card bg-gradient-to-r from-luxury-purple/10 to-luxury-gold/10 border-luxury-purple/20 hover-card">
         <div className="p-6 text-center space-y-4">
           <div className="text-4xl animate-pulse">🎁</div>
-          <h4 className="text-xl font-semibold">Exclusive Access</h4>
+          <h4 className="text-xl font-semibold text-dark-grey">Exclusive Access</h4>
           <p className="text-muted-foreground max-w-md mx-auto">
-            These rare collectibles are only available to verified vault members. 
-            Each drop is limited and reveals exclusive utility.
+            These collectibles are only available to verified vault members. Follow @crypdawgs on Instagram for reveals.
           </p>
           <div className="flex items-center justify-center gap-2 text-sm text-luxury-purple">
             <Instagram className="w-4 h-4" />
-            <span>Follow @CrypDNA for reveals</span>
+            <span>Follow @crypdawgs for reveals</span>
           </div>
         </div>
       </div>
