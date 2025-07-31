@@ -7,7 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from '@/hooks/use-toast';
 import LuxuryLoadingScreen from '@/components/LuxuryLoadingScreen';
 import { LuxuryThemeProvider } from '@/components/LuxuryThemeProvider';
-import PawDebitCard from '@/components/PawDebitCard';
+import LuxuryDebitCard from '@/components/LuxuryDebitCard';
+import DunBradstreetWidget from '@/components/DunBradstreetWidget';
 import LuxuryTierBadge from '@/components/LuxuryTierBadge';
 import BalanceBreakdown from '@/components/BalanceBreakdown';
 import VaultVerification from '@/components/VaultVerification';
@@ -19,6 +20,7 @@ import CrypbotsTab from '@/components/tabs/CrypbotsTab';
 import NeuroTechTab from '@/components/tabs/NeuroTechTab';
 import DropCountdown from '@/components/DropCountdown';
 import MobileFloatingNav from '@/components/MobileFloatingNav';
+import CinematicWelcome from '@/components/CinematicWelcome';
 import { LogOut, Moon, Sun, Wallet, Package, Rocket, Brain, Waves, Zap } from 'lucide-react';
 import { useTheme } from '@/components/LuxuryThemeProvider';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -31,6 +33,7 @@ const VaultDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [userProfile, setUserProfile] = useState<any>(null);
   const [activeTab, setActiveTab] = useState('balances');
+  const [showWelcome, setShowWelcome] = useState(true);
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -118,12 +121,20 @@ const VaultDashboard = () => {
     return null; // Will redirect via useEffect
   }
 
-  const vaultId = userProfile?.vault_id || 'VAULT-LOADING...';
+  const vaultId = userProfile?.vault_id || 'VAULT-' + (user?.id?.slice(0, 8).toUpperCase() || 'XXXXXXXX');
   const userName = userProfile?.name || user.email?.split('@')[0] || 'Member';
   const userTier = userProfile?.tier || 'Viewer';
 
   return (
-    <div className="min-h-screen bg-background luxury-transition">
+    <>
+      {showWelcome && (
+        <CinematicWelcome
+          userName={userName}
+          onComplete={() => setShowWelcome(false)}
+        />
+      )}
+      
+      <div className="min-h-screen bg-background luxury-transition">
       {/* Luxury Header */}
       <div className="luxury-card border-b sticky top-0 z-40 backdrop-blur-xl">
         <div className="container mx-auto px-6 py-4">
@@ -166,12 +177,11 @@ const VaultDashboard = () => {
           </p>
         </div>
 
-        {/* Paw Debit Card Section */}
+        {/* Luxury Debit Card Section */}
         <div className="animate-scale-in">
-          <PawDebitCard 
+          <LuxuryDebitCard 
             userName={userName}
             vaultId={vaultId}
-            crypDnaScore={750}
           />
         </div>
 
@@ -238,6 +248,7 @@ const VaultDashboard = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="space-y-8 animate-slide-up">
                   <BalanceBreakdown />
+                  <DunBradstreetWidget />
                   <VaultVerification />
                 </div>
                 <div className="space-y-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
@@ -272,6 +283,7 @@ const VaultDashboard = () => {
         <MobileFloatingNav activeTab={activeTab} onTabChange={setActiveTab} />
       </div>
     </div>
+    </>
   );
 };
 

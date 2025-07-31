@@ -5,39 +5,48 @@ const VaultFutureTech: React.FC = () => {
   const futureTechItems = [
     {
       id: 1,
-      title: 'Crypb0ts Emotional AI Sync',
-      description: 'Revolutionary AI companions that sync with your emotional patterns and financial decisions.',
-      icon: Bot,
-      status: 'In Development',
-      eta: 'Q2 2025',
-      features: ['Emotional Intelligence', 'Market Sentiment Analysis', 'Personalized Advice', 'Voice Synthesis']
+      title: 'Experian Credit Intelligence',
+      description: 'Real-time credit monitoring with AI-powered insights and predictive analytics.',
+      icon: Brain,
+      status: 'Integration Ready',
+      eta: 'Q1 2025',
+      features: ['Real-time Monitoring', 'AI Insights', 'Score Prediction', 'Alert System']
     },
     {
       id: 2,
-      title: 'NeuroDrop Brainwave Unlock',
-      description: 'Cutting-edge brainwave technology that unlocks exclusive content based on neural patterns.',
-      icon: Brain,
-      status: 'Research Phase',
-      eta: 'Q4 2025',
-      features: ['EEG Integration', 'Neural Authentication', 'Thought-to-Action', 'Mind Sync Protocol']
+      title: 'Equifax Risk Assessment',
+      description: 'Advanced risk modeling using machine learning and consumer behavior analysis.',
+      icon: Zap,
+      status: 'Testing Phase',
+      eta: 'Q2 2025',
+      features: ['Risk Modeling', 'Behavior Analysis', 'Credit Forecasting', 'Portfolio Optimization']
     },
     {
       id: 3,
-      title: 'Quantum Trading Interface',
-      description: 'Next-generation trading powered by quantum computing and predictive algorithms.',
-      icon: Zap,
-      status: 'Prototype',
+      title: 'TransUnion Data Fusion',
+      description: 'Comprehensive financial profiling through multi-bureau data integration.',
+      icon: Eye,
+      status: 'Development',
       eta: 'Q3 2025',
-      features: ['Quantum Processing', 'Predictive Analytics', 'Real-time Execution', 'Risk Assessment']
+      features: ['Multi-Bureau Sync', 'Identity Verification', 'Fraud Detection', 'Account Aggregation']
     },
     {
       id: 4,
-      title: 'Metaverse Vault Access',
-      description: 'Immersive virtual reality experience for managing your digital wealth.',
-      icon: Eye,
-      status: 'Conceptual',
+      title: 'Blockchain Identity Vault',
+      description: 'Decentralized identity management with cryptographic security and self-sovereignty.',
+      icon: Bot,
+      status: 'Research',
+      eta: 'Q4 2025',
+      features: ['Self-Sovereign ID', 'Zero-Knowledge Proofs', 'Biometric Authentication', 'Multi-Chain Support']
+    },
+    {
+      id: 5,
+      title: 'AI Portfolio Risk Management',
+      description: 'Intelligent portfolio optimization using quantum algorithms and market sentiment.',
+      icon: Brain,
+      status: 'Prototype',
       eta: 'Q1 2026',
-      features: ['VR Integration', '3D Asset Visualization', 'Haptic Feedback', 'Spatial Computing']
+      features: ['Quantum Algorithms', 'Sentiment Analysis', 'Risk Optimization', 'Automated Rebalancing']
     }
   ];
 
@@ -65,7 +74,7 @@ const VaultFutureTech: React.FC = () => {
         <p className="text-muted-foreground">Glimpse into the next generation of financial technology</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
         {futureTechItems.map((item) => {
           const IconComponent = item.icon;
           const statusColor = getStatusColor(item.status);
