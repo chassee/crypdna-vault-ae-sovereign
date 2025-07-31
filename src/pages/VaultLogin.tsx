@@ -42,44 +42,39 @@ const VaultLogin = () => {
   const validateToken = async () => {
     setValidatingToken(true);
     try {
-      const { data, error } = await supabase
-        .from('signup_tokens')
-        .select('email, used, expires_at')
-        .eq('token', token)
-        .single();
+      const { data, error } = await supabase.functions.invoke('validate-token', {
+        body: { token }
+      });
 
-      if (error || !data) {
+      if (error) {
+        console.error('Error calling validate-token function:', error);
+        toast({
+          title: "Error",
+          description: "Failed to validate access link. You can still login manually.",
+          variant: "destructive",
+        });
+        setTokenValid(true);
+        return;
+      }
+
+      if (!data.valid) {
         toast({
           title: "Invalid Access Link",
-          description: "This access link is not valid. You can still login if you have an account.",
-          variant: "destructive",
-        });
-        setTokenValid(true); // Allow login anyway
-        return;
-      }
-
-      if (data.used) {
-        toast({
-          title: "Link Already Used",
-          description: "This access link has already been used. You can login normally.",
-        });
-        setTokenValid(true);
-        return;
-      }
-
-      if (new Date(data.expires_at) < new Date()) {
-        toast({
-          title: "Link Expired",
-          description: "This access link has expired. You can still login if you have an account.",
+          description: data.error || "This access link is not valid. You can still login if you have an account.",
           variant: "destructive",
         });
         setTokenValid(true);
         return;
       }
 
+      // Token is valid
       setUserEmail(data.email);
       setLoginEmail(data.email);
       setTokenValid(true);
+      toast({
+        title: "Access Confirmed",
+        description: `Welcome! Your vault access has been verified for ${data.email}`,
+      });
     } catch (error) {
       console.error('Error validating token:', error);
       toast({

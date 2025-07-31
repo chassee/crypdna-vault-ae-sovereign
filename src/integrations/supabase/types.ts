@@ -47,6 +47,7 @@ export type Database = {
       balances: {
         Row: {
           available_credit: number | null
+          balance: number
           card_balance: number | null
           cash_back_rate: number | null
           created_at: string
@@ -59,6 +60,7 @@ export type Database = {
         }
         Insert: {
           available_credit?: number | null
+          balance?: number
           card_balance?: number | null
           cash_back_rate?: number | null
           created_at?: string
@@ -71,6 +73,7 @@ export type Database = {
         }
         Update: {
           available_credit?: number | null
+          balance?: number
           card_balance?: number | null
           cash_back_rate?: number | null
           created_at?: string
@@ -80,6 +83,167 @@ export type Database = {
           score_boost?: number | null
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      credit_activity: {
+        Row: {
+          amount: number | null
+          created_at: string | null
+          description: string | null
+          event_type: string
+          id: string
+          user_id: string | null
+        }
+        Insert: {
+          amount?: number | null
+          created_at?: string | null
+          description?: string | null
+          event_type: string
+          id?: string
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number | null
+          created_at?: string | null
+          description?: string | null
+          event_type?: string
+          id?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "credit_activity_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "vault_members"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      crypbots: {
+        Row: {
+          bot_name: string | null
+          created_at: string | null
+          id: string
+          tier: string | null
+          user_id: string | null
+        }
+        Insert: {
+          bot_name?: string | null
+          created_at?: string | null
+          id?: string
+          tier?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          bot_name?: string | null
+          created_at?: string | null
+          id?: string
+          tier?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      crypdna_file: {
+        Row: {
+          created_at: string | null
+          file_number: string
+          id: string
+          status: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          file_number: string
+          id?: string
+          status?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          file_number?: string
+          id?: string
+          status?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      drops: {
+        Row: {
+          description: string | null
+          drop_date: string | null
+          id: string
+          status: string | null
+          title: string
+        }
+        Insert: {
+          description?: string | null
+          drop_date?: string | null
+          id?: string
+          status?: string | null
+          title: string
+        }
+        Update: {
+          description?: string | null
+          drop_date?: string | null
+          id?: string
+          status?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      neuro_tech: {
+        Row: {
+          created_at: string | null
+          feature_name: string | null
+          id: string
+          status: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          feature_name?: string | null
+          id?: string
+          status?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          feature_name?: string | null
+          id?: string
+          status?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          category: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          price: number | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          price?: number | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          price?: number | null
         }
         Relationships: []
       }
@@ -109,6 +273,35 @@ export type Database = {
           username?: string
         }
         Relationships: []
+      }
+      reservations: {
+        Row: {
+          created_at: string | null
+          id: string
+          product_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          product_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          product_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reservations_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       rewards: {
         Row: {
@@ -230,6 +423,57 @@ export type Database = {
         }
         Relationships: []
       }
+      vault_cards: {
+        Row: {
+          card_last_four: string
+          card_status: string | null
+          created_at: string | null
+          id: string
+          user_id: string | null
+        }
+        Insert: {
+          card_last_four?: string
+          card_status?: string | null
+          created_at?: string | null
+          id?: string
+          user_id?: string | null
+        }
+        Update: {
+          card_last_four?: string
+          card_status?: string | null
+          created_at?: string | null
+          id?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      vault_documents: {
+        Row: {
+          created_at: string
+          doc_type: string | null
+          file_url: string | null
+          id: number
+          status: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          doc_type?: string | null
+          file_url?: string | null
+          id?: number
+          status?: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          doc_type?: string | null
+          file_url?: string | null
+          id?: number
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       vault_members: {
         Row: {
           approved: string | null
@@ -240,7 +484,9 @@ export type Database = {
           full_name: string | null
           id: number
           notes: string | null
+          status: boolean
           tally_id: string | null
+          user_id: string
           vault_tier: string | null
         }
         Insert: {
@@ -252,7 +498,9 @@ export type Database = {
           full_name?: string | null
           id?: number
           notes?: string | null
+          status?: boolean
           tally_id?: string | null
+          user_id?: string
           vault_tier?: string | null
         }
         Update: {
@@ -264,8 +512,43 @@ export type Database = {
           full_name?: string | null
           id?: number
           notes?: string | null
+          status?: boolean
           tally_id?: string | null
+          user_id?: string
           vault_tier?: string | null
+        }
+        Relationships: []
+      }
+      vault_transactions: {
+        Row: {
+          amount: number | null
+          created_at: string
+          description: string | null
+          id: number
+          status: string | null
+          transaction_type: string | null
+          user_id: string | null
+          vault_id: string | null
+        }
+        Insert: {
+          amount?: number | null
+          created_at?: string
+          description?: string | null
+          id?: number
+          status?: string | null
+          transaction_type?: string | null
+          user_id?: string | null
+          vault_id?: string | null
+        }
+        Update: {
+          amount?: number | null
+          created_at?: string
+          description?: string | null
+          id?: number
+          status?: string | null
+          transaction_type?: string | null
+          user_id?: string | null
+          vault_id?: string | null
         }
         Relationships: []
       }

@@ -5,7 +5,7 @@ import { Resend } from "npm:resend@2.0.0";
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
 const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-const webhookSecret = "775f9613af05dbdba171db703d6074f7";
+const webhookSecret = Deno.env.get("SHOPIFY_WEBHOOK_SECRET");
 
 const supabase = createClient(supabaseUrl, supabaseServiceKey, {
   auth: { persistSession: false }
