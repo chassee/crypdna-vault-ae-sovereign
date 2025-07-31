@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { User, Session } from '@supabase/supabase-js';
 import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from '@/hooks/use-toast';
 import LuxuryLoadingScreen from '@/components/LuxuryLoadingScreen';
 import { LuxuryThemeProvider } from '@/components/LuxuryThemeProvider';
@@ -11,7 +12,10 @@ import LuxuryTierBadge from '@/components/LuxuryTierBadge';
 import BalanceBreakdown from '@/components/BalanceBreakdown';
 import VaultVerification from '@/components/VaultVerification';
 import CreditActivity from '@/components/CreditActivity';
-import { LogOut, Moon, Sun } from 'lucide-react';
+import VaultProducts from '@/components/VaultProducts';
+import VaultDrops from '@/components/VaultDrops';
+import VaultFutureTech from '@/components/VaultFutureTech';
+import { LogOut, Moon, Sun, Wallet, Package, Rocket, Brain } from 'lucide-react';
 import { useTheme } from '@/components/LuxuryThemeProvider';
 
 const VaultDashboard = () => {
@@ -21,6 +25,7 @@ const VaultDashboard = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [userProfile, setUserProfile] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState('balances');
 
   useEffect(() => {
     // Set up auth state listener
@@ -163,16 +168,65 @@ const VaultDashboard = () => {
           />
         </div>
 
-        {/* Dashboard Sections */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="space-y-8 animate-slide-up">
-            <BalanceBreakdown />
-            <VaultVerification />
+        {/* Navigation Tabs */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-4 luxury-card border-luxury-purple/20 bg-background/50 backdrop-blur-md">
+            <TabsTrigger 
+              value="balances" 
+              className="flex items-center gap-2 data-[state=active]:bg-luxury-purple data-[state=active]:text-white luxury-transition"
+            >
+              <Wallet className="w-4 h-4" />
+              <span className="hidden sm:inline">Balances</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="products" 
+              className="flex items-center gap-2 data-[state=active]:bg-luxury-purple data-[state=active]:text-white luxury-transition"
+            >
+              <Package className="w-4 h-4" />
+              <span className="hidden sm:inline">Products</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="drops" 
+              className="flex items-center gap-2 data-[state=active]:bg-luxury-purple data-[state=active]:text-white luxury-transition"
+            >
+              <Rocket className="w-4 h-4" />
+              <span className="hidden sm:inline">Drops</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="future-tech" 
+              className="flex items-center gap-2 data-[state=active]:bg-luxury-purple data-[state=active]:text-white luxury-transition"
+            >
+              <Brain className="w-4 h-4" />
+              <span className="hidden sm:inline">Future Tech</span>
+            </TabsTrigger>
+          </TabsList>
+
+          <div className="mt-8">
+            <TabsContent value="balances" className="space-y-8 animate-fade-in">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="space-y-8 animate-slide-up">
+                  <BalanceBreakdown />
+                  <VaultVerification />
+                </div>
+                <div className="space-y-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+                  <CreditActivity />
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="products" className="animate-fade-in">
+              <VaultProducts />
+            </TabsContent>
+
+            <TabsContent value="drops" className="animate-fade-in">
+              <VaultDrops />
+            </TabsContent>
+
+            <TabsContent value="future-tech" className="animate-fade-in">
+              <VaultFutureTech />
+            </TabsContent>
           </div>
-          <div className="space-y-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
-            <CreditActivity />
-          </div>
-        </div>
+        </Tabs>
       </div>
     </div>
   );

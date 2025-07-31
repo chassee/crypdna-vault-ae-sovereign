@@ -218,6 +218,11 @@
   100% { transform: rotate(360deg); }
 }
 
+@keyframes luxury-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 .paw-spinner {
   animation: paw-spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
@@ -225,6 +230,47 @@
 /* Smooth Transitions */
 .luxury-transition {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Luxury Spinner */
+.luxury-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid hsl(var(--luxury-purple) / 0.3);
+  border-top: 3px solid hsl(var(--luxury-purple));
+  border-radius: 50%;
+  animation: luxury-spin 1s linear infinite;
+}
+
+/* Future Tech Glow */
+.future-tech-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.future-tech-glow::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, hsl(var(--luxury-purple) / 0.1), transparent);
+  animation: future-tech-sweep 3s ease-in-out infinite;
+  z-index: 0;
+}
+
+.future-tech-glow > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Luxury Toast Success */
+.luxury-toast-success {
+  background: linear-gradient(135deg, hsl(var(--luxury-purple) / 0.9), hsl(var(--luxury-gold) / 0.9));
+  border: 1px solid hsl(var(--luxury-purple) / 0.3);
+  color: white;
+  backdrop-filter: blur(20px);
 }
 
 /* Hide Lovable Badge */

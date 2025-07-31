@@ -122,6 +122,20 @@ export default {
 				'shimmer': {
 					'0%': { backgroundPosition: '-200% 0' },
 					'100%': { backgroundPosition: '200% 0' }
+				},
+				'tier-upgrade': {
+					'0%': { transform: 'scale(1)', filter: 'brightness(1)' },
+					'50%': { transform: 'scale(1.05)', filter: 'brightness(1.2)' },
+					'100%': { transform: 'scale(1)', filter: 'brightness(1)' }
+				},
+				'paw-spinner': {
+					'0%, 100%': { transform: 'scale(1) rotate(0deg)' },
+					'50%': { transform: 'scale(1.1) rotate(180deg)' }
+				},
+				'future-tech-sweep': {
+					'0%': { transform: 'translateX(-100%) translateY(-100%) rotate(45deg)' },
+					'50%': { transform: 'translateX(100%) translateY(100%) rotate(45deg)' },
+					'100%': { transform: 'translateX(-100%) translateY(-100%) rotate(45deg)' }
 				}
 			},
 			animation: {
@@ -132,7 +146,10 @@ export default {
 				'slide-up': 'slide-up 0.5s ease-out',
 				'pulse-glow': 'pulse-glow 3s ease-in-out infinite',
 				'float': 'float 3s ease-in-out infinite',
-				'shimmer': 'shimmer 2s linear infinite'
+				'shimmer': 'shimmer 2s ease-in-out infinite alternate',
+				'tier-upgrade': 'tier-upgrade 2s ease-in-out',
+				'paw-spinner': 'paw-spinner 2s ease-in-out infinite',
+				'future-tech-sweep': 'future-tech-sweep 3s ease-in-out infinite'
 			}
 		}
 	},
