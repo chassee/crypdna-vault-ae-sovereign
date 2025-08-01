@@ -20,6 +20,9 @@ security_captcha_provider = "turnstile"
 enable_signup = false
 enable_anonymous_sign_ins = false
 enable_email_confirmations = false
+enable_password_strength = true
+password_min_length = 8
+enable_leaked_password_protection = true
 
 [functions.shopify-order-paid]
 verify_jwt = false
