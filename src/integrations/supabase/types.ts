@@ -121,6 +121,33 @@ export type Database = {
           },
         ]
       }
+      crypb0ts: {
+        Row: {
+          ai_core_version: string | null
+          bot_name: string
+          created_at: string | null
+          emotional_sync: boolean | null
+          id: string
+          user_id: string | null
+        }
+        Insert: {
+          ai_core_version?: string | null
+          bot_name: string
+          created_at?: string | null
+          emotional_sync?: boolean | null
+          id?: string
+          user_id?: string | null
+        }
+        Update: {
+          ai_core_version?: string | null
+          bot_name?: string
+          created_at?: string | null
+          emotional_sync?: boolean | null
+          id?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       crypbots: {
         Row: {
           bot_name: string | null
@@ -169,6 +196,48 @@ export type Database = {
         }
         Relationships: []
       }
+      crypscore: {
+        Row: {
+          last_update: string | null
+          score: number | null
+          user_id: string
+        }
+        Insert: {
+          last_update?: string | null
+          score?: number | null
+          user_id: string
+        }
+        Update: {
+          last_update?: string | null
+          score?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      dnb_tracking: {
+        Row: {
+          id: string
+          score: number | null
+          status: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          id?: string
+          score?: number | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          id?: string
+          score?: number | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       drops: {
         Row: {
           description: string | null
@@ -193,6 +262,84 @@ export type Database = {
         }
         Relationships: []
       }
+      exclusive_drops: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          drop_number: number
+          id: string
+          mystery_asset: boolean | null
+          reveal_link: string | null
+          title: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          drop_number: number
+          id?: string
+          mystery_asset?: boolean | null
+          reveal_link?: string | null
+          title: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          drop_number?: number
+          id?: string
+          mystery_asset?: boolean | null
+          reveal_link?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      leaderboards: {
+        Row: {
+          crypdna_score: number | null
+          rank: number | null
+          rewards_points: number | null
+          user_id: string
+        }
+        Insert: {
+          crypdna_score?: number | null
+          rank?: number | null
+          rewards_points?: number | null
+          user_id: string
+        }
+        Update: {
+          crypdna_score?: number | null
+          rank?: number | null
+          rewards_points?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      lifestyle_events: {
+        Row: {
+          description: string | null
+          event_date: string | null
+          id: string
+          location: string | null
+          tier_access: string | null
+          title: string
+        }
+        Insert: {
+          description?: string | null
+          event_date?: string | null
+          id?: string
+          location?: string | null
+          tier_access?: string | null
+          title: string
+        }
+        Update: {
+          description?: string | null
+          event_date?: string | null
+          id?: string
+          location?: string | null
+          tier_access?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
       neuro_tech: {
         Row: {
           created_at: string | null
@@ -211,6 +358,87 @@ export type Database = {
         Update: {
           created_at?: string | null
           feature_name?: string | null
+          id?: string
+          status?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      neuro_tech_sessions: {
+        Row: {
+          access_level: string | null
+          brainwave_pattern: string
+          created_at: string | null
+          id: string
+          user_id: string | null
+        }
+        Insert: {
+          access_level?: string | null
+          brainwave_pattern: string
+          created_at?: string | null
+          id?: string
+          user_id?: string | null
+        }
+        Update: {
+          access_level?: string | null
+          brainwave_pattern?: string
+          created_at?: string | null
+          id?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      neurodrop_sessions: {
+        Row: {
+          eeg_score: number | null
+          id: string
+          session_date: string | null
+          unlocked_features: string[] | null
+          user_id: string | null
+        }
+        Insert: {
+          eeg_score?: number | null
+          id?: string
+          session_date?: string | null
+          unlocked_features?: string[] | null
+          user_id?: string | null
+        }
+        Update: {
+          eeg_score?: number | null
+          id?: string
+          session_date?: string | null
+          unlocked_features?: string[] | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      paw_debit_card: {
+        Row: {
+          card_number: string
+          created_at: string | null
+          crypdna_score: number | null
+          cvv: string
+          expiry: string
+          id: string
+          status: string | null
+          user_id: string | null
+        }
+        Insert: {
+          card_number: string
+          created_at?: string | null
+          crypdna_score?: number | null
+          cvv: string
+          expiry: string
+          id?: string
+          status?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          card_number?: string
+          created_at?: string | null
+          crypdna_score?: number | null
+          cvv?: string
+          expiry?: string
           id?: string
           status?: string | null
           user_id?: string | null
@@ -271,6 +499,33 @@ export type Database = {
           updated_at?: string
           user_id?: string
           username?: string
+        }
+        Relationships: []
+      }
+      quests: {
+        Row: {
+          description: string | null
+          id: string
+          points_reward: number | null
+          status: string | null
+          title: string
+          user_id: string | null
+        }
+        Insert: {
+          description?: string | null
+          id?: string
+          points_reward?: number | null
+          status?: string | null
+          title: string
+          user_id?: string | null
+        }
+        Update: {
+          description?: string | null
+          id?: string
+          points_reward?: number | null
+          status?: string | null
+          title?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -387,6 +642,27 @@ export type Database = {
           timestamp?: string
           type?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      user_voice_intro: {
+        Row: {
+          cinematic_intro_enabled: boolean | null
+          created_at: string | null
+          id: string
+          user_id: string | null
+        }
+        Insert: {
+          cinematic_intro_enabled?: boolean | null
+          created_at?: string | null
+          id?: string
+          user_id?: string | null
+        }
+        Update: {
+          cinematic_intro_enabled?: boolean | null
+          created_at?: string | null
+          id?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -516,6 +792,30 @@ export type Database = {
           tally_id?: string | null
           user_id?: string
           vault_tier?: string | null
+        }
+        Relationships: []
+      }
+      vault_rewards: {
+        Row: {
+          id: string
+          points: number | null
+          redeemed_items: string[] | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          id?: string
+          points?: number | null
+          redeemed_items?: string[] | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          id?: string
+          points?: number | null
+          redeemed_items?: string[] | null
+          updated_at?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
