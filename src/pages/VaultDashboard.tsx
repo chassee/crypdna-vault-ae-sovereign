@@ -145,10 +145,10 @@ const VaultDashboard = () => {
                 variant="ghost"
                 size="sm"
                 className="luxury-transition relative group hover:bg-gradient-to-r hover:from-purple-500/20 hover:to-gold-500/20"
-                title={theme === 'dark' ? 'Switch to CrypDawg Vibrant Mode' : 'Switch to Dark Luxury Mode'}
+                title={theme === 'dark' ? 'Switch to CrypDawg Light Mode' : 'Switch to Dark Mode'}
               >
                 {theme === 'dark' ? (
-                  <Palette className="h-4 w-4 text-luxury-purple animate-pulse" />
+                  <Sparkles className="h-4 w-4 text-luxury-purple animate-pulse" />
                 ) : (
                   <Moon className="h-4 w-4 text-luxury-gold" />
                 )}

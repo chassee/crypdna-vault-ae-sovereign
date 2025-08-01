@@ -207,8 +207,8 @@ const VaultSignupContent = () => {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
       <div className={`absolute inset-0 transition-all duration-1000 ${
-        theme === 'vibrant' 
-          ? 'bg-gradient-to-br from-purple-900/90 via-blue-900/80 to-gold-900/70' 
+        theme === 'light' 
+          ? 'bg-gradient-to-br from-purple-100/90 via-blue-100/80 to-gold-100/70' 
           : 'bg-gradient-to-br from-black via-gray-900 to-luxury-charcoal'
       }`} />
       
