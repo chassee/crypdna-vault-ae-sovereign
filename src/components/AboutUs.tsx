@@ -42,17 +42,17 @@ const AboutUs: React.FC = () => {
           </div>
           
           <div className="max-w-5xl mx-auto space-y-8 text-xl leading-relaxed">
-            <p className="text-foreground/95 font-medium">
-              CrypDNA Vault is building a future where <span className="font-bold text-luxury-purple">surreal fashion</span>, 
-              <span className="font-bold text-luxury-gold"> credit building</span>, 
-              <span className="font-bold text-luxury-blue"> emotional AI</span>, and 
-              <span className="font-bold text-luxury-purple"> neurotech</span> fuse into one luxury ecosystem.
+            <p className="text-foreground font-medium">
+              From NFT beginnings to AI robots and neurotech frontiers, <span className="font-bold text-luxury-purple">Crypdawgs</span> evolved beyond imagination. 
+              What started as digital collectibles transformed into <span className="font-bold text-luxury-gold">surreal fashion</span>, 
+              then <span className="font-bold text-luxury-blue">emotional AI companions</span>, and now 
+              <span className="font-bold text-luxury-purple">brain-computer luxury ecosystems</span>.
             </p>
             
-            <p className="text-foreground/95 font-medium">
+            <p className="text-foreground font-medium">
               We are unlocking <span className="font-bold bg-gradient-to-r from-luxury-gold to-luxury-purple bg-clip-text text-transparent">billion-dollar tradelines</span>, 
-              brain-computer product unlocks, and AI companions—redefining what it means to live 
-              <span className="font-bold bg-gradient-to-r from-luxury-purple to-luxury-blue bg-clip-text text-transparent"> 10 steps ahead</span>.
+              neural-linked product access, and AI beings that understand your deepest financial emotions—redefining what it means to live 
+              <span className="font-bold bg-gradient-to-r from-luxury-purple to-luxury-blue bg-clip-text text-transparent">10 steps ahead</span> of tomorrow.
             </p>
           </div>
         </div>
@@ -99,12 +99,13 @@ const AboutUs: React.FC = () => {
           </div>
           
           <div className="max-w-4xl mx-auto space-y-6">
-            <p className="text-foreground/95 text-2xl italic font-semibold">
-              "Join our forward-thinking community where technology, emotion, and luxury converge to unlock unprecedented possibilities."
+            <p className="text-foreground text-2xl italic font-semibold">
+              "The future is not just digital—it's neural. We're pioneering the intersection where luxury meets consciousness, 
+              where AI companions understand your deepest financial intuitions."
             </p>
             <p className="text-muted-foreground text-lg font-medium">
-              This is more than finance—it's the future of surreal wealth. We're building an ecosystem where billionaire-class 
-              experiences become accessible to those who understand the convergence of AI, NeuroTech, and luxury finance.
+              From humble NFT origins to neurotech pioneers—Crypdawgs represents the evolution of wealth consciousness. 
+              This isn't just finance; it's the emergence of luxury beings who think, feel, and prosper alongside you.
             </p>
           </div>
 

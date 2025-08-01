@@ -73,18 +73,18 @@ const BalanceBreakdown = () => {
       
       <div className="space-y-4">
         <div className="flex justify-between items-center p-4 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-lg border border-green-500/20">
-          <span className="text-foreground">Available Balance</span>
+          <span className="text-foreground font-medium">Available Balance</span>
           <span className="text-xl font-bold text-green-500">${availableBalance.toLocaleString()}</span>
         </div>
         
         <div className="flex justify-between items-center p-4 bg-gradient-to-r from-orange-500/10 to-yellow-500/10 rounded-lg border border-orange-500/20">
-          <span className="text-foreground">Pending Balance</span>
+          <span className="text-foreground font-medium">Pending Balance</span>
           <span className="text-xl font-bold text-orange-500">${pendingBalance.toLocaleString()}</span>
         </div>
         
         <div className="border-t border-border pt-4">
           <div className="flex justify-between items-center">
-            <span className="text-muted-foreground">Card Balance:</span>
+            <span className="text-foreground font-medium">Card Balance:</span>
             <span className="text-2xl font-bold text-luxury-purple">
               $0
             </span>
@@ -93,10 +93,10 @@ const BalanceBreakdown = () => {
 
         {balance?.lastTransaction && (
           <div className="border-t border-border pt-4">
-            <h4 className="text-sm font-semibold mb-2">Last Transaction</h4>
+            <h4 className="text-sm font-semibold mb-2 text-foreground">Last Transaction</h4>
             <div className="flex justify-between items-center">
               <div>
-                <span className="text-sm">{balance.lastTransaction.description || 'Transaction'}</span>
+                <span className="text-sm text-foreground font-medium">{balance.lastTransaction.description || 'Transaction'}</span>
                 <p className="text-xs text-muted-foreground">{new Date(balance.lastTransaction.timestamp).toLocaleDateString()}</p>
               </div>
               <span className={`text-sm font-medium ${

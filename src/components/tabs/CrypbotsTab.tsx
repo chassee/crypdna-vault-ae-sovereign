@@ -93,7 +93,7 @@ const CrypbotsTab = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="luxury-card border-purple-500/20 hover:border-purple-400/40 transition-all duration-500 group">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 text-foreground">
               <Heart className="w-5 h-5 text-purple-400 group-hover:animate-pulse" />
               Emotional Sync
             </CardTitle>
@@ -104,11 +104,11 @@ const CrypbotsTab = () => {
             </p>
             <div className="space-y-2">
               <div className="flex justify-between text-xs">
-                <span>AI Core:</span>
+                <span className="text-foreground">AI Core:</span>
                 <Badge variant="outline" className="border-purple-400/50">v2.1 Quantum</Badge>
               </div>
               <div className="flex justify-between text-xs">
-                <span>Sync Status:</span>
+                <span className="text-foreground">Sync Status:</span>
                 <span className="text-purple-400">🔘 Neural Link Ready</span>
               </div>
             </div>
@@ -117,7 +117,7 @@ const CrypbotsTab = () => {
 
         <Card className="luxury-card border-pink-500/20 hover:border-pink-400/40 transition-all duration-500 group">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 text-foreground">
               <Brain className="w-5 h-5 text-pink-400 group-hover:animate-pulse" />
               Quantum Insights
             </CardTitle>
@@ -128,11 +128,11 @@ const CrypbotsTab = () => {
             </p>
             <div className="space-y-2">
               <div className="flex justify-between text-xs">
-                <span>Processing:</span>
+                <span className="text-foreground">Processing:</span>
                 <Badge variant="outline" className="border-pink-400/50">Quantum Core</Badge>
               </div>
               <div className="flex justify-between text-xs">
-                <span>Accuracy:</span>
+                <span className="text-foreground">Accuracy:</span>
                 <span className="text-pink-400">99.7%</span>
               </div>
             </div>
@@ -141,7 +141,7 @@ const CrypbotsTab = () => {
 
         <Card className="luxury-card border-blue-500/20 hover:border-blue-400/40 transition-all duration-500 group">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 text-foreground">
               <Zap className="w-5 h-5 text-blue-400 group-hover:animate-pulse" />
               Real-time Oracle
             </CardTitle>
@@ -152,11 +152,11 @@ const CrypbotsTab = () => {
             </p>
             <div className="space-y-2">
               <div className="flex justify-between text-xs">
-                <span>Response:</span>
+                <span className="text-foreground">Response:</span>
                 <Badge variant="outline" className="border-blue-400/50">&lt;0.1ms</Badge>
               </div>
               <div className="flex justify-between text-xs">
-                <span>Coverage:</span>
+                <span className="text-foreground">Coverage:</span>
                 <span className="text-blue-400">247 Markets</span>
               </div>
             </div>
@@ -172,7 +172,7 @@ const CrypbotsTab = () => {
               <CardTitle className="text-2xl bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                 Your Elite Crypb0ts Collection
               </CardTitle>
-              <CardDescription className="text-gray-400">Manage your AI financial companions</CardDescription>
+              <CardDescription className="text-muted-foreground">Manage your AI financial companions</CardDescription>
             </div>
           </div>
         </CardHeader>
@@ -200,25 +200,25 @@ const CrypbotsTab = () => {
                         <Lock className="w-4 h-4" />
                       </div>
                     </div>
-                    <h3 className="font-bold text-lg mb-2 text-white">{bot.bot_name}</h3>
+                     <h3 className="font-bold text-lg mb-2 text-foreground">{bot.bot_name}</h3>
                     <div className="space-y-2 mb-4">
                       <div className="flex justify-between text-xs">
-                        <span className="text-gray-400">Tier:</span>
+                        <span className="text-muted-foreground">Tier:</span>
                         <Badge variant="outline" className="border-purple-400/50">{bot.tier}</Badge>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-gray-400">Deployed:</span>
+                        <span className="text-muted-foreground">Deployed:</span>
                         <span className="text-purple-400">{new Date(bot.created_at).toLocaleDateString()}</span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-gray-400">Status:</span>
+                        <span className="text-muted-foreground">Status:</span>
                         <span className="text-green-400">🟢 Neural Link Active</span>
                       </div>
                     </div>
                     <div className="w-full bg-gray-700 rounded-full h-2 mb-2">
                       <div className="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full w-4/5 animate-pulse" />
                     </div>
-                    <p className="text-xs text-gray-400">Emotional calibration: 87%</p>
+                    <p className="text-xs text-muted-foreground">Emotional calibration: 87%</p>
                   </CardContent>
                 </Card>
               ))}
@@ -260,7 +260,7 @@ const CrypbotsTab = () => {
                 <Brain className="w-5 h-5 text-white" />
               </div>
               <div>
-                <p className="text-sm italic text-gray-200 leading-relaxed">
+                <p className="text-sm italic text-foreground leading-relaxed">
                   "Neural analysis indicates elevated cortisol levels coinciding with market volatility. 
                   Recommend deploying $2.3M across defensive positions while your stress patterns normalize. 
                   Your emotional-financial DNA suggests maximum alpha generation in 72-hour recovery window."

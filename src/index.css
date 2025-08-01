@@ -258,6 +258,24 @@
     color: hsl(0, 0%, 8%) !important;
   }
 
+  /* Enhanced contrast for labels and content */
+  .light .luxury-card .text-foreground {
+    color: hsl(0, 0%, 8%) !important;
+  }
+
+  .light .luxury-card .text-muted-foreground {
+    color: hsl(0, 0%, 30%) !important;
+  }
+
+  /* CrypDNA Colorful Mode text contrast */
+  .gradient .text-foreground {
+    color: hsl(0, 0%, 98%) !important;
+  }
+
+  .gradient .text-muted-foreground {
+    color: hsl(0, 0%, 80%) !important;
+  }
+
   html {
     scroll-behavior: smooth;
   }
