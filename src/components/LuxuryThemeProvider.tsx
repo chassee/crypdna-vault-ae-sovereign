@@ -28,21 +28,28 @@ export const LuxuryThemeProvider: React.FC<ThemeProviderProps> = ({ children }) 
   useEffect(() => {
     // Check for saved theme preference or default to 'dark' for luxury mode
     const savedTheme = localStorage.getItem('luxury-theme') as Theme;
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
-    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+    const initialTheme = savedTheme || 'dark'; // Default to dark for mystery-first experience
     setTheme(initialTheme);
     
-    // Apply theme to document
-    document.documentElement.classList.remove('light', 'dark');
-    document.documentElement.classList.add(initialTheme);
+    // Apply theme to document with soft-white support
+    document.documentElement.classList.remove('light', 'dark', 'soft-white');
+    if (initialTheme === 'light') {
+      document.documentElement.classList.add('soft-white');
+    } else {
+      document.documentElement.classList.add(initialTheme);
+    }
   }, []);
 
   const updateTheme = (newTheme: Theme) => {
     setTheme(newTheme);
     localStorage.setItem('luxury-theme', newTheme);
-    document.documentElement.classList.remove('light', 'dark');
-    document.documentElement.classList.add(newTheme);
+    document.documentElement.classList.remove('light', 'dark', 'soft-white');
+    if (newTheme === 'light') {
+      document.documentElement.classList.add('soft-white');
+    } else {
+      document.documentElement.classList.add(newTheme);
+    }
   };
 
   const toggleTheme = () => {

@@ -53,13 +53,36 @@ const CreditActivity = () => {
         <h3 className="text-lg font-semibold mb-4 text-foreground border-b-2 border-luxury-purple inline-block pb-1">
           Credit Activity
         </h3>
-        <div className="text-center py-8 space-y-4">
-          <div className="w-16 h-16 mx-auto bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full flex items-center justify-center">
-            <Lock className="w-8 h-8 text-purple-400 animate-pulse" />
+        <div className="relative overflow-hidden">
+          {/* Blurred placeholder content */}
+          <div className="space-y-3 opacity-30 blur-sm">
+            {[1, 2, 3].map((item) => (
+              <div key={item} className="flex items-center justify-between p-4 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500"></div>
+                  <div>
+                    <div className="h-4 bg-foreground/20 rounded w-32 mb-1"></div>
+                    <div className="h-3 bg-muted-foreground/20 rounded w-24"></div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="h-4 bg-foreground/20 rounded w-16 mb-1"></div>
+                  <div className="h-3 bg-muted-foreground/20 rounded w-12"></div>
+                </div>
+              </div>
+            ))}
           </div>
-          <p className="text-muted-foreground italic">
-            Your emotional-credit DNA is syncing. First activity reveals soon.
-          </p>
+          
+          {/* Mystery overlay */}
+          <div className="absolute inset-0 mystery-blur flex items-center justify-center">
+            <div className="text-center space-y-3">
+              <div className="relative lock-glow">
+                <Lock className="w-10 h-10 text-purple-400 mx-auto animate-pulse" />
+                <div className="absolute inset-0 w-10 h-10 mx-auto border border-purple-400/50 rounded-lg animate-ping" />
+              </div>
+              <div className="text-sm text-purple-300 font-medium tracking-wider">SYNCED TO VAULT – MYSTERY MODE</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
