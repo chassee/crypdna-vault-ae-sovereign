@@ -86,6 +86,22 @@ const VaultDrops: React.FC = () => {
       category: 'Ultra-Limited',
       rarity: 'Mythic',
       image: '/lovable-uploads/61f72b3d-7679-473e-974f-26d69e18674d.png'
+    },
+    {
+      id: 'd5',
+      title: 'Blush Alpha Duffle',
+      description: 'Premium Exclusive',
+      category: 'Ultra-Limited',
+      rarity: 'Mythic',
+      image: '/lovable-uploads/2469c206-ace2-4a48-9a50-27252e2a4d2b.png'
+    },
+    {
+      id: 'd6',
+      title: 'Gold Fang Duffle',
+      description: 'Premium Exclusive',
+      category: 'Ultra-Limited',
+      rarity: 'Mythic',
+      image: '/lovable-uploads/c12a7868-4e73-45b6-a2ee-77cd45e317ae.png'
     }
   ];
 
