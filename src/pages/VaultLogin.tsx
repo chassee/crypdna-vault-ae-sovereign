@@ -153,12 +153,13 @@ const VaultLoginContent = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden" style={{ background: 'var(--gradient-background)' }}>
-      {/* Animated Elements */}
-      <div className="absolute top-20 left-20 w-32 h-32 bg-luxury-purple/20 rounded-full blur-2xl animate-pulse vault-logo-pulse" />
-      <div className="absolute bottom-20 right-20 w-48 h-48 bg-luxury-gold/20 rounded-full blur-3xl animate-pulse delay-1000" />
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0A0A0A 0%, #121212 100%)' }}>
+      {/* Animated Elements - Apple Card Aesthetic */}
+      <div className="absolute top-20 left-20 w-40 h-40 bg-gradient-to-br from-purple-600/30 to-blue-600/20 rounded-full blur-3xl animate-pulse vault-logo-pulse" />
+      <div className="absolute bottom-20 right-20 w-56 h-56 bg-gradient-to-br from-amber-500/20 to-orange-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-purple-600/10 to-blue-600/5 rounded-full blur-3xl animate-pulse delay-500" />
       
-      <Card className="w-full max-w-lg glassmorphism-auth relative z-10 overflow-hidden">
+      <Card className="w-full max-w-lg apple-card relative z-10 overflow-hidden border-white/10 shadow-2xl backdrop-blur-2xl bg-gradient-to-br from-black/40 to-gray-900/40">
         {/* CrypDNA Logo Animation */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-neon animate-pulse" />
         
@@ -210,27 +211,27 @@ const VaultLoginContent = () => {
           {/* Premium Login Form */}
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-3">
-              <Label htmlFor="loginEmail" className="text-sm font-semibold">Email Address</Label>
+              <Label htmlFor="loginEmail" className="text-sm font-semibold text-white">Email Address</Label>
               <Input
                 id="loginEmail"
                 type="email"
                 value={loginEmail}
                 onChange={(e) => setLoginEmail(e.target.value)}
                 placeholder="Enter your exclusive email"
-                className="luxury-card border-luxury-purple/30 focus:border-luxury-gold text-lg h-12"
+                className="luxury-input h-12 text-lg bg-black/20 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-500 focus:ring-purple-500/50 transition-all duration-300"
                 required
               />
             </div>
 
             <div className="space-y-3">
-              <Label htmlFor="loginPassword" className="text-sm font-semibold">Vault Password</Label>
+              <Label htmlFor="loginPassword" className="text-sm font-semibold text-white">Vault Password</Label>
               <Input
                 id="loginPassword"
                 type="password"
                 value={loginPassword}
                 onChange={(e) => setLoginPassword(e.target.value)}
                 placeholder="Enter your secure password"
-                className="luxury-card border-luxury-purple/30 focus:border-luxury-gold text-lg h-12"
+                className="luxury-input h-12 text-lg bg-black/20 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-500 focus:ring-purple-500/50 transition-all duration-300"
                 required
               />
             </div>
