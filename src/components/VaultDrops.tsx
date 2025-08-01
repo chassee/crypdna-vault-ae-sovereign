@@ -2,35 +2,7 @@ import React from 'react';
 import { Instagram, Eye, Lock } from 'lucide-react';
 
 const VaultDrops: React.FC = () => {
-  // Drop 1 - Duffle Bags (Premium Exclusive)
-  const duffleBags = [
-    {
-      id: 'd1',
-      title: 'Venom Pup Duffle',
-      description: 'Premium Exclusive',
-      category: 'Ultra-Limited',
-      rarity: 'Mythic',
-      image: '/lovable-uploads/9d010ec4-6e42-4286-b5cf-df7869e0d131.png'
-    },
-    {
-      id: 'd2',
-      title: 'Sky Alpha Duffle',
-      description: 'Premium Exclusive',
-      category: 'Ultra-Limited', 
-      rarity: 'Mythic',
-      image: '/lovable-uploads/fc7fcc75-198f-462d-8532-63fa3d6cf8cd.png'
-    },
-    {
-      id: 'd3',
-      title: 'Solar Fang Duffle',
-      description: 'Premium Exclusive',
-      category: 'Ultra-Limited',
-      rarity: 'Mythic',
-      image: '/lovable-uploads/0831920d-6e80-407b-bb92-30baf74dd023.png'
-    }
-  ];
-
-  // Drop 1 - Vinyl Collection (Vault Unlock)
+  // Drop 1 - Vinyl Exclusives
   const vinylCollection = [
     {
       id: 'v1',
@@ -71,6 +43,101 @@ const VaultDrops: React.FC = () => {
       category: 'Collector Archive',
       rarity: 'Legendary',
       image: '/lovable-uploads/09e5172e-7320-4224-baeb-3dde8a2865c5.png'
+    },
+    {
+      id: 'v6',
+      title: 'Acid Sight Vinyl',
+      description: 'Vault Unlock',
+      category: 'Collector Archive',
+      rarity: 'Epic'
+    }
+  ];
+
+  // Drop 1 - Luxury Duffles
+  const duffleBags = [
+    {
+      id: 'd1',
+      title: 'Venom Pup Duffle',
+      description: 'Premium Exclusive',
+      category: 'Ultra-Limited',
+      rarity: 'Mythic',
+      image: '/lovable-uploads/9d010ec4-6e42-4286-b5cf-df7869e0d131.png'
+    },
+    {
+      id: 'd2',
+      title: 'Sky Alpha Duffle',
+      description: 'Premium Exclusive',
+      category: 'Ultra-Limited', 
+      rarity: 'Mythic',
+      image: '/lovable-uploads/fc7fcc75-198f-462d-8532-63fa3d6cf8cd.png'
+    },
+    {
+      id: 'd3',
+      title: 'Solar Fang Duffle',
+      description: 'Premium Exclusive',
+      category: 'Ultra-Limited',
+      rarity: 'Mythic',
+      image: '/lovable-uploads/0831920d-6e80-407b-bb92-30baf74dd023.png'
+    },
+    {
+      id: 'd4',
+      title: 'Frost Pup Duffle',
+      description: 'Premium Exclusive',
+      category: 'Ultra-Limited',
+      rarity: 'Mythic',
+      image: '/lovable-uploads/61f72b3d-7679-473e-974f-26d69e18674d.png'
+    }
+  ];
+
+  // Drop 1 - Signature Truckers
+  const truckerHats = [
+    {
+      id: 't1',
+      title: 'Blush Alpha Trucker',
+      description: 'Limited Edition',
+      category: 'Signature Series',
+      rarity: 'Legendary',
+      image: '/lovable-uploads/de993d36-86e4-4baa-8355-ead37c9a0235.png'
+    },
+    {
+      id: 't2',
+      title: 'Sky Alpha Trucker',
+      description: 'Limited Edition',
+      category: 'Signature Series',
+      rarity: 'Legendary',
+      image: '/lovable-uploads/7d33ec1a-d32a-423c-8a69-4cb4310b7400.png'
+    },
+    {
+      id: 't3',
+      title: 'Venom Pup Trucker',
+      description: 'Limited Edition',
+      category: 'Signature Series',
+      rarity: 'Legendary',
+      image: '/lovable-uploads/845cb564-fcb1-4f4b-9b9a-1c5318cc7a23.png'
+    },
+    {
+      id: 't4',
+      title: 'Frost Pup Trucker',
+      description: 'Limited Edition',
+      category: 'Signature Series',
+      rarity: 'Legendary',
+      image: '/lovable-uploads/102b3105-137a-48fa-8e7e-4652156a771e.png'
+    },
+    {
+      id: 't5',
+      title: 'Solar Fang Trucker',
+      description: 'Limited Edition',
+      category: 'Signature Series',
+      rarity: 'Legendary',
+      image: '/lovable-uploads/5419e25b-c0f5-49fd-9d90-d6ed944c0777.png'
+    },
+    {
+      id: 't6',
+      title: 'Gold Fang Trucker',
+      description: 'Limited Edition',
+      category: 'Signature Series',
+      rarity: 'Legendary',
+      image: '/lovable-uploads/b300b4c6-77ab-474d-8bac-a5394dfa49aa.png'
     }
   ];
 
@@ -115,7 +182,7 @@ const VaultDrops: React.FC = () => {
     return (
       <div
         key={drop.id}
-        className="luxury-card group hover:scale-[1.02] luxury-transition hover:shadow-glow relative overflow-hidden hover-card"
+        className="luxury-card group hover:scale-[1.05] luxury-transition hover:shadow-glow relative overflow-hidden hover-card transform-gpu"
       >
         {/* Product image or placeholder */}
         <div className="relative h-48 bg-gradient-to-br from-purple-900/20 to-pink-900/20 overflow-hidden">
@@ -198,31 +265,45 @@ const VaultDrops: React.FC = () => {
 
   return (
     <div className="space-y-12 animate-fade-in">
-      {/* Premium Exclusive - Duffle Bags */}
-      <div className="space-y-8">
-        <div className="text-center space-y-2">
-          <h3 className="text-2xl font-bold text-foreground border-b-2 border-luxury-purple inline-block pb-1">
-            Premium Exclusive
-          </h3>
-          <p className="text-muted-foreground">Ultra-limited duffle bag collection</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {duffleBags.map((drop) => renderDropCard(drop, false, false))}
-        </div>
-      </div>
-
-      {/* Vault Unlock - Vinyl Collection */}
+      {/* Vinyl Exclusives */}
       <div className="space-y-8">
         <div className="text-center space-y-2">
           <h3 className="text-2xl font-bold text-foreground border-b-2 border-luxury-gold inline-block pb-1">
-            Vault Unlock
+            Vinyl Exclusives
           </h3>
           <p className="text-muted-foreground">Collector archive vinyl series</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
           {vinylCollection.map((vinyl) => renderDropCard(vinyl, true, false))}
+        </div>
+      </div>
+
+      {/* Luxury Duffles */}
+      <div className="space-y-8">
+        <div className="text-center space-y-2">
+          <h3 className="text-2xl font-bold text-foreground border-b-2 border-luxury-purple inline-block pb-1">
+            Luxury Duffles
+          </h3>
+          <p className="text-muted-foreground">Ultra-limited duffle bag collection</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {duffleBags.map((drop) => renderDropCard(drop, false, false))}
+        </div>
+      </div>
+
+      {/* Signature Truckers */}
+      <div className="space-y-8">
+        <div className="text-center space-y-2">
+          <h3 className="text-2xl font-bold text-foreground border-b-2 border-cyan-500 inline-block pb-1">
+            Signature Truckers
+          </h3>
+          <p className="text-muted-foreground">Limited edition trucker hat collection</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+          {truckerHats.map((hat) => renderDropCard(hat, true, false))}
         </div>
       </div>
 
