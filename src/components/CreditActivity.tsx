@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Activity, ArrowUpCircle, ArrowDownCircle, CreditCard, Gift, TrendingUp } from 'lucide-react';
+import { Activity, ArrowUpCircle, ArrowDownCircle, CreditCard, Gift, TrendingUp, Lock } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 
 const CreditActivity = () => {
@@ -45,76 +45,22 @@ const CreditActivity = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 shadow-sm hover-card">
-        <div className="animate-pulse">
-          <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
-          <div className="space-y-3">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="p-4 rounded-xl bg-white/80 shadow-sm border border-gray-100">
-                <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                <div className="h-3 bg-gray-200 rounded w-1/2"></div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
+  // Show mystery message instead of loading
   return (
-    <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 shadow-sm hover-card">
-      <div className="flex items-center space-x-3 mb-6">
-        <Activity className="w-6 h-6 text-luxury-purple" />
-        <h3 className="text-xl font-bold text-dark-grey border-b-2 border-luxury-purple inline-block pb-1">Credit Activity</h3>
-      </div>
-      <div className="space-y-3">
-        {activities.length === 0 ? (
-          <div className="text-center py-8 text-gray-500">
-            <p>No credit activity yet</p>
+    <div className="luxury-card hover-card relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5" />
+      <div className="p-6 relative z-10">
+        <h3 className="text-lg font-semibold mb-4 text-foreground border-b-2 border-luxury-purple inline-block pb-1">
+          Credit Activity
+        </h3>
+        <div className="text-center py-8 space-y-4">
+          <div className="w-16 h-16 mx-auto bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full flex items-center justify-center">
+            <Lock className="w-8 h-8 text-purple-400 animate-pulse" />
           </div>
-        ) : (
-          activities.map((activity) => {
-            const isPositive = activity.event_type === 'Credit' || activity.event_type === 'Rewards';
-            const icon = getEventIcon(activity.event_type);
-            
-            return (
-              <div key={activity.id} className="flex items-center space-x-4 p-4 rounded-xl bg-white/90 hover:bg-white/95 luxury-transition shadow-sm border border-gray-100 hover-card wallet-row">
-                <div className={`p-2.5 rounded-full ${isPositive ? 'bg-green-50 text-green-600' : 'bg-orange-50 text-orange-600'}`}>
-                  {icon}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-dark-grey truncate">
-                    {activity.description}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-0.5">
-                    {activity.event_type} • {new Date(activity.created_at).toLocaleDateString('en-US', { 
-                      month: 'short', 
-                      day: 'numeric',
-                      year: 'numeric'
-                    })}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className={`font-bold text-sm ${
-                    activity.event_type === 'Credit' || activity.event_type === 'Rewards' || activity.event_type === 'Tradeline' 
-                      ? 'text-green-600' 
-                      : activity.event_type === 'Payment' 
-                      ? 'text-dark-grey' 
-                      : 'text-orange-600'
-                  }`}>
-                    {activity.event_type === 'Credit' && `+$${activity.amount?.toLocaleString()}`}
-                    {activity.event_type === 'Rewards' && `+${activity.amount} pts`}
-                    {activity.event_type === 'Tradeline' && `+${activity.amount} pts`}
-                    {activity.event_type === 'Payment' && `$${activity.amount?.toLocaleString()}`}
-                    {activity.event_type === 'Benefit' && 'Qualified'}
-                  </p>
-                </div>
-              </div>
-            );
-          })
-        )}
+          <p className="text-muted-foreground italic">
+            Your emotional-credit DNA is syncing. First activity reveals soon.
+          </p>
+        </div>
       </div>
     </div>
   );

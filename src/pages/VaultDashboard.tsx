@@ -33,7 +33,7 @@ const VaultDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [userProfile, setUserProfile] = useState<any>(null);
   const [activeTab, setActiveTab] = useState('balances');
-  const [showWelcome, setShowWelcome] = useState(true);
+  const [showWelcome, setShowWelcome] = useState(false);
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -127,12 +127,6 @@ const VaultDashboard = () => {
 
   return (
     <>
-      {showWelcome && (
-        <CinematicWelcome
-          userName={userName}
-          onComplete={() => setShowWelcome(false)}
-        />
-      )}
       
       <div className="min-h-screen bg-warm-white luxury-transition">
       {/* Luxury Header */}
@@ -185,8 +179,6 @@ const VaultDashboard = () => {
           />
         </div>
 
-        {/* Drop Countdowns */}
-        <DropCountdown />
 
         {/* Navigation Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -197,7 +189,7 @@ const VaultDashboard = () => {
                 className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-gray-800/50 relative group hover-card"
               >
                 <Wallet className="w-4 h-4" />
-                <span className="hidden sm:inline">Balances</span>
+                <span className="hidden sm:inline">Balance</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
               </TabsTrigger>
               <TabsTrigger 
@@ -205,7 +197,15 @@ const VaultDashboard = () => {
                 className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-gray-800/50 relative group hover-card"
               >
                 <Rocket className="w-4 h-4" />
-                <span className="hidden sm:inline">Exclusive Drops</span>
+                <span className="hidden sm:inline">Drops</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
+              </TabsTrigger>
+              <TabsTrigger 
+                value="products" 
+                className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-gray-800/50 relative group hover-card"
+              >
+                <Package className="w-4 h-4" />
+                <span className="hidden sm:inline">Products</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
               </TabsTrigger>
               <TabsTrigger 
@@ -214,22 +214,6 @@ const VaultDashboard = () => {
               >
                 <Brain className="w-4 h-4" />
                 <span className="hidden sm:inline">Crypb0ts</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
-              </TabsTrigger>
-              <TabsTrigger 
-                value="neurotech" 
-                className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-cyan-500 data-[state=active]:text-white luxury-transition hover:bg-gray-800/50 relative group hover-card"
-              >
-                <Waves className="w-4 h-4" />
-                <span className="hidden sm:inline">NeuroTech</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
-              </TabsTrigger>
-              <TabsTrigger 
-                value="future-tech" 
-                className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-gray-800/50 relative group hover-card"
-              >
-                <Zap className="w-4 h-4" />
-                <span className="hidden sm:inline">Future Tech</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
               </TabsTrigger>
             </TabsList>
@@ -253,16 +237,12 @@ const VaultDashboard = () => {
               <VaultDrops />
             </TabsContent>
 
+            <TabsContent value="products" className="animate-fade-in">
+              <VaultProducts />
+            </TabsContent>
+
             <TabsContent value="crypbots" className="animate-fade-in">
               <CrypbotsTab />
-            </TabsContent>
-
-            <TabsContent value="neurotech" className="animate-fade-in">
-              <NeuroTechTab />
-            </TabsContent>
-
-            <TabsContent value="future-tech" className="animate-fade-in">
-              <VaultFutureTech />
             </TabsContent>
           </div>
         </Tabs>

@@ -84,8 +84,10 @@ const BalanceBreakdown = () => {
         
         <div className="border-t border-border pt-4">
           <div className="flex justify-between items-center">
-            <span className="text-muted-foreground">Card Balance</span>
-            <span className="text-sm font-medium">${(balance?.card_balance || 0).toLocaleString()}</span>
+            <span className="text-muted-foreground">Card Balance:</span>
+            <span className="text-2xl font-bold text-luxury-purple">
+              $0
+            </span>
           </div>
         </div>
 

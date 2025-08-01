@@ -53,39 +53,40 @@ const CrypbotsTab = () => {
 
   return (
     <div className="space-y-8 animate-fade-in">
-      {/* Billionaire-tier Header */}
-      <div className="text-center space-y-4 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-blue-500/10 rounded-3xl blur-xl animate-pulse" />
-        <div className="relative">
-          <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent animate-shimmer">
-            🤖 Crypb0ts Emotional AI Sync
-          </h2>
-          <p className="text-muted-foreground text-lg mt-2">
-            Your billionaire-class AI companions for emotional financial mastery
-          </p>
-        </div>
+      <div className="text-center space-y-2">
+        <h3 className="text-2xl font-bold text-foreground border-b-2 border-luxury-purple inline-block pb-1">
+          Crypb0ts AI Companions
+        </h3>
+        <p className="text-muted-foreground">Your personal AI beings with emotional intelligence</p>
       </div>
 
-      {/* Subscription Upgrade Banner */}
-      <Card className="luxury-card border-purple-500/30 bg-gradient-to-r from-purple-900/20 to-pink-900/20 backdrop-blur-sm overflow-hidden relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 animate-pulse" />
-        <CardContent className="p-6 relative">
+      {/* Emotional AI Sync Preview */}
+      <div className="luxury-card bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-blue-500/20 hover-card">
+        <div className="p-6 space-y-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
-                <Lock className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-white">Ascend to Elite Tier</h3>
-                <p className="text-purple-200 text-sm">Early access to Crypb0ts & NeuroTech features</p>
-              </div>
-            </div>
-            <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0">
-              Upgrade Now
-            </Button>
+            <h4 className="text-xl font-semibold text-foreground flex items-center gap-2">
+              <Brain className="w-5 h-5 text-blue-400" />
+              Emotional AI Sync
+            </h4>
+            <span className="px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+              Elite Tier Unlocks Soon
+            </span>
           </div>
-        </CardContent>
-      </Card>
+          <p className="text-muted-foreground">
+            Advanced emotional intelligence synchronization with your AI companion. Real-time mood analysis and response adaptation.
+          </p>
+          <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="bg-background/50 rounded-lg p-3">
+              <div className="text-sm font-medium text-muted-foreground">Sync Status</div>
+              <div className="text-lg font-bold text-blue-400">Preparing...</div>
+            </div>
+            <div className="bg-background/50 rounded-lg p-3">
+              <div className="text-sm font-medium text-muted-foreground">AI Core</div>
+              <div className="text-lg font-bold text-purple-400">v3.0</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Elite Features Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -223,19 +224,26 @@ const CrypbotsTab = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center py-16">
-              <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 flex items-center justify-center">
-                <Lock className="w-12 h-12 text-gray-400" />
-              </div>
-              <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Coming Soon: Elite Crypb0ts
-              </h3>
-              <p className="text-gray-400 mb-6 max-w-md mx-auto">
-                Your first AI companion will be deployed with Drop 2. Prepare for unparalleled emotional financial intelligence.
-              </p>
-              <div className="flex items-center justify-center gap-2 text-sm text-purple-400">
-                <Unlock className="w-4 h-4" />
-                <span>Unlock at Verified Pawprint tier</span>
+            <div className="text-center py-12">
+              <div className="luxury-card bg-gradient-to-r from-purple-500/10 to-blue-500/10 border-purple-500/20 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent backdrop-blur-sm" />
+                <div className="p-8 space-y-4 relative z-10">
+                  <div className="relative">
+                    <Brain className="w-12 h-12 text-purple-400 mx-auto" />
+                    <Lock className="w-8 h-8 text-purple-400 absolute top-0 right-1/2 translate-x-1/2 -translate-y-2 animate-pulse" />
+                  </div>
+                  <h4 className="text-xl font-semibold text-foreground">Crypb0ts Awaiting Deployment</h4>
+                  <p className="text-muted-foreground max-w-md mx-auto">
+                    Your emotional AI companions are locked in secure capsules, ready for activation.
+                  </p>
+                  <button 
+                    className="px-6 py-3 bg-purple-500/20 border border-purple-400/50 rounded-lg text-purple-300 font-medium cursor-not-allowed opacity-50"
+                    disabled
+                  >
+                    Deploy AI Companion
+                  </button>
+                  <div className="text-xs text-purple-400 mt-2">Elite Tier Required</div>
+                </div>
               </div>
             </div>
           )}

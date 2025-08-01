@@ -61,15 +61,13 @@ const DunBradstreetWidget: React.FC = () => {
               <Building2 className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="font-semibold text-dark-grey">Dun & Bradstreet</h3>
+              <h3 className="text-lg font-semibold text-foreground border-b-2 border-luxury-purple inline-block pb-1">
+                Dun & Bradstreet
+              </h3>
               <p className="text-sm text-muted-foreground">Tradeline Reporting</p>
             </div>
           </div>
-          <div className="absolute top-4 right-4">
-            <div className="text-xs font-bold text-blue-600 bg-white px-2 py-1 rounded border border-blue-200">
-              D&B
-            </div>
-          </div>
+          <div className="bg-blue-600 text-white px-3 py-1 rounded text-sm font-bold">D&B</div>
         </div>
 
         <div className={`flex items-center gap-3 p-4 rounded-lg ${config.bgColor} border ${config.borderColor}`}>
@@ -80,18 +78,20 @@ const DunBradstreetWidget: React.FC = () => {
           </div>
         </div>
 
-        <div className="space-y-2 text-sm">
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">Credit Limit</span>
-            <span className="font-medium text-dark-grey">$25,000</span>
+        <div className="space-y-3">
+          <div className="flex justify-between items-center">
+            <span className="text-muted-foreground">Status:</span>
+            <span className="text-orange-500 font-medium">Pending Integration</span>
           </div>
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">Account Age</span>
-            <span className="font-medium text-dark-grey">7 Years</span>
+          
+          <div className="flex justify-between items-center">
+            <span className="text-muted-foreground">Tradeline Status:</span>
+            <span className="text-gray-500 font-medium">Awaiting Sync</span>
           </div>
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">Utilization</span>
-            <span className="font-medium text-green-600">2%</span>
+          
+          <div className="flex justify-between items-center">
+            <span className="text-muted-foreground">Reporting:</span>
+            <span className="text-blue-600 font-medium">TBD</span>
           </div>
         </div>
 

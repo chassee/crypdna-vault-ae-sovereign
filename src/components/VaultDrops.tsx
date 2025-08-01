@@ -5,24 +5,24 @@ const VaultDrops: React.FC = () => {
   const exclusiveDrops = [
     {
       id: '1',
-      title: 'Mystery Drop #1',
-      description: 'Ultra-rare collectible series',
-      category: 'Limited Edition',
-      rarity: 'Legendary'
+      title: 'Drop Alpha',
+      description: 'Premium Exclusive',
+      category: 'Ultra-Limited',
+      rarity: 'Mythic'
     },
     {
       id: '2', 
-      title: 'Vault Member Exclusive',
-      description: 'Premium members only access',
-      category: 'Members Only',
-      rarity: 'Epic'
+      title: 'Drop Beta',
+      description: 'Vault Member Unlock',
+      category: 'Member Access',
+      rarity: 'Legendary'
     },
     {
       id: '3',
-      title: 'Genesis Collection',
-      description: 'First edition vault items',
-      category: 'Genesis',
-      rarity: 'Mythic'
+      title: 'Genesis',
+      description: 'First Edition Archive',
+      category: 'Founder Series',
+      rarity: 'Epic'
     }
   ];
 
@@ -42,7 +42,7 @@ const VaultDrops: React.FC = () => {
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="text-center space-y-2">
-        <h3 className="text-2xl font-bold text-dark-grey border-b-2 border-luxury-purple inline-block pb-1">
+        <h3 className="text-2xl font-bold text-foreground border-b-2 border-luxury-purple inline-block pb-1">
           Exclusive Drops
         </h3>
         <p className="text-muted-foreground">Ultra-rare collectibles for vault members</p>
@@ -57,18 +57,20 @@ const VaultDrops: React.FC = () => {
               key={drop.id}
               className="luxury-card group hover:scale-[1.02] luxury-transition hover:shadow-glow relative overflow-hidden hover-card"
             >
-              {/* Clean gradient placeholder */}
-              <div className="relative h-48 bg-gradient-to-br from-purple-100 to-pink-100 overflow-hidden">
+              {/* Blurred silhouette placeholder */}
+              <div className="relative h-48 bg-gradient-to-br from-purple-900/20 to-pink-900/20 overflow-hidden">
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-24 h-24 bg-gradient-to-br from-purple-200/50 to-pink-200/50 rounded-full blur-lg" />
-                  <div className="absolute w-16 h-20 bg-gradient-to-br from-purple-300/30 to-pink-300/30 rounded-lg blur-md" />
+                  <div className="w-32 h-32 bg-gradient-to-br from-purple-500/30 to-pink-500/30 rounded-lg blur-xl" />
                 </div>
                 
-                {/* Overlay with lock icon */}
-                <div className="absolute inset-0 bg-gradient-to-t from-purple-500/40 to-transparent flex items-center justify-center backdrop-blur-sm">
-                  <div className="text-center space-y-2">
-                    <Lock className="w-8 h-8 text-purple-600 mx-auto" />
-                    <div className="text-xs text-purple-700 font-medium">Coming Soon</div>
+                {/* Luxury lock overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-center justify-center backdrop-blur-md">
+                  <div className="text-center space-y-3">
+                    <div className="relative">
+                      <Lock className="w-10 h-10 text-purple-400 mx-auto animate-pulse" />
+                      <div className="absolute inset-0 w-10 h-10 mx-auto border border-purple-400/50 rounded-lg animate-ping" />
+                    </div>
+                    <div className="text-sm text-purple-300 font-medium tracking-wider">COMING SOON</div>
                   </div>
                 </div>
 
@@ -81,8 +83,8 @@ const VaultDrops: React.FC = () => {
               <div className="p-6 space-y-4">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <h4 className="text-lg font-semibold text-dark-grey">{drop.title}</h4>
-                    <span className="px-3 py-1 rounded-full text-xs font-medium bg-purple-500 text-white glow-purple">
+                    <h4 className="text-lg font-semibold text-foreground">{drop.title}</h4>
+                    <span className="px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/25">
                       Coming Soon
                     </span>
                   </div>
@@ -109,13 +111,13 @@ const VaultDrops: React.FC = () => {
       <div className="luxury-card bg-gradient-to-r from-luxury-purple/10 to-luxury-gold/10 border-luxury-purple/20 hover-card">
         <div className="p-6 text-center space-y-4">
           <div className="text-4xl animate-pulse">🎁</div>
-          <h4 className="text-xl font-semibold text-dark-grey">Exclusive Access</h4>
+          <h4 className="text-xl font-semibold text-foreground">Exclusive Access</h4>
           <p className="text-muted-foreground max-w-md mx-auto">
-            These collectibles are only available to verified vault members. Follow @crypdawgs on Instagram for reveals.
+            These collectibles are only available to verified vault members. Follow @crypdawgs for hints.
           </p>
           <div className="flex items-center justify-center gap-2 text-sm text-luxury-purple">
             <Instagram className="w-4 h-4" />
-            <span>Follow @crypdawgs for reveals</span>
+            <span>Follow @crypdawgs for hints</span>
           </div>
         </div>
       </div>
