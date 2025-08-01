@@ -216,6 +216,14 @@ const VaultDashboard = () => {
                 <span className="hidden sm:inline">Crypb0ts</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
               </TabsTrigger>
+              <TabsTrigger 
+                value="neurotech" 
+                className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-gray-800/50 relative group hover-card"
+              >
+                <Waves className="w-4 h-4" />
+                <span className="hidden sm:inline">NeuroTech</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
+              </TabsTrigger>
             </TabsList>
           )}
 
@@ -243,6 +251,10 @@ const VaultDashboard = () => {
 
             <TabsContent value="crypbots" className="animate-fade-in">
               <CrypbotsTab />
+            </TabsContent>
+
+            <TabsContent value="neurotech" className="animate-fade-in">
+              <NeuroTechTab />
             </TabsContent>
           </div>
         </Tabs>
