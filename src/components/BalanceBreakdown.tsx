@@ -64,8 +64,8 @@ const BalanceBreakdown = () => {
     );
   }
 
-  const availableBalance = balance?.available_credit || 0;
-  const pendingBalance = balance?.pending_balance || 0;
+  const availableBalance = 0; // Mystery mode - show $0
+  const pendingBalance = 0; // Mystery mode - show $0
 
   return (
     <div className="luxury-card rounded-2xl p-6 mt-6">

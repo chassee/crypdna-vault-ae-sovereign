@@ -51,7 +51,7 @@ const VaultProducts: React.FC = () => {
                     <Lock className="w-10 h-10 text-purple-400 mx-auto animate-pulse" />
                     <div className="absolute inset-0 w-10 h-10 mx-auto border border-purple-400/50 rounded-lg animate-ping" />
                   </div>
-                  <div className="text-sm text-purple-300 font-medium tracking-wider">COMING SOON</div>
+                  <div className="text-sm text-purple-300 font-medium tracking-wider">UNLOCK VAULT ACCESS TO REVEAL</div>
                 </div>
               </div>
             </div>
@@ -77,7 +77,7 @@ const VaultProducts: React.FC = () => {
           <div className="text-4xl animate-pulse">🎁</div>
           <h4 className="text-xl font-semibold text-foreground">Premium Collection</h4>
           <p className="text-muted-foreground max-w-md mx-auto">
-            Exclusive lifestyle products crafted for vault members only.
+            These collectibles are only available to verified vault members. Follow @crypdawgs for hints.
           </p>
         </div>
       </div>

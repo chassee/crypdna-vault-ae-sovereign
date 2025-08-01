@@ -173,10 +173,10 @@ const CrypbotsTab = () => {
               </CardTitle>
               <CardDescription className="text-gray-400">Manage your AI financial companions</CardDescription>
             </div>
-            <Button onClick={addCrypbot} className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0">
-              <Plus className="w-4 h-4 mr-2" />
-              Deploy New Crypbot
-            </Button>
+            <div className="px-6 py-3 bg-purple-500/20 border border-purple-400/50 rounded-lg text-purple-300 font-medium cursor-not-allowed opacity-50 flex items-center gap-2">
+              <Lock className="w-4 h-4" />
+              Coming Soon
+            </div>
           </div>
         </CardHeader>
         <CardContent>
@@ -196,9 +196,9 @@ const CrypbotsTab = () => {
                       <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
                         <Brain className="w-6 h-6 text-white" />
                       </div>
-                      <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white">
-                        <Settings className="w-4 h-4" />
-                      </Button>
+                      <div className="text-gray-400">
+                        <Lock className="w-4 h-4" />
+                      </div>
                     </div>
                     <h3 className="font-bold text-lg mb-2 text-white">{bot.bot_name}</h3>
                     <div className="space-y-2 mb-4">

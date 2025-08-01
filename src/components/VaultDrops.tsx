@@ -70,7 +70,7 @@ const VaultDrops: React.FC = () => {
                       <Lock className="w-10 h-10 text-purple-400 mx-auto animate-pulse" />
                       <div className="absolute inset-0 w-10 h-10 mx-auto border border-purple-400/50 rounded-lg animate-ping" />
                     </div>
-                    <div className="text-sm text-purple-300 font-medium tracking-wider">COMING SOON</div>
+                    <div className="text-sm text-purple-300 font-medium tracking-wider">EXCLUSIVE DROP COMING SOON</div>
                   </div>
                 </div>
 
