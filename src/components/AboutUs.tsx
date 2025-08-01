@@ -1,128 +1,113 @@
 import React from 'react';
-import { Sparkles, Brain, Zap, CreditCard, Star, Gem } from 'lucide-react';
+import { Shield, Zap, Brain, TrendingUp, Lock, Sparkles } from 'lucide-react';
 
 const AboutUs: React.FC = () => {
-  const features = [
-    {
-      icon: Sparkles,
-      title: "Ultra-Limited Collectibles",
-      description: "Exclusive fashion drops and luxury apparel for the elite"
-    },
-    {
-      icon: Brain,
-      title: "Emotional-Financial Guidance", 
-      description: "Advanced AI systems that understand your financial emotions"
-    },
-    {
-      icon: Zap,
-      title: "Brain-Computer Interface",
-      description: "NeuroTech-powered product unlocks and neural integrations"
-    },
-    {
-      icon: CreditCard,
-      title: "Billionaire-Class Tradelines",
-      description: "Elite credit solutions and billion-dollar financial access"
-    }
-  ];
-
   return (
-    <div className="space-y-16 animate-fade-in">
+    <div className="space-y-12 animate-fade-in">
       {/* Hero Section */}
-      <div className="text-center space-y-8 luxury-card bg-gradient-to-br from-luxury-purple/20 via-luxury-gold/20 to-luxury-blue/20 border-2 border-luxury-purple/30 relative overflow-hidden hover-card">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-gold-500/10 to-blue-500/5 animate-pulse" />
-        <div className="absolute inset-0 bg-gradient-neon opacity-5 blur-3xl" />
+      <div className="text-center space-y-6">
+        <h1 className="text-4xl font-bold text-foreground bg-gradient-to-r from-luxury-purple to-luxury-gold bg-clip-text text-transparent">
+          CrypDNA Vault – Billionaire-Class Future
+        </h1>
+        <p className="text-xl text-foreground max-w-4xl mx-auto leading-relaxed">
+          "CrypDNA Vault is building a future where surreal fashion, credit building, emotional AI, and neurotech fuse into one luxury ecosystem. We are unlocking billion-dollar tradelines, brain-computer product unlocks, and AI companions—redefining what it means to live 10 steps ahead."
+        </p>
+      </div>
+
+      {/* Evolution Timeline */}
+      <div className="luxury-card p-8">
+        <h2 className="text-3xl font-bold text-foreground mb-8 text-center border-b-2 border-luxury-purple inline-block pb-2 w-full">
+          The Evolution: From Digital Art to Neural Reality
+        </h2>
         
-        <div className="relative p-12 space-y-8">
-          <div className="flex items-center justify-center space-x-4 mb-6">
-            <Gem className="w-10 h-10 text-luxury-purple animate-pulse" />
-            <h1 className="text-4xl md:text-5xl font-black bg-gradient-to-r from-luxury-purple via-luxury-gold to-luxury-blue bg-clip-text text-transparent text-center leading-tight">
-              CrypDNA Vault – Billionaire-Class Future
-            </h1>
-            <Gem className="w-10 h-10 text-luxury-gold animate-pulse" />
-          </div>
-          
-          <div className="max-w-5xl mx-auto space-y-8 text-lg md:text-xl leading-relaxed">
-            <p className="text-foreground font-medium text-center">
-              CrypDNA Vault is building a future where <span className="font-bold text-luxury-purple">surreal fashion</span>, 
-              <span className="font-bold text-luxury-gold">credit building</span>, 
-              <span className="font-bold text-luxury-blue">emotional AI</span>, and 
-              <span className="font-bold text-luxury-purple">neurotech</span> fuse into one luxury ecosystem.
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Phase 1: NFTs */}
+          <div className="space-y-4">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center mx-auto">
+              <Sparkles className="w-8 h-8 text-white" />
+            </div>
+            <h3 className="text-xl font-semibold text-foreground text-center">Phase 1: Crypdawgs NFTs</h3>
+            <p className="text-muted-foreground text-center">
+              Started as groundbreaking digital collectibles that captured the imagination of the crypto world. Each Crypdawg was a unique digital DNA experiment.
             </p>
-            
-            <p className="text-foreground font-medium text-center">
-              We are unlocking <span className="font-bold bg-gradient-to-r from-luxury-gold to-luxury-purple bg-clip-text text-transparent">billion-dollar tradelines</span>, 
-              brain-computer product unlocks, and AI companions—redefining what it means to live 
-              <span className="font-bold bg-gradient-to-r from-luxury-purple to-luxury-blue bg-clip-text text-transparent">10 steps ahead</span>.
+          </div>
+
+          {/* Phase 2: Fashion */}
+          <div className="space-y-4">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mx-auto">
+              <Shield className="w-8 h-8 text-white" />
+            </div>
+            <h3 className="text-xl font-semibold text-foreground text-center">Phase 2: Luxury Fashion</h3>
+            <p className="text-muted-foreground text-center">
+              Evolved into high-end fashion experiences—duffles, truckers, and vinyl exclusives that bridge digital ownership with premium physical goods.
+            </p>
+          </div>
+
+          {/* Phase 3: AI Companions */}
+          <div className="space-y-4">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center mx-auto">
+              <Zap className="w-8 h-8 text-white" />
+            </div>
+            <h3 className="text-xl font-semibold text-foreground text-center">Phase 3: Crypb0ts AI</h3>
+            <p className="text-muted-foreground text-center">
+              Transformed into emotional AI companions that sync with your moods, understand your patterns, and adapt to your lifestyle in real-time.
+            </p>
+          </div>
+
+          {/* Phase 4: NeuroTech */}
+          <div className="space-y-4">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 flex items-center justify-center mx-auto">
+              <Brain className="w-8 h-8 text-white" />
+            </div>
+            <h3 className="text-xl font-semibold text-foreground text-center">Phase 4: Neural Interface</h3>
+            <p className="text-muted-foreground text-center">
+              The future: Direct brain-computer interfaces that unlock products through thought patterns, emotions, and neural signatures.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Features Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {features.map((feature, index) => {
-          const Icon = feature.icon;
-          return (
-            <div
-              key={index}
-              className="luxury-card group hover:scale-[1.02] luxury-transition hover:shadow-glow relative overflow-hidden border-luxury-purple/20 hover-card"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <div className="p-6 space-y-4">
-                <div className="flex items-center space-x-3">
-                  <div className="relative">
-                    <Icon className="w-8 h-8 text-luxury-purple group-hover:text-luxury-gold luxury-transition" />
-                    <div className="absolute inset-0 w-8 h-8 border border-luxury-purple/30 rounded-lg opacity-0 group-hover:opacity-100 group-hover:animate-ping" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-foreground">{feature.title}</h3>
-                </div>
-                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
-              </div>
-              
-              {/* Subtle glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-luxury-purple/5 to-luxury-gold/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg" />
-            </div>
-          );
-        })}
+      {/* Mission Statement */}
+      <div className="luxury-card p-8 bg-gradient-to-r from-luxury-purple/10 to-luxury-gold/10 border-luxury-purple/20">
+        <h2 className="text-3xl font-bold text-foreground mb-6 text-center">Our Mission</h2>
+        <p className="text-lg text-foreground text-center max-w-3xl mx-auto leading-relaxed">
+          To create a parallel ecosystem where the digital and physical worlds merge through advanced technology, luxury experiences, and emotional intelligence. We're not just building products—we're architecting the future of human-AI collaboration.
+        </p>
       </div>
 
-      {/* Vision Statement */}
-      <div className="luxury-card bg-gradient-to-r from-black/40 to-gray-900/40 border-luxury-gold/40 hover-card relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-neon opacity-10 blur-2xl" />
-        <div className="relative p-10 text-center space-y-8">
-          <div className="flex items-center justify-center space-x-3 mb-6">
-            <Star className="w-8 h-8 text-luxury-gold animate-pulse" />
-            <h3 className="text-3xl font-black bg-gradient-to-r from-luxury-gold via-luxury-purple to-luxury-blue bg-clip-text text-transparent">
-              The CrypDawgs Vision
-            </h3>
-            <Star className="w-8 h-8 text-luxury-purple animate-pulse" />
+      {/* Vision & Values */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Vision */}
+        <div className="luxury-card p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <TrendingUp className="w-6 h-6 text-luxury-purple" />
+            <h3 className="text-2xl font-bold text-foreground">Vision</h3>
           </div>
-          
-          <div className="max-w-4xl mx-auto space-y-6">
-            <p className="text-foreground text-2xl italic font-semibold">
-              "The future is not just digital—it's neural. We're pioneering the intersection where luxury meets consciousness, 
-              where AI companions understand your deepest financial intuitions."
-            </p>
-            <p className="text-muted-foreground text-lg font-medium">
-              From humble NFT origins to neurotech pioneers—Crypdawgs represents the evolution of wealth consciousness. 
-              This isn't just finance; it's the emergence of luxury beings who think, feel, and prosper alongside you.
-            </p>
-          </div>
+          <p className="text-muted-foreground leading-relaxed">
+            A world where consciousness and technology harmonize to unlock human potential. Where your thoughts can unlock exclusive experiences, your emotions guide AI companions, and your neural patterns become the ultimate luxury credential.
+          </p>
+        </div>
 
-          <div className="flex items-center justify-center space-x-12 pt-8">
-            <div className="text-center group">
-              <div className="text-4xl font-black text-luxury-purple group-hover:scale-110 transition-transform">∞</div>
-              <div className="text-sm text-muted-foreground font-medium">Infinite Potential</div>
-            </div>
-            <div className="text-center group">
-              <div className="text-4xl font-black text-luxury-gold group-hover:scale-110 transition-transform">⚡</div>
-              <div className="text-sm text-muted-foreground font-medium">Future Forward</div>
-            </div>
-            <div className="text-center group">
-              <div className="text-4xl font-black text-luxury-blue group-hover:scale-110 transition-transform">💎</div>
-              <div className="text-sm text-muted-foreground font-medium">Luxury Redefined</div>
-            </div>
+        {/* The Future */}
+        <div className="luxury-card p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <Lock className="w-6 h-6 text-luxury-gold" />
+            <h3 className="text-2xl font-bold text-foreground">The Future</h3>
           </div>
+          <p className="text-muted-foreground leading-relaxed">
+            Billion-dollar tradelines accessible through neural verification. AI companions that evolve with your consciousness. Fashion that adapts to your brainwaves. Credit systems that recognize neural patterns. This isn't science fiction—it's the CrypDNA roadmap.
+          </p>
+        </div>
+      </div>
+
+      {/* Mysterious Footer */}
+      <div className="luxury-card bg-gradient-to-r from-black/50 to-luxury-purple/20 border-luxury-purple/30 p-8 text-center">
+        <h3 className="text-2xl font-bold text-foreground mb-4">The Code is in Your DNA</h3>
+        <p className="text-muted-foreground italic">
+          "Some secrets can only be unlocked by those who understand that the future isn't arriving—it's already here, waiting for minds ready to decode it."
+        </p>
+        <div className="mt-6 text-xs text-luxury-purple/70">
+          Access Level: Vault Member | Neural Sync: Active | Status: Initiated
         </div>
       </div>
     </div>

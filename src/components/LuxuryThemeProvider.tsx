@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-type Theme = 'dark' | 'light' | 'gradient';
+type Theme = 'dark' | 'light';
 
 interface ThemeContextType {
   theme: Theme;
@@ -32,16 +32,20 @@ export const LuxuryThemeProvider: React.FC<ThemeProviderProps> = ({ children }) 
     const initialTheme = savedTheme || 'dark'; // Default to dark for billionaire experience
     setTheme(initialTheme);
     
-    // Apply theme to document
-    document.documentElement.classList.remove('dark', 'light', 'gradient');
+    // Apply theme to document and body
+    document.documentElement.classList.remove('dark', 'light');
     document.documentElement.classList.add(initialTheme);
+    document.body.classList.remove('dark', 'light');
+    document.body.classList.add(initialTheme);
   }, []);
 
   const updateTheme = (newTheme: Theme) => {
     setTheme(newTheme);
     localStorage.setItem('luxury-theme', newTheme);
-    document.documentElement.classList.remove('dark', 'light', 'gradient');
+    document.documentElement.classList.remove('dark', 'light');
     document.documentElement.classList.add(newTheme);
+    document.body.classList.remove('dark', 'light');
+    document.body.classList.add(newTheme);
   };
 
   const toggleTheme = () => {
