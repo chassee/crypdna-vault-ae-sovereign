@@ -36,18 +36,18 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="bg-gray-900/80 backdrop-blur-md border-b border-gray-700 sticky top-0 z-50 luxury-transition">
+    <nav className="luxury-card border-b border-border sticky top-0 z-50 luxury-transition backdrop-blur-xl">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl flex items-center justify-center diamond-logo shadow-lg">
+            <div className="w-10 h-10 bg-gradient-to-r from-luxury-purple to-luxury-gold rounded-xl flex items-center justify-center diamond-logo shadow-lg">
               <Vault className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent sparkle-animation">
+              <h1 className="text-xl font-bold bg-gradient-to-r from-luxury-purple to-luxury-gold bg-clip-text text-transparent sparkle-animation">
                 CrypDNA Vault
               </h1>
-              <p className="text-xs text-gray-400">Billionaire Membership Portal</p>
+              <p className="text-xs text-foreground-secondary">Billionaire Membership Portal</p>
             </div>
           </div>
           
@@ -56,7 +56,7 @@ const Navigation = () => {
               onClick={handleLogout}
               variant="outline"
               size="sm"
-              className="text-sm luxury-transition hover:bg-red-600 hover:text-white border-gray-600 text-gray-300"
+              className="text-sm luxury-transition hover:bg-red-600 hover:text-white border-border text-foreground-secondary"
             >
               <LogOut className="h-4 w-4 mr-2" />
               Logout

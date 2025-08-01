@@ -69,7 +69,7 @@ const BalanceBreakdown = () => {
 
   return (
     <div className="luxury-card rounded-2xl p-6 mt-6">
-      <h3 className="text-lg font-bold mb-4 bg-gradient-to-r from-luxury-purple to-luxury-gold bg-clip-text text-transparent">💳 Balance Overview</h3>
+      <h3 className="text-lg font-bold mb-4 text-foreground">💳 Balance Overview</h3>
       
       <div className="space-y-4">
         <div className="flex justify-between items-center p-4 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-lg border border-green-500/20">

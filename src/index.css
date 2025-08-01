@@ -8,35 +8,37 @@
 @layer base {
   :root,
   .dark {
-    /* Permanent Dark Mode - Apple x Amex Luxury */
-    --background: 0 0% 7%;
-    --foreground: 0 0% 92%;
-    --warm-white: 0 0% 92%;
-    --dark-grey: 0 0% 7%;
+    /* Permanent Dark Mode - Premium Deep Gradient */
+    --background: 220 15% 4%;
+    --background-secondary: 220 12% 7%;
+    --foreground: 0 0% 96%;
+    --foreground-secondary: 0 0% 63%;
+    --warm-white: 0 0% 96%;
+    --dark-grey: 220 15% 4%;
 
-    --card: 0 0% 11%;
-    --card-foreground: 0 0% 92%;
+    --card: 220 12% 9%;
+    --card-foreground: 0 0% 96%;
 
-    --popover: 0 0% 11%;
-    --popover-foreground: 0 0% 92%;
+    --popover: 220 12% 9%;
+    --popover-foreground: 0 0% 96%;
 
     --primary: 262 90% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 92%;
+    --secondary: 220 10% 12%;
+    --secondary-foreground: 0 0% 96%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 70%;
+    --muted: 220 10% 12%;
+    --muted-foreground: 0 0% 63%;
 
-    --accent: 0 0% 15%;
-    --accent-foreground: 0 0% 92%;
+    --accent: 220 10% 12%;
+    --accent-foreground: 0 0% 96%;
 
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
+    --border: 220 8% 18%;
+    --input: 220 8% 18%;
     --ring: 262 90% 60%;
 
     --radius: 1.2rem;
@@ -52,12 +54,13 @@
     --luxury-glass-dark: 0 0% 0% / 0.5;
     --luxury-diamond: 262 80% 85%;
 
-    /* Premium Dark Mode Gradients */
+    /* Premium Dark Mode Gradients - Deep Background */
+    --gradient-background: radial-gradient(ellipse at center, hsl(220, 15%, 7%) 0%, hsl(220, 15%, 4%) 100%);
     --gradient-primary: linear-gradient(135deg, hsl(var(--luxury-purple)), hsl(var(--luxury-purple-dark)));
     --gradient-luxury: linear-gradient(135deg, hsl(var(--luxury-purple)) 0%, hsl(var(--luxury-gold)) 50%, hsl(var(--luxury-purple-light)) 100%);
-    --gradient-glassmorphism: linear-gradient(135deg, hsla(0, 0%, 100%, 0.08), hsla(0, 0%, 100%, 0.03));
-    --gradient-card: linear-gradient(135deg, hsl(0, 0%, 11%) 0%, hsl(0, 0%, 15%) 100%);
-    --gradient-panel: linear-gradient(135deg, hsl(0, 0%, 12%) 0%, hsl(0, 0%, 8%) 100%);
+    --gradient-glassmorphism: linear-gradient(135deg, hsla(220, 12%, 15%, 0.8), hsla(220, 8%, 12%, 0.6));
+    --gradient-card: linear-gradient(135deg, hsl(220, 12%, 9%) 0%, hsl(220, 10%, 12%) 100%);
+    --gradient-panel: linear-gradient(135deg, hsl(220, 12%, 9%) 0%, hsl(220, 15%, 6%) 100%);
     --gradient-amex: linear-gradient(135deg, hsl(262, 90%, 60%) 0%, hsl(220, 90%, 60%) 50%, hsl(180, 90%, 60%) 100%);
     --gradient-apple: linear-gradient(135deg, hsl(262, 80%, 70%) 0%, hsl(220, 70%, 75%) 100%);
 
@@ -175,21 +178,28 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-    background: #121212 !important;
-    color: hsl(0, 0%, 92%) !important;
+    background: var(--gradient-background) !important;
+    color: hsl(var(--foreground)) !important;
     min-height: 100vh;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   * {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    color: hsl(0, 0%, 92%) !important;
   }
 
   /* Global Text Readability */
+  .text-foreground {
+    color: hsl(var(--foreground)) !important;
+  }
+  
+  .text-foreground-secondary {
+    color: hsl(var(--foreground-secondary)) !important;
+  }
+  
   .text-muted-foreground,
   .text-muted-foreground * {
-    color: hsl(0, 0%, 70%) !important;
+    color: hsl(var(--muted-foreground)) !important;
   }
 
   /* Premium Card Backgrounds */

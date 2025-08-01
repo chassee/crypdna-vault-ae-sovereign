@@ -153,16 +153,12 @@ const VaultLoginContent = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Dynamic Billionaire Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-gray-800" />
-      
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden" style={{ background: 'var(--gradient-background)' }}>
       {/* Animated Elements */}
-      <div className="absolute inset-0 bg-gradient-neon opacity-20 blur-3xl animate-pulse" />
-      <div className="absolute top-20 left-20 w-32 h-32 bg-luxury-purple/20 rounded-full blur-2xl animate-pulse" />
+      <div className="absolute top-20 left-20 w-32 h-32 bg-luxury-purple/20 rounded-full blur-2xl animate-pulse vault-logo-pulse" />
       <div className="absolute bottom-20 right-20 w-48 h-48 bg-luxury-gold/20 rounded-full blur-3xl animate-pulse delay-1000" />
       
-      <Card className="w-full max-w-lg luxury-card relative z-10 overflow-hidden">
+      <Card className="w-full max-w-lg glassmorphism-auth relative z-10 overflow-hidden">
         {/* CrypDNA Logo Animation */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-neon animate-pulse" />
         
