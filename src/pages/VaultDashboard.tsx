@@ -27,7 +27,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 const VaultDashboard = () => {
   const navigate = useNavigate();
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
@@ -140,28 +140,10 @@ const VaultDashboard = () => {
               <LuxuryTierBadge tier={userTier} />
             </div>
             <div className="flex items-center space-x-3">
-              <Button
-                onClick={toggleTheme}
-                variant="ghost"
-                size="sm"
-                className="luxury-transition relative group overflow-hidden bg-gradient-to-r from-purple-500/10 to-pink-500/10 hover:from-purple-500/20 hover:to-pink-500/20 border border-purple-500/20 hover:border-purple-400/30"
-                title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-              >
-                <div className="relative flex items-center gap-2 z-10">
-                  {theme === 'dark' ? (
-                    <>
-                      <Sparkles className="h-4 w-4 text-yellow-400" />
-                      <span className="text-xs font-medium text-foreground">Light</span>
-                    </>
-                  ) : (
-                    <>
-                      <Moon className="h-4 w-4 text-purple-400" />
-                      <span className="text-xs font-medium text-foreground">Dark</span>
-                    </>
-                  )}
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </Button>
+              <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-900/50 border border-gray-700">
+                <Moon className="h-4 w-4 text-purple-400" />
+                <span className="text-xs font-medium text-gray-300">Dark Mode</span>
+              </div>
               <Button
                 onClick={handleSignOut}
                 variant="outline"

@@ -1,11 +1,7 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-
-type Theme = 'dark' | 'light';
+import React, { createContext, useContext, useEffect } from 'react';
 
 interface ThemeContextType {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
-  toggleTheme: () => void;
+  theme: 'dark';
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -23,37 +19,20 @@ interface ThemeProviderProps {
 }
 
 export const LuxuryThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>('dark');
-
   useEffect(() => {
-    // Check for saved theme preference or default to 'dark' for luxury mode
-    const savedTheme = localStorage.getItem('luxury-theme') as Theme;
+    // Force permanent dark mode for luxury experience
+    document.documentElement.classList.remove('light');
+    document.documentElement.classList.add('dark');
+    document.body.classList.remove('light');
+    document.body.classList.add('dark');
     
-    const initialTheme = savedTheme || 'dark'; // Default to dark for billionaire experience
-    setTheme(initialTheme);
-    
-    // Apply theme to document and body
-    document.documentElement.classList.remove('dark', 'light');
-    document.documentElement.classList.add(initialTheme);
-    document.body.classList.remove('dark', 'light');
-    document.body.classList.add(initialTheme);
+    // Set dark background immediately
+    document.body.style.backgroundColor = '#121212';
+    document.documentElement.style.backgroundColor = '#121212';
   }, []);
 
-  const updateTheme = (newTheme: Theme) => {
-    setTheme(newTheme);
-    localStorage.setItem('luxury-theme', newTheme);
-    document.documentElement.classList.remove('dark', 'light');
-    document.documentElement.classList.add(newTheme);
-    document.body.classList.remove('dark', 'light');
-    document.body.classList.add(newTheme);
-  };
-
-  const toggleTheme = () => {
-    updateTheme(theme === 'dark' ? 'light' : 'dark');
-  };
-
   return (
-    <ThemeContext.Provider value={{ theme, setTheme: updateTheme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme: 'dark' }}>
       {children}
     </ThemeContext.Provider>
   );

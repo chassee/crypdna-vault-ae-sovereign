@@ -19,16 +19,16 @@ const MemberCard = () => {
       <div className="flex justify-between items-start mb-6">
         <div>
           <div className="flex items-center gap-3 mb-2">
-            <h2 className="text-2xl font-bold text-foreground">Crypdawgs Card Balance</h2>
+            <h2 className="text-2xl font-bold text-gray-100">Crypdawgs Card Balance</h2>
             <VaultTierBadge tier={memberTier as any} />
           </div>
-          <p className="text-muted-foreground">Billionaire Member since {memberSince}</p>
+          <p className="text-gray-400">Billionaire Member since {memberSince}</p>
         </div>
         <div className="text-right">
-          <p className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent dna-score-pulse">
+          <p className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent dna-score-pulse dna-score-glow">
             ${cardBalance.toLocaleString()}
           </p>
-          <p className="text-sm text-green-600 font-medium">+2.3% this month</p>
+          <p className="text-sm text-green-400 font-medium">+2.3% this month</p>
         </div>
       </div>
       
@@ -49,21 +49,21 @@ const MemberCard = () => {
       </div>
       
       <div className="text-center mb-6">
-        <p className="text-xs text-muted-foreground italic">Tap card for Apple Wallet-style interaction</p>
+        <p className="text-xs text-gray-500 italic">Tap card for Apple Wallet-style interaction</p>
       </div>
       
       <div className="grid grid-cols-3 gap-4">
         <div className="apple-card text-center p-4">
-          <p className="text-sm text-muted-foreground">Monthly Limit</p>
-          <p className="text-lg font-bold text-purple-600">$50,000</p>
+          <p className="text-sm text-gray-400">Monthly Limit</p>
+          <p className="text-lg font-bold text-purple-400">$50,000</p>
         </div>
         <div className="apple-card text-center p-4">
-          <p className="text-sm text-muted-foreground">Cash Back</p>
-          <p className="text-lg font-bold text-blue-600">3.5%</p>
+          <p className="text-sm text-gray-400">Cash Back</p>
+          <p className="text-lg font-bold text-blue-400">3.5%</p>
         </div>
         <div className="apple-card text-center p-4">
-          <p className="text-sm text-muted-foreground">Status</p>
-          <p className="text-lg font-bold text-green-600">Active</p>
+          <p className="text-sm text-gray-400">Status</p>
+          <p className="text-lg font-bold text-green-400">Active</p>
         </div>
       </div>
     </div>

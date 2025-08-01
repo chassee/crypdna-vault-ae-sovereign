@@ -1,425 +1,141 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
-import { User, Session } from '@supabase/supabase-js';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Eye, EyeOff, Lock, User as UserIcon, Mail } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const Auth = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isSignUp, setIsSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [activeTab, setActiveTab] = useState('login');
-  const [error, setError] = useState('');
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Form states
-  const [loginForm, setLoginForm] = useState({
-    emailOrUsername: '',
-    password: ''
-  });
-
-  const [signupForm, setSignupForm] = useState({
-    email: '',
-    username: '',
-    password: '',
-    confirmPassword: '',
-    fullName: ''
-  });
-
-  const [resetEmail, setResetEmail] = useState('');
-
-  useEffect(() => {
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        
-        if (session?.user) {
-          navigate('/dashboard');
-        }
-      }
-    );
-
-    // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      
-      if (session?.user) {
+  const handleAuth = async () => {
+    setLoading(true);
+    try {
+      if (isSignUp) {
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/dashboard`
+          }
+        });
+        if (error) throw error;
+        toast({
+          title: "Account created!",
+          description: "Please check your email to verify your account.",
+        });
+      } else {
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        if (error) throw error;
         navigate('/dashboard');
       }
-    });
-
-    return () => subscription.unsubscribe();
-  }, [navigate]);
-
-  const validateSignup = () => {
-    if (!signupForm.email || !signupForm.username || !signupForm.password) {
-      setError('All fields are required');
-      return false;
-    }
-
-    if (signupForm.password.length < 6) {
-      setError('Password must be at least 6 characters');
-      return false;
-    }
-
-    if (signupForm.password !== signupForm.confirmPassword) {
-      setError('Passwords do not match');
-      return false;
-    }
-
-    if (signupForm.username.length < 3) {
-      setError('Username must be at least 3 characters');
-      return false;
-    }
-
-    // Check for valid username format
-    const usernameRegex = /^[a-zA-Z0-9_]+$/;
-    if (!usernameRegex.test(signupForm.username)) {
-      setError('Username can only contain letters, numbers, and underscores');
-      return false;
-    }
-
-    return true;
-  };
-
-  const handleSignup = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    
-    if (!validateSignup()) return;
-
-    setLoading(true);
-
-    try {
-      // Check if username already exists
-      const { data: existingProfile } = await supabase
-        .from('profiles')
-        .select('username')
-        .eq('username', signupForm.username)
-        .single();
-
-      if (existingProfile) {
-        setError('Username already taken');
-        setLoading(false);
-        return;
-      }
-
-      const redirectUrl = `${window.location.origin}/dashboard`;
-      
-      const { error } = await supabase.auth.signUp({
-        email: signupForm.email,
-        password: signupForm.password,
-        options: {
-          emailRedirectTo: redirectUrl,
-          data: {
-            username: signupForm.username,
-            full_name: signupForm.fullName
-          }
-        }
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
       });
-
-      if (error) {
-        setError(error.message);
-      } else {
-        toast({
-          title: 'Account created!',
-          description: 'Please check your email to verify your account.',
-        });
-      }
-    } catch (err: any) {
-      setError(err.message || 'An error occurred during signup');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
-
-    try {
-      let email = loginForm.emailOrUsername;
-
-      // If it's not an email, we need to find the user's email by username
-      // Since we can't access admin functions, we'll need to store email in profiles
-      // For now, let's assume it's either email or show an error
-      if (!email.includes('@')) {
-        setError('Please use your email address to login');
-        setLoading(false);
-        return;
-      }
-
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password: loginForm.password
-      });
-
-      if (error) {
-        setError('Invalid login credentials');
-      }
-    } catch (err: any) {
-      setError('An error occurred during login');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleForgotPassword = async () => {
-    if (!resetEmail) {
-      setError('Please enter your email address');
-      return;
-    }
-
-    setLoading(true);
-    setError('');
-
-    try {
-      const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
-        redirectTo: `${window.location.origin}/auth`,
-      });
-
-      if (error) {
-        setError(error.message);
-      } else {
-        toast({
-          title: 'Reset email sent!',
-          description: 'Check your email for password reset instructions.',
-        });
-      }
-    } catch (err: any) {
-      setError('An error occurred sending reset email');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4 page-transition">
-      {/* Animated background particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -left-40 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -right-40 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-700"></div>
-        <div className="absolute top-1/2 left-1/2 w-60 h-60 bg-indigo-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+    <div className="min-h-screen relative overflow-hidden page-transition" style={{ background: '#121212' }}>
+      {/* Premium Dark Background with Subtle Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-900/50 via-black to-gray-800/30"></div>
+      
+      {/* Floating Particles */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-purple-500/40 rounded-full sparkle-animation"></div>
+        <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-purple-400/30 rounded-full sparkle-animation" style={{animationDelay: '10s'}}></div>
+        <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-purple-300/20 rounded-full sparkle-animation" style={{animationDelay: '20s'}}></div>
       </div>
       
-      <Card className="w-full max-w-md relative z-10 glassmorphism-auth">
-        <CardHeader className="text-center space-y-4">
-          {/* Animated Diamond Logo */}
-          <div className="mx-auto w-20 h-20 bg-gradient-to-br from-purple-500 via-blue-600 to-cyan-500 rounded-2xl flex items-center justify-center mb-6 diamond-logo shadow-xl">
-            <div className="relative">
-              <Lock className="w-10 h-10 text-white" />
-              {/* Sparkle effects */}
-              <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full sparkle-animation"></div>
-              <div className="absolute -bottom-1 -left-1 w-1 h-1 bg-white rounded-full sparkle-animation delay-1000"></div>
+      <div className="relative z-10 flex min-h-screen items-center justify-center p-6">
+        <div className="glassmorphism-auth w-full max-w-lg p-8 rounded-3xl">
+          <div className="text-center pb-6">
+            {/* Animated Vault Logo */}
+            <div className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-purple-600/30 to-purple-800/20 backdrop-blur-sm border border-purple-500/30 vault-logo-pulse">
+              <div className="diamond-logo">
+                <div className="h-10 w-10 rotate-45 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl shadow-2xl"></div>
+              </div>
             </div>
+            
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent mb-3">
+              CrypDNA Vault
+            </h1>
+            <p className="text-gray-400 text-lg">
+              Access your billionaire-class crypto portfolio
+            </p>
           </div>
-          <CardTitle className="text-3xl font-bold bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent animate-shimmer">
-            CrypDNA Vault
-          </CardTitle>
-          <CardDescription className="text-white/70 text-lg">
-            Your billionaire-class secure gateway
-          </CardDescription>
-        </CardHeader>
 
-        <CardContent>
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="login">Login</TabsTrigger>
-              <TabsTrigger value="signup">Sign Up</TabsTrigger>
-            </TabsList>
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+                Email Address
+              </label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                className="w-full h-12 px-4 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder:text-gray-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all duration-300"
+                required
+              />
+            </div>
+            
+            <div className="space-y-3">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-300">
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                className="w-full h-12 px-4 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder:text-gray-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition-all duration-300"
+                required
+              />
+            </div>
 
-            {error && (
-              <Alert variant="destructive">
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
-
-            <TabsContent value="login" className="space-y-4">
-              <form onSubmit={handleLogin} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="emailOrUsername" className="text-white/90 font-medium">Email or Username</Label>
-                  <div className="relative">
-                    <UserIcon className="absolute left-3 top-3 h-4 w-4 text-white/60" />
-                    <Input
-                      id="emailOrUsername"
-                      placeholder="Enter email or username"
-                      type="text"
-                      value={loginForm.emailOrUsername}
-                      onChange={(e) => setLoginForm(prev => ({ ...prev, emailOrUsername: e.target.value }))}
-                      className="pl-10 luxury-input focus-ring-input text-white placeholder:text-white/50"
-                      required
-                    />
-                  </div>
+            <button
+              onClick={handleAuth}
+              disabled={loading}
+              className="w-full h-12 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold rounded-xl shadow-xl hover:shadow-2xl disabled:opacity-50 transition-all duration-300 amex-cta"
+            >
+              {loading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <div className="luxury-spinner w-5 h-5"></div>
+                  Processing...
                 </div>
+              ) : (
+                isSignUp ? 'Create Billionaire Account' : 'Access Vault'
+              )}
+            </button>
+          </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="password" className="text-white/90 font-medium">Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-white/60" />
-                    <Input
-                      id="password"
-                      placeholder="Enter password"
-                      type={showPassword ? "text" : "password"}
-                      value={loginForm.password}
-                      onChange={(e) => setLoginForm(prev => ({ ...prev, password: e.target.value }))}
-                      className="pl-10 pr-10 luxury-input focus-ring-input text-white placeholder:text-white/50"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-3 text-white/60 hover:text-white transition-colors"
-                    >
-                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                    </button>
-                  </div>
-                </div>
-
-                <Button 
-                  type="submit" 
-                  className="w-full amex-cta text-white font-semibold py-3 text-lg" 
-                  disabled={loading}
-                >
-                  {loading ? 'Signing in...' : 'Access Billionaire Vault'}
-                </Button>
-              </form>
-
-              <div className="text-center">
-                <Button
-                  variant="link"
-                  onClick={handleForgotPassword}
-                  className="text-purple-600 hover:text-purple-800"
-                  disabled={loading}
-                >
-                  Forgot Password?
-                </Button>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="resetEmail">Reset Password Email</Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                  <Input
-                    id="resetEmail"
-                    placeholder="Enter email for password reset"
-                    type="email"
-                    value={resetEmail}
-                    onChange={(e) => setResetEmail(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="signup" className="space-y-4">
-              <form onSubmit={handleSignup} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <Input
-                      id="email"
-                      placeholder="Enter email"
-                      type="email"
-                      value={signupForm.email}
-                      onChange={(e) => setSignupForm(prev => ({ ...prev, email: e.target.value }))}
-                      className="pl-10"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="username">Username</Label>
-                  <div className="relative">
-                    <UserIcon className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <Input
-                      id="username"
-                      placeholder="Choose username"
-                      type="text"
-                      value={signupForm.username}
-                      onChange={(e) => setSignupForm(prev => ({ ...prev, username: e.target.value }))}
-                      className="pl-10"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="fullName">Full Name (Optional)</Label>
-                  <Input
-                    id="fullName"
-                    placeholder="Enter full name"
-                    type="text"
-                    value={signupForm.fullName}
-                    onChange={(e) => setSignupForm(prev => ({ ...prev, fullName: e.target.value }))}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="signupPassword">Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <Input
-                      id="signupPassword"
-                      placeholder="Create password"
-                      type={showPassword ? "text" : "password"}
-                      value={signupForm.password}
-                      onChange={(e) => setSignupForm(prev => ({ ...prev, password: e.target.value }))}
-                      className="pl-10 pr-10"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
-                    >
-                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                    </button>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirm Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <Input
-                      id="confirmPassword"
-                      placeholder="Confirm password"
-                      type={showPassword ? "text" : "password"}
-                      value={signupForm.confirmPassword}
-                      onChange={(e) => setSignupForm(prev => ({ ...prev, confirmPassword: e.target.value }))}
-                      className="pl-10"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <Button 
-                  type="submit" 
-                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700" 
-                  disabled={loading}
-                >
-                  {loading ? 'Creating Account...' : 'Create Account'}
-                </Button>
-              </form>
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
+          <div className="pt-6 text-center">
+            <p className="text-gray-400 text-sm">
+              {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
+              <button
+                onClick={() => setIsSignUp(!isSignUp)}
+                className="text-purple-400 hover:text-purple-300 font-medium transition-colors duration-200"
+              >
+                {isSignUp ? 'Sign In' : 'Create Account'}
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
