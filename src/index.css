@@ -169,6 +169,9 @@
     --luxury-blue: 59 130 246;
     --radius: 0.75rem;
   }
+}
+
+@layer base {
   * {
     @apply border-border;
   }
