@@ -2,52 +2,75 @@ import React from 'react';
 import { Instagram, Eye, Lock } from 'lucide-react';
 
 const VaultDrops: React.FC = () => {
-  const exclusiveDrops = [
+  // Drop 1 - Duffle Bags (Premium Exclusive)
+  const duffleBags = [
     {
-      id: '1',
-      title: 'Drop Alpha',
+      id: 'd1',
+      title: 'Venom Pup Duffle',
       description: 'Premium Exclusive',
       category: 'Ultra-Limited',
-      rarity: 'Mythic'
+      rarity: 'Mythic',
+      image: '/lovable-uploads/9d010ec4-6e42-4286-b5cf-df7869e0d131.png'
     },
     {
-      id: '2', 
-      title: 'Drop Beta',
-      description: 'Vault Member Unlock',
-      category: 'Member Access',
-      rarity: 'Legendary'
+      id: 'd2',
+      title: 'Sky Alpha Duffle',
+      description: 'Premium Exclusive',
+      category: 'Ultra-Limited', 
+      rarity: 'Mythic',
+      image: '/lovable-uploads/fc7fcc75-198f-462d-8532-63fa3d6cf8cd.png'
     },
     {
-      id: '3',
-      title: 'Genesis',
-      description: 'First Edition Archive',
-      category: 'Founder Series',
-      rarity: 'Epic'
+      id: 'd3',
+      title: 'Solar Fang Duffle',
+      description: 'Premium Exclusive',
+      category: 'Ultra-Limited',
+      rarity: 'Mythic',
+      image: '/lovable-uploads/0831920d-6e80-407b-bb92-30baf74dd023.png'
     }
   ];
 
-  // Products merged from VaultProducts
-  const products = [
+  // Drop 1 - Vinyl Collection (Vault Unlock)
+  const vinylCollection = [
     {
-      id: 'p1',
-      title: 'Crypdawgs Duffle',
-      description: 'Premium travel companion',
-      category: 'Lifestyle',
-      rarity: 'Rare'
+      id: 'v1',
+      title: 'Tripjaw Vinyl',
+      description: 'Vault Unlock',
+      category: 'Collector Archive',
+      rarity: 'Legendary',
+      image: '/lovable-uploads/5e535260-24a3-4ed3-9d4a-796ece23cc29.png'
     },
     {
-      id: 'p2', 
-      title: 'Crypdawgs Trucker Hat',
-      description: 'Signature headwear collection',
-      category: 'Apparel',
-      rarity: 'Rare'
+      id: 'v2',
+      title: 'Red Shift Vinyl',
+      description: 'Vault Unlock',
+      category: 'Collector Archive',
+      rarity: 'Legendary',
+      image: '/lovable-uploads/d420655e-40c1-43e6-a515-1cd2b2ea2702.png'
     },
     {
-      id: 'p3',
-      title: 'Crypdawgs Vinyl',
-      description: 'Limited edition soundscape',
-      category: 'Collectible',
-      rarity: 'Epic'
+      id: 'v3',
+      title: 'Lazerbite Vinyl',
+      description: 'Vault Unlock',
+      category: 'Collector Archive',
+      rarity: 'Epic',
+      image: '/lovable-uploads/981b6c81-e87e-40b1-8e79-272d5a2465f1.png'
+    },
+    {
+      id: 'v4',
+      title: 'Chromaburst Vinyl',
+      description: 'Vault Unlock',
+      category: 'Collector Archive',
+      rarity: 'Epic',
+      image: '/lovable-uploads/e6edc075-737b-4dad-b53f-9787c56ce4d1.png'
+    },
+    {
+      id: 'v5',
+      title: 'Cryopulse Vinyl',
+      description: 'Vault Unlock',
+      category: 'Collector Archive',
+      rarity: 'Legendary',
+      image: '/lovable-uploads/09e5172e-7320-4224-baeb-3dde8a2865c5.png'
     }
   ];
 
@@ -94,27 +117,54 @@ const VaultDrops: React.FC = () => {
         key={drop.id}
         className="luxury-card group hover:scale-[1.02] luxury-transition hover:shadow-glow relative overflow-hidden hover-card"
       >
-        {/* Blurred silhouette placeholder */}
+        {/* Product image or placeholder */}
         <div className="relative h-48 bg-gradient-to-br from-purple-900/20 to-pink-900/20 overflow-hidden">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className={`w-32 h-32 ${isMystery ? 'bg-gradient-to-br from-black/50 to-gray-900/50' : isProduct ? 'bg-gradient-to-br from-gray-500/40 to-gray-600/40' : 'bg-gradient-to-br from-purple-500/30 to-pink-500/30'} rounded-lg blur-xl`} />
-          </div>
-          
-          {/* Luxury lock overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-center justify-center backdrop-blur-md">
-            <div className="text-center space-y-3">
-              <div className="relative">
-                <Lock className="w-10 h-10 text-purple-400 mx-auto animate-pulse" />
-                <div className="absolute inset-0 w-10 h-10 mx-auto border border-purple-400/50 rounded-lg animate-ping" />
+          {drop.image && !isMystery ? (
+            <>
+              {/* Actual product image */}
+              <img 
+                src={drop.image} 
+                alt={drop.title}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              
+              {/* Luxury lock overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-center justify-center backdrop-blur-sm">
+                <div className="text-center space-y-3">
+                  <div className="relative">
+                    <Lock className="w-10 h-10 text-luxury-purple mx-auto animate-pulse drop-shadow-glow" />
+                    <div className="absolute inset-0 w-10 h-10 mx-auto border border-luxury-purple/50 rounded-lg animate-ping" />
+                  </div>
+                  <div className="text-sm text-luxury-purple font-medium tracking-wider drop-shadow-lg">
+                    COMING SOON
+                  </div>
+                </div>
               </div>
-              <div className="text-sm text-purple-300 font-medium tracking-wider">
-                {isMystery ? 'MYSTERY COMING SOON' : isProduct ? 'PRODUCT COMING SOON' : 'EXCLUSIVE DROP COMING SOON'}
+            </>
+          ) : (
+            <>
+              {/* Blurred mystery placeholder */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-32 h-32 bg-gradient-to-br from-black/50 to-gray-900/50 rounded-lg blur-xl" />
               </div>
-            </div>
-          </div>
+              
+              {/* Mystery lock overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-center justify-center backdrop-blur-md">
+                <div className="text-center space-y-3">
+                  <div className="relative">
+                    <Lock className="w-10 h-10 text-purple-400 mx-auto animate-pulse" />
+                    <div className="absolute inset-0 w-10 h-10 mx-auto border border-purple-400/50 rounded-lg animate-ping" />
+                  </div>
+                  <div className="text-sm text-purple-300 font-medium tracking-wider">
+                    MYSTERY COMING SOON
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
 
           {/* Rarity indicator */}
-          <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r ${rarityGradient}`}>
+          <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r ${rarityGradient} shadow-lg`}>
             {drop.rarity}
           </div>
         </div>
@@ -148,31 +198,31 @@ const VaultDrops: React.FC = () => {
 
   return (
     <div className="space-y-12 animate-fade-in">
-      {/* Exclusive Drops Section */}
+      {/* Premium Exclusive - Duffle Bags */}
       <div className="space-y-8">
         <div className="text-center space-y-2">
           <h3 className="text-2xl font-bold text-foreground border-b-2 border-luxury-purple inline-block pb-1">
-            Exclusive Drops
+            Premium Exclusive
           </h3>
-          <p className="text-muted-foreground">Ultra-rare collectibles for vault members</p>
+          <p className="text-muted-foreground">Ultra-limited duffle bag collection</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {exclusiveDrops.map((drop) => renderDropCard(drop, false, false))}
+          {duffleBags.map((drop) => renderDropCard(drop, false, false))}
         </div>
       </div>
 
-      {/* Premium Products Section */}
+      {/* Vault Unlock - Vinyl Collection */}
       <div className="space-y-8">
         <div className="text-center space-y-2">
           <h3 className="text-2xl font-bold text-foreground border-b-2 border-luxury-gold inline-block pb-1">
-            Premium Products
+            Vault Unlock
           </h3>
-          <p className="text-muted-foreground">Exclusive lifestyle collection</p>
+          <p className="text-muted-foreground">Collector archive vinyl series</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product) => renderDropCard(product, true, false))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+          {vinylCollection.map((vinyl) => renderDropCard(vinyl, true, false))}
         </div>
       </div>
 
