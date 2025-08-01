@@ -243,18 +243,6 @@
 }
 
 /* Billionaire UI Components */
-.luxury-card {
-  background: var(--gradient-glass);
-  backdrop-filter: blur(24px);
-  border: 1px solid hsl(var(--border));
-  box-shadow: var(--shadow-glass);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.luxury-card:hover {
-  box-shadow: var(--shadow-luxury);
-  transform: translateY(-2px);
-}
 
 .luxury-button {
   background: var(--gradient-primary);
