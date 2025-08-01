@@ -13,15 +13,15 @@ import LuxuryTierBadge from '@/components/LuxuryTierBadge';
 import BalanceBreakdown from '@/components/BalanceBreakdown';
 import VaultVerification from '@/components/VaultVerification';
 import CreditActivity from '@/components/CreditActivity';
-import VaultProducts from '@/components/VaultProducts';
 import VaultDrops from '@/components/VaultDrops';
 import VaultFutureTech from '@/components/VaultFutureTech';
 import CrypbotsTab from '@/components/tabs/CrypbotsTab';
 import NeuroTechTab from '@/components/tabs/NeuroTechTab';
+import AboutUs from '@/components/AboutUs';
 import DropCountdown from '@/components/DropCountdown';
 import MobileFloatingNav from '@/components/MobileFloatingNav';
 import CinematicWelcome from '@/components/CinematicWelcome';
-import { LogOut, Moon, Sun, Wallet, Package, Rocket, Brain, Waves, Zap } from 'lucide-react';
+import { LogOut, Moon, Sun, Palette, Wallet, Rocket, Brain, Waves, Zap, Info } from 'lucide-react';
 import { useTheme } from '@/components/LuxuryThemeProvider';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -144,9 +144,16 @@ const VaultDashboard = () => {
                 onClick={toggleTheme}
                 variant="ghost"
                 size="sm"
-                className="luxury-transition"
+                className="luxury-transition relative group"
               >
-                {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                {theme === 'dark' ? (
+                  <Palette className="h-4 w-4 animate-pulse" />
+                ) : theme === 'gradient' ? (
+                  <Moon className="h-4 w-4" />
+                ) : (
+                  <Sun className="h-4 w-4" />
+                )}
+                <div className="absolute inset-0 rounded-md bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity" />
               </Button>
               <Button
                 onClick={handleSignOut}
@@ -201,14 +208,6 @@ const VaultDashboard = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
               </TabsTrigger>
               <TabsTrigger 
-                value="products" 
-                className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-gray-800/50 relative group hover-card"
-              >
-                <Package className="w-4 h-4" />
-                <span className="hidden sm:inline">Products</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
-              </TabsTrigger>
-              <TabsTrigger 
                 value="crypbots" 
                 className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-gray-800/50 relative group hover-card"
               >
@@ -222,6 +221,14 @@ const VaultDashboard = () => {
               >
                 <Waves className="w-4 h-4" />
                 <span className="hidden sm:inline">NeuroTech</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
+              </TabsTrigger>
+              <TabsTrigger 
+                value="about" 
+                className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-gray-800/50 relative group hover-card"
+              >
+                <Info className="w-4 h-4" />
+                <span className="hidden sm:inline">About Us</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
               </TabsTrigger>
             </TabsList>
@@ -245,16 +252,16 @@ const VaultDashboard = () => {
               <VaultDrops />
             </TabsContent>
 
-            <TabsContent value="products" className="animate-fade-in">
-              <VaultProducts />
-            </TabsContent>
-
             <TabsContent value="crypbots" className="animate-fade-in">
               <CrypbotsTab />
             </TabsContent>
 
             <TabsContent value="neurotech" className="animate-fade-in">
               <NeuroTechTab />
+            </TabsContent>
+
+            <TabsContent value="about" className="animate-fade-in">
+              <AboutUs />
             </TabsContent>
           </div>
         </Tabs>

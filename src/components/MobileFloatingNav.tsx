@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Wallet, Brain, Waves, Settings, Home } from 'lucide-react';
+import { Wallet, Brain, Waves, Rocket, Info } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface MobileFloatingNavProps {
@@ -14,11 +14,11 @@ const MobileFloatingNav: React.FC<MobileFloatingNavProps> = ({ activeTab, onTabC
   if (!isMobile) return null;
 
   const navItems = [
-    { id: 'balances', icon: Home, label: 'Home' },
-    { id: 'card-balance', icon: Wallet, label: 'Balance' },
+    { id: 'balances', icon: Wallet, label: 'Balance' },
+    { id: 'drops', icon: Rocket, label: 'Drops' },
     { id: 'crypbots', icon: Brain, label: 'Crypb0ts' },
     { id: 'neurotech', icon: Waves, label: 'NeuroTech' },
-    { id: 'settings', icon: Settings, label: 'Settings' }
+    { id: 'about', icon: Info, label: 'About Us' }
   ];
 
   return (

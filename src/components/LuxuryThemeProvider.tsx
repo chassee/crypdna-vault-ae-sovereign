@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-type Theme = 'dark' | 'light';
+type Theme = 'dark' | 'light' | 'gradient';
 
 interface ThemeContextType {
   theme: Theme;
@@ -32,10 +32,12 @@ export const LuxuryThemeProvider: React.FC<ThemeProviderProps> = ({ children }) 
     const initialTheme = savedTheme || 'dark'; // Default to dark for mystery-first experience
     setTheme(initialTheme);
     
-    // Apply theme to document with soft-white support
-    document.documentElement.classList.remove('light', 'dark', 'soft-white');
+    // Apply theme to document with gradient and soft-white support
+    document.documentElement.classList.remove('light', 'dark', 'soft-white', 'gradient');
     if (initialTheme === 'light') {
       document.documentElement.classList.add('soft-white');
+    } else if (initialTheme === 'gradient') {
+      document.documentElement.classList.add('gradient');
     } else {
       document.documentElement.classList.add(initialTheme);
     }
@@ -44,16 +46,24 @@ export const LuxuryThemeProvider: React.FC<ThemeProviderProps> = ({ children }) 
   const updateTheme = (newTheme: Theme) => {
     setTheme(newTheme);
     localStorage.setItem('luxury-theme', newTheme);
-    document.documentElement.classList.remove('light', 'dark', 'soft-white');
+    document.documentElement.classList.remove('light', 'dark', 'soft-white', 'gradient');
     if (newTheme === 'light') {
       document.documentElement.classList.add('soft-white');
+    } else if (newTheme === 'gradient') {
+      document.documentElement.classList.add('gradient');
     } else {
       document.documentElement.classList.add(newTheme);
     }
   };
 
   const toggleTheme = () => {
-    updateTheme(theme === 'dark' ? 'light' : 'dark');
+    if (theme === 'dark') {
+      updateTheme('gradient');
+    } else if (theme === 'gradient') {
+      updateTheme('dark');
+    } else {
+      updateTheme('dark');
+    }
   };
 
   return (
