@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-type Theme = 'dark' | 'light' | 'gradient';
+type Theme = 'dark' | 'vibrant';
 
 interface ThemeContextType {
   theme: Theme;
@@ -29,41 +29,23 @@ export const LuxuryThemeProvider: React.FC<ThemeProviderProps> = ({ children }) 
     // Check for saved theme preference or default to 'dark' for luxury mode
     const savedTheme = localStorage.getItem('luxury-theme') as Theme;
     
-    const initialTheme = savedTheme || 'dark'; // Default to dark for mystery-first experience
+    const initialTheme = savedTheme || 'dark'; // Default to dark for billionaire experience
     setTheme(initialTheme);
     
-    // Apply theme to document with gradient and soft-white support
-    document.documentElement.classList.remove('light', 'dark', 'soft-white', 'gradient');
-    if (initialTheme === 'light') {
-      document.documentElement.classList.add('soft-white');
-    } else if (initialTheme === 'gradient') {
-      document.documentElement.classList.add('gradient');
-    } else {
-      document.documentElement.classList.add(initialTheme);
-    }
+    // Apply theme to document
+    document.documentElement.classList.remove('dark', 'vibrant');
+    document.documentElement.classList.add(initialTheme);
   }, []);
 
   const updateTheme = (newTheme: Theme) => {
     setTheme(newTheme);
     localStorage.setItem('luxury-theme', newTheme);
-    document.documentElement.classList.remove('light', 'dark', 'soft-white', 'gradient');
-    if (newTheme === 'light') {
-      document.documentElement.classList.add('soft-white');
-    } else if (newTheme === 'gradient') {
-      document.documentElement.classList.add('gradient');
-    } else {
-      document.documentElement.classList.add(newTheme);
-    }
+    document.documentElement.classList.remove('dark', 'vibrant');
+    document.documentElement.classList.add(newTheme);
   };
 
   const toggleTheme = () => {
-    if (theme === 'dark') {
-      updateTheme('gradient');
-    } else if (theme === 'gradient') {
-      updateTheme('dark');
-    } else {
-      updateTheme('dark');
-    }
+    updateTheme(theme === 'dark' ? 'vibrant' : 'dark');
   };
 
   return (

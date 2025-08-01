@@ -21,7 +21,7 @@ import AboutUs from '@/components/AboutUs';
 import DropCountdown from '@/components/DropCountdown';
 import MobileFloatingNav from '@/components/MobileFloatingNav';
 import CinematicWelcome from '@/components/CinematicWelcome';
-import { LogOut, Moon, Sun, Palette, Wallet, Rocket, Brain, Waves, Zap, Info } from 'lucide-react';
+import { LogOut, Palette, Moon, Sparkles, Wallet, Rocket, Brain, Waves, Info } from 'lucide-react';
 import { useTheme } from '@/components/LuxuryThemeProvider';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -144,16 +144,16 @@ const VaultDashboard = () => {
                 onClick={toggleTheme}
                 variant="ghost"
                 size="sm"
-                className="luxury-transition relative group"
+                className="luxury-transition relative group hover:bg-gradient-to-r hover:from-purple-500/20 hover:to-gold-500/20"
+                title={theme === 'dark' ? 'Switch to CrypDawg Vibrant Mode' : 'Switch to Dark Luxury Mode'}
               >
                 {theme === 'dark' ? (
-                  <Palette className="h-4 w-4 animate-pulse" />
-                ) : theme === 'gradient' ? (
-                  <Moon className="h-4 w-4" />
+                  <Palette className="h-4 w-4 text-luxury-purple animate-pulse" />
                 ) : (
-                  <Sun className="h-4 w-4" />
+                  <Moon className="h-4 w-4 text-luxury-gold" />
                 )}
-                <div className="absolute inset-0 rounded-md bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 rounded-md bg-gradient-to-r from-purple-500/10 to-gold-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-gold-500 rounded-md opacity-0 group-hover:opacity-20 blur transition-opacity" />
               </Button>
               <Button
                 onClick={handleSignOut}

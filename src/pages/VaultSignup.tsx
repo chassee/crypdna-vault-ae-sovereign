@@ -6,11 +6,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from '@/hooks/use-toast';
-import { Loader2, Shield, CreditCard, Zap } from 'lucide-react';
+import { Loader2, Shield, CreditCard, Zap, Sparkles, Gem } from 'lucide-react';
+import { LuxuryThemeProvider, useTheme } from '@/components/LuxuryThemeProvider';
 
-const VaultSignup = () => {
-  const [searchParams] = useSearchParams();
+const VaultSignupContent = () => {
+  const { theme } = useTheme();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [validatingToken, setValidatingToken] = useState(true);
   const [tokenValid, setTokenValid] = useState(false);
@@ -179,12 +181,18 @@ const VaultSignup = () => {
 
   if (validatingToken) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
+      <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-luxury-charcoal via-luxury-purple/20 to-luxury-gold/10" />
+        <div className="absolute inset-0 bg-gradient-neon opacity-10 blur-3xl animate-pulse" />
+        
+        <Card className="w-full max-w-md luxury-card relative z-10">
           <CardContent className="flex items-center justify-center p-8">
-            <div className="text-center">
-              <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-primary" />
-              <p className="text-muted-foreground">Validating your access...</p>
+            <div className="text-center space-y-4">
+              <div className="relative">
+                <Loader2 className="h-12 w-12 animate-spin mx-auto text-luxury-purple" />
+                <div className="absolute inset-0 h-12 w-12 mx-auto border-2 border-luxury-purple/30 rounded-full animate-ping" />
+              </div>
+              <p className="text-muted-foreground font-medium">Validating billionaire invitation...</p>
             </div>
           </CardContent>
         </Card>
@@ -193,74 +201,95 @@ const VaultSignup = () => {
   }
 
   if (!tokenValid) {
-    return null; // Component will redirect via useEffect
+    return null;
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="flex justify-center mb-4">
-            <Shield className="h-12 w-12 text-primary" />
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+      <div className={`absolute inset-0 transition-all duration-1000 ${
+        theme === 'vibrant' 
+          ? 'bg-gradient-to-br from-purple-900/90 via-blue-900/80 to-gold-900/70' 
+          : 'bg-gradient-to-br from-black via-gray-900 to-luxury-charcoal'
+      }`} />
+      
+      <div className="absolute inset-0 bg-gradient-neon opacity-20 blur-3xl animate-pulse" />
+      <div className="absolute top-20 left-20 w-32 h-32 bg-luxury-purple/20 rounded-full blur-2xl animate-pulse" />
+      <div className="absolute bottom-20 right-20 w-48 h-48 bg-luxury-gold/20 rounded-full blur-3xl animate-pulse delay-1000" />
+      
+      <Card className="w-full max-w-lg luxury-card relative z-10 overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-neon animate-pulse" />
+        
+        <CardHeader className="text-center relative">
+          <div className="flex justify-center mb-6 relative">
+            <div className="relative">
+              <Gem className="h-16 w-16 text-luxury-purple animate-pulse" />
+              <div className="absolute inset-0 h-16 w-16 border-2 border-luxury-gold/30 rounded-full animate-ping" />
+              <Sparkles className="absolute -top-2 -right-2 h-6 w-6 text-luxury-gold animate-pulse" />
+            </div>
           </div>
-          <CardTitle className="text-2xl font-bold">🔐 CrypDNA Vault</CardTitle>
-          <CardDescription>
-            Create your secure vault account to access exclusive financial tools.
+          
+          <CardTitle className="text-3xl font-black bg-gradient-to-r from-luxury-purple via-luxury-gold to-luxury-blue bg-clip-text text-transparent mb-2">
+            🔐 CrypDNA Vault
+          </CardTitle>
+          <CardDescription className="text-lg font-medium">
+            Create your billionaire-class vault account
           </CardDescription>
         </CardHeader>
         
-        <CardContent>
-          <div className="grid grid-cols-3 gap-4 mb-6">
-            <div className="text-center p-3 bg-muted rounded-lg">
-              <CreditCard className="h-6 w-6 mx-auto mb-2 text-primary" />
-              <p className="text-xs font-medium">Credit Card</p>
+        <CardContent className="space-y-8">
+          <div className="grid grid-cols-3 gap-4">
+            <div className="text-center p-4 luxury-card hover:scale-105 transition-transform">
+              <CreditCard className="h-8 w-8 mx-auto mb-3 text-luxury-purple" />
+              <p className="text-sm font-bold">Elite Credit</p>
             </div>
-            <div className="text-center p-3 bg-muted rounded-lg">
-              <Zap className="h-6 w-6 mx-auto mb-2 text-primary" />
-              <p className="text-xs font-medium">Rewards</p>
+            <div className="text-center p-4 luxury-card hover:scale-105 transition-transform">
+              <Zap className="h-8 w-8 mx-auto mb-3 text-luxury-gold" />
+              <p className="text-sm font-bold">Instant Rewards</p>
             </div>
-            <div className="text-center p-3 bg-muted rounded-lg">
-              <Shield className="h-6 w-6 mx-auto mb-2 text-primary" />
-              <p className="text-xs font-medium">Secure</p>
+            <div className="text-center p-4 luxury-card hover:scale-105 transition-transform">
+              <Shield className="h-8 w-8 mx-auto mb-3 text-luxury-blue" />
+              <p className="text-sm font-bold">Military Grade</p>
             </div>
           </div>
 
-          <form onSubmit={handleSignup} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+          <form onSubmit={handleSignup} className="space-y-6">
+            <div className="space-y-3">
+              <Label htmlFor="email" className="text-sm font-semibold">Exclusive Email</Label>
               <Input
                 id="email"
                 type="email"
                 value={userEmail}
                 disabled
-                className="bg-muted"
+                className="luxury-card bg-muted/50 text-lg h-12 font-medium"
               />
-              <p className="text-xs text-muted-foreground">
-                This email is linked to your purchase
+              <p className="text-sm text-muted-foreground font-medium">
+                This email is linked to your billionaire purchase
               </p>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+            <div className="space-y-3">
+              <Label htmlFor="password" className="text-sm font-semibold">Vault Password</Label>
               <Input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Create a secure password"
+                placeholder="Create an ultra-secure password"
+                className="luxury-card border-luxury-purple/30 focus:border-luxury-gold text-lg h-12"
                 required
                 minLength={6}
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
+            <div className="space-y-3">
+              <Label htmlFor="confirmPassword" className="text-sm font-semibold">Confirm Password</Label>
               <Input
                 id="confirmPassword"
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Confirm your password"
+                placeholder="Confirm your secure password"
+                className="luxury-card border-luxury-purple/30 focus:border-luxury-gold text-lg h-12"
                 required
                 minLength={6}
               />
@@ -268,23 +297,26 @@ const VaultSignup = () => {
 
             <Button
               type="submit"
-              className="w-full"
+              className="w-full h-14 text-lg font-bold luxury-button bg-gradient-to-r from-luxury-purple via-luxury-gold to-luxury-blue hover:shadow-neon"
               disabled={loading || !password || !confirmPassword}
             >
               {loading ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Creating Account...
+                  <Loader2 className="mr-3 h-5 w-5 animate-spin" />
+                  Creating Billionaire Account...
                 </>
               ) : (
-                'Create Vault Account'
+                <>
+                  <Gem className="mr-3 h-5 w-5" />
+                  Create Billionaire Vault
+                </>
               )}
             </Button>
           </form>
 
-          <div className="mt-6 pt-4 border-t text-center">
-            <p className="text-xs text-muted-foreground">
-              Secure • Encrypted • Your financial data stays private
+          <div className="pt-6 border-t border-luxury-purple/30 text-center">
+            <p className="text-sm text-muted-foreground">
+              🔒 Military-Grade Encryption • 🛡️ Zero-Knowledge Security • 💎 Your wealth stays private
             </p>
           </div>
         </CardContent>
@@ -292,5 +324,11 @@ const VaultSignup = () => {
     </div>
   );
 };
+
+const VaultSignup = () => (
+  <LuxuryThemeProvider>
+    <VaultSignupContent />
+  </LuxuryThemeProvider>
+);
 
 export default VaultSignup;

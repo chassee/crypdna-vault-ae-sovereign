@@ -204,35 +204,52 @@
   }
 
   body {
-    @apply bg-background text-foreground transition-colors duration-300;
+    @apply bg-background text-foreground;
     font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Gradient theme background */
-  .gradient body,
-  .gradient {
+  /* Vibrant Mode Background */
+  .vibrant body,
+  .vibrant {
     background: linear-gradient(135deg, 
-      hsl(280, 100%, 70%) 0%,
-      hsl(320, 100%, 80%) 35%,
-      hsl(30, 100%, 75%) 100%);
+      hsl(280, 100%, 8%) 0%,
+      hsl(262, 90%, 12%) 25%,
+      hsl(220, 100%, 15%) 50%,
+      hsl(45, 100%, 20%) 75%,
+      hsl(262, 90%, 8%) 100%);
     background-attachment: fixed;
-    min-height: 100vh;
+    background-size: 400% 400%;
+    animation: billionaireGradient 15s ease infinite;
   }
 
-  /* Gradient theme cards */
-  .gradient .luxury-card {
-    @apply bg-white/10 border-white/20 backdrop-blur-xl;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  @keyframes billionaireGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 
-  /* Gradient theme text adjustments */
-  .gradient .text-foreground {
-    @apply text-gray-800;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+  /* Vibrant Mode Cards */
+  .vibrant .luxury-card {
+    @apply backdrop-blur-2xl;
+    background: linear-gradient(135deg, 
+      hsla(280, 60%, 100%, 0.12), 
+      hsla(220, 80%, 100%, 0.08));
+    border: 1px solid hsla(280, 30%, 100%, 0.2);
+    box-shadow: 
+      0 8px 32px hsla(280, 60%, 10%, 0.4),
+      0 0 0 1px hsla(280, 30%, 100%, 0.1) inset;
   }
 
-  .gradient .text-muted-foreground {
-    @apply text-gray-700;
+  /* Enhanced text visibility for vibrant mode */
+  .vibrant .text-foreground {
+    @apply text-white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .vibrant .text-muted-foreground {
+    @apply text-gray-200;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   }
 
   html {
@@ -240,23 +257,31 @@
   }
 }
 
-/* Luxury UI Components */
+/* Billionaire UI Components */
 .luxury-card {
   background: var(--gradient-glass);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(24px);
   border: 1px solid hsl(var(--border));
   box-shadow: var(--shadow-glass);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.luxury-card:hover {
+  box-shadow: var(--shadow-luxury);
+  transform: translateY(-2px);
 }
 
 .luxury-button {
   background: var(--gradient-primary);
   box-shadow: var(--shadow-luxury);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
 }
 
 .luxury-button:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-glow);
+  border-color: hsl(var(--primary));
 }
 
 /* Debit Card 3D Effects */

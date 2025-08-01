@@ -5,55 +5,54 @@ const AboutUs: React.FC = () => {
   const features = [
     {
       icon: Sparkles,
-      title: "Exclusive Fashion Drops",
-      description: "Ultra-limited collectibles and luxury apparel"
+      title: "Ultra-Limited Collectibles",
+      description: "Exclusive fashion drops and luxury apparel for the elite"
     },
     {
       icon: Brain,
-      title: "AI Emotional Intelligence", 
-      description: "Advanced emotional-financial guidance systems"
+      title: "Emotional-Financial Guidance", 
+      description: "Advanced AI systems that understand your financial emotions"
     },
     {
       icon: Zap,
-      title: "NeuroTech Integrations",
-      description: "Brain-computer interface product unlocks"
+      title: "Brain-Computer Interface",
+      description: "NeuroTech-powered product unlocks and neural integrations"
     },
     {
       icon: CreditCard,
-      title: "Elite Credit Solutions",
-      description: "Billionaire-class tradelines and credit access"
+      title: "Billionaire-Class Tradelines",
+      description: "Elite credit solutions and billion-dollar financial access"
     }
   ];
 
   return (
-    <div className="space-y-12 animate-fade-in">
+    <div className="space-y-16 animate-fade-in">
       {/* Hero Section */}
-      <div className="text-center space-y-6 luxury-card bg-gradient-to-br from-luxury-purple/20 via-luxury-gold/20 to-luxury-purple/20 border-2 border-luxury-purple/30 relative overflow-hidden hover-card">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-orange-500/10 animate-pulse" />
-        <div className="relative p-8 space-y-6">
-          <div className="flex items-center justify-center space-x-3 mb-4">
-            <Gem className="w-8 h-8 text-luxury-purple animate-pulse" />
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-luxury-purple to-luxury-gold bg-clip-text text-transparent">
+      <div className="text-center space-y-8 luxury-card bg-gradient-to-br from-luxury-purple/20 via-luxury-gold/20 to-luxury-blue/20 border-2 border-luxury-purple/30 relative overflow-hidden hover-card">
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-gold-500/10 to-blue-500/5 animate-pulse" />
+        <div className="absolute inset-0 bg-gradient-neon opacity-5 blur-3xl" />
+        
+        <div className="relative p-12 space-y-8">
+          <div className="flex items-center justify-center space-x-4 mb-6">
+            <Gem className="w-10 h-10 text-luxury-purple animate-pulse" />
+            <h1 className="text-5xl font-black bg-gradient-to-r from-luxury-purple via-luxury-gold to-luxury-blue bg-clip-text text-transparent">
               CrypDNA Vault – Billionaire-Class Future
             </h1>
-            <Gem className="w-8 h-8 text-luxury-gold animate-pulse" />
+            <Gem className="w-10 h-10 text-luxury-gold animate-pulse" />
           </div>
           
-          <div className="max-w-4xl mx-auto space-y-6 text-lg leading-relaxed">
-            <p className="text-foreground/90">
-              CrypDNA Vault is the <span className="font-bold text-luxury-purple">surreal luxury financial ecosystem</span> by Crypdawgs. 
-              We merge exclusive fashion drops, AI emotional intelligence, NeuroTech integrations, and elite credit solutions into one universe.
+          <div className="max-w-5xl mx-auto space-y-8 text-xl leading-relaxed">
+            <p className="text-foreground/95 font-medium">
+              CrypDNA Vault is building a future where <span className="font-bold text-luxury-purple">surreal fashion</span>, 
+              <span className="font-bold text-luxury-gold"> credit building</span>, 
+              <span className="font-bold text-luxury-blue"> emotional AI</span>, and 
+              <span className="font-bold text-luxury-purple"> neurotech</span> fuse into one luxury ecosystem.
             </p>
             
-            <p className="text-foreground/90">
-              Over the next few years, our ecosystem will deliver <span className="font-bold text-luxury-gold">billionaire-class tradelines</span>, 
-              surreal AI companions, emotional-financial guidance, and NeuroTech-powered product unlocks.
-            </p>
-            
-            <p className="text-foreground/90">
-              From luxury fashion to emotional AI credit scoring, every detail is designed to keep our members 
-              <span className="font-bold bg-gradient-to-r from-luxury-purple to-luxury-gold bg-clip-text text-transparent"> 10 steps ahead</span>. 
-              Crypdawgs is building a future where luxury, credit, and intelligent tech fuse into one seamless experience.
+            <p className="text-foreground/95 font-medium">
+              We are unlocking <span className="font-bold bg-gradient-to-r from-luxury-gold to-luxury-purple bg-clip-text text-transparent">billion-dollar tradelines</span>, 
+              brain-computer product unlocks, and AI companions—redefining what it means to live 
+              <span className="font-bold bg-gradient-to-r from-luxury-purple to-luxury-blue bg-clip-text text-transparent"> 10 steps ahead</span>.
             </p>
           </div>
         </div>
@@ -88,37 +87,39 @@ const AboutUs: React.FC = () => {
       </div>
 
       {/* Vision Statement */}
-      <div className="luxury-card bg-gradient-to-r from-black/20 to-gray-900/20 border-luxury-gold/30 hover-card">
-        <div className="p-8 text-center space-y-6">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <Star className="w-6 h-6 text-luxury-gold animate-pulse" />
-            <h3 className="text-2xl font-bold text-luxury-gold">The Crypdawgs Vision</h3>
-            <Star className="w-6 h-6 text-luxury-gold animate-pulse" />
+      <div className="luxury-card bg-gradient-to-r from-black/40 to-gray-900/40 border-luxury-gold/40 hover-card relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-neon opacity-10 blur-2xl" />
+        <div className="relative p-10 text-center space-y-8">
+          <div className="flex items-center justify-center space-x-3 mb-6">
+            <Star className="w-8 h-8 text-luxury-gold animate-pulse" />
+            <h3 className="text-3xl font-black bg-gradient-to-r from-luxury-gold via-luxury-purple to-luxury-blue bg-clip-text text-transparent">
+              The CrypDawgs Vision
+            </h3>
+            <Star className="w-8 h-8 text-luxury-purple animate-pulse" />
           </div>
           
-          <div className="max-w-3xl mx-auto space-y-4">
-            <p className="text-foreground/90 text-lg italic">
-              "Where financial evolution meets emotional intelligence, and luxury transcends the ordinary."
+          <div className="max-w-4xl mx-auto space-y-6">
+            <p className="text-foreground/95 text-2xl italic font-semibold">
+              "Join our forward-thinking community where technology, emotion, and luxury converge to unlock unprecedented possibilities."
             </p>
-            <p className="text-muted-foreground">
-              Join the exclusive community of forward-thinking individuals who understand that the future of finance 
-              is not just about numbers—it's about creating an ecosystem where technology, emotion, and luxury converge 
-              to unlock unprecedented possibilities.
+            <p className="text-muted-foreground text-lg font-medium">
+              This is more than finance—it's the future of surreal wealth. We're building an ecosystem where billionaire-class 
+              experiences become accessible to those who understand the convergence of AI, NeuroTech, and luxury finance.
             </p>
           </div>
 
-          <div className="flex items-center justify-center space-x-8 pt-6">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-luxury-purple">∞</div>
-              <div className="text-xs text-muted-foreground">Infinite Potential</div>
+          <div className="flex items-center justify-center space-x-12 pt-8">
+            <div className="text-center group">
+              <div className="text-4xl font-black text-luxury-purple group-hover:scale-110 transition-transform">∞</div>
+              <div className="text-sm text-muted-foreground font-medium">Infinite Potential</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-luxury-gold">⚡</div>
-              <div className="text-xs text-muted-foreground">Future Forward</div>
+            <div className="text-center group">
+              <div className="text-4xl font-black text-luxury-gold group-hover:scale-110 transition-transform">⚡</div>
+              <div className="text-sm text-muted-foreground font-medium">Future Forward</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-luxury-purple">💎</div>
-              <div className="text-xs text-muted-foreground">Luxury Redefined</div>
+            <div className="text-center group">
+              <div className="text-4xl font-black text-luxury-blue group-hover:scale-110 transition-transform">💎</div>
+              <div className="text-sm text-muted-foreground font-medium">Luxury Redefined</div>
             </div>
           </div>
         </div>
