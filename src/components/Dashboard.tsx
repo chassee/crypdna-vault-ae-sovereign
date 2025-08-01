@@ -18,7 +18,7 @@ const Dashboard = () => {
   const vaultId = Math.floor(Math.random() * 999) + 1;
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+    <div className="min-h-screen bg-background page-transition">
       <Navigation />
       
       <main className="container mx-auto px-6 py-8">
@@ -26,14 +26,14 @@ const Dashboard = () => {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-2">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-2 sparkle-animation">
                 Welcome to the Vault, Legend
               </h1>
-              <p className="text-gray-600 text-lg">Your premium CrypDNA financial gateway awaits</p>
+              <p className="text-muted-foreground text-lg">Your billionaire-class CrypDNA financial gateway awaits</p>
             </div>
             <div className="text-right">
-              <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-2xl shadow-lg">
-                <p className="text-sm font-medium">Assigned Vault ID</p>
+              <div className="apple-card px-6 py-3 text-white shadow-xl">
+                <p className="text-sm font-medium text-white/80">Assigned Vault ID</p>
                 <p className="text-xl font-bold">Vault Legend #{vaultId}</p>
               </div>
             </div>
@@ -60,65 +60,65 @@ const Dashboard = () => {
           <VaultVerification />
         </div>
 
-        {/* Credit Dashboard Stats */}
+        {/* Apple Wallet Style Credit Dashboard Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-green-200 shadow-lg hover:shadow-xl transition-all duration-300">
+          <div className="wallet-card p-6">
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
                 <Shield className="w-6 h-6 text-white" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Available Credit</p>
-                <p className="text-2xl font-bold text-green-600">$47,500</p>
+                <p className="text-sm text-muted-foreground">Available Credit</p>
+                <p className="text-2xl font-bold text-green-600 dna-score-pulse">$47,500</p>
               </div>
             </div>
-            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-3">
-              <p className="text-xs text-gray-600">Credit Utilization: 15%</p>
+            <div className="apple-card p-3 bg-gradient-to-r from-green-500/10 to-emerald-500/10">
+              <p className="text-xs text-muted-foreground">Credit Utilization: 15%</p>
             </div>
           </div>
 
-          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-blue-200 shadow-lg hover:shadow-xl transition-all duration-300">
+          <div className="wallet-card p-6">
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
                 <Star className="w-6 h-6 text-white" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Rewards Points</p>
-                <p className="text-2xl font-bold text-blue-600">2,847</p>
+                <p className="text-sm text-muted-foreground">Rewards Points</p>
+                <p className="text-2xl font-bold text-blue-600 dna-score-pulse">2,847</p>
               </div>
             </div>
-            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg p-3">
-              <p className="text-xs text-gray-600">+247 pts this month</p>
+            <div className="apple-card p-3 bg-gradient-to-r from-blue-500/10 to-cyan-500/10">
+              <p className="text-xs text-muted-foreground">+247 pts this month</p>
             </div>
           </div>
 
-          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-purple-200 shadow-lg hover:shadow-xl transition-all duration-300">
+          <div className="wallet-card p-6">
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
                 <Vault className="w-6 h-6 text-white" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Next Tier</p>
-                <p className="text-2xl font-bold text-purple-600">Elite</p>
+                <p className="text-sm text-muted-foreground">Next Tier</p>
+                <p className="text-2xl font-bold text-purple-600 dna-score-pulse">Elite</p>
               </div>
             </div>
-            <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-3">
-              <p className="text-xs text-gray-600">Progress: 78%</p>
+            <div className="apple-card p-3 bg-gradient-to-r from-purple-500/10 to-pink-500/10">
+              <p className="text-xs text-muted-foreground">Progress: 78%</p>
             </div>
           </div>
 
-          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-orange-200 shadow-lg hover:shadow-xl transition-all duration-300">
+          <div className="wallet-card p-6">
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
                 <span className="text-white font-bold text-lg">+</span>
               </div>
               <div>
-                <p className="text-sm text-gray-600">Score Boost</p>
-                <p className="text-2xl font-bold text-orange-600">+127</p>
+                <p className="text-sm text-muted-foreground">Score Boost</p>
+                <p className="text-2xl font-bold text-orange-600 dna-score-pulse">+127</p>
               </div>
             </div>
-            <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-3">
-              <p className="text-xs text-gray-600">Tradeline Benefits</p>
+            <div className="apple-card p-3 bg-gradient-to-r from-orange-500/10 to-red-500/10">
+              <p className="text-xs text-muted-foreground">Tradeline Benefits</p>
             </div>
           </div>
         </div>
@@ -134,69 +134,69 @@ const Dashboard = () => {
         {/* Drop 1 Preview – Vinyl Collectibles */}
         <VinylCollectiblesPreview />
         
-        {/* Member Perks Section */}
+        {/* Billionaire Member Perks Section */}
         <div className="mt-12 mb-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Exclusive Member Perks</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-6">Exclusive Billionaire Perks</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-green-200 shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="wallet-card p-6">
               <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mb-4">
                 <Shield className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-bold text-gray-800 mb-2">Priority Support</h3>
-              <p className="text-gray-600 text-sm mb-4">24/7 dedicated support line for Legend tier members</p>
-              <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-3">
+              <h3 className="font-bold text-foreground mb-2">Priority Support</h3>
+              <p className="text-muted-foreground text-sm mb-4">24/7 dedicated concierge for Legend tier members</p>
+              <div className="apple-card p-3 bg-gradient-to-r from-green-500/10 to-emerald-500/10">
                 <p className="text-xs text-green-600 font-medium">✓ Active</p>
               </div>
             </div>
             
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-purple-200 shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="wallet-card p-6">
               <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4">
                 <Star className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-bold text-gray-800 mb-2">Exclusive Rewards</h3>
-              <p className="text-gray-600 text-sm mb-4">Access to premium reward multipliers and exclusive offers</p>
-              <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-3">
-                <p className="text-xs text-purple-600 font-medium">5x Points Active</p>
+              <h3 className="font-bold text-foreground mb-2">Exclusive Rewards</h3>
+              <p className="text-muted-foreground text-sm mb-4">Access to billionaire-tier multipliers and exclusive benefits</p>
+              <div className="apple-card p-3 bg-gradient-to-r from-purple-500/10 to-pink-500/10">
+                <p className="text-xs text-purple-600 font-medium">10x Points Active</p>
               </div>
             </div>
             
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-blue-200 shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="wallet-card p-6">
               <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mb-4">
                 <Vault className="w-6 h-6 text-white" />
               </div>
-              <h3 className="font-bold text-gray-800 mb-2">Vault Tier Upgrades</h3>
-              <p className="text-gray-600 text-sm mb-4">Automatic tier progression with enhanced benefits</p>
-              <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg p-3">
+              <h3 className="font-bold text-foreground mb-2">Vault Tier Upgrades</h3>
+              <p className="text-muted-foreground text-sm mb-4">Automatic progression with enhanced billionaire benefits</p>
+              <div className="apple-card p-3 bg-gradient-to-r from-blue-500/10 to-cyan-500/10">
                 <p className="text-xs text-blue-600 font-medium">Next: Elite (78%)</p>
               </div>
             </div>
           </div>
         </div>
         
-        {/* Future Expansion Placeholder */}
+        {/* Future Luxury Expansion */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-purple-200 shadow-lg hover:shadow-xl transition-all duration-300">
+          <div className="wallet-card p-6">
             <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4">
               <span className="text-white font-bold">AI</span>
             </div>
-            <h3 className="font-bold text-gray-800 mb-2">AI Bot Integration</h3>
-            <p className="text-gray-600 text-sm">Coming Soon: Personalized financial AI assistant for advanced credit optimization</p>
+            <h3 className="font-bold text-foreground mb-2">AI Concierge</h3>
+            <p className="text-muted-foreground text-sm">Coming Soon: Personal AI financial advisor with billionaire-level insights</p>
           </div>
           
-          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-blue-200 shadow-lg hover:shadow-xl transition-all duration-300">
+          <div className="wallet-card p-6">
             <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mb-4">
               <span className="text-white font-bold">NT</span>
             </div>
-            <h3 className="font-bold text-gray-800 mb-2">Neurotech Unlocks</h3>
-            <p className="text-gray-600 text-sm">Coming Soon: Cognitive-based credit tools and neural financial insights</p>
+            <h3 className="font-bold text-foreground mb-2">Neurotech Access</h3>
+            <p className="text-muted-foreground text-sm">Coming Soon: Cognitive-enhanced credit optimization and neural wealth insights</p>
           </div>
           
-          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-green-200 shadow-lg hover:shadow-xl transition-all duration-300">
+          <div className="wallet-card p-6">
             <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mb-4">
               <span className="text-white font-bold">EM</span>
             </div>
-            <h3 className="font-bold text-gray-800 mb-2">Emotion Vault Tiers</h3>
-            <p className="text-gray-600 text-sm">Coming Soon: Sentiment-based premium access and emotion-driven benefits</p>
+            <h3 className="font-bold text-foreground mb-2">Emotion Vault</h3>
+            <p className="text-muted-foreground text-sm">Coming Soon: Sentiment-driven luxury access and emotional wealth management</p>
           </div>
         </div>
       </main>

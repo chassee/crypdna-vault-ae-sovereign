@@ -207,19 +207,30 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/10 opacity-20"></div>
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4 page-transition">
+      {/* Animated background particles */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -left-40 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -right-40 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-700"></div>
+        <div className="absolute top-1/2 left-1/2 w-60 h-60 bg-indigo-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
       
-      <Card className="w-full max-w-md relative z-10 bg-white/95 backdrop-blur-sm border-purple-200 shadow-2xl">
-        <CardHeader className="text-center space-y-2">
-          <div className="mx-auto w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-full flex items-center justify-center mb-4">
-            <Lock className="w-8 h-8 text-white" />
+      <Card className="w-full max-w-md relative z-10 glassmorphism-auth">
+        <CardHeader className="text-center space-y-4">
+          {/* Animated Diamond Logo */}
+          <div className="mx-auto w-20 h-20 bg-gradient-to-br from-purple-500 via-blue-600 to-cyan-500 rounded-2xl flex items-center justify-center mb-6 diamond-logo shadow-xl">
+            <div className="relative">
+              <Lock className="w-10 h-10 text-white" />
+              {/* Sparkle effects */}
+              <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full sparkle-animation"></div>
+              <div className="absolute -bottom-1 -left-1 w-1 h-1 bg-white rounded-full sparkle-animation delay-1000"></div>
+            </div>
           </div>
-          <CardTitle className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+          <CardTitle className="text-3xl font-bold bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent animate-shimmer">
             CrypDNA Vault
           </CardTitle>
-          <CardDescription className="text-gray-600">
-            Access your secure crypto vault
+          <CardDescription className="text-white/70 text-lg">
+            Your billionaire-class secure gateway
           </CardDescription>
         </CardHeader>
 
@@ -239,38 +250,38 @@ const Auth = () => {
             <TabsContent value="login" className="space-y-4">
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="emailOrUsername">Email or Username</Label>
+                  <Label htmlFor="emailOrUsername" className="text-white/90 font-medium">Email or Username</Label>
                   <div className="relative">
-                    <UserIcon className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <UserIcon className="absolute left-3 top-3 h-4 w-4 text-white/60" />
                     <Input
                       id="emailOrUsername"
                       placeholder="Enter email or username"
                       type="text"
                       value={loginForm.emailOrUsername}
                       onChange={(e) => setLoginForm(prev => ({ ...prev, emailOrUsername: e.target.value }))}
-                      className="pl-10"
+                      className="pl-10 luxury-input focus-ring-input text-white placeholder:text-white/50"
                       required
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password" className="text-white/90 font-medium">Password</Label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <Lock className="absolute left-3 top-3 h-4 w-4 text-white/60" />
                     <Input
                       id="password"
                       placeholder="Enter password"
                       type={showPassword ? "text" : "password"}
                       value={loginForm.password}
                       onChange={(e) => setLoginForm(prev => ({ ...prev, password: e.target.value }))}
-                      className="pl-10 pr-10"
+                      className="pl-10 pr-10 luxury-input focus-ring-input text-white placeholder:text-white/50"
                       required
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                      className="absolute right-3 top-3 text-white/60 hover:text-white transition-colors"
                     >
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
@@ -279,10 +290,10 @@ const Auth = () => {
 
                 <Button 
                   type="submit" 
-                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700" 
+                  className="w-full amex-cta text-white font-semibold py-3 text-lg" 
                   disabled={loading}
                 >
-                  {loading ? 'Signing in...' : 'Sign In'}
+                  {loading ? 'Signing in...' : 'Access Billionaire Vault'}
                 </Button>
               </form>
 
