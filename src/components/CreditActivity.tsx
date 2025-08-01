@@ -60,43 +60,62 @@ const CreditActivity = () => {
 
   return (
     <div className="luxury-card hover-card relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5" />
+      <div className="absolute inset-0 bg-gradient-to-br from-luxury-purple/5 to-luxury-gold/5" />
       <div className="p-6 relative z-10">
-        <h3 className="text-lg font-semibold mb-4 text-foreground border-b-2 border-luxury-purple inline-block pb-1">
-          Credit Activity
-        </h3>
+        <div className="flex items-center gap-2 mb-4">
+          <Activity className="w-5 h-5 text-luxury-purple" />
+          <h3 className="text-lg font-semibold text-foreground border-b-2 border-luxury-purple inline-block pb-1">
+            Credit Activity Monitor
+          </h3>
+        </div>
         
         {loading ? (
           <div className="flex items-center justify-center py-8">
             <div className="luxury-spinner" />
+            <span className="ml-3 text-muted-foreground">Syncing credit events...</span>
           </div>
         ) : (
           <div className="space-y-3">
-            {activities.map((activity, index) => (
-              <div 
-                key={activity.id} 
-                className="flex items-center justify-between p-4 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-lg hover:from-purple-500/20 hover:to-pink-500/20 transition-all duration-300 transform hover:scale-[1.02] animate-fade-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white">
-                    {getEventIcon(activity.event_type)}
-                  </div>
-                  <div>
-                    <div className="font-medium text-foreground">{activity.description}</div>
-                    <div className="text-sm text-muted-foreground">{activity.event_type}</div>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="font-bold text-foreground">
-                    {activity.amount > 0 ? `+$${activity.amount.toLocaleString()}` : 'Qualified'}
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    {new Date(activity.created_at).toLocaleDateString()}
-                  </div>
-                </div>
+            {activities.length === 0 ? (
+              <div className="text-center py-8">
+                <Lock className="w-12 h-12 text-muted-foreground mx-auto mb-3 opacity-50" />
+                <p className="text-muted-foreground">No credit activity to display</p>
+                <p className="text-xs text-muted-foreground mt-1">Activities will appear once synced</p>
               </div>
-            ))}
+            ) : (
+              activities.map((activity, index) => (
+                <div 
+                  key={activity.id} 
+                  className="flex items-center justify-between p-4 bg-gradient-to-r from-luxury-purple/10 to-luxury-gold/10 rounded-lg hover:from-luxury-purple/20 hover:to-luxury-gold/20 transition-all duration-300 transform hover:scale-[1.02] animate-fade-in border border-luxury-purple/20"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-luxury-purple to-luxury-gold flex items-center justify-center text-white shadow-lg">
+                      {getEventIcon(activity.event_type)}
+                    </div>
+                    <div>
+                      <div className="font-medium text-foreground">{activity.description}</div>
+                      <div className="text-sm text-muted-foreground flex items-center gap-2">
+                        <span className="px-2 py-1 bg-luxury-purple/20 rounded-full text-xs font-medium">
+                          {activity.event_type}
+                        </span>
+                        <span>•</span>
+                        <span>Live</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="font-bold text-foreground text-lg">
+                      {activity.amount > 0 ? `+$${activity.amount.toLocaleString()}` : 'Qualified'}
+                    </div>
+                    <div className="text-xs text-muted-foreground flex items-center gap-1">
+                      <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                      {new Date(activity.created_at).toLocaleDateString()}
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         )}
       </div>

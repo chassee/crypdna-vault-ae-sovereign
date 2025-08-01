@@ -245,12 +245,10 @@
 
   /* Enhanced text contrast for light mode */
   .light .text-foreground {
-    @apply text-gray-900;
     color: hsl(0, 0%, 8%) !important;
   }
 
   .light .text-muted-foreground {
-    @apply text-gray-700;
     color: hsl(0, 0%, 35%) !important;
   }
 
@@ -265,6 +263,28 @@
 
   .light .luxury-card .text-muted-foreground {
     color: hsl(0, 0%, 30%) !important;
+  }
+
+  /* Dark mode text contrast */
+  .dark .text-foreground {
+    color: hsl(0, 0%, 98%) !important;
+  }
+
+  .dark .text-muted-foreground {
+    color: hsl(0, 0%, 70%) !important;
+  }
+
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    color: hsl(0, 0%, 98%) !important;
+  }
+
+  /* Dark mode luxury card content */
+  .dark .luxury-card .text-foreground {
+    color: hsl(0, 0%, 98%) !important;
+  }
+
+  .dark .luxury-card .text-muted-foreground {
+    color: hsl(0, 0%, 70%) !important;
   }
 
   /* CrypDNA Colorful Mode text contrast */

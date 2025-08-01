@@ -35,24 +35,24 @@ const AboutUs: React.FC = () => {
         <div className="relative p-12 space-y-8">
           <div className="flex items-center justify-center space-x-4 mb-6">
             <Gem className="w-10 h-10 text-luxury-purple animate-pulse" />
-            <h1 className="text-5xl font-black bg-gradient-to-r from-luxury-purple via-luxury-gold to-luxury-blue bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-5xl font-black bg-gradient-to-r from-luxury-purple via-luxury-gold to-luxury-blue bg-clip-text text-transparent text-center leading-tight">
               CrypDNA Vault – Billionaire-Class Future
             </h1>
             <Gem className="w-10 h-10 text-luxury-gold animate-pulse" />
           </div>
           
-          <div className="max-w-5xl mx-auto space-y-8 text-xl leading-relaxed">
-            <p className="text-foreground font-medium">
-              From NFT beginnings to AI robots and neurotech frontiers, <span className="font-bold text-luxury-purple">Crypdawgs</span> evolved beyond imagination. 
-              What started as digital collectibles transformed into <span className="font-bold text-luxury-gold">surreal fashion</span>, 
-              then <span className="font-bold text-luxury-blue">emotional AI companions</span>, and now 
-              <span className="font-bold text-luxury-purple">brain-computer luxury ecosystems</span>.
+          <div className="max-w-5xl mx-auto space-y-8 text-lg md:text-xl leading-relaxed">
+            <p className="text-foreground font-medium text-center">
+              CrypDNA Vault is building a future where <span className="font-bold text-luxury-purple">surreal fashion</span>, 
+              <span className="font-bold text-luxury-gold">credit building</span>, 
+              <span className="font-bold text-luxury-blue">emotional AI</span>, and 
+              <span className="font-bold text-luxury-purple">neurotech</span> fuse into one luxury ecosystem.
             </p>
             
-            <p className="text-foreground font-medium">
+            <p className="text-foreground font-medium text-center">
               We are unlocking <span className="font-bold bg-gradient-to-r from-luxury-gold to-luxury-purple bg-clip-text text-transparent">billion-dollar tradelines</span>, 
-              neural-linked product access, and AI beings that understand your deepest financial emotions—redefining what it means to live 
-              <span className="font-bold bg-gradient-to-r from-luxury-purple to-luxury-blue bg-clip-text text-transparent">10 steps ahead</span> of tomorrow.
+              brain-computer product unlocks, and AI companions—redefining what it means to live 
+              <span className="font-bold bg-gradient-to-r from-luxury-purple to-luxury-blue bg-clip-text text-transparent">10 steps ahead</span>.
             </p>
           </div>
         </div>
