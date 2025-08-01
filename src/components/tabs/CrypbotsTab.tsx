@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Brain, Heart, Zap, Plus, Settings, Lock, Unlock } from 'lucide-react';
+import CrypbotManagement from '../CrypbotManagement';
 
 const CrypbotsTab = () => {
   const [crypbots, setCrypbots] = useState<any[]>([]);
@@ -173,18 +174,17 @@ const CrypbotsTab = () => {
               </CardTitle>
               <CardDescription className="text-gray-400">Manage your AI financial companions</CardDescription>
             </div>
-            <div className="px-6 py-3 bg-purple-500/20 border border-purple-400/50 rounded-lg text-purple-300 font-medium cursor-not-allowed opacity-50 flex items-center gap-2">
-              <Lock className="w-4 h-4" />
-              Coming Soon
-            </div>
           </div>
         </CardHeader>
         <CardContent>
+          <CrypbotManagement 
+            onCrypbotAdded={fetchCrypbots}
+            onCrypbotDeleted={fetchCrypbots}
+            crypbots={crypbots}
+          />
           {loading ? (
             <div className="text-center py-12">
-              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 animate-spin">
-                <div className="w-full h-full rounded-full border-4 border-transparent border-t-white animate-spin" />
-              </div>
+              <div className="luxury-spinner mx-auto mb-4" />
               <p className="text-muted-foreground">Initializing quantum neural networks...</p>
             </div>
           ) : crypbots.length > 0 ? (
@@ -234,15 +234,9 @@ const CrypbotsTab = () => {
                   </div>
                   <h4 className="text-xl font-semibold text-foreground">Crypb0ts Awaiting Deployment</h4>
                   <p className="text-muted-foreground max-w-md mx-auto">
-                    Your emotional AI companions are locked in secure capsules, ready for activation.
+                    Create your first AI companion to begin the emotional sync journey.
                   </p>
-                  <button 
-                    className="px-6 py-3 bg-purple-500/20 border border-purple-400/50 rounded-lg text-purple-300 font-medium cursor-not-allowed opacity-50"
-                    disabled
-                  >
-                    Deploy AI Companion
-                  </button>
-                  <div className="text-xs text-purple-400 mt-2">Elite Tier Required</div>
+                  <p className="text-xs text-purple-400 mt-2">Ready for deployment</p>
                 </div>
               </div>
             </div>

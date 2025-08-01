@@ -144,16 +144,23 @@ const VaultDashboard = () => {
                 onClick={toggleTheme}
                 variant="ghost"
                 size="sm"
-                className="luxury-transition relative group hover:bg-gradient-to-r hover:from-purple-500/20 hover:to-gold-500/20"
-                title={theme === 'dark' ? 'Switch to CrypDawg Light Mode' : 'Switch to Dark Mode'}
+                className="luxury-transition relative group overflow-hidden bg-gradient-to-r from-purple-500/10 to-pink-500/10 hover:from-purple-500/20 hover:to-pink-500/20 border border-purple-500/20 hover:border-purple-400/30"
+                title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
               >
-                {theme === 'dark' ? (
-                  <Sparkles className="h-4 w-4 text-luxury-purple animate-pulse" />
-                ) : (
-                  <Moon className="h-4 w-4 text-luxury-gold" />
-                )}
-                <div className="absolute inset-0 rounded-md bg-gradient-to-r from-purple-500/10 to-gold-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-gold-500 rounded-md opacity-0 group-hover:opacity-20 blur transition-opacity" />
+                <div className="relative flex items-center gap-2 z-10">
+                  {theme === 'dark' ? (
+                    <>
+                      <Sparkles className="h-4 w-4 text-yellow-400" />
+                      <span className="text-xs font-medium text-foreground">Light</span>
+                    </>
+                  ) : (
+                    <>
+                      <Moon className="h-4 w-4 text-purple-400" />
+                      <span className="text-xs font-medium text-foreground">Dark</span>
+                    </>
+                  )}
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
               </Button>
               <Button
                 onClick={handleSignOut}
@@ -171,11 +178,19 @@ const VaultDashboard = () => {
 
       <div className="container mx-auto px-6 py-8 space-y-12">
         {/* Welcome Section */}
-        <div className="text-center space-y-4 animate-fade-in">
-          <h2 className="text-4xl font-bold">Welcome back, {userName}</h2>
-          <p className="text-muted-foreground text-lg">
-            Vault ID: <span className="font-mono text-luxury-purple">{vaultId}</span>
-          </p>
+        <div className="text-center space-y-6 animate-fade-in">
+          <div className="space-y-2">
+            <h2 className="text-5xl font-black bg-gradient-to-r from-luxury-purple via-luxury-gold to-luxury-blue bg-clip-text text-transparent">
+              Welcome back, {userName}
+            </h2>
+            <p className="text-muted-foreground text-xl font-medium">
+              Vault ID: <span className="font-mono text-luxury-purple text-2xl">{vaultId}</span>
+            </p>
+            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+              <span>Tier:</span>
+              <LuxuryTierBadge tier={userTier} />
+            </div>
+          </div>
         </div>
 
         {/* Luxury Debit Card Section */}

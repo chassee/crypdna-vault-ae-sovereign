@@ -15,14 +15,27 @@ const CreditActivity = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // Display default activities for now (will be replaced with real data from credit_activity table)
-      setActivities([
-        { id: 1, event_type: 'Credit', description: 'Credit line increase approved', amount: 15000, created_at: new Date().toISOString() },
-        { id: 2, event_type: 'Rewards', description: 'Premium rewards earned', amount: 347, created_at: new Date().toISOString() },
-        { id: 3, event_type: 'Tradeline', description: 'Tradeline boost activated', amount: 75, created_at: new Date().toISOString() },
-        { id: 4, event_type: 'Payment', description: 'Auto-payment processed', amount: 2450, created_at: new Date().toISOString() },
-        { id: 5, event_type: 'Benefit', description: 'Vault tier upgrade qualified', amount: 0, created_at: new Date().toISOString() },
-      ]);
+      // Fetch real credit activity data
+      const { data: creditActivities, error } = await supabase
+        .from('credit_activity')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      if (error) {
+        console.error('Error fetching credit activity:', error);
+        // Fallback to mock data
+        setActivities([
+          { id: 1, event_type: 'Credit', description: 'Credit line increase approved', amount: 15000, created_at: new Date().toISOString() },
+          { id: 2, event_type: 'Rewards', description: 'Premium rewards earned', amount: 347, created_at: new Date().toISOString() },
+          { id: 3, event_type: 'Tradeline', description: 'Tradeline boost activated', amount: 75, created_at: new Date().toISOString() },
+          { id: 4, event_type: 'Payment', description: 'Auto-payment processed', amount: 2450, created_at: new Date().toISOString() },
+          { id: 5, event_type: 'Benefit', description: 'Vault tier upgrade qualified', amount: 0, created_at: new Date().toISOString() },
+        ]);
+      } else {
+        setActivities(creditActivities || []);
+      }
     } catch (error) {
       console.error('Error in fetchCreditActivity:', error);
     } finally {
@@ -45,7 +58,6 @@ const CreditActivity = () => {
     }
   };
 
-  // Show mystery message instead of loading
   return (
     <div className="luxury-card hover-card relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5" />
@@ -53,37 +65,40 @@ const CreditActivity = () => {
         <h3 className="text-lg font-semibold mb-4 text-foreground border-b-2 border-luxury-purple inline-block pb-1">
           Credit Activity
         </h3>
-        <div className="relative overflow-hidden">
-          {/* Blurred placeholder content */}
-          <div className="space-y-3 opacity-30 blur-sm">
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="flex items-center justify-between p-4 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-lg">
+        
+        {loading ? (
+          <div className="flex items-center justify-center py-8">
+            <div className="luxury-spinner" />
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {activities.map((activity, index) => (
+              <div 
+                key={activity.id} 
+                className="flex items-center justify-between p-4 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-lg hover:from-purple-500/20 hover:to-pink-500/20 transition-all duration-300 transform hover:scale-[1.02] animate-fade-in"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500"></div>
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white">
+                    {getEventIcon(activity.event_type)}
+                  </div>
                   <div>
-                    <div className="h-4 bg-foreground/20 rounded w-32 mb-1"></div>
-                    <div className="h-3 bg-muted-foreground/20 rounded w-24"></div>
+                    <div className="font-medium text-foreground">{activity.description}</div>
+                    <div className="text-sm text-muted-foreground">{activity.event_type}</div>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="h-4 bg-foreground/20 rounded w-16 mb-1"></div>
-                  <div className="h-3 bg-muted-foreground/20 rounded w-12"></div>
+                  <div className="font-bold text-foreground">
+                    {activity.amount > 0 ? `+$${activity.amount.toLocaleString()}` : 'Qualified'}
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    {new Date(activity.created_at).toLocaleDateString()}
+                  </div>
                 </div>
               </div>
             ))}
           </div>
-          
-          {/* Mystery overlay */}
-          <div className="absolute inset-0 mystery-blur flex items-center justify-center">
-            <div className="text-center space-y-3">
-              <div className="relative lock-glow">
-                <Lock className="w-10 h-10 text-purple-400 mx-auto animate-pulse" />
-                <div className="absolute inset-0 w-10 h-10 mx-auto border border-purple-400/50 rounded-lg animate-ping" />
-              </div>
-              <div className="text-sm text-purple-300 font-medium tracking-wider">SYNCED TO VAULT – MYSTERY MODE</div>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

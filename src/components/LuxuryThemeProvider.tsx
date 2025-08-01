@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-type Theme = 'dark' | 'light';
+type Theme = 'dark' | 'light' | 'gradient';
 
 interface ThemeContextType {
   theme: Theme;
@@ -33,14 +33,14 @@ export const LuxuryThemeProvider: React.FC<ThemeProviderProps> = ({ children }) 
     setTheme(initialTheme);
     
     // Apply theme to document
-    document.documentElement.classList.remove('dark', 'vibrant');
+    document.documentElement.classList.remove('dark', 'light', 'gradient');
     document.documentElement.classList.add(initialTheme);
   }, []);
 
   const updateTheme = (newTheme: Theme) => {
     setTheme(newTheme);
     localStorage.setItem('luxury-theme', newTheme);
-    document.documentElement.classList.remove('dark', 'light');
+    document.documentElement.classList.remove('dark', 'light', 'gradient');
     document.documentElement.classList.add(newTheme);
   };
 

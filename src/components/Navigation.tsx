@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { User, Vault, FileText } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
 const Navigation = () => {
   return (
@@ -19,7 +20,8 @@ const Navigation = () => {
             </div>
           </div>
           
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-4">
+            <ThemeToggle />
             <button className="text-gray-600 hover:text-purple-600 transition-colors">
               <FileText className="w-5 h-5" />
             </button>
