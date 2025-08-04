@@ -6,14 +6,89 @@
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
 
 @layer base {
-  :root,
+  :root {
+    /* Light Mode - Clean and Professional */
+    --background: 0 0% 100%;
+    --background-secondary: 0 0% 98%;
+    --foreground: 0 0% 3.9%;
+    --foreground-secondary: 0 0% 45.1%;
+    --warm-white: 0 0% 100%;
+    --dark-grey: 0 0% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+
+    --primary: 262 90% 60%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 262 90% 60%;
+
+    --radius: 1.2rem;
+
+    /* Light Mode Design Tokens */
+    --luxury-purple: 262 90% 60%;
+    --luxury-purple-dark: 262 90% 45%;
+    --luxury-purple-light: 262 90% 75%;
+    --luxury-gold: 45 100% 60%;
+    --luxury-platinum: 0 0% 70%;
+    --luxury-charcoal: 0 0% 13%;
+    --luxury-glass: 0 0% 0% / 0.05;
+    --luxury-glass-dark: 0 0% 0% / 0.1;
+    --luxury-diamond: 262 80% 85%;
+
+    /* Light Mode Gradients */
+    --gradient-background: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 98%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(var(--luxury-purple)), hsl(var(--luxury-purple-dark)));
+    --gradient-luxury: linear-gradient(135deg, hsl(var(--luxury-purple)) 0%, hsl(var(--luxury-gold)) 50%, hsl(var(--luxury-purple-light)) 100%);
+    --gradient-glassmorphism: linear-gradient(135deg, hsla(0, 0%, 100%, 0.9), hsla(0, 0%, 100%, 0.7));
+    --gradient-card: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 99%) 100%);
+    --gradient-panel: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 98%) 100%);
+    --gradient-amex: linear-gradient(135deg, hsl(262, 90%, 60%) 0%, hsl(220, 90%, 60%) 50%, hsl(180, 90%, 60%) 100%);
+    --gradient-apple: linear-gradient(135deg, hsl(262, 80%, 70%) 0%, hsl(220, 70%, 75%) 100%);
+
+    /* Light Mode Shadows */
+    --shadow-luxury: 0 25px 50px -12px hsl(var(--luxury-purple) / 0.3);
+    --shadow-glass: 0 8px 32px hsl(0 0% 0% / 0.1);
+    --shadow-glow: 0 0 60px hsl(var(--luxury-purple) / 0.4);
+    --shadow-card-hover: 0 20px 40px -8px hsl(var(--luxury-purple) / 0.2);
+    --shadow-apple: 0 4px 20px hsl(0 0% 0% / 0.1);
+    --shadow-amex: 0 8px 30px hsl(var(--luxury-purple) / 0.2);
+    --shadow-3d: 0 10px 25px -5px hsl(0 0% 0% / 0.1), 0 20px 40px -10px hsl(var(--luxury-purple) / 0.1);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
   .dark {
-    /* Permanent Global Dark Mode - Luxury Deep Gradient */
+    /* Dark Mode - Luxury Deep Gradient */
     --background: 0 0% 3.9%;
     --background-secondary: 0 0% 7.1%;
-    --foreground: 0 0% 100%;
+    --foreground: 0 0% 98%;
     --foreground-secondary: 0 0% 87.8%;
-    --warm-white: 0 0% 100%;
+    --warm-white: 0 0% 98%;
     --dark-grey: 0 0% 3.9%;
 
     --card: 0 0% 9%;
@@ -168,8 +243,6 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #0A0A0A 0%, #121212 100%) !important;
-    color: #FFFFFF !important;
     min-height: 100vh;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -178,42 +251,47 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Global Text Readability - Permanent Dark Mode */
-  .text-foreground {
-    color: #FFFFFF !important;
+  /* Mobile Responsive Typography */
+  @media (max-width: 768px) {
+    h1 { @apply text-3xl sm:text-4xl md:text-5xl; }
+    h2 { @apply text-2xl sm:text-3xl; }
+    h3 { @apply text-xl sm:text-2xl; }
+    h4 { @apply text-lg sm:text-xl; }
+    h5 { @apply text-base sm:text-lg; }
+    h6 { @apply text-sm sm:text-base; }
+    
+    body { @apply text-sm; }
+    p { @apply text-sm leading-relaxed; }
+    
+    /* Mobile spacing adjustments */
+    .container { @apply px-4 sm:px-6; }
+    .space-y-8 > * + * { @apply mt-4 sm:mt-6 lg:mt-8; }
+    .space-y-6 > * + * { @apply mt-3 sm:mt-4 lg:mt-6; }
+    .space-y-4 > * + * { @apply mt-2 sm:mt-3 lg:mt-4; }
+    
+    /* Prevent overflow */
+    * { 
+      @apply max-w-full; 
+      word-wrap: break-word;
+    }
+  }
+
+  /* Text overlay for better readability on gradients */
+  .text-overlay {
+    position: relative;
   }
   
-  .text-foreground-secondary {
-    color: #E0E0E0 !important;
-  }
-  
-  .text-muted-foreground,
-  .text-muted-foreground * {
-    color: #E0E0E0 !important;
-  }
-
-  /* Ensure all text elements use proper light colors */
-  h1, h2, h3, h4, h5, h6 {
-    color: #FFFFFF !important;
-  }
-
-  p, span, div, label {
-    color: #E0E0E0 !important;
-  }
-
-  /* Tab content and cards */
-  .tab-content,
-  .tab-content *,
-  .card-content,
-  .card-content * {
-    color: #E0E0E0 !important;
-  }
-
-  /* Headers and important text */
-  .card-title,
-  .font-bold,
-  .font-semibold {
-    color: #FFFFFF !important;
+  .text-overlay::before {
+    content: '';
+    position: absolute;
+    inset: -0.5rem;
+    background: linear-gradient(135deg, 
+      hsl(var(--background) / 0.8), 
+      hsl(var(--background) / 0.6)
+    );
+    backdrop-filter: blur(8px);
+    border-radius: inherit;
+    z-index: -1;
   }
 
   /* Premium Card Backgrounds */
