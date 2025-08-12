@@ -54,7 +54,7 @@ export default function Index() {
               </CardDescription>
             </CardHeader>
             <CardContent className="pt-0">
-               <Button 
+              <Button 
                 onClick={() => navigate('/login')}
                 className="w-full amex-cta text-white font-semibold py-3 sm:py-4 text-base sm:text-lg lg:text-xl mb-4"
               >
