@@ -76,6 +76,13 @@ const DunBradstreetWidget: React.FC = () => {
             <div className={`font-medium ${config.color}`}>{config.text}</div>
             <div className="text-sm text-muted-foreground mt-1">{config.description}</div>
           </div>
+          <div className="shrink-0">
+            <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${config.color === 'text-green-400' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : config.color === 'text-blue-400' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' : 'bg-orange-500/20 text-orange-400 border border-orange-500/30'}`}>
+              {status === 'active' && '✅ D&B Active'}
+              {status === 'approved' && '🔄 D&B Approved'}
+              {status === 'pending' && '⏳ D&B Pending'}
+            </div>
+          </div>
         </div>
 
         <div className="space-y-3">

@@ -13,6 +13,7 @@ import ViewerOnboarding from "./pages/ViewerOnboarding";
 import VaultSignup from "./pages/VaultSignup";
 import VaultLogin from "./pages/VaultLogin";
 import VaultDashboard from "./pages/VaultDashboard";
+import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -28,7 +29,8 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
-            <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/dashboard" element={<ProtectedRoute redirectTo="/login"><DashboardPage /></ProtectedRoute>} />
             <Route path="/vault-viewer" element={<ProtectedRoute><VaultViewerPage /></ProtectedRoute>} />
             <Route path="/viewer-onboarding" element={<ViewerOnboarding />} />
           <Route path="/vault-signup" element={<VaultSignup />} />
