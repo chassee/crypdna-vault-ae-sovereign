@@ -67,7 +67,9 @@ const DunBradstreetWidget: React.FC = () => {
               <p className="text-sm text-muted-foreground">Tradeline Reporting</p>
             </div>
           </div>
-          <div className="bg-blue-600 text-white px-3 py-1 rounded text-sm font-bold">D&B</div>
+           <div className="bg-green-600 text-white px-3 py-2 rounded-full text-sm font-bold flex items-center gap-1 shadow-lg">
+             ✅ D&B Active
+           </div>
         </div>
 
         <div className={`flex items-center gap-3 p-4 rounded-lg ${config.bgColor} border ${config.borderColor}`}>
