@@ -42,7 +42,7 @@ const VaultDashboard = () => {
         setSession(session);
         setUser(session?.user ?? null);
         if (!session?.user) {
-          navigate('/login');
+          navigate('/vault-login');
         } else {
           // Fetch user profile data after authentication
           setTimeout(() => {
@@ -57,7 +57,7 @@ const VaultDashboard = () => {
       setSession(session);
       setUser(session?.user ?? null);
       if (!session?.user) {
-        navigate('/login');
+        navigate('/vault-login');
       } else {
         fetchUserProfile(session.user.id);
       }
@@ -100,7 +100,7 @@ const VaultDashboard = () => {
           title: "Signed Out",
           description: "You have been successfully signed out.",
         });
-        navigate('/login');
+        navigate('/vault-login');
       }
     } catch (error) {
       console.error('Sign out error:', error);
