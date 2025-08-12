@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
+import Login from "./pages/login";
 import DashboardPage from "./pages/Dashboard";
 import VaultViewerPage from "./pages/VaultViewer";
 import ViewerOnboarding from "./pages/ViewerOnboarding";
@@ -28,6 +29,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
             <Route path="/vault-viewer" element={<ProtectedRoute><VaultViewerPage /></ProtectedRoute>} />
             <Route path="/viewer-onboarding" element={<ViewerOnboarding />} />
