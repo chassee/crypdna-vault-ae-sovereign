@@ -1,123 +1,271 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Shield, DollarSign, Gift } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { ThemeToggle } from '@/components/ui/theme-toggle';
+// src/pages/Index.tsx
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+  createContext,
+  useContext,
+} from "react";
+import {
+  Sun,
+  Moon,
+  Shield,
+  DollarSign,
+  Gift,
+  CheckCircle,
+  Clock,
+  RefreshCcw,
+  AlertCircle,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
+/** =============== ONE-FILE THEME (persistent) =============== **/
+type Theme = "light" | "dark";
+const ThemeCtx = createContext<{ theme: Theme; toggle: () => void }>({
+  theme: "light",
+  toggle: () => {},
+});
+const useTheme = () => useContext(ThemeCtx);
+
+function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const getInitial = (): Theme => {
+    const saved =
+      typeof window !== "undefined"
+        ? localStorage.getItem("crypdna-theme")
+        : null;
+    if (saved === "light" || saved === "dark") return saved;
+    const prefersDark =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-color-scheme: dark)").matches;
+    return prefersDark ? "dark" : "light";
+  };
+  const [theme, setTheme] = useState<Theme>(getInitial);
+
+  // Inject minimal CSS variables once
+  useEffect(() => {
+    const id = "crypdna-theme-vars";
+    if (!document.getElementById(id)) {
+      const style = document.createElement("style");
+      style.id = id;
+      style.innerHTML = `
+        :root {
+          --bg: #ffffff;
+          --surface: #f6f8fb;
+          --card: #ffffff;
+          --text: #0b0f14;
+          --subtle: rgba(11,15,20,0.72);
+          --border: rgba(11,15,20,0.16);
+          --grad1: #7c3aed; /* purple */
+          --grad2: #06b6d4; /* cyan */
+          --success: #16a34a;
+          --emerald: #059669;
+          --amber: #d97706;
+          --sky: #0284c7;
+          --danger: #dc2626;
+        }
+        [data-theme="dark"] {
+          --bg: #0b0f14;
+          --surface: #0f141a;
+          --card: #111821;
+          --text: #f5f7fb;
+          --subtle: rgba(245,247,251,0.78);
+          --border: rgba(255,255,255,0.14);
+        }
+        html, body, #root { height:100%; }
+        body { margin:0; background: var(--bg); color: var(--text); font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+        .wrap { max-width: 1100px; margin: 0 auto; padding: 16px; }
+        .cryp-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.18); }
+        .card-pad { padding: 20px 22px; }
+        .title { font-size: 20px; font-weight: 900; margin: 0; color: var(--text); }
+        .desc { font-size: 16px; line-height: 1.45; color: var(--subtle); font-weight: 600; }
+        .pill { display:inline-flex; align-items:center; gap:8px; padding: 6px 12px; border-radius:999px; font-weight:900; font-size:14px; color:#fff; box-shadow:0 1px 2px rgba(0,0,0,0.25); }
+        .grid3 { display:grid; gap:16px; grid-template-columns: 1fr; }
+        @media (min-width: 640px){ .grid3{ grid-template-columns: 1fr 1fr 1fr; } }
+        .iconbox{ width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#fff; margin-bottom:12px; }
+        .g1{ background: linear-gradient(135deg, #8b5cf6, #2563eb); }
+        .g2{ background: linear-gradient(135deg, #22c55e, #059669); }
+        .g3{ background: linear-gradient(135deg, #3b82f6, #06b6d4); }
+        .header{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+        .toggle{ display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--text); font-weight:800; cursor:pointer; }
+        .ribbon{ margin-top:8px; font-size:12px; font-weight:800; color:var(--subtle); letter-spacing:.2px; }
+        .cta-bar{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px; margin-top:16px; }
+        .btn{ padding:10px 16px; border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--text); font-weight:900; cursor:pointer; }
+        .btn-primary{ background: linear-gradient(90deg, var(--grad1), var(--grad2)); color:#fff; border:none; }
+        .row{ display:flex; align-items:flex-start; justify-content:space-between; padding:10px 0; }
+        .row label{ font-weight:900; font-size:16px; color:var(--text); }
+        .row span{ font-weight:900; font-size:16px; color:var(--text); text-align:right; }
+        .divider{ border-top:1px solid var(--border); margin-top:14px; padding-top:12px; text-align:center; font-weight:900; }
+        .hoverable{ transition: transform .18s ease, box-shadow .18s ease; }
+        .hoverable:hover{ transform: translateY(-1px) scale(1.01); box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
+        .focusable:focus-visible{ outline:2px solid var(--grad2); outline-offset:2px; border-radius:10px; }
+      `;
+      document.head.appendChild(style);
+    }
+  }, []);
+
+  // Apply theme + persist
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === "dark") root.setAttribute("data-theme", "dark");
+    else root.removeAttribute("data-theme");
+    localStorage.setItem("crypdna-theme", theme);
+  }, [theme]);
+
+  const value = useMemo(
+    () => ({ theme, toggle: () => setTheme((t) => (t === "light" ? "dark" : "light")) }),
+    [theme]
+  );
+  return <ThemeCtx.Provider value={value}>{children}</ThemeCtx.Provider>;
+}
+
+/** =============== D&B CARD (high-contrast) =============== **/
+type DnbStatus = "active" | "approved" | "pending" | "syncing" | "error";
+const STATUS: Record<
+  DnbStatus,
+  { label: string; bg: string; Icon: React.ElementType }
+> = {
+  active: { label: "Active", bg: "var(--success)", Icon: CheckCircle },
+  approved: { label: "Approved", bg: "var(--emerald)", Icon: CheckCircle },
+  pending: { label: "Pending Integration", bg: "var(--amber)", Icon: Clock },
+  syncing: { label: "Awaiting Sync", bg: "var(--sky)", Icon: RefreshCcw },
+  error: { label: "Action Required", bg: "var(--danger)", Icon: AlertCircle },
+};
+
+function StatusBadge({ status }: { status: DnbStatus }) {
+  const { label, bg, Icon } = STATUS[status];
+  return (
+    <span className="pill" style={{ background: bg }}>
+      <Icon size={16} />
+      {label}
+    </span>
+  );
+}
+
+function DnbCard({ status }: { status: DnbStatus }) {
+  const nextReport = new Date(
+    Date.now() + 30 * 24 * 60 * 60 * 1000
+  ).toLocaleDateString();
+  return (
+    <section className="cryp-card card-pad hoverable" aria-labelledby="dnb-h">
+      <div className="header" style={{ marginBottom: 14 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <Shield size={20} color="var(--text)" />
+          <h3 id="dnb-h" className="title">
+            Dun &amp; Bradstreet
+          </h3>
+        </div>
+        <StatusBadge status={status} />
+      </div>
+
+      <div className="row">
+        <label>Tradeline Reporting</label>
+        <span style={{ color: "var(--subtle)", fontWeight: 800 }}>Enabled</span>
+      </div>
+      <div className="row">
+        <label>Integration</label>
+        <span>{status === "pending" ? "Pending" : "Connected"}</span>
+      </div>
+      <div className="row">
+        <label>Reporting</label>
+        <span>{status === "syncing" ? "Awaiting Sync" : "Monthly"}</span>
+      </div>
+
+      <div className="divider">Next report: {nextReport}</div>
+    </section>
+  );
+}
+
+/** =============== PAGE =============== **/
 export default function Index() {
   const navigate = useNavigate();
+  const { theme, toggle } = useTheme(); // will be provided below
+  // TODO: replace with your real paid flag from auth/billing
+  const isPaid = false as boolean;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-background/90 page-transition relative">
-      {/* Theme Toggle */}
-      <div className="absolute top-4 right-4 z-50">
-        <ThemeToggle />
-      </div>
-
-      {/* Animated background particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -left-40 w-60 sm:w-80 h-60 sm:h-80 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -right-40 w-60 sm:w-80 h-60 sm:h-80 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-700"></div>
-        <div className="absolute top-1/3 left-1/3 w-40 sm:w-60 h-40 sm:h-60 bg-indigo-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      </div>
-      
-      <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8 relative z-10">
+    <ThemeProvider>
+      <div className="wrap" role="main">
         {/* Header */}
-        <div className="text-center mb-8 sm:mb-12">
-          <div className="text-overlay mb-6">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 animate-shimmer bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
-              Welcome to CrypDNA Vault
-            </h1>
+        <div className="cryp-card card-pad" style={{ marginBottom: 16 }}>
+          <div className="header">
+            <div style={{ fontWeight: 900, fontSize: 18 }}>CrypDNA Vault</div>
+            <button className="toggle focusable" onClick={toggle}>
+              {document.documentElement.getAttribute("data-theme") === "dark" ? (
+                <Sun size={16} />
+              ) : (
+                <Moon size={16} />
+              )}
+              {document.documentElement.getAttribute("data-theme") === "dark"
+                ? "Light"
+                : "Dark"}
+            </button>
           </div>
-          <div className="text-overlay mb-4">
-            <p className="text-lg sm:text-xl lg:text-2xl text-foreground/80 max-w-3xl mx-auto mb-2 sm:mb-4">
-              Your billionaire-class gateway to credit building, identity management, and exclusive Crypdawgs benefits.
-            </p>
-          </div>
-          <div className="text-overlay">
-            <p className="text-sm sm:text-base lg:text-lg text-muted-foreground mt-2">
-              Access your vault, manage your CrypDNA File, and unlock luxury rewards.
-            </p>
+          <div className="ribbon">
+            AES‑256 at rest · HTTPS in transit · RBAC protected
           </div>
         </div>
 
-        {/* Call to Action */}
-        <div className="max-w-sm sm:max-w-lg mx-auto mb-12 sm:mb-16 text-center">
-          <Card className="glassmorphism-auth">
-            <CardHeader className="text-center pb-4 sm:pb-6">
-              <div className="mx-auto w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-500 via-blue-600 to-cyan-500 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 diamond-logo shadow-xl">
-                <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-              </div>
-              <CardTitle className="text-xl sm:text-2xl lg:text-3xl text-card-foreground font-bold">Access Your Secure Vault</CardTitle>
-              <CardDescription className="text-muted-foreground text-sm sm:text-base lg:text-lg">
-                Enter the billionaire-class CrypDNA ecosystem
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <Button 
-                onClick={() => navigate('/vault-login')}
-                className="w-full amex-cta text-white font-semibold py-3 sm:py-4 text-base sm:text-lg lg:text-xl mb-4"
-              >
-                Access Billionaire Vault
-              </Button>
-              <p className="text-xs sm:text-sm text-muted-foreground mt-4">
-                Don't have an account? <a href="https://crypdawgs.com" className="text-luxury-purple hover:text-luxury-purple-light transition-colors">Visit Crypdawgs.com</a>
-              </p>
-            </CardContent>
-          </Card>
+        {/* Three luxury cards */}
+        <div className="grid3">
+          <section className="cryp-card card-pad hoverable">
+            <div className="iconbox g1">
+              <Shield size={20} />
+            </div>
+            <h3 className="title">Secure Vault</h3>
+            <p className="desc" style={{ marginTop: 8 }}>
+              AES‑256 at rest. HTTPS in transit. RBAC‑locked. Your identity and
+              assets stay untouchable.
+            </p>
+          </section>
+
+          <section className="cryp-card card-pad hoverable">
+            <div className="iconbox g2">
+              <DollarSign size={20} />
+            </div>
+            <h3 className="title">Credit Building</h3>
+            <p className="desc" style={{ marginTop: 8 }}>
+              Real tradelines. Automatic reporting. Smart reminders. Grow credit
+              without guesswork.
+            </p>
+          </section>
+
+          <section className="cryp-card card-pad hoverable">
+            <div className="iconbox g3">
+              <Gift size={20} />
+            </div>
+            <h3 className="title">Exclusive Benefits</h3>
+            <p className="desc" style={{ marginTop: 8 }}>
+              Priority access, private drops, concierge support, and
+              members‑only perks built for whales.
+            </p>
+          </section>
         </div>
 
-        {/* Features */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-5xl mx-auto">
-          <Card className="apple-card">
-            <CardHeader className="text-center pb-4 sm:pb-6">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-              </div>
-              <CardTitle className="text-lg sm:text-xl font-bold text-card-foreground">Secure Vault</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-overlay">
-                <CardDescription className="text-muted-foreground text-center text-sm sm:text-base">
-                  Military-grade encryption protects your digital assets and identity data with Apple-level security.
-                </CardDescription>
-              </div>
-            </CardContent>
-          </Card>
+        {/* Dun & Bradstreet */}
+        <div style={{ marginTop: 16 }}>
+          <DnbCard status={"active"} />
+        </div>
 
-          <Card className="apple-card">
-            <CardHeader className="text-center pb-4 sm:pb-6">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-              </div>
-              <CardTitle className="text-lg sm:text-xl font-bold text-card-foreground">Credit Building</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-overlay">
-                <CardDescription className="text-muted-foreground text-center text-sm sm:text-base">
-                  Build and manage your credit score with our advanced AI-powered tools and exclusive tradelines.
-                </CardDescription>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="apple-card sm:col-span-2 lg:col-span-1">
-            <CardHeader className="text-center pb-4 sm:pb-6">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <Gift className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-              </div>
-              <CardTitle className="text-lg sm:text-xl font-bold text-card-foreground">Exclusive Benefits</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-overlay">
-                <CardDescription className="text-muted-foreground text-center text-sm sm:text-base">
-                  Access billionaire-tier rewards and benefits as a premium Crypdawgs member.
-                </CardDescription>
-              </div>
-            </CardContent>
-          </Card>
+        {/* CTA Bar */}
+        <div className="cryp-card cta-bar hoverable" role="region" aria-label="Vault access">
+          <div style={{ fontWeight: 900, fontSize: 16 }}>Vault Access</div>
+          {isPaid ? (
+            <button
+              className="btn focusable"
+              onClick={() => navigate("/vault-dashboard")}
+            >
+              Enter Vault
+            </button>
+          ) : (
+            <button
+              className="btn btn-primary focusable"
+              onClick={() => navigate("/join")}
+            >
+              Join The Vault — $50
+            </button>
+          )}
         </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }
