@@ -49,8 +49,8 @@ const VaultFiles = () => {
                 <div className="flex items-center space-x-3">
                   <div className={`w-3 h-3 rounded-full ${
                     activity.status === 'approved' ? 'bg-green-500' :
-                    activity.status === 'active' ? 'bg-status-active' :
-                    activity.status === 'pending' ? 'bg-status-pending' : 'bg-status-warning'
+                    activity.status === 'active' ? 'bg-blue-500' :
+                    activity.status === 'pending' ? 'bg-orange-500' : 'bg-purple-500'
                   }`}></div>
                   <div>
                     <p className="font-medium text-gray-800">{activity.description}</p>
@@ -93,7 +93,7 @@ const VaultFiles = () => {
             
             <div className="flex justify-between items-center">
               <span>Number of Reporting Tradelines:</span>
-              <span className="font-bold text-sm text-status-active">3 Active</span>
+              <span className="font-medium">3 Active</span>
             </div>
             
             <div className="flex justify-between items-center">

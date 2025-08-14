@@ -79,7 +79,7 @@ const BalanceBreakdown = () => {
         
         <div className="flex justify-between items-center p-4 bg-gradient-to-r from-orange-500/10 to-yellow-500/10 rounded-lg border border-orange-500/20">
           <span className="text-foreground font-medium">Pending Balance</span>
-          <span className="text-xl font-bold text-status-pending">${pendingBalance.toLocaleString()}</span>
+          <span className="text-xl font-bold text-orange-500">${pendingBalance.toLocaleString()}</span>
         </div>
         
         <div className="border-t border-border pt-4">

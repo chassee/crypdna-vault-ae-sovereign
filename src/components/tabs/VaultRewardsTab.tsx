@@ -232,7 +232,7 @@ const VaultRewardsTab = () => {
           <div className="space-y-3">
             <div className="flex items-center justify-between p-3 rounded-lg bg-luxury-purple/10">
               <span className="text-sm">Priority customer support</span>
-              <span className="text-sm font-bold text-status-active">Active</span>
+              <Badge variant="secondary">Active</Badge>
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg bg-gray-100/50 dark:bg-gray-800/50">
               <span className="text-sm">Exclusive product drops</span>

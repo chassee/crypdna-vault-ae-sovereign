@@ -212,7 +212,7 @@ const CrypbotsTab = () => {
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-muted-foreground">Status:</span>
-                        <span className="text-status-active font-bold text-sm">🟢 Neural Link Active</span>
+                        <span className="text-green-400">🟢 Neural Link Active</span>
                       </div>
                     </div>
                     <div className="w-full bg-gray-700 rounded-full h-2 mb-2">
@@ -232,7 +232,7 @@ const CrypbotsTab = () => {
                     <Brain className="w-12 h-12 text-purple-400 mx-auto" />
                     <Lock className="w-8 h-8 text-purple-400 absolute top-0 right-1/2 translate-x-1/2 -translate-y-2 animate-pulse" />
                   </div>
-                  <h4 className="text-xl font-semibold text-foreground">Crypb0ts <span className="text-status-pending font-bold text-lg">Awaiting Deployment</span></h4>
+                  <h4 className="text-xl font-semibold text-foreground">Crypb0ts Awaiting Deployment</h4>
                   <p className="text-muted-foreground max-w-md mx-auto">
                     Create your first AI companion to begin the emotional sync journey.
                   </p>
