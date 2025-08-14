@@ -1,5 +1,5 @@
-import React from 'react';
-import { User, Vault, FileText, LogOut } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { User, Vault, FileText, LogOut, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -8,6 +8,32 @@ import { useToast } from '@/hooks/use-toast';
 const Navigation = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+  useEffect(() => {
+    // Get theme from localStorage or default to light
+    const savedTheme = localStorage.getItem('crypdna-theme') as 'light' | 'dark' || 'light';
+    setTheme(savedTheme);
+    // Apply theme to HTML element
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    if (savedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    localStorage.setItem('crypdna-theme', newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+    if (newTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -52,6 +78,24 @@ const Navigation = () => {
           </div>
           
           <div className="flex items-center gap-4">
+            <Button
+              onClick={toggleTheme}
+              variant="outline"
+              size="sm"
+              className="text-sm luxury-transition border-border text-foreground-secondary hover:bg-accent"
+            >
+              {theme === 'dark' ? (
+                <>
+                  <Sun className="h-4 w-4 mr-2" />
+                  Light
+                </>
+              ) : (
+                <>
+                  <Moon className="h-4 w-4 mr-2" />
+                  Dark
+                </>
+              )}
+            </Button>
             <Button
               onClick={handleLogout}
               variant="outline"

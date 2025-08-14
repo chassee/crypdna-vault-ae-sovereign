@@ -499,6 +499,16 @@
   box-shadow: 0 0 15px rgba(147, 51, 234, 0.5);
 }
 
+/* Dun & Bradstreet High Contrast Status Text */
+.dnb-status-text {
+  color: #0b0f14 !important;
+}
+
+[data-theme="dark"] .dnb-status-text,
+.dark .dnb-status-text {
+  color: #f5f7fb !important;
+}
+
 .glow-blue {
   box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
 }
