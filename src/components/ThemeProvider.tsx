@@ -26,8 +26,8 @@ interface ThemeProviderProps {
 
 export function ThemeProvider({
   children,
-  defaultTheme = 'system',
-  storageKey = 'vite-ui-theme',
+  defaultTheme = 'dark',
+  storageKey = 'crypdna-theme',
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
@@ -39,6 +39,7 @@ export function ThemeProvider({
     const root = window.document.documentElement;
 
     root.classList.remove('light', 'dark');
+    root.removeAttribute('data-theme');
 
     if (theme === 'system') {
       const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -46,11 +47,13 @@ export function ThemeProvider({
         : 'light';
       
       root.classList.add(systemTheme);
+      root.setAttribute('data-theme', systemTheme);
       setActualTheme(systemTheme);
       return;
     }
 
     root.classList.add(theme);
+    root.setAttribute('data-theme', theme);
     setActualTheme(theme);
   }, [theme]);
 

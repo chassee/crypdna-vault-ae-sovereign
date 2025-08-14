@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -52,6 +53,7 @@ const Navigation = () => {
           </div>
           
           <div className="flex items-center gap-4">
+            <ThemeToggle />
             <Button
               onClick={handleLogout}
               variant="outline"

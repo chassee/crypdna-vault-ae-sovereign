@@ -6,13 +6,7 @@ export function ThemeToggle() {
   const { theme, setTheme, actualTheme } = useTheme()
 
   const toggleTheme = () => {
-    if (theme === 'light') {
-      setTheme('dark')
-    } else if (theme === 'dark') {
-      setTheme('system')
-    } else {
-      setTheme('light')
-    }
+    setTheme(actualTheme === 'dark' ? 'light' : 'dark')
   }
 
   return (
@@ -28,7 +22,7 @@ export function ThemeToggle() {
         <Moon className="h-4 w-4" />
       )}
       <span className="ml-2 text-xs font-medium">
-        {theme === 'system' ? 'Auto' : theme === 'dark' ? 'Dark' : 'Light'}
+        {actualTheme === 'dark' ? 'Light' : 'Dark'}
       </span>
     </Button>
   )

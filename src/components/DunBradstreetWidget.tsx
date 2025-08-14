@@ -80,18 +80,18 @@ const DunBradstreetWidget: React.FC = () => {
 
         <div className="space-y-3">
           <div className="flex justify-between items-center">
-            <span className="text-base font-bold text-foreground">Status:</span>
-            <span className="text-status-pending font-bold text-base">Pending Integration</span>
+            <span className="text-lg font-bold text-foreground">Status:</span>
+            <span className="text-status-pending font-bold text-lg">Pending Integration</span>
           </div>
           
           <div className="flex justify-between items-center">
-            <span className="text-base font-bold text-foreground">Tradeline Status:</span>
-            <span className="text-status-warning font-bold text-base">Awaiting Sync</span>
+            <span className="text-lg font-bold text-foreground">Tradeline Status:</span>
+            <span className="text-status-warning font-bold text-lg">Awaiting Sync</span>
           </div>
           
           <div className="flex justify-between items-center">
-            <span className="text-base font-bold text-foreground">Reporting:</span>
-            <span className="text-status-text font-bold text-base">TBD</span>
+            <span className="text-lg font-bold text-foreground">Reporting:</span>
+            <span className="text-status-text font-bold text-lg">TBD</span>
           </div>
         </div>
 
