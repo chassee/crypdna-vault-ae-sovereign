@@ -61,43 +61,43 @@ const DunBradstreetWidget: React.FC = () => {
               <Building2 className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-foreground border-b-2 border-luxury-purple inline-block pb-1">
+              <h3 className="text-xl font-bold text-foreground border-b-2 border-luxury-purple inline-block pb-1">
                 Dun & Bradstreet
               </h3>
-              <p className="text-sm text-muted-foreground">Tradeline Reporting</p>
+              <p className="text-base font-bold text-muted-foreground">Tradeline Reporting</p>
             </div>
           </div>
-          <div className="bg-blue-600 text-white px-3 py-1 rounded text-sm font-bold">D&B</div>
+          <div className="bg-blue-600 text-white px-3 py-1 rounded text-base font-bold">D&B</div>
         </div>
 
         <div className={`flex items-center gap-3 p-4 rounded-lg ${config.bgColor} border ${config.borderColor}`}>
           <StatusIcon className={`w-5 h-5 ${config.color}`} />
           <div className="flex-1">
-            <div className={`font-bold text-sm ${config.color}`}>{config.text}</div>
-            <div className="text-sm text-muted-foreground mt-1">{config.description}</div>
+            <div className={`font-bold text-base ${config.color}`}>{config.text}</div>
+            <div className="text-base font-bold text-foreground mt-1">{config.description}</div>
           </div>
         </div>
 
         <div className="space-y-3">
           <div className="flex justify-between items-center">
-            <span className="text-muted-foreground">Status:</span>
-            <span className="text-status-pending font-bold text-sm">Pending Integration</span>
+            <span className="text-base font-bold text-foreground">Status:</span>
+            <span className="text-status-pending font-bold text-base">Pending Integration</span>
           </div>
           
           <div className="flex justify-between items-center">
-            <span className="text-muted-foreground">Tradeline Status:</span>
-            <span className="text-status-warning font-bold text-sm">Awaiting Sync</span>
+            <span className="text-base font-bold text-foreground">Tradeline Status:</span>
+            <span className="text-status-warning font-bold text-base">Awaiting Sync</span>
           </div>
           
           <div className="flex justify-between items-center">
-            <span className="text-muted-foreground">Reporting:</span>
-            <span className="text-status-text font-bold text-sm">TBD</span>
+            <span className="text-base font-bold text-foreground">Reporting:</span>
+            <span className="text-status-text font-bold text-base">TBD</span>
           </div>
         </div>
 
         {status === 'active' && (
           <div className="pt-4 border-t border-border/50">
-            <div className="text-xs text-muted-foreground text-center">
+            <div className="text-sm font-bold text-foreground text-center">
               Next report: {new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString()}
             </div>
           </div>
