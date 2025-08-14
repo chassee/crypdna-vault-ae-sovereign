@@ -94,9 +94,35 @@ const VaultLoginContent = () => {
     e.preventDefault();
     setLoading(true);
 
+    // Input validation and sanitization
+    const sanitizedEmail = loginEmail.trim().toLowerCase();
+    
+    // Basic email validation
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(sanitizedEmail)) {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      setLoading(false);
+      return;
+    }
+
+    // Password validation
+    if (loginPassword.length < 6) {
+      toast({
+        title: "Invalid Password",
+        description: "Password must be at least 6 characters long.",
+        variant: "destructive",
+      });
+      setLoading(false);
+      return;
+    }
+
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
-        email: loginEmail,
+        email: sanitizedEmail,
         password: loginPassword,
       });
 
