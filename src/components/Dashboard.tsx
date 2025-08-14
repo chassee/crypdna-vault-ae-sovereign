@@ -145,7 +145,7 @@ const Dashboard = () => {
               <h3 className="font-bold text-foreground mb-2">Priority Support</h3>
               <p className="text-muted-foreground text-sm mb-4">24/7 dedicated concierge for Legend tier members</p>
               <div className="apple-card p-3 bg-gradient-to-r from-green-500/10 to-emerald-500/10">
-                <p className="text-xs text-green-600 font-medium">✓ Active</p>
+                <p className="text-sm text-status-active font-bold">✓ Active</p>
               </div>
             </div>
             
@@ -156,7 +156,7 @@ const Dashboard = () => {
               <h3 className="font-bold text-foreground mb-2">Exclusive Rewards</h3>
               <p className="text-muted-foreground text-sm mb-4">Access to billionaire-tier multipliers and exclusive benefits</p>
               <div className="apple-card p-3 bg-gradient-to-r from-purple-500/10 to-pink-500/10">
-                <p className="text-xs text-purple-600 font-medium">10x Points Active</p>
+                <p className="text-sm text-status-active font-bold">10x Points Active</p>
               </div>
             </div>
             

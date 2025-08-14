@@ -73,7 +73,7 @@ const DunBradstreetWidget: React.FC = () => {
         <div className={`flex items-center gap-3 p-4 rounded-lg ${config.bgColor} border ${config.borderColor}`}>
           <StatusIcon className={`w-5 h-5 ${config.color}`} />
           <div className="flex-1">
-            <div className={`font-medium ${config.color}`}>{config.text}</div>
+            <div className={`font-bold text-sm ${config.color}`}>{config.text}</div>
             <div className="text-sm text-muted-foreground mt-1">{config.description}</div>
           </div>
         </div>
@@ -81,17 +81,17 @@ const DunBradstreetWidget: React.FC = () => {
         <div className="space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-muted-foreground">Status:</span>
-            <span className="text-orange-500 font-medium">Pending Integration</span>
+            <span className="text-status-pending font-bold text-sm">Pending Integration</span>
           </div>
           
           <div className="flex justify-between items-center">
             <span className="text-muted-foreground">Tradeline Status:</span>
-            <span className="text-gray-500 font-medium">Awaiting Sync</span>
+            <span className="text-status-warning font-bold text-sm">Awaiting Sync</span>
           </div>
           
           <div className="flex justify-between items-center">
             <span className="text-muted-foreground">Reporting:</span>
-            <span className="text-blue-600 font-medium">TBD</span>
+            <span className="text-status-text font-bold text-sm">TBD</span>
           </div>
         </div>
 

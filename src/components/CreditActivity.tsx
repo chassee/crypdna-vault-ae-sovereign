@@ -77,15 +77,15 @@ const CreditActivity = () => {
       case 'applied':
       case 'active':
       case 'removed':
-        return 'text-green-400';
+        return 'text-status-active font-bold text-sm';
       case 'pending':
       case 'monitoring':
-        return 'text-yellow-400';
+        return 'text-status-pending font-bold text-sm';
       case 'declined':
       case 'failed':
-        return 'text-red-400';
+        return 'text-status-error font-bold text-sm';
       default:
-        return 'text-blue-400';
+        return 'text-status-text font-bold text-sm';
     }
   };
 
@@ -146,8 +146,8 @@ const CreditActivity = () => {
                     </div>
                     <div className="text-xs text-muted-foreground flex items-center gap-1">
                       <span className={`w-2 h-2 rounded-full animate-pulse ${
-                        activity.status === 'Posted' || activity.status === 'Active' ? 'bg-green-500' :
-                        activity.status === 'Pending' ? 'bg-yellow-500' : 'bg-blue-500'
+                        activity.status === 'Posted' || activity.status === 'Active' ? 'bg-status-active' :
+                        activity.status === 'Pending' ? 'bg-status-pending' : 'bg-status-text'
                       }`}></span>
                       {new Date(activity.created_at).toLocaleDateString()}
                     </div>

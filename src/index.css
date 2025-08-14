@@ -53,6 +53,13 @@
     --luxury-glass-dark: 0 0% 0% / 0.1;
     --luxury-diamond: 262 80% 85%;
 
+    /* Status Text Colors - High Contrast */
+    --status-text: 0 0% 9%;
+    --status-active: 142 76% 36%;
+    --status-pending: 32 95% 44%;
+    --status-warning: 48 96% 53%;
+    --status-error: 0 84% 60%;
+
     /* Light Mode Gradients */
     --gradient-background: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 98%) 100%);
     --gradient-primary: linear-gradient(135deg, hsl(var(--luxury-purple)), hsl(var(--luxury-purple-dark)));
@@ -128,6 +135,13 @@
     --luxury-glass: 0 0% 100% / 0.05;
     --luxury-glass-dark: 0 0% 0% / 0.5;
     --luxury-diamond: 262 80% 85%;
+
+    /* Status Text Colors - High Contrast Dark Mode */
+    --status-text: 0 0% 98%;
+    --status-active: 142 76% 56%;
+    --status-pending: 32 95% 64%;
+    --status-warning: 48 96% 73%;
+    --status-error: 0 84% 70%;
 
     /* Premium Global Dark Mode Gradients - Deep Background */
     --gradient-background: linear-gradient(135deg, hsl(0, 0%, 4%) 0%, hsl(0, 0%, 7.1%) 100%);

@@ -70,6 +70,13 @@ export default {
 					platinum: 'hsl(var(--luxury-platinum))',
 					charcoal: 'hsl(var(--luxury-charcoal))'
 				},
+				status: {
+					text: 'hsl(var(--status-text))',
+					active: 'hsl(var(--status-active))',
+					pending: 'hsl(var(--status-pending))',
+					warning: 'hsl(var(--status-warning))',
+					error: 'hsl(var(--status-error))'
+				},
 				'warm-white': 'hsl(var(--warm-white))',
 				'dark-grey': 'hsl(var(--dark-grey))'
 			},

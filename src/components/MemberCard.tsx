@@ -63,7 +63,7 @@ const MemberCard = () => {
         </div>
         <div className="apple-card text-center p-4">
           <p className="text-sm text-gray-400">Status</p>
-          <p className="text-lg font-bold text-green-400">Active</p>
+          <p className="text-lg font-bold text-status-active">Active</p>
         </div>
       </div>
     </div>

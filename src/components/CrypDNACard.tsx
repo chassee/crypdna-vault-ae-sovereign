@@ -50,7 +50,7 @@ const CrypDNACard = ({ fileNumber }: CrypDNACardProps) => {
         <div className="grid grid-cols-2 gap-3">
           <div className="text-center p-3 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg">
             <p className="text-xs text-gray-600">Status</p>
-            <p className="text-sm font-bold text-green-600">Active</p>
+            <p className="text-sm font-bold text-status-active">Active</p>
           </div>
           <div className="text-center p-3 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg">
             <p className="text-xs text-gray-600">Tier</p>
