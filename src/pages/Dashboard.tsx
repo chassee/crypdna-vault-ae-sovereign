@@ -3,7 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
 import { User, Session } from '@supabase/supabase-js';
 import LoadingScreen from '../components/LoadingScreen';
-import Dashboard from '../components/Dashboard';
+import VaultDashboard from '../components/VaultDashboard'; // rename your component to this
 import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -16,27 +16,21 @@ const DashboardPage = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Set up auth state listener
+    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      (_event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
-        
-        if (!session?.user) {
-          navigate('/auth');
-        }
+        if (!session?.user) navigate('/auth');
         setLoading(false);
       }
     );
 
-    // Check for existing session
+    // Check for active session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
-      
-      if (!session?.user) {
-        navigate('/auth');
-      }
+      if (!session?.user) navigate('/auth');
       setLoading(false);
     });
 
@@ -47,8 +41,8 @@ const DashboardPage = () => {
     try {
       await supabase.auth.signOut();
       toast({
-        title: 'Signed out successfully',
-        description: 'You have been logged out of your account.',
+        title: 'Signed out',
+        description: 'You have been logged out.',
       });
       navigate('/auth');
     } catch (error) {
@@ -56,13 +50,8 @@ const DashboardPage = () => {
     }
   };
 
-  if (loading) {
-    return <LoadingScreen />;
-  }
-
-  if (!user || !session) {
-    return null; // Will redirect to auth
-  }
+  if (loading) return <LoadingScreen />;
+  if (!user || !session) return null; // Redirects to /auth
 
   return (
     <div className="relative">
@@ -77,7 +66,7 @@ const DashboardPage = () => {
           Sign Out
         </Button>
       </div>
-      <Dashboard />
+      <VaultDashboard /> {/* main vault dashboard here */}
     </div>
   );
 };
