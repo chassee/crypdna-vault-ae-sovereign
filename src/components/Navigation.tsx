@@ -1,62 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { User, Vault, FileText, LogOut, Sun, Moon } from 'lucide-react';
+import React from 'react';
+import { Vault, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const Navigation = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
-
-  useEffect(() => {
-    // Get theme from localStorage or default to light
-    const savedTheme = localStorage.getItem('crypdna-theme') as 'light' | 'dark' || 'light';
-    setTheme(savedTheme);
-    // Apply theme to HTML element
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    if (savedTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    localStorage.setItem('crypdna-theme', newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
-    if (newTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  };
 
   const handleLogout = async () => {
     try {
       const { error } = await supabase.auth.signOut();
       if (error) {
         toast({
-          title: "Error",
-          description: "Failed to sign out. Please try again.",
-          variant: "destructive",
+          title: 'Error',
+          description: 'Failed to sign out. Please try again.',
+          variant: 'destructive',
         });
       } else {
         toast({
-          title: "Signed Out",
-          description: "You have been successfully signed out.",
+          title: 'Signed Out',
+          description: 'You have been successfully signed out.',
         });
         navigate('/auth');
       }
     } catch (error) {
       console.error('Sign out error:', error);
       toast({
-        title: "Error",
-        description: "An unexpected error occurred during sign out.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'An unexpected error occurred during sign out.',
+        variant: 'destructive',
       });
     }
   };
@@ -65,6 +40,7 @@ const Navigation = () => {
     <nav className="luxury-card border-b border-border sticky top-0 z-50 luxury-transition backdrop-blur-xl">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
+          {/* Brand */}
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-gradient-to-r from-luxury-purple to-luxury-gold rounded-xl flex items-center justify-center diamond-logo shadow-lg">
               <Vault className="w-6 h-6 text-white" />
@@ -76,26 +52,10 @@ const Navigation = () => {
               <p className="text-xs text-foreground-secondary">Billionaire Membership Portal</p>
             </div>
           </div>
-          
+
+          {/* Actions */}
           <div className="flex items-center gap-4">
-            <Button
-              onClick={toggleTheme}
-              variant="outline"
-              size="sm"
-              className="text-sm luxury-transition border-border text-foreground-secondary hover:bg-accent"
-            >
-              {theme === 'dark' ? (
-                <>
-                  <Sun className="h-4 w-4 mr-2" />
-                  Light
-                </>
-              ) : (
-                <>
-                  <Moon className="h-4 w-4 mr-2" />
-                  Dark
-                </>
-              )}
-            </Button>
+            <ThemeToggle />
             <Button
               onClick={handleLogout}
               variant="outline"
