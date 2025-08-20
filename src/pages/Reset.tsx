@@ -1,13 +1,17 @@
 // src/pages/Reset.tsx
-import React from 'react';
-import ResetPassword from '../components/ResetPassword';
+import { Auth } from '@supabase/auth-ui-react'
+import { ThemeSupa } from '@supabase/auth-ui-shared'
+import { supabase } from '../lib/supabaseClient' // adjust path if yours is different
 
-export default function ResetPage() {
+export default function Reset() {
   return (
-    <div className="min-h-screen flex items-center justify-center p-6">
-      <div className="w-full max-w-md">
-        <ResetPassword />
-      </div>
+    <div className="max-w-md mx-auto py-16">
+      <Auth
+        supabaseClient={supabase}
+        appearance={{ theme: ThemeSupa }}
+        view="update_password"   // 👈 forces the Reset Password view
+        showLinks={false}
+      />
     </div>
-  );
+  )
 }
