@@ -6,8 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from '@/hooks/use-toast';
 import LuxuryLoadingScreen from '@/components/LuxuryLoadingScreen';
-import { ThemeProvider } from '@/components/ThemeProvider';
-import { ThemeToggle } from '@/components/ui/theme-toggle';
+
+
 import LuxuryDebitCard from '@/components/LuxuryDebitCard';
 import DunBradstreetWidget from '@/components/DunBradstreetWidget';
 import LuxuryTierBadge from '@/components/LuxuryTierBadge';
