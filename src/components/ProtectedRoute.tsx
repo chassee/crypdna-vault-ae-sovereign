@@ -1,55 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
-import LoadingScreen from '@/components/LoadingScreen';
+import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
-interface ProtectedRouteProps {
-  children: React.ReactNode;
-  redirectTo?: string;
-}
-
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ 
-  children, 
-  redirectTo = '/vault-login' 
-}) => {
+const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthed, setIsAuthed] = useState(false);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        setIsAuthenticated(!!session);
-      } catch (error) {
-        console.error('Auth check error:', error);
-        setIsAuthenticated(false);
-      } finally {
-        setLoading(false);
-      }
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setIsAuthed(!!session);
+      setLoading(false);
+
+      // keep listening for changes
+      supabase.auth.onAuthStateChange((_event, session) => {
+        setIsAuthed(!!session);
+      });
     };
 
-    checkAuth();
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setIsAuthenticated(!!session);
-        setLoading(false);
-      }
-    );
-
-    return () => subscription.unsubscribe();
+    checkSession();
   }, []);
 
   if (loading) {
-    return <LoadingScreen />;
+    return <div className="flex h-screen items-center justify-center text-white">Loading...</div>;
   }
 
-  if (!isAuthenticated) {
-    return <Navigate to={redirectTo} replace />;
+  if (!isAuthed) {
+    return <Navigate to="/auth" replace />;
   }
 
-  return <>{children}</>;
+  return children;
 };
 
 export default ProtectedRoute;
