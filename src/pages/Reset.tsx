@@ -1,6 +1,6 @@
 // src/pages/Reset.tsx
 import React from 'react';
-import ResetPassword from '@/components/ResetPassword';
+import ResetPassword from '../components/ResetPassword';
 
 export default function ResetPage() {
   return (
