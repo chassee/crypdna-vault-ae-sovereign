@@ -1,41 +1,55 @@
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { ThemeProvider } from "@/components/ThemeProvider";
+import { useEffect, useState } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import Auth from '@/pages/Auth';
+import Dashboard from '@/pages/Dashboard';
+import Reset from '@/pages/Reset';
+import NotFound from '@/pages/NotFound';
 
-import Auth from "@/pages/Auth";
-import Dashboard from "@/pages/Dashboard";
-import NotFound from "@/pages/NotFound";
-import ProtectedRoute from "@/components/ProtectedRoute";
+function Protected({ children }: { children: JSX.Element }) {
+  const [loading, setLoading] = useState(true);
+  const [authed, setAuthed] = useState(false);
+  const loc = useLocation();
 
-const queryClient = new QueryClient();
+  useEffect(() => {
+    let mounted = true;
 
-const App = () => {
+    async function check() {
+      const { data } = await supabase.auth.getSession();
+      if (!mounted) return;
+      setAuthed(!!data.session);
+      setLoading(false);
+    }
+
+    // keep session fresh
+    const { data: sub } = supabase.auth.onAuthStateChange(() => check());
+    check();
+
+    return () => {
+      mounted = false;
+      sub.subscription.unsubscribe();
+    };
+  }, []);
+
+  if (loading) return <div style={{ padding: 24 }}>Loading…</div>;
+  if (!authed) return <Navigate to="/" replace state={{ from: loc }} />;
+  return children;
+}
+
+export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <TooltipProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Navigate to="/auth" replace />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-          <Toaster />
-        </TooltipProvider>
-      </ThemeProvider>
-    </QueryClientProvider>
+    <Routes>
+      <Route path="/" element={<Auth />} />
+      <Route
+        path="/dashboard"
+        element={
+          <Protected>
+            <Dashboard />
+          </Protected>
+        }
+      />
+      <Route path="/reset" element={<Reset />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
-};
-
-export default App;
+}
