@@ -3,7 +3,7 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 
 import Auth from '@/pages/Auth';
-import Dashboard from '@/pages/Dashboard';
+import VaultDashboard from '@/pages/VaultDashboard'; // <-- use the real dashboard
 import Reset from '@/pages/Reset';
 import NotFound from '@/pages/NotFound';
 
@@ -23,7 +23,6 @@ function Protected({ children }: { children: JSX.Element }) {
 
         if (!session) {
           setCanAccess(false);
-          setLoading(false);
           return;
         }
 
@@ -53,7 +52,6 @@ function Protected({ children }: { children: JSX.Element }) {
 
     return () => {
       alive = false;
-      // guard for older SDK typings
       listener?.subscription?.unsubscribe?.();
     };
   }, [loc.pathname]);
@@ -71,7 +69,7 @@ export default function App() {
         path="/dashboard"
         element={
           <Protected>
-            <Dashboard />
+            <VaultDashboard /> {/* <-- real dashboard */}
           </Protected>
         }
       />
