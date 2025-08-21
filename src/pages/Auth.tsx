@@ -1,82 +1,77 @@
-import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useNavigate } from 'react-router-dom';
 
-const Auth = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function Auth() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const nav = useNavigate();
 
-  const handleSignIn = async (e: React.FormEvent) => {
+  const goDash = () => nav('/dashboard', { replace: true });
+
+  async function handleSignIn(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
+    if (error) alert(error.message);
+    else goDash();
+  }
 
-    if (error) {
-      alert(error.message);
-    } else {
-      navigate("/dashboard");
-    }
-  };
-
-  const handleSignUp = async (e: React.FormEvent) => {
+  async function handleSignUp(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     const { error } = await supabase.auth.signUp({
       email,
       password,
+      options: { emailRedirectTo: `${window.location.origin}/reset` },
     });
     setLoading(false);
+    if (error) alert(error.message);
+    else alert('Check your email to confirm your account. After confirming, come back and sign in.');
+  }
 
-    if (error) {
-      alert(error.message);
-    } else {
-      navigate("/dashboard");
-    }
-  };
+  async function handleForgot() {
+    if (!email) return alert('Enter your email first.');
+    setLoading(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset`,
+    });
+    setLoading(false);
+    if (error) alert(error.message);
+    else alert('Password reset link sent. Check your email.');
+  }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-black text-white">
-      <form className="flex flex-col gap-4 w-80" onSubmit={handleSignIn}>
-        <h1 className="text-2xl font-bold text-center">CrypDNA Vault</h1>
+    <div style={{ maxWidth: 420, margin: '64px auto', padding: 24 }}>
+      <h1>CRYPDNA Vault Access</h1>
+      <form onSubmit={handleSignIn}>
         <input
-          className="p-2 rounded bg-gray-900 border border-gray-700"
-          type="email"
-          placeholder="Email"
+          placeholder="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          style={{ display: 'block', width: '100%', marginBottom: 12 }}
         />
         <input
-          className="p-2 rounded bg-gray-900 border border-gray-700"
+          placeholder="password"
           type="password"
-          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          style={{ display: 'block', width: '100%', marginBottom: 12 }}
         />
-
-        <button
-          type="submit"
-          className="bg-purple-600 hover:bg-purple-700 py-2 rounded"
-          disabled={loading}
-        >
-          {loading ? "Loading..." : "Sign In"}
-        </button>
-
-        <button
-          onClick={handleSignUp}
-          className="bg-gray-800 hover:bg-gray-900 py-2 rounded"
-          disabled={loading}
-        >
-          {loading ? "Loading..." : "Sign Up"}
+        <button type="submit" disabled={loading} style={{ width: '100%', marginBottom: 8 }}>
+          {loading ? '…' : 'Sign in'}
         </button>
       </form>
+
+      <button onClick={handleSignUp} disabled={loading} style={{ width: '100%', marginBottom: 8 }}>
+        Create account
+      </button>
+
+      <button onClick={handleForgot} disabled={loading} style={{ width: '100%' }}>
+        Forgot password
+      </button>
     </div>
   );
-};
-
-export default Auth;
+}
