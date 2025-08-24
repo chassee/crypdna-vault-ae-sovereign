@@ -1,3 +1,7 @@
+
+<h1 style={{fontSize:24, margin:'12px 0'}}>✅ LIVE: pages/VaultDashboard.tsx</h1>
+
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
