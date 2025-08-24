@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import ThemeToggle from '@/components/ThemeToggle';
+import ThemeToggle from '@/components/ui/theme-toggle';
 
 const Navigation = () => {
   const navigate = useNavigate();

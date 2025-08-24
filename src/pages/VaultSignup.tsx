@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from '@/hooks/use-toast';
 import { Loader2, Shield, CreditCard, Zap, Sparkles, Gem } from 'lucide-react';
-import { LuxuryThemeProvider, useTheme } from '@/components/LuxuryThemeProvider';
+import { useTheme } from '@/components/ThemeProvider';
 
 const VaultSignupContent = () => {
   const { theme } = useTheme();
@@ -341,10 +341,6 @@ const VaultSignupContent = () => {
   );
 };
 
-const VaultSignup = () => (
-  <LuxuryThemeProvider>
-    <VaultSignupContent />
-  </LuxuryThemeProvider>
-);
+const VaultSignup = () => <VaultSignupContent />;
 
 export default VaultSignup;

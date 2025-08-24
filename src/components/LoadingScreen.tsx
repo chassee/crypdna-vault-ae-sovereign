@@ -57,7 +57,7 @@ const LoadingScreen = () => {
           <div className="bg-white rounded-full p-1 shadow-lg">
             <div
               className="h-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full transition-all duration-300 ease-out"
-              style={{ width: ${progress}% }}
+              style={{ width: `${progress}%` }}
             ></div>
           </div>
           <p className="text-sm text-gray-500 mt-2">{progress}% Complete</p>

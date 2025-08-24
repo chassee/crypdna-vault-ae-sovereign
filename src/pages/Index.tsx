@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Shield, DollarSign, Gift } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { ThemeToggle } from '@/components/ui/theme-toggle';
+import ThemeToggle from '@/components/ui/theme-toggle';
 
 export default function Index() {
   const navigate = useNavigate();

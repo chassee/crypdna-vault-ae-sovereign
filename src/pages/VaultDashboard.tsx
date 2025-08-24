@@ -115,8 +115,14 @@ const VaultDashboard = () => {
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           {!isMobile && (
             <TabsList className="grid w-full grid-cols-5 luxury-card border-border bg-gradient-to-r from-card/50 to-muted/50 backdrop-blur-xl">
-              {[['balances', Wallet, 'Balance'], ['drops', Rocket, 'Drops'], ['crypbots', Brain, 'Crypb0ts'], ['neurotech', Waves, 'NeuroTech'], ['about', Info, 'About Us']].map(([val, Icon, label]) => (
-                <TabsTrigger key={val} value={val} className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
+              {[
+                { key: 'balances', icon: Wallet, label: 'Balance' },
+                { key: 'drops', icon: Rocket, label: 'Drops' },
+                { key: 'crypbots', icon: Brain, label: 'Crypb0ts' },
+                { key: 'neurotech', icon: Waves, label: 'NeuroTech' },
+                { key: 'about', icon: Info, label: 'About Us' }
+              ].map(({ key, icon: Icon, label }) => (
+                <TabsTrigger key={key} value={key} className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
                   <Icon className="w-3 h-3 sm:w-4 sm:h-4" />
                   <span className="hidden md:inline">{label}</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
