@@ -87,68 +87,63 @@ const VaultDashboard = () => {
   const userTier = userProfile?.tier || 'Viewer';
 
   return (
-    <div className="min-h-screen bg-background luxury-transition">
-      <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 space-y-6 sm:space-y-8 lg:space-y-12">
-        <div className="text-center space-y-3 sm:space-y-4 lg:space-y-6 animate-fade-in">
-          <div className="space-y-2">
-            <div className="text-overlay">
-              <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black bg-gradient-to-r from-luxury-purple via-luxury-gold to-luxury-blue bg-clip-text text-transparent">
-                Welcome back, {userName}
-              </h2>
-            </div>
-            <div className="text-overlay">
-              <p className="text-muted-foreground text-sm sm:text-base lg:text-xl font-medium">
-                Vault ID: <span className="font-mono text-luxury-purple text-sm sm:text-lg lg:text-2xl">{vaultId}</span>
-              </p>
-            </div>
-            <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-muted-foreground sm:hidden">
-              <span>Tier:</span>
-              <LuxuryTierBadge tier={userTier} />
-            </div>
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-6 py-12 space-y-12">
+        {/* Header - Minimalist */}
+        <div className="text-center space-y-4 animate-slide-up-fade">
+          <h1 className="text-5xl font-bold tracking-tight text-foreground">
+            {userName}
+          </h1>
+          <div className="vault-id text-muted-foreground">
+            {vaultId}
+          </div>
+          <div className="vault-tier bg-primary text-primary-foreground">
+            {userTier}
           </div>
         </div>
 
-        <div className="animate-scale-in">
+        {/* Premium Card */}
+        <div className="animate-slide-up-fade" style={{ animationDelay: '0.1s' }}>
           <LuxuryDebitCard userName={userName} vaultId={vaultId} />
         </div>
 
+        {/* Navigation Tabs - Clean */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           {!isMobile && (
-            <TabsList className="grid w-full grid-cols-5 luxury-card border-border bg-gradient-to-r from-card/50 to-muted/50 backdrop-blur-xl">
+            <TabsList className="grid w-full grid-cols-5 vault-card h-14">
               {[
                 { key: 'balances', icon: Wallet, label: 'Balance' },
                 { key: 'drops', icon: Rocket, label: 'Drops' },
                 { key: 'crypbots', icon: Brain, label: 'Crypb0ts' },
                 { key: 'neurotech', icon: Waves, label: 'NeuroTech' },
-                { key: 'about', icon: Info, label: 'About Us' }
+                { key: 'about', icon: Info, label: 'About' }
               ].map(({ key, icon: Icon, label }) => (
-                <TabsTrigger key={key} value={key} className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
-                  <Icon className="w-3 h-3 sm:w-4 sm:h-4" />
+                <TabsTrigger key={key} value={key} className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground font-medium transition-all">
+                  <Icon className="w-4 h-4" />
                   <span className="hidden md:inline">{label}</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
                 </TabsTrigger>
               ))}
             </TabsList>
           )}
 
-          <div className="mt-4 sm:mt-6 lg:mt-8">
-            <TabsContent value="balances" className="space-y-4 sm:space-y-6 lg:space-y-8 animate-fade-in">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
-                <div className="space-y-4 sm:space-y-6 lg:space-y-8 animate-slide-up">
+          <div className="mt-8">
+            <TabsContent value="balances" className="space-y-8 animate-slide-up-fade">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="space-y-8">
                   <BalanceBreakdown />
                   <DunBradstreetWidget />
                   <VaultVerification />
                 </div>
-                <div className="space-y-4 sm:space-y-6 lg:space-y-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+                <div className="space-y-8">
                   <CreditActivity />
                 </div>
               </div>
             </TabsContent>
 
-            <TabsContent value="drops" className="animate-fade-in"><VaultDrops /></TabsContent>
-            <TabsContent value="crypbots" className="animate-fade-in"><CrypbotsTab /></TabsContent>
-            <TabsContent value="neurotech" className="animate-fade-in"><NeuroTechTab /></TabsContent>
-            <TabsContent value="about" className="animate-fade-in"><AboutUs /></TabsContent>
+            <TabsContent value="drops" className="animate-slide-up-fade"><VaultDrops /></TabsContent>
+            <TabsContent value="crypbots" className="animate-slide-up-fade"><CrypbotsTab /></TabsContent>
+            <TabsContent value="neurotech" className="animate-slide-up-fade"><NeuroTechTab /></TabsContent>
+            <TabsContent value="about" className="animate-slide-up-fade"><AboutUs /></TabsContent>
           </div>
         </Tabs>
 

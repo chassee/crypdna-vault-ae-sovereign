@@ -3,51 +3,44 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
+/* Minimalist fintech x fashion design system - Apple x Supreme x Credit Karma with Virgil energy */
 
 @layer base {
   :root {
-    /* Light Mode - Clean and Professional */
-    --background: 0 0% 100%;
-    --background-secondary: 0 0% 98%;
-    --foreground: 0 0% 3.9%;
-    --foreground-secondary: 0 0% 45.1%;
-    --warm-white: 0 0% 100%;
-    --dark-grey: 0 0% 3.9%;
-
+    /* Minimalist Luxury Palette */
+    --background: 0 0% 99%;
+    --foreground: 0 0% 8%;
+    --foreground-secondary: 0 0% 35%;
+    
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-
-    --primary: 262 90% 60%;
+    --card-foreground: 0 0% 8%;
+    
+    --primary: 0 0% 15%;     /* Deep charcoal - Virgil's signature */
     --primary-foreground: 0 0% 98%;
-
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-
-    --destructive: 0 84.2% 60.2%;
+    
+    --secondary: 0 0% 94%;   /* Subtle grey */
+    --secondary-foreground: 0 0% 15%;
+    
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    
+    --accent: 240 5% 96%;    /* Cool accent */
+    --accent-foreground: 0 0% 15%;
+    
+    --border: 0 0% 92%;
+    --input: 0 0% 92%;
+    --ring: 0 0% 15%;
+    
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 262 90% 60%;
-
-    --radius: 1.2rem;
-
-    /* Light Mode Design Tokens */
-    --luxury-purple: 262 90% 60%;
-    --luxury-purple-dark: 262 90% 45%;
-    --luxury-purple-light: 262 90% 75%;
-    --luxury-gold: 45 100% 60%;
-    --luxury-platinum: 0 0% 70%;
+    
+    --radius: 0.75rem;       /* Refined radius */
+    
+    /* Vault-specific tokens */
+    --vault-accent: 240 100% 50%;      /* Electric blue */
+    --vault-success: 142 76% 36%;      /* Success green */
+    --vault-warning: 38 92% 50%;       /* Warning amber */
+    --vault-tier-gold: 45 100% 51%;    /* Tier gold */
     --luxury-charcoal: 0 0% 13%;
     --luxury-glass: 0 0% 0% / 0.05;
     --luxury-glass-dark: 0 0% 0% / 0.1;
