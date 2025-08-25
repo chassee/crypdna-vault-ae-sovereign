@@ -8,15 +8,15 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        {/* Redirect root to vault */}
+        {/* redirect root to vault */}
         <Route path="/" element={<Navigate to="/vault" replace />} />
 
-        {/* Main Vault pages */}
+        {/* vault */}
         <Route path="/vault" element={<VaultDashboard />} />
         <Route path="/vault-login" element={<VaultLogin />} />
         <Route path="/vault-signup" element={<VaultSignup />} />
 
-        {/* Catch-all */}
+        {/* 404 */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
