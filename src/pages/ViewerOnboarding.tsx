@@ -1,9 +1,4 @@
-
-import React from 'react';
-import ViewerOnboardingForm from '../components/ViewerOnboardingForm';
-
-const ViewerOnboarding = () => {
-  return <ViewerOnboardingForm />;
-};
-
-export default ViewerOnboarding;
+import { Navigate } from 'react-router-dom';
+export default function ViewerOnboarding() {
+  return <Navigate to="/dashboard" replace />;
+}
