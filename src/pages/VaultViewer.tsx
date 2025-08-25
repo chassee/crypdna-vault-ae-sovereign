@@ -1,4 +1,4 @@
 import { Navigate } from 'react-router-dom';
 export default function VaultViewer() {
-  return <Navigate to="/dashboard" replace />;
+  return <Navigate to="/vault" replace />;
 }
