@@ -218,7 +218,7 @@ export default function VaultDashboard() {
           </div>
         </Tabs>
 
-        <MobileFloatingNav activeTab={activeTab} onTabChange={setActiveTab} />
+        <MobileFloatingNav activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab as TabKey)} />
       </div>
     </div>
   );
