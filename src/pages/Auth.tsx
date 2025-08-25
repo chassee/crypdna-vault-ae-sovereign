@@ -1,22 +1,19 @@
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { useNavigate } from 'react-router-dom';
 
 export default function Auth() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const nav = useNavigate();
 
-  const goDash = () => nav('/dashboard', { replace: true });
-
+  // App.tsx listens to auth state and swaps to <VaultDashboard /> on success.
   async function handleSignIn(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (error) alert(error.message);
-    else goDash();
+    // no navigate here; App.tsx onAuthStateChange will render the dashboard
   }
 
   async function handleSignUp(e: React.FormEvent) {
@@ -25,18 +22,21 @@ export default function Auth() {
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { emailRedirectTo: `${window.location.origin}/reset` },
+      options: {
+        // after email confirmation, send them back to your site
+        emailRedirectTo: ${window.location.origin},
+      },
     });
     setLoading(false);
     if (error) alert(error.message);
-    else alert('Check your email to confirm your account. After confirming, come back and sign in.');
+    else alert('Check your email to confirm your account, then sign in.');
   }
 
   async function handleForgot() {
     if (!email) return alert('Enter your email first.');
     setLoading(true);
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/reset`,
+      redirectTo: ${window.location.origin},
     });
     setLoading(false);
     if (error) alert(error.message);
@@ -46,12 +46,15 @@ export default function Auth() {
   return (
     <div style={{ maxWidth: 420, margin: '64px auto', padding: 24 }}>
       <h1>CRYPDNA Vault Access</h1>
+
       <form onSubmit={handleSignIn}>
         <input
           placeholder="email"
+          type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           style={{ display: 'block', width: '100%', marginBottom: 12 }}
+          required
         />
         <input
           placeholder="password"
@@ -59,6 +62,7 @@ export default function Auth() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           style={{ display: 'block', width: '100%', marginBottom: 12 }}
+          required
         />
         <button type="submit" disabled={loading} style={{ width: '100%', marginBottom: 8 }}>
           {loading ? '…' : 'Sign in'}
