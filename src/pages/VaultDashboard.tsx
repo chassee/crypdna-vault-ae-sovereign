@@ -1,3 +1,6 @@
+{/* TEMP MARKER – remove later */}
+<div className="p-2 text-center text-xs opacity-70">BUILD r1 — VaultDashboard.tsx mounted</div>
+
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
