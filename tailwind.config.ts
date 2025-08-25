@@ -63,12 +63,15 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				vault: {
-					accent: 'hsl(var(--vault-accent))',
-					success: 'hsl(var(--vault-success))',
-					warning: 'hsl(var(--vault-warning))',
-					'tier-gold': 'hsl(var(--vault-tier-gold))'
-				}
+				luxury: {
+					purple: 'hsl(var(--luxury-purple))',
+					'purple-dark': 'hsl(var(--luxury-purple-dark))',
+					gold: 'hsl(var(--luxury-gold))',
+					platinum: 'hsl(var(--luxury-platinum))',
+					charcoal: 'hsl(var(--luxury-charcoal))'
+				},
+				'warm-white': 'hsl(var(--warm-white))',
+				'dark-grey': 'hsl(var(--dark-grey))'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -76,9 +79,7 @@ export default {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			fontFamily: {
-				'sans': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
-				'mono': ['JetBrains Mono', 'SF Mono', 'Monaco', 'Consolas', 'monospace'],
-				'luxury': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif']
+				'luxury': ['SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
 			},
 			backgroundImage: {
 				'gradient-luxury': 'var(--gradient-luxury)',

@@ -1,30 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { supabase } from '@/integrations/supabase/client';
-import { Skeleton } from '@/components/ui/skeleton';
-import VaultStats from './VaultStats';
-
-interface Balance {
-  balance: number;
-  pending_balance?: number;
-  card_balance?: number;
-  available_credit?: number;
-  cash_back_rate?: number;
-  monthly_limit?: number;
-  score_boost?: number;
-}
-
-interface Transaction {
-  id: string;
-  description: string;
-  amount: number;
-  timestamp: string;
-  type: string;
-}
 
 const BalanceBreakdown = () => {
-  const [balance, setBalance] = useState<Balance | null>(null);
-  const [lastTransaction, setLastTransaction] = useState<Transaction | null>(null);
+  const [balance, setBalance] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -36,14 +15,14 @@ const BalanceBreakdown = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // Get balance from balances table
+      // Get balance from balances table and last transaction from vault_transactions
       const { data: balanceData, error: balanceError } = await supabase
         .from('balances')
         .select('*')
         .eq('user_id', user.id)
         .maybeSingle();
 
-      // Get last transaction
+      // Get last transaction from transactions table (vault_transactions not in types yet)
       let lastTransaction = null;
       try {
         const { data: transactionData } = await supabase
@@ -63,8 +42,7 @@ const BalanceBreakdown = () => {
         return;
       }
 
-      setBalance(balanceData);
-      setLastTransaction(lastTransaction);
+      setBalance({ ...balanceData, lastTransaction });
     } catch (error) {
       console.error('Error in fetchBalance:', error);
     } finally {
@@ -72,79 +50,65 @@ const BalanceBreakdown = () => {
     }
   };
 
-  // Format currency
-  const formatCurrency = (amount: number) => 
-    new Intl.NumberFormat('en-US', { 
-      style: 'currency', 
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(amount);
-
   if (loading) {
     return (
-      <Card className="vault-card">
-        <CardHeader>
-          <CardTitle className="text-lg font-semibold">Balance</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid grid-cols-2 gap-6">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="space-y-2">
-                <Skeleton className="h-8 w-20" />
-                <Skeleton className="h-4 w-16" />
-              </div>
-            ))}
+      <div className="luxury-card rounded-2xl p-6">
+        <div className="animate-pulse">
+          <div className="h-4 bg-muted rounded w-1/3 mb-4"></div>
+          <div className="space-y-4">
+            <div className="h-6 bg-muted rounded"></div>
+            <div className="h-6 bg-muted rounded"></div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     );
   }
 
-  const stats = [
-    {
-      label: 'Available',
-      value: formatCurrency(balance?.balance || 0),
-      change: balance?.score_boost ? `+${balance.score_boost} boost` : undefined,
-      trend: 'up' as const
-    },
-    {
-      label: 'Pending',
-      value: formatCurrency(balance?.pending_balance || 0)
-    },
-    {
-      label: 'Credit',
-      value: formatCurrency(balance?.available_credit || 0)
-    },
-    {
-      label: 'Rate',
-      value: `${balance?.cash_back_rate || 0}%`
-    }
-  ];
+  const availableBalance = 0; // Mystery mode - show $0
+  const pendingBalance = 0; // Mystery mode - show $0
 
   return (
-    <Card className="vault-card">
-      <CardHeader>
-        <CardTitle className="text-lg font-semibold">Balance</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <VaultStats stats={stats} />
+    <div className="luxury-card rounded-2xl p-6 mt-6">
+      <h3 className="text-lg font-bold mb-4" style={{ color: '#FFFFFF' }}>💳 Balance Overview</h3>
+      
+      <div className="space-y-4">
+        <div className="flex justify-between items-center p-4 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-lg border border-green-500/20">
+          <span className="text-foreground font-medium">Available Balance</span>
+          <span className="text-xl font-bold text-green-500">${availableBalance.toLocaleString()}</span>
+        </div>
         
-        {lastTransaction && (
-          <div className="mt-6 pt-6 border-t border-border">
-            <div className="text-sm text-muted-foreground mb-2">Latest</div>
+        <div className="flex justify-between items-center p-4 bg-gradient-to-r from-orange-500/10 to-yellow-500/10 rounded-lg border border-orange-500/20">
+          <span className="text-foreground font-medium">Pending Balance</span>
+          <span className="text-xl font-bold text-orange-500">${pendingBalance.toLocaleString()}</span>
+        </div>
+        
+        <div className="border-t border-border pt-4">
+          <div className="flex justify-between items-center">
+            <span className="text-foreground font-medium">Card Balance:</span>
+            <span className="text-2xl font-bold text-luxury-purple">
+              $0
+            </span>
+          </div>
+        </div>
+
+        {balance?.lastTransaction && (
+          <div className="border-t border-border pt-4">
+            <h4 className="text-sm font-semibold mb-2 text-foreground">Last Transaction</h4>
             <div className="flex justify-between items-center">
-              <span className="font-medium">{lastTransaction.description}</span>
-              <span className={`font-mono font-semibold ${
-                lastTransaction.type === 'credit' ? 'text-vault-success' : 'text-foreground'
+              <div>
+                <span className="text-sm text-foreground font-medium">{balance.lastTransaction.description || 'Transaction'}</span>
+                <p className="text-xs text-muted-foreground">{new Date(balance.lastTransaction.timestamp).toLocaleDateString()}</p>
+              </div>
+              <span className={`text-sm font-medium ${
+                balance.lastTransaction.type === 'credit' ? 'text-green-500' : 'text-red-500'
               }`}>
-                {lastTransaction.type === 'credit' ? '+' : ''}{formatCurrency(Math.abs(lastTransaction.amount))}
+                {balance.lastTransaction.type === 'credit' ? '+' : '-'}${balance.lastTransaction.amount.toLocaleString()}
               </span>
             </div>
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

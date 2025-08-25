@@ -44,36 +44,6 @@ export type Database = {
         }
         Relationships: []
       }
-      audit_log: {
-        Row: {
-          id: string
-          new_data: Json | null
-          old_data: Json | null
-          operation: string
-          table_name: string
-          timestamp: string | null
-          user_id: string | null
-        }
-        Insert: {
-          id?: string
-          new_data?: Json | null
-          old_data?: Json | null
-          operation: string
-          table_name: string
-          timestamp?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          id?: string
-          new_data?: Json | null
-          old_data?: Json | null
-          operation?: string
-          table_name?: string
-          timestamp?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
       balances: {
         Row: {
           available_credit: number | null
@@ -451,7 +421,7 @@ export type Database = {
           expiry: string
           id: string
           status: string | null
-          user_id: string
+          user_id: string | null
         }
         Insert: {
           card_number: string
@@ -461,7 +431,7 @@ export type Database = {
           expiry: string
           id?: string
           status?: string | null
-          user_id: string
+          user_id?: string | null
         }
         Update: {
           card_number?: string
@@ -471,7 +441,7 @@ export type Database = {
           expiry?: string
           id?: string
           status?: string | null
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: []
       }

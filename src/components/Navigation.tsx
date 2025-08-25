@@ -1,10 +1,9 @@
 import React from 'react';
-import { Vault, LogOut } from 'lucide-react';
+import { User, Vault, FileText, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import ThemeToggle from '@/components/ui/theme-toggle';
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -15,23 +14,23 @@ const Navigation = () => {
       const { error } = await supabase.auth.signOut();
       if (error) {
         toast({
-          title: 'Error',
-          description: 'Failed to sign out. Please try again.',
-          variant: 'destructive',
+          title: "Error",
+          description: "Failed to sign out. Please try again.",
+          variant: "destructive",
         });
       } else {
         toast({
-          title: 'Signed Out',
-          description: 'You have been successfully signed out.',
+          title: "Signed Out",
+          description: "You have been successfully signed out.",
         });
         navigate('/auth');
       }
     } catch (error) {
       console.error('Sign out error:', error);
       toast({
-        title: 'Error',
-        description: 'An unexpected error occurred during sign out.',
-        variant: 'destructive',
+        title: "Error",
+        description: "An unexpected error occurred during sign out.",
+        variant: "destructive",
       });
     }
   };
@@ -40,7 +39,6 @@ const Navigation = () => {
     <nav className="luxury-card border-b border-border sticky top-0 z-50 luxury-transition backdrop-blur-xl">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          {/* Brand */}
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-gradient-to-r from-luxury-purple to-luxury-gold rounded-xl flex items-center justify-center diamond-logo shadow-lg">
               <Vault className="w-6 h-6 text-white" />
@@ -52,10 +50,8 @@ const Navigation = () => {
               <p className="text-xs text-foreground-secondary">Billionaire Membership Portal</p>
             </div>
           </div>
-
-          {/* Actions */}
+          
           <div className="flex items-center gap-4">
-            <ThemeToggle />
             <Button
               onClick={handleLogout}
               variant="outline"

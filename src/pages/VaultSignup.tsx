@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from '@/hooks/use-toast';
 import { Loader2, Shield, CreditCard, Zap, Sparkles, Gem } from 'lucide-react';
-import { useTheme } from '@/components/ThemeProvider';
+import { LuxuryThemeProvider, useTheme } from '@/components/LuxuryThemeProvider';
 
 const VaultSignupContent = () => {
   const { theme } = useTheme();
@@ -103,7 +103,6 @@ const VaultSignupContent = () => {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Enhanced password validation
     if (password !== confirmPassword) {
       toast({
         title: "Password Mismatch",
@@ -113,40 +112,21 @@ const VaultSignupContent = () => {
       return;
     }
 
-    // Stronger password requirements
-    if (password.length < 8) {
+    if (password.length < 6) {
       toast({
         title: "Weak Password",
-        description: "Password must be at least 8 characters long.",
+        description: "Password must be at least 6 characters long.",
         variant: "destructive",
       });
       return;
     }
-
-    // Check for password complexity
-    const hasUpperCase = /[A-Z]/.test(password);
-    const hasLowerCase = /[a-z]/.test(password);
-    const hasNumbers = /\d/.test(password);
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-
-    if (!hasUpperCase || !hasLowerCase || !hasNumbers || !hasSpecialChar) {
-      toast({
-        title: "Weak Password",
-        description: "Password must contain uppercase, lowercase, numbers, and special characters.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Sanitize email
-    const sanitizedEmail = userEmail.trim().toLowerCase();
 
     setLoading(true);
 
     try {
       // Create the user account
       const { data, error } = await supabase.auth.signUp({
-        email: sanitizedEmail,
+        email: userEmail,
         password,
         options: {
           emailRedirectTo: `${window.location.origin}/vault-dashboard`
@@ -341,6 +321,10 @@ const VaultSignupContent = () => {
   );
 };
 
-const VaultSignup = () => <VaultSignupContent />;
+const VaultSignup = () => (
+  <LuxuryThemeProvider>
+    <VaultSignupContent />
+  </LuxuryThemeProvider>
+);
 
 export default VaultSignup;

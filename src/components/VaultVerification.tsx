@@ -53,34 +53,8 @@ const VaultVerification = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // Enhanced file validation
-      const maxSize = 10 * 1024 * 1024; // 10MB limit
-      if (file.size > maxSize) {
-        toast({
-          title: "File Too Large",
-          description: "File size must be less than 10MB.",
-          variant: "destructive",
-        });
-        setUploading(null);
-        return;
-      }
-
-      // Validate file type
-      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
-      if (!allowedTypes.includes(file.type)) {
-        toast({
-          title: "Invalid File Type",
-          description: "Only JPG, PNG, and PDF files are allowed.",
-          variant: "destructive",
-        });
-        setUploading(null);
-        return;
-      }
-
-      // Sanitize filename
-      const fileExt = file.name.split('.').pop()?.toLowerCase();
-      const sanitizedDocType = docType.replace(/[^a-z0-9_]/gi, '');
-      const fileName = `${user.id}/${sanitizedDocType}.${fileExt}`;
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user.id}/${docType}.${fileExt}`;
 
       const { error: uploadError } = await supabase.storage
         .from('vault-documents')
@@ -138,18 +112,7 @@ const VaultVerification = () => {
             accept=".pdf,.jpg,.jpeg,.png"
             onChange={(e) => {
               const file = e.target.files?.[0];
-              if (file) {
-                // Additional client-side validation
-                if (file.size > 10 * 1024 * 1024) {
-                  toast({
-                    title: "File Too Large",
-                    description: "File size must be less than 10MB.",
-                    variant: "destructive",
-                  });
-                  return;
-                }
-                handleFileUpload(file, docType);
-              }
+              if (file) handleFileUpload(file, docType);
             }}
             className="hidden"
             id={`upload-${docType}`}

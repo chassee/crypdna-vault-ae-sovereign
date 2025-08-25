@@ -5,28 +5,27 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from '@/hooks/use-toast';
 import { Loader2, Shield, CreditCard, Zap, AlertCircle, Sparkles, Gem } from 'lucide-react';
-import { useTheme } from '@/components/ThemeProvider';
+import { LuxuryThemeProvider, useTheme } from '@/components/LuxuryThemeProvider';
 
 const VaultLoginContent = () => {
   const { theme } = useTheme();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
   const [loading, setLoading] = useState(false);
-  const [resetLoading, setResetLoading] = useState(false);
-
   const [validatingToken, setValidatingToken] = useState(false);
   const [tokenValid, setTokenValid] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
-
+  // Signup functionality removed
+  
   const token = searchParams.get('token');
 
   useEffect(() => {
-    // If already authed, bounce to dashboard
+    // Check if user is already authenticated
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
         navigate('/vault-dashboard');
@@ -38,7 +37,7 @@ const VaultLoginContent = () => {
       validateToken();
     } else {
       setValidatingToken(false);
-      setTokenValid(true);
+      setTokenValid(true); // Allow direct login without token
     }
   }, [token, navigate]);
 
@@ -52,9 +51,9 @@ const VaultLoginContent = () => {
       if (error) {
         console.error('Error calling validate-token function:', error);
         toast({
-          title: 'Error',
-          description: 'Failed to validate access link. You can still login manually.',
-          variant: 'destructive',
+          title: "Error",
+          description: "Failed to validate access link. You can still login manually.",
+          variant: "destructive",
         });
         setTokenValid(true);
         return;
@@ -62,27 +61,28 @@ const VaultLoginContent = () => {
 
       if (!data.valid) {
         toast({
-          title: 'Invalid Access Link',
-          description: data.error || 'This access link is not valid. You can still login if you have an account.',
-          variant: 'destructive',
+          title: "Invalid Access Link",
+          description: data.error || "This access link is not valid. You can still login if you have an account.",
+          variant: "destructive",
         });
         setTokenValid(true);
         return;
       }
 
+      // Token is valid
       setUserEmail(data.email);
       setLoginEmail(data.email);
       setTokenValid(true);
       toast({
-        title: 'Access Confirmed',
+        title: "Access Confirmed",
         description: `Welcome! Your vault access has been verified for ${data.email}`,
       });
     } catch (error) {
       console.error('Error validating token:', error);
       toast({
-        title: 'Error',
-        description: 'Failed to validate access link. You can still login manually.',
-        variant: 'destructive',
+        title: "Error",
+        description: "Failed to validate access link. You can still login manually.",
+        variant: "destructive",
       });
       setTokenValid(true);
     } finally {
@@ -94,102 +94,49 @@ const VaultLoginContent = () => {
     e.preventDefault();
     setLoading(true);
 
-    const sanitizedEmail = loginEmail.trim().toLowerCase();
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    if (!emailRegex.test(sanitizedEmail)) {
-      toast({
-        title: 'Invalid Email',
-        description: 'Please enter a valid email address.',
-        variant: 'destructive',
-      });
-      setLoading(false);
-      return;
-    }
-
-    if (loginPassword.length < 6) {
-      toast({
-        title: 'Invalid Password',
-        description: 'Password must be at least 6 characters long.',
-        variant: 'destructive',
-      });
-      setLoading(false);
-      return;
-    }
-
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
-        email: sanitizedEmail,
+        email: loginEmail,
         password: loginPassword,
       });
 
       if (error) {
         toast({
-          title: 'Login Failed',
+          title: "Login Failed",
           description: error.message,
-          variant: 'destructive',
+          variant: "destructive",
         });
         return;
       }
 
       if (data.user) {
         toast({
-          title: 'Welcome Back!',
-          description: 'Successfully logged into your vault.',
+          title: "Welcome Back!",
+          description: "Successfully logged into your vault.",
         });
         navigate('/vault-dashboard');
       }
     } catch (error) {
       console.error('Login error:', error);
       toast({
-        title: 'Error',
-        description: 'An unexpected error occurred during login.',
-        variant: 'destructive',
+        title: "Error",
+        description: "An unexpected error occurred during login.",
+        variant: "destructive",
       });
     } finally {
       setLoading(false);
     }
   };
 
-  // 👉 NEW: Forgot Password handler with redirect to /reset
-  const handleForgotPassword = async () => {
-    const email = loginEmail.trim().toLowerCase();
-    if (!email) {
-      toast({
-        title: 'Enter Email',
-        description: 'Type your email above first.',
-        variant: 'destructive',
-      });
-      return;
-    }
-
-    setResetLoading(true);
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: 'https://vault.crypdawgs.com/reset',
-    });
-    setResetLoading(false);
-
-    if (error) {
-      console.error('Reset email error:', error);
-      toast({
-        title: 'Could not send reset email',
-        description: error.message,
-        variant: 'destructive',
-      });
-      return;
-    }
-
-    toast({
-      title: 'Check your inbox',
-      description: 'Password reset link sent. Open it to set a new password.',
-    });
-  };
+  // Signup removed - login only for existing accounts
 
   if (validatingToken) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+        {/* Animated Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-luxury-charcoal via-luxury-purple/20 to-luxury-gold/10" />
         <div className="absolute inset-0 bg-gradient-neon opacity-10 blur-3xl animate-pulse" />
+        
         <Card className="w-full max-w-md luxury-card relative z-10">
           <CardContent className="flex items-center justify-center p-8">
             <div className="text-center space-y-4">
@@ -206,16 +153,16 @@ const VaultLoginContent = () => {
   }
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #0A0A0A 0%, #121212 100%)' }}
-    >
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0A0A0A 0%, #121212 100%)' }}>
+      {/* Animated Elements - Apple Card Aesthetic */}
       <div className="absolute top-20 left-20 w-40 h-40 bg-gradient-to-br from-purple-600/30 to-blue-600/20 rounded-full blur-3xl animate-pulse vault-logo-pulse" />
       <div className="absolute bottom-20 right-20 w-56 h-56 bg-gradient-to-br from-amber-500/20 to-orange-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-purple-600/10 to-blue-600/5 rounded-full blur-3xl animate-pulse delay-500" />
-
+      
       <Card className="w-full max-w-lg apple-card relative z-10 overflow-hidden border-white/10 shadow-2xl backdrop-blur-2xl bg-gradient-to-br from-black/40 to-gray-900/40">
+        {/* CrypDNA Logo Animation */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-neon animate-pulse" />
+        
         <CardHeader className="text-center relative">
           <div className="flex justify-center mb-6 relative">
             <div className="relative">
@@ -224,7 +171,7 @@ const VaultLoginContent = () => {
               <Sparkles className="absolute -top-2 -right-2 h-6 w-6 text-luxury-gold animate-pulse" />
             </div>
           </div>
-
+          
           <CardTitle className="text-3xl font-black bg-gradient-to-r from-luxury-purple via-luxury-gold to-luxury-blue bg-clip-text text-transparent mb-2">
             🔐 CrypDNA Vault
           </CardTitle>
@@ -232,8 +179,9 @@ const VaultLoginContent = () => {
             Enter the billionaire-class financial ecosystem
           </CardDescription>
         </CardHeader>
-
+        
         <CardContent className="space-y-8">
+          {/* Luxury Features Grid */}
           <div className="grid grid-cols-3 gap-4">
             <div className="text-center p-4 luxury-card hover:scale-105 transition-transform">
               <CreditCard className="h-8 w-8 mx-auto mb-3 text-luxury-purple" />
@@ -260,7 +208,7 @@ const VaultLoginContent = () => {
             </div>
           )}
 
-          {/* Login Form */}
+          {/* Premium Login Form */}
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-3">
               <Label htmlFor="loginEmail" className="text-sm font-semibold text-white">Email Address</Label>
@@ -286,18 +234,6 @@ const VaultLoginContent = () => {
                 className="luxury-input h-12 text-lg bg-black/20 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-500 focus:ring-purple-500/50 transition-all duration-300"
                 required
               />
-              {/* Forgot Password */}
-              <div className="flex justify-end">
-                <Button
-                  type="button"
-                  variant="ghost"
-                  className="px-0 h-auto text-sm text-luxury-gold hover:text-luxury-purple"
-                  onClick={handleForgotPassword}
-                  disabled={resetLoading}
-                >
-                  {resetLoading ? 'Sending reset link…' : 'Forgot password?'}
-                </Button>
-              </div>
             </div>
 
             <Button
@@ -327,14 +263,7 @@ const VaultLoginContent = () => {
 
           <div className="pt-6 border-t border-luxury-purple/30 text-center space-y-3">
             <p className="text-sm text-muted-foreground">
-              Don't have access?{' '}
-              <a
-                href="https://crypdawgs.com"
-                className="text-luxury-gold hover:text-luxury-purple transition-colors font-semibold"
-              >
-                Visit Crypdawgs.com
-              </a>{' '}
-              to purchase vault access.
+              Don't have access? <a href="https://crypdawgs.com" className="text-luxury-gold hover:text-luxury-purple transition-colors font-semibold">Visit Crypdawgs.com</a> to purchase vault access.
             </p>
             <p className="text-xs text-muted-foreground">
               🔒 Military-Grade Encryption • 🛡️ Zero-Knowledge Security • 💎 Your wealth stays private
@@ -346,6 +275,10 @@ const VaultLoginContent = () => {
   );
 };
 
-const VaultLogin = () => <VaultLoginContent />;
+const VaultLogin = () => (
+  <LuxuryThemeProvider>
+    <VaultLoginContent />
+  </LuxuryThemeProvider>
+);
 
 export default VaultLogin;
