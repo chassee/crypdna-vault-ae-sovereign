@@ -10,14 +10,15 @@ import { Loader2, Shield, CreditCard, Zap, AlertCircle, Sparkles, Gem } from 'lu
 import { LuxuryThemeProvider, useTheme } from '@/components/LuxuryThemeProvider';
 
 const VaultLoginContent = () => {
-  const { theme } = useTheme();
+  // theme is used by LuxuryThemeProvider, we don't need it directly here
+  useTheme();
+
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
   // UI state
   const [loading, setLoading] = useState(false);
   const [validatingToken, setValidatingToken] = useState(false);
-  const [tokenValid, setTokenValid] = useState(false);
 
   // form state
   const [userEmail, setUserEmail] = useState('');
@@ -26,8 +27,16 @@ const VaultLoginContent = () => {
 
   const token = searchParams.get('token');
 
-  // --- single place to navigate to the Vault ---
-  const goVault = () => navigate('/vault', { replace: true });
+  // --- single place to navigate to the Vault (HashRouter-safe) ---
+  const goVault = async () => {
+    // react-router navigate (works in editor & prod)
+    navigate('/vault', { replace: true });
+    // belt-and-suspenders for stubborn hash routing in Lovable preview
+    await new Promise(r => setTimeout(r, 60));
+    if (!location.hash.endsWith('/vault')) {
+      location.hash = '#/vault';
+    }
+  };
 
   useEffect(() => {
     // If already logged in, send to Vault
@@ -38,8 +47,8 @@ const VaultLoginContent = () => {
     if (token) {
       validateToken();
     } else {
+      // allow manual login path immediately
       setValidatingToken(false);
-      setTokenValid(true); // allow manual login
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
@@ -54,37 +63,33 @@ const VaultLoginContent = () => {
       if (error) {
         toast({
           title: 'Error',
-          description: 'Failed to validate access link. You can still login manually.',
+          description: 'Failed to validate access link. You can still log in manually.',
           variant: 'destructive',
         });
-        setTokenValid(true);
         return;
       }
 
       if (!data?.valid) {
         toast({
           title: 'Invalid Access Link',
-          description: data?.error || 'Link is not valid. You can still login.',
+          description: data?.error || 'This link is not valid. You can still log in manually.',
           variant: 'destructive',
         });
-        setTokenValid(true);
         return;
       }
 
       setUserEmail(data.email);
       setLoginEmail(data.email);
-      setTokenValid(true);
       toast({
         title: 'Access Confirmed',
-        description: `Welcome! Your vault access has been verified for ${data.email}`,
+        description: `Welcome! Vault access verified for ${data.email}`,
       });
-    } catch (err) {
+    } catch {
       toast({
         title: 'Error',
-        description: 'Failed to validate access link. You can still login manually.',
+        description: 'Failed to validate access link. You can still log in manually.',
         variant: 'destructive',
       });
-      setTokenValid(true);
     } finally {
       setValidatingToken(false);
     }
@@ -106,9 +111,9 @@ const VaultLoginContent = () => {
 
       if (data?.user) {
         toast({ title: 'Welcome Back!', description: 'Successfully logged into your vault.' });
-        goVault(); // <<< send to /vault
+        await goVault();
       }
-    } catch (err) {
+    } catch {
       toast({
         title: 'Error',
         description: 'An unexpected error occurred during login.',
@@ -131,7 +136,9 @@ const VaultLoginContent = () => {
                 <Loader2 className="h-12 w-12 animate-spin mx-auto text-luxury-purple" />
                 <div className="absolute inset-0 h-12 w-12 mx-auto border-2 border-luxury-purple/30 rounded-full animate-ping" />
               </div>
-              <p className="text-muted-foreground font-medium">Validating your billionaire access...</p>
+              <p className="text-muted-foreground font-medium">
+                Validating your billionaire access...
+              </p>
             </div>
           </CardContent>
         </Card>
@@ -197,7 +204,9 @@ const VaultLoginContent = () => {
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-3">
-              <Label htmlFor="loginEmail" className="text-sm font-semibold text-white">Email Address</Label>
+              <Label htmlFor="loginEmail" className="text-sm font-semibold text-white">
+                Email Address
+              </Label>
               <Input
                 id="loginEmail"
                 type="email"
@@ -210,7 +219,9 @@ const VaultLoginContent = () => {
             </div>
 
             <div className="space-y-3">
-              <Label htmlFor="loginPassword" className="text-sm font-semibold text-white">Vault Password</Label>
+              <Label htmlFor="loginPassword" className="text-sm font-semibold text-white">
+                Vault Password
+              </Label>
               <Input
                 id="loginPassword"
                 type="password"
@@ -249,7 +260,14 @@ const VaultLoginContent = () => {
 
           <div className="pt-6 border-t border-luxury-purple/30 text-center space-y-3">
             <p className="text-sm text-muted-foreground">
-              Don't have access? <a href="https://crypdawgs.com" className="text-luxury-gold hover:text-luxury-purple transition-colors font-semibold">Visit Crypdawgs.com</a> to purchase vault access.
+              Don't have access?{' '}
+              <a
+                href="https://crypdawgs.com"
+                className="text-luxury-gold hover:text-luxury-purple transition-colors font-semibold"
+              >
+                Visit Crypdawgs.com
+              </a>{' '}
+              to purchase vault access.
             </p>
             <p className="text-xs text-muted-foreground">
               🔒 Military-Grade Encryption • 🛡️ Zero-Knowledge Security • 💎 Your wealth stays private
