@@ -1,9 +1,4 @@
-
-import React from 'react';
-import VaultViewer from '../components/VaultViewer';
-
-const VaultViewerPage = () => {
-  return <VaultViewer />;
-};
-
-export default VaultViewerPage;
+import { Navigate } from 'react-router-dom';
+export default function VaultViewer() {
+  return <Navigate to="/dashboard" replace />;
+}
