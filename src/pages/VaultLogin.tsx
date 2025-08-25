@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from '@/hooks/use-toast';
 import { Loader2, Shield, CreditCard, Zap, AlertCircle, Sparkles, Gem } from 'lucide-react';
 import { LuxuryThemeProvider, useTheme } from '@/components/LuxuryThemeProvider';
@@ -14,75 +13,76 @@ const VaultLoginContent = () => {
   const { theme } = useTheme();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+
+  // UI state
   const [loading, setLoading] = useState(false);
   const [validatingToken, setValidatingToken] = useState(false);
   const [tokenValid, setTokenValid] = useState(false);
+
+  // form state
   const [userEmail, setUserEmail] = useState('');
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
-  // Signup functionality removed
-  
+
   const token = searchParams.get('token');
 
+  // --- single place to navigate to the Vault ---
+  const goVault = () => navigate('/vault', { replace: true });
+
   useEffect(() => {
-    // Check if user is already authenticated
+    // If already logged in, send to Vault
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        navigate('/vault-dashboard');
-        return;
-      }
+      if (session?.user) goVault();
     });
 
     if (token) {
       validateToken();
     } else {
       setValidatingToken(false);
-      setTokenValid(true); // Allow direct login without token
+      setTokenValid(true); // allow manual login
     }
-  }, [token, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
 
   const validateToken = async () => {
     setValidatingToken(true);
     try {
       const { data, error } = await supabase.functions.invoke('validate-token', {
-        body: { token }
+        body: { token },
       });
 
       if (error) {
-        console.error('Error calling validate-token function:', error);
         toast({
-          title: "Error",
-          description: "Failed to validate access link. You can still login manually.",
-          variant: "destructive",
+          title: 'Error',
+          description: 'Failed to validate access link. You can still login manually.',
+          variant: 'destructive',
         });
         setTokenValid(true);
         return;
       }
 
-      if (!data.valid) {
+      if (!data?.valid) {
         toast({
-          title: "Invalid Access Link",
-          description: data.error || "This access link is not valid. You can still login if you have an account.",
-          variant: "destructive",
+          title: 'Invalid Access Link',
+          description: data?.error || 'Link is not valid. You can still login.',
+          variant: 'destructive',
         });
         setTokenValid(true);
         return;
       }
 
-      // Token is valid
       setUserEmail(data.email);
       setLoginEmail(data.email);
       setTokenValid(true);
       toast({
-        title: "Access Confirmed",
+        title: 'Access Confirmed',
         description: `Welcome! Your vault access has been verified for ${data.email}`,
       });
-    } catch (error) {
-      console.error('Error validating token:', error);
+    } catch (err) {
       toast({
-        title: "Error",
-        description: "Failed to validate access link. You can still login manually.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to validate access link. You can still login manually.',
+        variant: 'destructive',
       });
       setTokenValid(true);
     } finally {
@@ -93,7 +93,6 @@ const VaultLoginContent = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email: loginEmail,
@@ -101,42 +100,30 @@ const VaultLoginContent = () => {
       });
 
       if (error) {
-        toast({
-          title: "Login Failed",
-          description: error.message,
-          variant: "destructive",
-        });
+        toast({ title: 'Login Failed', description: error.message, variant: 'destructive' });
         return;
       }
 
-      if (data.user) {
-        toast({
-          title: "Welcome Back!",
-          description: "Successfully logged into your vault.",
-        });
-        navigate('/vault-dashboard');
+      if (data?.user) {
+        toast({ title: 'Welcome Back!', description: 'Successfully logged into your vault.' });
+        goVault(); // <<< send to /vault
       }
-    } catch (error) {
-      console.error('Login error:', error);
+    } catch (err) {
       toast({
-        title: "Error",
-        description: "An unexpected error occurred during login.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'An unexpected error occurred during login.',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
     }
   };
 
-  // Signup removed - login only for existing accounts
-
   if (validatingToken) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
-        {/* Animated Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-luxury-charcoal via-luxury-purple/20 to-luxury-gold/10" />
         <div className="absolute inset-0 bg-gradient-neon opacity-10 blur-3xl animate-pulse" />
-        
         <Card className="w-full max-w-md luxury-card relative z-10">
           <CardContent className="flex items-center justify-center p-8">
             <div className="text-center space-y-4">
@@ -153,16 +140,18 @@ const VaultLoginContent = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0A0A0A 0%, #121212 100%)' }}>
-      {/* Animated Elements - Apple Card Aesthetic */}
+    <div
+      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden"
+      style={{ background: 'linear-gradient(135deg, #0A0A0A 0%, #121212 100%)' }}
+    >
+      {/* background accents */}
       <div className="absolute top-20 left-20 w-40 h-40 bg-gradient-to-br from-purple-600/30 to-blue-600/20 rounded-full blur-3xl animate-pulse vault-logo-pulse" />
       <div className="absolute bottom-20 right-20 w-56 h-56 bg-gradient-to-br from-amber-500/20 to-orange-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-purple-600/10 to-blue-600/5 rounded-full blur-3xl animate-pulse delay-500" />
-      
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-purple-600/10 to-blue-600/5 rounded-full blur-3xl animate-pulse delay-500" />
+
       <Card className="w-full max-w-lg apple-card relative z-10 overflow-hidden border-white/10 shadow-2xl backdrop-blur-2xl bg-gradient-to-br from-black/40 to-gray-900/40">
-        {/* CrypDNA Logo Animation */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-neon animate-pulse" />
-        
+
         <CardHeader className="text-center relative">
           <div className="flex justify-center mb-6 relative">
             <div className="relative">
@@ -171,7 +160,6 @@ const VaultLoginContent = () => {
               <Sparkles className="absolute -top-2 -right-2 h-6 w-6 text-luxury-gold animate-pulse" />
             </div>
           </div>
-          
           <CardTitle className="text-3xl font-black bg-gradient-to-r from-luxury-purple via-luxury-gold to-luxury-blue bg-clip-text text-transparent mb-2">
             🔐 CrypDNA Vault
           </CardTitle>
@@ -179,9 +167,8 @@ const VaultLoginContent = () => {
             Enter the billionaire-class financial ecosystem
           </CardDescription>
         </CardHeader>
-        
+
         <CardContent className="space-y-8">
-          {/* Luxury Features Grid */}
           <div className="grid grid-cols-3 gap-4">
             <div className="text-center p-4 luxury-card hover:scale-105 transition-transform">
               <CreditCard className="h-8 w-8 mx-auto mb-3 text-luxury-purple" />
@@ -208,7 +195,6 @@ const VaultLoginContent = () => {
             </div>
           )}
 
-          {/* Premium Login Form */}
           <form onSubmit={handleLogin} className="space-y-6">
             <div className="space-y-3">
               <Label htmlFor="loginEmail" className="text-sm font-semibold text-white">Email Address</Label>
