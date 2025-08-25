@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import VaultDashboard from './pages/VaultDashboard';
 import VaultLogin from './pages/VaultLogin';
 import VaultSignup from './pages/VaultSignup';
@@ -16,7 +16,7 @@ export default function App() {
         <Route path="/vault-login" element={<VaultLogin />} />
         <Route path="/vault-signup" element={<VaultSignup />} />
 
-        {/* Catch-all route */}
+        {/* Catch-all */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
