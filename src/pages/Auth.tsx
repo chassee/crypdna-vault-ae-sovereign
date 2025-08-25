@@ -11,35 +11,46 @@ const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const handleAuth = async () => {
+  const handleAuth = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !password) return;
+
     setLoading(true);
     try {
       if (isSignUp) {
+        // Send Supabase’s verification link back to the Vault app’s login route
         const { error } = await supabase.auth.signUp({
           email,
           password,
           options: {
-            emailRedirectTo: `${window.location.origin}/dashboard`
-          }
+            // IMPORTANT: HashRouter uses # in the URL
+            emailRedirectTo: `${window.location.origin}/#/vault-login`,
+          },
         });
         if (error) throw error;
+
         toast({
-          title: "Account created!",
-          description: "Please check your email to verify your account.",
+          title: 'Account created!',
+          description: 'Check your email to verify your account, then log in.',
         });
       } else {
-        const { error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
         if (error) throw error;
-        navigate('/dashboard');
+
+        if (data?.user) {
+          toast({ title: 'Welcome back!', description: 'Logged in successfully.' });
+          // Go straight to the Vault dashboard
+          navigate('/vault', { replace: true });
+        }
       }
-    } catch (error: any) {
+    } catch (err: any) {
       toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
+        title: 'Error',
+        description: err?.message || 'Something went wrong.',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);
@@ -49,34 +60,32 @@ const Auth = () => {
   return (
     <div className="min-h-screen relative overflow-hidden page-transition" style={{ background: '#121212' }}>
       {/* Premium Dark Background with Subtle Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900/50 via-black to-gray-800/30"></div>
-      
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-900/50 via-black to-gray-800/30" />
+
       {/* Floating Particles */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-purple-500/40 rounded-full sparkle-animation"></div>
-        <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-purple-400/30 rounded-full sparkle-animation" style={{animationDelay: '10s'}}></div>
-        <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-purple-300/20 rounded-full sparkle-animation" style={{animationDelay: '20s'}}></div>
+        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-purple-500/40 rounded-full sparkle-animation" />
+        <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-purple-400/30 rounded-full sparkle-animation" style={{ animationDelay: '10s' }} />
+        <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-purple-300/20 rounded-full sparkle-animation" style={{ animationDelay: '20s' }} />
       </div>
-      
+
       <div className="relative z-10 flex min-h-screen items-center justify-center p-6">
         <div className="glassmorphism-auth w-full max-w-lg p-8 rounded-3xl">
           <div className="text-center pb-6">
             {/* Animated Vault Logo */}
             <div className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-purple-600/30 to-purple-800/20 backdrop-blur-sm border border-purple-500/30 vault-logo-pulse">
               <div className="diamond-logo">
-                <div className="h-10 w-10 rotate-45 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl shadow-2xl"></div>
+                <div className="h-10 w-10 rotate-45 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl shadow-2xl" />
               </div>
             </div>
-            
+
             <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent mb-3">
               CrypDNA Vault
             </h1>
-            <p className="text-gray-400 text-lg">
-              Access your billionaire-class crypto portfolio
-            </p>
+            <p className="text-gray-400 text-lg">Access your billionaire-class crypto portfolio</p>
           </div>
 
-          <div className="space-y-6">
+          <form className="space-y-6" onSubmit={handleAuth}>
             <div className="space-y-3">
               <label htmlFor="email" className="block text-sm font-medium text-gray-300">
                 Email Address
@@ -91,7 +100,7 @@ const Auth = () => {
                 required
               />
             </div>
-            
+
             <div className="space-y-3">
               <label htmlFor="password" className="block text-sm font-medium text-gray-300">
                 Password
@@ -108,20 +117,20 @@ const Auth = () => {
             </div>
 
             <button
-              onClick={handleAuth}
+              type="submit"
               disabled={loading}
               className="w-full h-12 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold rounded-xl shadow-xl hover:shadow-2xl disabled:opacity-50 transition-all duration-300 amex-cta"
             >
               {loading ? (
                 <div className="flex items-center justify-center gap-2">
-                  <div className="luxury-spinner w-5 h-5"></div>
+                  <div className="luxury-spinner w-5 h-5" />
                   Processing...
                 </div>
               ) : (
                 isSignUp ? 'Create Billionaire Account' : 'Access Vault'
               )}
             </button>
-          </div>
+          </form>
 
           <div className="pt-6 text-center">
             <p className="text-gray-400 text-sm">
