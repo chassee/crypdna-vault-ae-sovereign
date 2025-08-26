@@ -1,45 +1,58 @@
+// src/App.tsx
 import { HashRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { supabase } from './integrations/supabase/client';
 
 import VaultDashboard from './pages/VaultDashboard';
-import AuthPage from './pages/Auth';    
-import ResetPage from './pages/Reset';  
-import NotFound from './pages/NotFound';
+import AuthPage from './pages/Auth';
+import ResetPage from './pages/Reset';
 
-// Protects /vault route so only logged-in users can see it
+// ---- Protected route: blocks /vault if no session ----
 function Protected({ children }: { children: JSX.Element }) {
-  const [ok, setOk] = useState(false);
   const [ready, setReady] = useState(false);
+  const [authed, setAuthed] = useState(false);
   const nav = useNavigate();
 
   useEffect(() => {
+    let alive = true;
+
+    // initial session check
     supabase.auth.getSession().then(({ data }) => {
-      const loggedIn = !!data.session;
-      setOk(loggedIn);
+      if (!alive) return;
+      setAuthed(!!data.session);
       setReady(true);
-      if (!loggedIn) nav('/auth');
     });
+
+    // react to future auth changes
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+      setAuthed(!!session);
+      if (session) nav('/vault', { replace: true });
+    });
+
+    return () => {
+      alive = false;
+      sub?.subscription.unsubscribe();
+    };
   }, [nav]);
 
-  if (!ready) return null; 
-  return ok ? children : null;
+  if (!ready) return null;                 // avoid flicker while checking
+  if (!authed) return <Navigate to="/auth" replace />;
+
+  return children;
 }
 
 export default function App() {
   return (
     <Router>
       <Routes>
-        {/* always send root → /auth */}
+        {/* default → auth */}
         <Route path="/" element={<Navigate to="/auth" replace />} />
 
-        {/* login + signup */}
+        {/* public routes */}
         <Route path="/auth" element={<AuthPage />} />
-
-        {/* password reset */}
         <Route path="/reset" element={<ResetPage />} />
 
-        {/* vault (protected) */}
+        {/* private vault */}
         <Route
           path="/vault"
           element={
@@ -49,7 +62,7 @@ export default function App() {
           }
         />
 
-        {/* everything else → /auth */}
+        {/* catch-all */}
         <Route path="*" element={<Navigate to="/auth" replace />} />
       </Routes>
     </Router>
