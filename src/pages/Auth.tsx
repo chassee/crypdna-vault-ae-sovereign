@@ -6,7 +6,7 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { Toaster } from '@/components/ui/toaster';
 
 const AUTH_REDIRECT = `${window.location.origin}/#/vault`;
-const RESET_REDIRECT = `${window.location.origin}/#/reset`;
+const RESET_REDIRECT = 'https://vault.crypdawgs.com/#/reset';
 
 export default function Auth() {
   const [email, setEmail] = useState('');
@@ -82,12 +82,7 @@ export default function Auth() {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        options: { 
-          emailRedirectTo: AUTH_REDIRECT,
-          data: {
-            // Security: No sensitive data in client-side user metadata
-          }
-        }
+        options: { emailRedirectTo: AUTH_REDIRECT }
       });
 
       if (error) throw error;
@@ -120,10 +115,7 @@ export default function Auth() {
     try {
       const { error } = await supabase.auth.signInWithOtp({
         email,
-        options: { 
-          emailRedirectTo: AUTH_REDIRECT,
-          shouldCreateUser: false // Security: Don't auto-create accounts via magic link
-        }
+        options: { emailRedirectTo: AUTH_REDIRECT }
       });
 
       if (error) throw error;
@@ -169,151 +161,146 @@ export default function Auth() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-black via-purple-900/20 to-black">
+      <div className="min-h-screen flex items-center justify-center bg-black relative overflow-hidden">
+        {/* Luxury dark background with subtle gradients */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-black to-cyan-900/30" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(168,85,247,0.15),transparent_50%)]" />
         
-        <div className="w-full max-w-md relative z-10 p-6">
-          <div className="text-center space-y-8">
-            {/* Diamond Icon */}
+        <div className="w-full max-w-lg p-8 space-y-8 relative z-10">
+          {/* Crisp gradient header */}
+          <div className="text-center space-y-6">
             <div className="flex justify-center">
               <div className="relative">
-                <svg className="w-16 h-16 text-purple-400" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M6 2L18 2L22 6L18 10L16 12L18 14L22 18L18 22L6 22L2 18L6 14L8 12L6 10L2 6L6 2Z" />
-                </svg>
-                <div className="absolute -top-2 -right-2">
-                  <svg className="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                <div className="w-20 h-20 bg-gradient-to-br from-purple-500 via-cyan-400 to-yellow-400 rounded-xl flex items-center justify-center shadow-2xl shadow-purple-500/50">
+                  <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 2L18 2L22 6L18 10L16 12L18 14L22 18L18 22L6 22L2 18L6 14L8 12L6 10L2 6L6 2Z" />
+                  </svg>
+                </div>
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-yellow-400 to-yellow-300 rounded-full flex items-center justify-center shadow-lg">
+                  <svg className="w-4 h-4 text-black" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" />
                   </svg>
                 </div>
               </div>
             </div>
-
-            {/* Title */}
-            <div className="space-y-2">
-              <h1 
-                className="text-4xl font-black tracking-tight"
-                style={{
-                  background: 'linear-gradient(135deg, #ffd9a3 0%, #ffb27b 25%, #ff6bcc 50%, #8f7bff 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
-                }}
-              >
-                🔒 CrypDNA Vault
+            
+            <div className="space-y-3">
+              <h1 className="text-4xl font-black bg-gradient-to-r from-white via-purple-200 to-cyan-200 bg-clip-text text-transparent">
+                CrypDNA Vault
               </h1>
-              <p className="text-gray-300 text-sm">
+              <p className="text-gray-300 text-base font-medium">
                 Enter the billionaire-class financial ecosystem
               </p>
             </div>
 
-            {/* Feature Cards */}
-            <div className="grid grid-cols-3 gap-3 mb-8">
-              <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-3 text-center">
-                <div className="w-8 h-8 mx-auto mb-2 bg-purple-500 rounded flex items-center justify-center">
-                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M2 5h20v14H2V5zm2 2v10h16V7H4z"/>
-                    <path d="M6 9h4v2H6V9zm6 0h6v2h-6V9z"/>
+            {/* High-contrast feature cards */}
+            <div className="grid grid-cols-3 gap-4 mt-8">
+              <div className="p-5 bg-purple-900/40 border border-purple-500/30 rounded-xl text-center space-y-3 backdrop-blur-sm">
+                <div className="w-10 h-10 mx-auto bg-purple-500/30 rounded-xl flex items-center justify-center">
+                  <svg className="w-5 h-5 text-purple-300" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M2 17H22V19H2V17M1.15 12.15L4 15L1.15 17.85L2.85 19.55L7.4 15L2.85 10.45L1.15 12.15M8 5H10V7H12V9H10V7H8V5Z" />
                   </svg>
                 </div>
-                <div className="text-xs font-medium text-white">Elite</div>
-                <div className="text-xs font-medium text-white">Credit</div>
-              </div>
-              <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-3 text-center">
-                <div className="w-8 h-8 mx-auto mb-2 bg-yellow-500 rounded flex items-center justify-center">
-                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                  </svg>
-                </div>
-                <div className="text-xs font-medium text-white">Instant</div>
-                <div className="text-xs font-medium text-white">Rewards</div>
-              </div>
-              <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-3 text-center">
-                <div className="w-8 h-8 mx-auto mb-2 bg-gray-400 rounded flex items-center justify-center">
-                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
-                  </svg>
-                </div>
-                <div className="text-xs font-medium text-white">Military</div>
-                <div className="text-xs font-medium text-white">Grade</div>
-              </div>
-            </div>
-
-            {/* Form */}
-            <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className="space-y-4">
-              <div className="space-y-3">
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                    placeholder="Enter your exclusive email"
-                    disabled={loading}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Vault Password</label>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                    placeholder="Enter your secure password"
-                    disabled={loading}
-                  />
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-4 text-white font-bold text-lg rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                style={{
-                  background: 'linear-gradient(135deg, #ff6bcc 0%, #7a5cff 50%, #3b3bf5 100%)'
-                }}
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M6 2L18 2L22 6L18 10L16 12L18 14L22 18L18 22L6 22L2 18L6 14L8 12L6 10L2 6L6 2Z" />
-                </svg>
-                {loading ? 'Accessing...' : 'Access Billionaire Vault'}
-              </button>
-            </form>
-
-            {/* Secondary Actions */}
-            <div className="space-y-2 text-center">
-              <div className="flex justify-center space-x-4 text-sm">
-                <button
-                  onClick={handleMagicLink}
-                  disabled={loading}
-                  className="text-gray-400 hover:text-white transition-colors disabled:opacity-50"
-                >
-                  Send Magic Link
-                </button>
-                <button
-                  onClick={() => setIsSignUp(!isSignUp)}
-                  disabled={loading}
-                  className="text-gray-400 hover:text-white transition-colors disabled:opacity-50"
-                >
-                  {isSignUp ? 'Sign In' : 'Create Account'}
-                </button>
+                <div className="text-sm font-bold text-white">Elite Credit</div>
               </div>
               
-              <button
-                onClick={handleReset}
+              <div className="p-5 bg-cyan-900/40 border border-cyan-500/30 rounded-xl text-center space-y-3 backdrop-blur-sm">
+                <div className="w-10 h-10 mx-auto bg-cyan-500/30 rounded-xl flex items-center justify-center">
+                  <svg className="w-5 h-5 text-cyan-300" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M7 14L12 9L17 14H7Z" />
+                  </svg>
+                </div>
+                <div className="text-sm font-bold text-white">Instant Rewards</div>
+              </div>
+              
+              <div className="p-5 bg-yellow-900/40 border border-yellow-500/30 rounded-xl text-center space-y-3 backdrop-blur-sm">
+                <div className="w-10 h-10 mx-auto bg-yellow-500/30 rounded-xl flex items-center justify-center">
+                  <svg className="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 1L21 5V11C21 16.55 17.16 21.74 12 23C6.84 21.74 3 16.55 3 11V5L12 1Z" />
+                  </svg>
+                </div>
+                <div className="text-sm font-bold text-white">Military Grade</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Large, high-contrast form */}
+          <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className="space-y-6">
+            <div className="space-y-3">
+              <label className="text-base font-bold text-white">
+                Email Address
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-6 py-4 text-lg bg-gray-900/70 border-2 border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:ring-4 focus:ring-purple-500/50 focus:border-purple-500 transition-all"
+                placeholder="Enter your exclusive email"
                 disabled={loading}
-                className="text-gray-500 hover:text-gray-300 text-xs transition-colors disabled:opacity-50"
-              >
-                Reset Password
-              </button>
+              />
             </div>
 
-            {/* Footer */}
-            <div className="text-center pt-4">
-              <p className="text-sm text-gray-400">
-                Access is restricted to verified billionaire-class members only.
-              </p>
+            <div className="space-y-3">
+              <label className="text-base font-bold text-white">
+                Vault Password
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-6 py-4 text-lg bg-gray-900/70 border-2 border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:ring-4 focus:ring-purple-500/50 focus:border-purple-500 transition-all"
+                placeholder="Enter your secure password"
+                disabled={loading}
+              />
             </div>
+
+            {/* Neon gradient button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-5 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 hover:from-purple-500 hover:via-pink-500 hover:to-cyan-500 text-white text-lg font-bold rounded-xl transition-all duration-300 disabled:opacity-50 flex items-center justify-center space-x-3 shadow-2xl shadow-purple-500/50 hover:shadow-purple-400/60 hover:scale-[1.02]"
+            >
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6 2L18 2L22 6L18 10L16 12L18 14L22 18L18 22L6 22L2 18L6 14L8 12L6 10L2 6L6 2Z" />
+              </svg>
+              <span>
+                {loading ? 'Accessing...' : 'Access Billionaire Vault'}
+              </span>
+            </button>
+          </form>
+
+          {/* Alternative actions with high contrast */}
+          <div className="space-y-4">
+            <button
+              onClick={handleMagicLink}
+              disabled={loading}
+              className="w-full py-4 border-2 border-gray-600 bg-gray-800/50 rounded-xl text-white text-base font-semibold hover:bg-gray-700/50 hover:border-gray-500 transition-all disabled:opacity-50"
+            >
+              Send Magic Link
+            </button>
+
+            <button
+              onClick={() => setIsSignUp(!isSignUp)}
+              disabled={loading}
+              className="w-full py-4 border-2 border-purple-600 bg-purple-900/30 rounded-xl text-white text-base font-semibold hover:bg-purple-800/40 hover:border-purple-500 transition-all disabled:opacity-50"
+            >
+              {isSignUp ? 'Already have access? Sign In' : 'Create Account'}
+            </button>
+
+            <button
+              onClick={handleReset}
+              disabled={loading}
+              className="w-full py-3 text-gray-300 text-sm hover:text-white transition-colors disabled:opacity-50"
+            >
+              Reset Password
+            </button>
+          </div>
+
+          {/* Footer */}
+          <div className="text-center">
+            <p className="text-sm text-gray-400 font-medium">
+              Access is restricted to verified billionaire-class members only.
+            </p>
           </div>
         </div>
       </div>
