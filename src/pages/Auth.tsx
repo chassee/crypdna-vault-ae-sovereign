@@ -169,108 +169,120 @@ export default function Auth() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
-        {/* Deep Black to Violet Background */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(135deg, #000000 0%, #1a0033 30%, #2d1b69 60%, #0f0f23 100%)'
-          }}
-        />
+      <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-black via-purple-900/20 to-black">
         
-        {/* Subtle Ambient Glows */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div 
-            className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-20"
-            style={{
-              background: 'radial-gradient(circle, rgba(219, 39, 119, 0.3) 0%, transparent 70%)',
-              filter: 'blur(60px)'
-            }} 
-          />
-          <div 
-            className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full opacity-20"
-            style={{
-              background: 'radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%)',
-              filter: 'blur(60px)'
-            }} 
-          />
-        </div>
-        
-        <div className="w-full max-w-md relative z-10">
-          <div className="p-8 space-y-8">
-            {/* Luxury Header */}
-            <div className="text-center space-y-6">
-              <div className="flex justify-center">
-                <div 
-                  className="w-16 h-16 rounded-2xl flex items-center justify-center"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(219, 39, 119, 0.2) 50%, rgba(59, 130, 246, 0.2) 100%)',
-                    boxShadow: '0 8px 32px rgba(139, 92, 246, 0.3)'
-                  }}
-                >
-                  <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M6 2L18 2L22 6L18 10L16 12L18 14L22 18L18 22L6 22L2 18L6 14L8 12L6 10L2 6L6 2Z" />
+        <div className="w-full max-w-md relative z-10 p-6">
+          <div className="text-center space-y-8">
+            {/* Diamond Icon */}
+            <div className="flex justify-center">
+              <div className="relative">
+                <svg className="w-16 h-16 text-purple-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6 2L18 2L22 6L18 10L16 12L18 14L22 18L18 22L6 22L2 18L6 14L8 12L6 10L2 6L6 2Z" />
+                </svg>
+                <div className="absolute -top-2 -right-2">
+                  <svg className="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
                   </svg>
                 </div>
               </div>
-              
-              <div className="space-y-3">
-                <h1 
-                  className="text-4xl font-black tracking-tight"
-                  style={{
-                    background: 'linear-gradient(135deg, #db2777 0%, #8b5cf6 50%, #3b82f6 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                    filter: 'drop-shadow(0 0 20px rgba(139, 92, 246, 0.4))'
-                  }}
-                >
-                  CrypDNA Vault
-                </h1>
-                <p className="text-gray-300 text-sm font-medium">
-                  Billionaire-class financial ecosystem
-                </p>
+            </div>
+
+            {/* Title */}
+            <div className="space-y-2">
+              <h1 
+                className="text-4xl font-black tracking-tight"
+                style={{
+                  background: 'linear-gradient(135deg, #ffd9a3 0%, #ffb27b 25%, #ff6bcc 50%, #8f7bff 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}
+              >
+                🔒 CrypDNA Vault
+              </h1>
+              <p className="text-gray-300 text-sm">
+                Enter the billionaire-class financial ecosystem
+              </p>
+            </div>
+
+            {/* Feature Cards */}
+            <div className="grid grid-cols-3 gap-3 mb-8">
+              <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-3 text-center">
+                <div className="w-8 h-8 mx-auto mb-2 bg-purple-500 rounded flex items-center justify-center">
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M2 5h20v14H2V5zm2 2v10h16V7H4z"/>
+                    <path d="M6 9h4v2H6V9zm6 0h6v2h-6V9z"/>
+                  </svg>
+                </div>
+                <div className="text-xs font-medium text-white">Elite</div>
+                <div className="text-xs font-medium text-white">Credit</div>
+              </div>
+              <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-3 text-center">
+                <div className="w-8 h-8 mx-auto mb-2 bg-yellow-500 rounded flex items-center justify-center">
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                  </svg>
+                </div>
+                <div className="text-xs font-medium text-white">Instant</div>
+                <div className="text-xs font-medium text-white">Rewards</div>
+              </div>
+              <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-3 text-center">
+                <div className="w-8 h-8 mx-auto mb-2 bg-gray-400 rounded flex items-center justify-center">
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                  </svg>
+                </div>
+                <div className="text-xs font-medium text-white">Military</div>
+                <div className="text-xs font-medium text-white">Grade</div>
               </div>
             </div>
 
             {/* Form */}
-            <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className="space-y-6">
-              <div className="space-y-4">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all"
-                  placeholder="Email address"
-                  disabled={loading}
-                />
+            <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className="space-y-4">
+              <div className="space-y-3">
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    placeholder="Enter your exclusive email"
+                    disabled={loading}
+                  />
+                </div>
 
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all"
-                  placeholder="Password"
-                  disabled={loading}
-                />
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Vault Password</label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    placeholder="Enter your secure password"
+                    disabled={loading}
+                  />
+                </div>
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-4 text-white font-bold text-lg rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group hover:scale-105"
+                className="w-full py-4 text-white font-bold text-lg rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 style={{
-                  background: 'linear-gradient(135deg, #db2777 0%, #8b5cf6 50%, #3b82f6 100%)',
-                  boxShadow: '0 10px 30px rgba(139, 92, 246, 0.4)'
+                  background: 'linear-gradient(135deg, #ff6bcc 0%, #7a5cff 50%, #3b3bf5 100%)'
                 }}
               >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6 2L18 2L22 6L18 10L16 12L18 14L22 18L18 22L6 22L2 18L6 14L8 12L6 10L2 6L6 2Z" />
+                </svg>
                 {loading ? 'Accessing...' : 'Access Billionaire Vault'}
               </button>
             </form>
 
             {/* Secondary Actions */}
-            <div className="space-y-3 text-center">
-              <div className="flex justify-center space-x-6 text-sm">
+            <div className="space-y-2 text-center">
+              <div className="flex justify-center space-x-4 text-sm">
                 <button
                   onClick={handleMagicLink}
                   disabled={loading}
@@ -297,9 +309,9 @@ export default function Auth() {
             </div>
 
             {/* Footer */}
-            <div className="text-center pt-4 border-t border-white/10">
-              <p className="text-xs text-gray-500">
-                Secure entry for billionaire-class members only.
+            <div className="text-center pt-4">
+              <p className="text-sm text-gray-400">
+                Access is restricted to verified billionaire-class members only.
               </p>
             </div>
           </div>

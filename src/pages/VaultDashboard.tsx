@@ -100,32 +100,33 @@ export default function VaultDashboard() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="min-h-screen luxury-transition" style={{
-        background: 'radial-gradient(ellipse at top, hsl(262, 90%, 4%) 0%, hsl(0, 0%, 1%) 100%)'
-      }}>
+      <div className="min-h-screen bg-gradient-to-br from-black via-purple-900/20 to-black">
 
-        {/* Luxury Header */}
-        <div className="billionaire-card border-b sticky top-0 z-40">
-          <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
+        {/* Header */}
+        <div className="bg-black/50 backdrop-blur border-b border-gray-800 sticky top-0 z-40">
+          <div className="container mx-auto px-4 py-3">
             <div className="flex justify-between items-center">
-              <div className="flex items-center space-x-2 sm:space-x-4">
-                <h1 className="text-lg sm:text-2xl font-black font-billionaire tracking-wide" style={{
-                  background: 'linear-gradient(135deg, hsl(0, 0%, 98%) 0%, hsl(262, 90%, 75%) 30%, hsl(335, 78%, 70%) 70%, hsl(213, 92%, 70%) 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
-                }}>
-                  CrypDNA Vault
+              <div className="flex items-center space-x-4">
+                <h1 
+                  className="text-xl font-black tracking-wide"
+                  style={{
+                    background: 'linear-gradient(135deg, #ffd9a3 0%, #ffb27b 25%, #ff6bcc 50%, #8f7bff 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text'
+                  }}
+                >
+                  🔒 CrypDNA Vault
                 </h1>
                 <div className="hidden sm:block">
                   <LuxuryTierBadge tier={userTier} />
                 </div>
               </div>
-              <div className="flex items-center space-x-2 sm:space-x-3">
+              <div className="flex items-center space-x-3">
                 <ThemeToggle />
-                <Button onClick={handleSignOut} variant="outline" size="sm" className="ghost-button text-xs sm:text-sm">
-                  <LogOut className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-                  <span className="hidden sm:inline">Sign Out</span>
+                <Button onClick={handleSignOut} variant="outline" size="sm" className="text-xs">
+                  <LogOut className="mr-2 h-3 w-3" />
+                  Sign Out
                 </Button>
               </div>
             </div>
@@ -133,29 +134,28 @@ export default function VaultDashboard() {
         </div>
 
         {/* Body */}
-        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 space-y-6 sm:space-y-8 lg:space-y-12">
+        <div className="container mx-auto px-4 py-6 space-y-6">
           {/* Welcome */}
-          <div className="text-center space-y-3 sm:space-y-4 lg:space-y-6 animate-fade-in">
+          <div className="text-center space-y-4 animate-fade-in">
             <div className="space-y-2">
-              <div className="text-overlay">
-                <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black font-billionaire tracking-wide" style={{
-                  background: 'linear-gradient(135deg, hsl(0, 0%, 98%) 0%, hsl(262, 90%, 75%) 30%, hsl(335, 78%, 70%) 70%, hsl(213, 92%, 70%) 100%)',
+              <h2 
+                className="text-3xl font-black tracking-wide"
+                style={{
+                  background: 'linear-gradient(135deg, #ffd9a3 0%, #ffb27b 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text'
-                }}>
-                  Welcome back, {userName}
-                </h2>
-              </div>
-              <div className="text-overlay">
-                <p className="text-luxury-platinum/80 text-sm sm:text-base lg:text-xl font-medium tracking-wide">
-                  Vault ID:{' '}
-                  <span className="font-mono text-luxury-purple text-sm sm:text-lg lg:text-2xl">
-                    {vaultId}
-                  </span>
-                </p>
-              </div>
-              <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-luxury-platinum/70 sm:hidden">
+                }}
+              >
+                Welcome back, {userName}
+              </h2>
+              <p className="text-gray-300 text-lg font-medium tracking-wide">
+                Vault ID:{' '}
+                <span className="font-mono text-purple-400 text-xl">
+                  {vaultId}
+                </span>
+              </p>
+              <div className="flex items-center justify-center gap-2 text-sm text-gray-400 sm:hidden">
                 <span>Tier:</span>
                 <LuxuryTierBadge tier={userTier} />
               </div>
@@ -170,44 +170,39 @@ export default function VaultDashboard() {
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as TabKey)} className="w-full">
           {!isMobile && (
-            <TabsList className="grid w-full grid-cols-5 luxury-card border-border bg-gradient-to-r from-card/50 to-muted/50 backdrop-blur-xl">
-              <TabsTrigger value="balances" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
-                <Wallet className="w-3 h-3 sm:w-4 sm:h-4" />
+            <TabsList className="grid w-full grid-cols-5 bg-black/30 backdrop-blur border border-gray-800">
+              <TabsTrigger value="balances" className="flex items-center gap-2 data-[state=active]:bg-purple-600 data-[state=active]:text-white text-xs">
+                <Wallet className="w-4 h-4" />
                 <span className="hidden md:inline">Balance</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
               </TabsTrigger>
-              <TabsTrigger value="drops" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
-                <Rocket className="w-3 h-3 sm:w-4 sm:h-4" />
+              <TabsTrigger value="drops" className="flex items-center gap-2 data-[state=active]:bg-purple-600 data-[state=active]:text-white text-xs">
+                <Rocket className="w-4 h-4" />
                 <span className="hidden md:inline">Drops</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
               </TabsTrigger>
-              <TabsTrigger value="crypbots" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
-                <Brain className="w-3 h-3 sm:w-4 sm:h-4" />
+              <TabsTrigger value="crypbots" className="flex items-center gap-2 data-[state=active]:bg-purple-600 data-[state=active]:text-white text-xs">
+                <Brain className="w-4 h-4" />
                 <span className="hidden md:inline">Crypb0ts</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
               </TabsTrigger>
-              <TabsTrigger value="neurotech" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
-                <Waves className="w-3 h-3 sm:w-4 sm:h-4" />
+              <TabsTrigger value="neurotech" className="flex items-center gap-2 data-[state=active]:bg-purple-600 data-[state=active]:text-white text-xs">
+                <Waves className="w-4 h-4" />
                 <span className="hidden md:inline">NeuroTech</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
               </TabsTrigger>
-              <TabsTrigger value="about" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
-                <Info className="w-3 h-3 sm:w-4 sm:h-4" />
+              <TabsTrigger value="about" className="flex items-center gap-2 data-[state=active]:bg-purple-600 data-[state=active]:text-white text-xs">
+                <Info className="w-4 h-4" />
                 <span className="hidden md:inline">About Us</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
               </TabsTrigger>
             </TabsList>
           )}
 
-          <div className="mt-4 sm:mt-6 lg:mt-8">
-            <TabsContent value="balances" className="space-y-4 sm:space-y-6 lg:space-y-8 animate-fade-in">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
-                <div className="space-y-4 sm:space-y-6 lg:space-y-8 animate-slide-up">
+          <div className="mt-6">
+            <TabsContent value="balances" className="space-y-6 animate-fade-in">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="space-y-6 animate-slide-up">
                   <BalanceBreakdown />
                   <DunBradstreetWidget />
                   <VaultVerification />
                 </div>
-                <div className="space-y-4 sm:space-y-6 lg:space-y-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+                <div className="space-y-6 animate-slide-up" style={{ animationDelay: '0.2s' }}>
                   <CreditActivity />
                 </div>
               </div>
