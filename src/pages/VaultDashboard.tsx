@@ -1,8 +1,9 @@
-// src/pages/VaultDashboard.tsx
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import { Toaster } from '@/components/ui/toaster';
 
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -98,7 +99,8 @@ export default function VaultDashboard() {
   const userTier = userProfile?.tier ?? 'Viewer';
 
   return (
-    <div className="min-h-screen bg-background luxury-transition">
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <div className="min-h-screen bg-background luxury-transition">
 
       {/* Header */}
       <div className="luxury-card border-b sticky top-0 z-40 backdrop-blur-xl">
@@ -219,6 +221,8 @@ export default function VaultDashboard() {
 
         <MobileFloatingNav activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab as TabKey)} />
       </div>
-    </div>
+      </div>
+      <Toaster />
+    </ThemeProvider>
   );
 }
