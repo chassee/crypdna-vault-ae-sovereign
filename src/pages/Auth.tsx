@@ -3,8 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 
-// Because we use HashRouter, redirects MUST include `#/`
-const AUTH_REDIRECT  = 'https://vault.crypdawgs.com/#/auth';
+const AUTH_REDIRECT = `${window.location.origin}/#/vault`;
 const RESET_REDIRECT = 'https://vault.crypdawgs.com/#/reset';
 
 export default function Auth() {

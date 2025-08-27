@@ -99,8 +99,6 @@ export default function VaultDashboard() {
 
   return (
     <div className="min-h-screen bg-background luxury-transition">
-      {/* TEMP MARKER – remove later */}
-      <div className="p-2 text-center text-xs opacity-70">BUILD r1 — VaultDashboard.tsx mounted</div>
 
       {/* Header */}
       <div className="luxury-card border-b sticky top-0 z-40 backdrop-blur-xl">
