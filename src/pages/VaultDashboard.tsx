@@ -87,7 +87,7 @@ export default function VaultDashboard() {
       return;
     }
     toast({ title: 'Signed out', description: 'You have been signed out.' });
-    navigate('/auth', { replace: true });
+    window.location.hash = '/auth';
   }
 
   if (loading) return <LuxuryLoadingScreen />;
