@@ -1,15 +1,13 @@
-{/* TEMP MARKER – remove later */}
-<div className="p-2 text-center text-xs opacity-70">BUILD r1 — VaultDashboard.tsx mounted</div>
-
+// src/pages/VaultDashboard.tsx
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
 import type { User, Session } from '@supabase/supabase-js';
+import { supabase } from '@/integrations/supabase/client';
 
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
-import { toast } from '@/hooks/use-toast';
+import { useToast } from '@/hooks/use-toast';
 
 import LuxuryLoadingScreen from '@/components/LuxuryLoadingScreen';
 import LuxuryDebitCard from '@/components/LuxuryDebitCard';
@@ -32,6 +30,7 @@ type TabKey = 'balances' | 'drops' | 'crypbots' | 'neurotech' | 'about';
 export default function VaultDashboard() {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const { toast } = useToast();
 
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
@@ -39,17 +38,16 @@ export default function VaultDashboard() {
   const [userProfile, setUserProfile] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<TabKey>('balances');
 
+  // ---- Auth wiring ----
   useEffect(() => {
     // live auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, nextSession) => {
-        setSession(nextSession ?? null);
-        const nextUser = nextSession?.user ?? null;
-        setUser(nextUser);
-        if (!nextUser) navigate('/auth', { replace: true });
-        else void fetchUserProfile(nextUser.id);
-      }
-    );
+    const { data } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      setSession(nextSession ?? null);
+      const nextUser = nextSession?.user ?? null;
+      setUser(nextUser);
+      if (!nextUser) navigate('/auth', { replace: true });
+      else void fetchUserProfile(nextUser.id);
+    });
 
     // initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -61,15 +59,15 @@ export default function VaultDashboard() {
       setLoading(false);
     });
 
-    return () => subscription.unsubscribe();
+    return () => data?.subscription?.unsubscribe();
   }, [navigate]);
 
   async function fetchUserProfile(userId: string) {
     try {
       const { data, error } = await supabase
-        .from('users')               // make sure this table/column exist
+        .from('users')          // make sure table/column exist
         .select('*')
-        .eq('user_id', userId)       // change to your column if different (e.g., 'id')
+        .eq('user_id', userId)  // change to your column if different
         .single();
 
       if (error && error.code !== 'PGRST116') {
@@ -101,6 +99,9 @@ export default function VaultDashboard() {
 
   return (
     <div className="min-h-screen bg-background luxury-transition">
+      {/* TEMP MARKER – remove later */}
+      <div className="p-2 text-center text-xs opacity-70">BUILD r1 — VaultDashboard.tsx mounted</div>
+
       {/* Header */}
       <div className="luxury-card border-b sticky top-0 z-40 backdrop-blur-xl">
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
