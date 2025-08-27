@@ -763,6 +763,8 @@
 /* Hide Lovable Badge */
 iframe[src*="lovableproject.com"] + div[style*="position: fixed"] {
   display: none !important;
+}
+
 /* Shimmer Animation for Luxury Button */
 @keyframes shimmer {
   0% { transform: translateX(-100%); }
