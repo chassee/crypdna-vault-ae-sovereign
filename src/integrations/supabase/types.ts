@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "12.2.12 (cd3cf9e)"
@@ -41,6 +41,36 @@ export type Database = {
           old_value?: string | null
           target_user_id?: string
           timestamp?: string
+        }
+        Relationships: []
+      }
+      audit_log: {
+        Row: {
+          id: string
+          new_data: Json | null
+          old_data: Json | null
+          operation: string
+          table_name: string
+          timestamp: string | null
+          user_id: string | null
+        }
+        Insert: {
+          id?: string
+          new_data?: Json | null
+          old_data?: Json | null
+          operation: string
+          table_name: string
+          timestamp?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          id?: string
+          new_data?: Json | null
+          old_data?: Json | null
+          operation?: string
+          table_name?: string
+          timestamp?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -412,6 +442,24 @@ export type Database = {
         }
         Relationships: []
       }
+      paid_customers: {
+        Row: {
+          created_at: string | null
+          email: string
+          source: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          source?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          source?: string | null
+        }
+        Relationships: []
+      }
       paw_debit_card: {
         Row: {
           card_number: string
@@ -421,7 +469,7 @@ export type Database = {
           expiry: string
           id: string
           status: string | null
-          user_id: string | null
+          user_id: string
         }
         Insert: {
           card_number: string
@@ -431,7 +479,7 @@ export type Database = {
           expiry: string
           id?: string
           status?: string | null
-          user_id?: string | null
+          user_id: string
         }
         Update: {
           card_number?: string
@@ -441,7 +489,7 @@ export type Database = {
           expiry?: string
           id?: string
           status?: string | null
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: []
       }
@@ -477,28 +525,28 @@ export type Database = {
       }
       profiles: {
         Row: {
-          created_at: string
+          avatar_url: string | null
+          email: string | null
           full_name: string | null
           id: string
-          updated_at: string
-          user_id: string
-          username: string
+          is_member: boolean | null
+          updated_at: string | null
         }
         Insert: {
-          created_at?: string
+          avatar_url?: string | null
+          email?: string | null
           full_name?: string | null
-          id?: string
-          updated_at?: string
-          user_id: string
-          username: string
+          id: string
+          is_member?: boolean | null
+          updated_at?: string | null
         }
         Update: {
-          created_at?: string
+          avatar_url?: string | null
+          email?: string | null
           full_name?: string | null
           id?: string
-          updated_at?: string
-          user_id?: string
-          username?: string
+          is_member?: boolean | null
+          updated_at?: string | null
         }
         Relationships: []
       }

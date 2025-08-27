@@ -49,12 +49,55 @@ const VaultVerification = () => {
 
   const handleFileUpload = async (file: File, docType: string) => {
     setUploading(docType);
+    
+    // SECURITY: Enhanced file validation
+    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+    const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+    const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'pdf'];
+
+    // File size validation
+    if (file.size > MAX_FILE_SIZE) {
+      toast({
+        title: "File too large",
+        description: "File must be smaller than 10MB.",
+        variant: "destructive",
+      });
+      setUploading(null);
+      return;
+    }
+
+    // MIME type validation
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      toast({
+        title: "Invalid file type",
+        description: "Only JPEG, PNG, and PDF files are allowed.",
+        variant: "destructive",
+      });
+      setUploading(null);
+      return;
+    }
+
+    // File extension validation
+    const fileExt = file.name.split('.').pop()?.toLowerCase();
+    if (!fileExt || !ALLOWED_EXTENSIONS.includes(fileExt)) {
+      toast({
+        title: "Invalid file extension",
+        description: "Only .jpg, .jpeg, .png, and .pdf files are allowed.",
+        variant: "destructive",
+      });
+      setUploading(null);
+      return;
+    }
+
+    // File name sanitization
+    const sanitizedDocType = docType.replace(/[^a-zA-Z0-9_]/g, '');
+    const sanitizedExt = fileExt.replace(/[^a-zA-Z0-9]/g, '');
+
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${user.id}/${docType}.${fileExt}`;
+      const fileName = `${user.id}/${sanitizedDocType}.${sanitizedExt}`;
 
       const { error: uploadError } = await supabase.storage
         .from('vault-documents')
@@ -74,8 +117,10 @@ const VaultVerification = () => {
 
       const { error } = await supabase
         .from('verification')
-        .update(updateData)
-        .eq('user_id', user.id);
+        .upsert({
+          user_id: user.id,
+          ...updateData,
+        });
 
       if (error) throw error;
 
