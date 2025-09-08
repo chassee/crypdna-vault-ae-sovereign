@@ -1,43 +1,61 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
+import { supabase } from '@/lib/supabase';
+import LoadingScreen from '@/components/LoadingScreen';
 
-type Props = { children: React.ReactNode };
+interface RequirePaidProps {
+  children: React.ReactNode;
+}
 
-export default function RequirePaid({ children }: Props) {
+const RequirePaid: React.FC<RequirePaidProps> = ({ children }) => {
   const [loading, setLoading] = useState(true);
-  const [allowed, setAllowed] = useState<boolean | null>(null);
+  const [isPaid, setIsPaid] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      // must be logged in
-      const { data: sess } = await supabase.auth.getSession();
-      const email = sess?.session?.user?.email?.toLowerCase();
-      if (!email) {
-        setAllowed(null); // not logged in
+    const checkMembership = async () => {
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+
+        if (!session?.user?.email) {
+          setIsPaid(false);
+          setLoading(false);
+          return;
+        }
+
+        // Check if this email exists in the memberships table
+        const { data, error } = await supabase
+          .from('memberships')
+          .select('is_active')
+          .eq('email', session.user.email.toLowerCase())
+          .maybeSingle();
+
+        if (error) {
+          console.error('Error checking membership:', error);
+          setIsPaid(false);
+        } else {
+          setIsPaid(!!data?.is_active);
+        }
+      } catch (err) {
+        console.error('Membership check failed:', err);
+        setIsPaid(false);
+      } finally {
         setLoading(false);
-        return;
       }
+    };
 
-      // check if user is in memberships table
-      const { data, error } = await supabase
-        .from('memberships')
-        .select('is_active')
-        .eq('email', email)
-        .maybeSingle();
-
-      if (error) {
-        console.error('Membership check failed', error);
-        setAllowed(false);
-      } else {
-        setAllowed(Boolean(data?.is_active));
-      }
-      setLoading(false);
-    })();
+    checkMembership();
   }, []);
 
-  if (loading) return <div style={{ padding: 24 }}>Checking membership…</div>;
-  if (allowed === null) return <Navigate to="/login" replace />;
-  if (allowed === false) return <Navigate to="/checkout" replace />;
+  if (loading) return <LoadingScreen />;
+
+  // Not paid? Send to checkout
+  if (!isPaid) {
+    return <Navigate to="/checkout" replace />;
+  }
+
   return <>{children}</>;
-}
+};
+
+export default RequirePaid;
