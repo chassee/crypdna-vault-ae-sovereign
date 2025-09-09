@@ -1,61 +1,42 @@
-import React, { useEffect, useState } from 'react';
+// src/components/RequirePaid.tsx
+import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { supabase } from '@/lib/supabase';
-import LoadingScreen from '@/components/LoadingScreen';
+import { createClient } from '@supabase/supabase-js';
 
-interface RequirePaidProps {
-  children: React.ReactNode;
-}
+// use the envs you set in Netlify
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL!,
+  import.meta.env.VITE_SUPABASE_ANON_KEY!
+);
 
-const RequirePaid: React.FC<RequirePaidProps> = ({ children }) => {
+export default function RequirePaid({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
-  const [isPaid, setIsPaid] = useState(false);
+  const [allowed, setAllowed] = useState<boolean>(false);
 
   useEffect(() => {
-    const checkMembership = async () => {
-      try {
-        const {
-          data: { session },
-        } = await supabase.auth.getSession();
-
-        if (!session?.user?.email) {
-          setIsPaid(false);
-          setLoading(false);
-          return;
-        }
-
-        // Check if this email exists in the memberships table
-        const { data, error } = await supabase
-          .from('memberships')
-          .select('is_active')
-          .eq('email', session.user.email.toLowerCase())
-          .maybeSingle();
-
-        if (error) {
-          console.error('Error checking membership:', error);
-          setIsPaid(false);
-        } else {
-          setIsPaid(!!data?.is_active);
-        }
-      } catch (err) {
-        console.error('Membership check failed:', err);
-        setIsPaid(false);
-      } finally {
+    (async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.user?.email) {
+        setAllowed(false);
         setLoading(false);
+        return;
       }
-    };
 
-    checkMembership();
+      // look up membership row by email (case-insensitive)
+      const { data, error } = await supabase
+        .from('memberships')
+        .select('is_active')
+        .ilike('email', session.user.email.toLowerCase())
+        .maybeSingle();
+
+      if (error) console.error('membership check error', error);
+
+      setAllowed(!!data?.is_active);
+      setLoading(false);
+    })();
   }, []);
 
-  if (loading) return <LoadingScreen />;
-
-  // Not paid? Send to checkout
-  if (!isPaid) {
-    return <Navigate to="/checkout" replace />;
-  }
-
+  if (loading) return null; // or a spinner
+  if (!allowed) return <Navigate to="/auth" replace />;
   return <>{children}</>;
-};
-
-export default RequirePaid;
+}
