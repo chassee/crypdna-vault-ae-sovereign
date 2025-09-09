@@ -20,7 +20,7 @@ export default function App() {
               <VaultDashboard />
             </RequirePaid>
           }
-        />
+        /> 
 
         <Route path="*" element={<Navigate to="/auth" replace />} />
       </Routes>
