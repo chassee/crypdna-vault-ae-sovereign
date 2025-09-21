@@ -4,12 +4,16 @@ interface PawDebitCardProps {
   userName: string;
   vaultId: string;
   crypDnaScore?: number;
+  cardLastFour?: string;
+  cardBrand?: string;
 }
 
 const PawDebitCard: React.FC<PawDebitCardProps> = ({
   userName,
   vaultId,
-  crypDnaScore = 700
+  crypDnaScore = 700,
+  cardLastFour = "****",
+  cardBrand = "VAULT"
 }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [tiltStyle, setTiltStyle] = useState<{transform?: string; transition?: string}>({});
@@ -79,8 +83,8 @@ const PawDebitCard: React.FC<PawDebitCardProps> = ({
     playPawTapSound();
   };
 
-  const cardNumber = '**** **** **** 1234';
-  const expiryDate = '12/27';
+  const cardNumber = `**** **** **** ${cardLastFour}`;
+  const expiryDate = '••/••'; // Never expose real expiry dates
 
   return (
     <div className="w-full max-w-lg mx-auto">
