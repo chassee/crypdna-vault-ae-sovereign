@@ -161,133 +161,120 @@ export default function Auth() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="min-h-screen flex items-center justify-center relative overflow-hidden" style={{
-        background: 'radial-gradient(ellipse at top, hsl(262, 90%, 4%) 0%, hsl(0, 0%, 1%) 100%)'
-      }}>
-        {/* Subtle animated background effects */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-luxury-purple/20 to-luxury-pink/10 rounded-full blur-3xl animate-pulse-glow" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-r from-luxury-blue/15 to-luxury-cyan/10 rounded-full blur-3xl animate-float" />
-        </div>
+      <div className="min-h-screen flex items-center justify-center bg-black relative overflow-hidden">
+        {/* Luxury dark background with subtle gradients */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-black to-cyan-900/30" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(168,85,247,0.15),transparent_50%)]" />
         
         <div className="w-full max-w-lg p-8 space-y-8 relative z-10">
-          {/* Billionaire Header */}
+          {/* Crisp gradient header */}
           <div className="text-center space-y-6">
             <div className="flex justify-center">
               <div className="relative">
-                <div className="w-24 h-24 billionaire-card rounded-2xl flex items-center justify-center group">
-                  <svg className="w-12 h-12 text-luxury-platinum" fill="currentColor" viewBox="0 0 24 24">
+                <div className="w-20 h-20 bg-gradient-to-br from-purple-500 via-cyan-400 to-yellow-400 rounded-xl flex items-center justify-center shadow-2xl shadow-purple-500/50">
+                  <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M6 2L18 2L22 6L18 10L16 12L18 14L22 18L18 22L6 22L2 18L6 14L8 12L6 10L2 6L6 2Z" />
                   </svg>
-                  <div className="absolute inset-0 bg-gradient-to-r from-luxury-purple/20 via-luxury-pink/10 to-luxury-blue/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
-                <div className="absolute -top-3 -right-3 w-10 h-10 billionaire-card rounded-full flex items-center justify-center">
-                  <svg className="w-5 h-5 text-luxury-gold" fill="currentColor" viewBox="0 0 24 24">
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-yellow-400 to-yellow-300 rounded-full flex items-center justify-center shadow-lg">
+                  <svg className="w-4 h-4 text-black" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" />
                   </svg>
                 </div>
               </div>
             </div>
             
-            <div className="space-y-4">
-              <h1 className="text-5xl font-black font-billionaire" style={{
-                background: 'linear-gradient(135deg, hsl(0, 0%, 98%) 0%, hsl(262, 90%, 75%) 30%, hsl(335, 78%, 70%) 70%, hsl(213, 92%, 70%) 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}>
+            <div className="space-y-3">
+              <h1 className="text-4xl font-black bg-gradient-to-r from-white via-purple-200 to-cyan-200 bg-clip-text text-transparent">
                 CrypDNA Vault
               </h1>
-              <p className="text-luxury-platinum/80 text-lg font-medium tracking-wide">
+              <p className="text-gray-300 text-base font-medium">
                 Enter the billionaire-class financial ecosystem
               </p>
             </div>
 
-            {/* High-end feature showcase */}
+            {/* High-contrast feature cards */}
             <div className="grid grid-cols-3 gap-4 mt-8">
-              <div className="billionaire-card p-6 text-center space-y-3 group">
-                <div className="w-12 h-12 mx-auto bg-gradient-to-r from-luxury-purple/30 to-luxury-pink/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-6 h-6 text-luxury-purple" fill="currentColor" viewBox="0 0 24 24">
+              <div className="p-5 bg-purple-900/40 border border-purple-500/30 rounded-xl text-center space-y-3 backdrop-blur-sm">
+                <div className="w-10 h-10 mx-auto bg-purple-500/30 rounded-xl flex items-center justify-center">
+                  <svg className="w-5 h-5 text-purple-300" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M2 17H22V19H2V17M1.15 12.15L4 15L1.15 17.85L2.85 19.55L7.4 15L2.85 10.45L1.15 12.15M8 5H10V7H12V9H10V7H8V5Z" />
                   </svg>
                 </div>
-                <div className="text-sm font-bold text-white tracking-wide">Elite Credit</div>
+                <div className="text-sm font-bold text-white">Elite Credit</div>
               </div>
               
-              <div className="billionaire-card p-6 text-center space-y-3 group">
-                <div className="w-12 h-12 mx-auto bg-gradient-to-r from-luxury-blue/30 to-luxury-cyan/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-6 h-6 text-luxury-blue" fill="currentColor" viewBox="0 0 24 24">
+              <div className="p-5 bg-cyan-900/40 border border-cyan-500/30 rounded-xl text-center space-y-3 backdrop-blur-sm">
+                <div className="w-10 h-10 mx-auto bg-cyan-500/30 rounded-xl flex items-center justify-center">
+                  <svg className="w-5 h-5 text-cyan-300" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M7 14L12 9L17 14H7Z" />
                   </svg>
                 </div>
-                <div className="text-sm font-bold text-white tracking-wide">Instant Rewards</div>
+                <div className="text-sm font-bold text-white">Instant Rewards</div>
               </div>
               
-              <div className="billionaire-card p-6 text-center space-y-3 group">
-                <div className="w-12 h-12 mx-auto bg-gradient-to-r from-luxury-gold/30 to-luxury-platinum/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-6 h-6 text-luxury-gold" fill="currentColor" viewBox="0 0 24 24">
+              <div className="p-5 bg-yellow-900/40 border border-yellow-500/30 rounded-xl text-center space-y-3 backdrop-blur-sm">
+                <div className="w-10 h-10 mx-auto bg-yellow-500/30 rounded-xl flex items-center justify-center">
+                  <svg className="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 1L21 5V11C21 16.55 17.16 21.74 12 23C6.84 21.74 3 16.55 3 11V5L12 1Z" />
                   </svg>
                 </div>
-                <div className="text-sm font-bold text-white tracking-wide">Military Grade</div>
+                <div className="text-sm font-bold text-white">Military Grade</div>
               </div>
             </div>
           </div>
 
-          {/* Luxury Form */}
+          {/* Large, high-contrast form */}
           <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className="space-y-6">
             <div className="space-y-3">
-              <label className="text-base font-semibold text-luxury-platinum tracking-wide">
+              <label className="text-base font-bold text-white">
                 Email Address
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-6 py-4 text-lg luxury-input rounded-xl text-white font-medium tracking-wide"
+                className="w-full px-6 py-4 text-lg bg-gray-900/70 border-2 border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:ring-4 focus:ring-purple-500/50 focus:border-purple-500 transition-all"
                 placeholder="Enter your exclusive email"
                 disabled={loading}
-                style={{ fontSize: '16px' }} // Prevent zoom on mobile
               />
             </div>
 
             <div className="space-y-3">
-              <label className="text-base font-semibold text-luxury-platinum tracking-wide">
+              <label className="text-base font-bold text-white">
                 Vault Password
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-6 py-4 text-lg luxury-input rounded-xl text-white font-medium tracking-wide"
+                className="w-full px-6 py-4 text-lg bg-gray-900/70 border-2 border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:ring-4 focus:ring-purple-500/50 focus:border-purple-500 transition-all"
                 placeholder="Enter your secure password"
                 disabled={loading}
-                style={{ fontSize: '16px' }} // Prevent zoom on mobile
               />
             </div>
 
-            {/* Billionaire Primary Button */}
+            {/* Neon gradient button */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-5 luxury-button text-white text-lg font-bold rounded-xl flex items-center justify-center space-x-3 tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
-              style={{
-                background: 'linear-gradient(135deg, hsl(335, 78%, 62%) 0%, hsl(262, 90%, 60%) 50%, hsl(213, 92%, 60%) 100%)'
-              }}
+              className="w-full py-5 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 hover:from-purple-500 hover:via-pink-500 hover:to-cyan-500 text-white text-lg font-bold rounded-xl transition-all duration-300 disabled:opacity-50 flex items-center justify-center space-x-3 shadow-2xl shadow-purple-500/50 hover:shadow-purple-400/60 hover:scale-[1.02]"
             >
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M6 2L18 2L22 6L18 10L16 12L18 14L22 18L18 22L6 22L2 18L6 14L8 12L6 10L2 6L6 2Z" />
               </svg>
-              <span>{loading ? 'Accessing...' : 'Access Billionaire Vault'}</span>
+              <span>
+                {loading ? 'Accessing...' : 'Access Billionaire Vault'}
+              </span>
             </button>
           </form>
 
-          {/* Luxury Secondary Actions */}
+          {/* Alternative actions with high contrast */}
           <div className="space-y-4">
             <button
               onClick={handleMagicLink}
               disabled={loading}
-              className="w-full py-4 ghost-button text-luxury-platinum text-base font-semibold rounded-xl tracking-wide disabled:opacity-50"
+              className="w-full py-4 border-2 border-gray-600 bg-gray-800/50 rounded-xl text-white text-base font-semibold hover:bg-gray-700/50 hover:border-gray-500 transition-all disabled:opacity-50"
             >
               Send Magic Link
             </button>
@@ -295,7 +282,7 @@ export default function Auth() {
             <button
               onClick={() => setIsSignUp(!isSignUp)}
               disabled={loading}
-              className="w-full py-4 ghost-button text-luxury-platinum text-base font-semibold rounded-xl tracking-wide disabled:opacity-50"
+              className="w-full py-4 border-2 border-purple-600 bg-purple-900/30 rounded-xl text-white text-base font-semibold hover:bg-purple-800/40 hover:border-purple-500 transition-all disabled:opacity-50"
             >
               {isSignUp ? 'Already have access? Sign In' : 'Create Account'}
             </button>
@@ -303,15 +290,15 @@ export default function Auth() {
             <button
               onClick={handleReset}
               disabled={loading}
-              className="w-full py-3 text-luxury-platinum/70 text-sm hover:text-luxury-platinum transition-colors disabled:opacity-50 tracking-wide"
+              className="w-full py-3 text-gray-300 text-sm hover:text-white transition-colors disabled:opacity-50"
             >
               Reset Password
             </button>
           </div>
 
-          {/* Exclusive Footer */}
+          {/* Footer */}
           <div className="text-center">
-            <p className="text-sm text-luxury-platinum/60 font-medium tracking-wide">
+            <p className="text-sm text-gray-400 font-medium">
               Access is restricted to verified billionaire-class members only.
             </p>
           </div>

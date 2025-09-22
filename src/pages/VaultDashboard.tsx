@@ -100,67 +100,55 @@ export default function VaultDashboard() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="min-h-screen luxury-transition" style={{
-        background: 'radial-gradient(ellipse at top, hsl(262, 90%, 4%) 0%, hsl(0, 0%, 1%) 100%)'
-      }}>
+      <div className="min-h-screen bg-background luxury-transition">
 
-        {/* Luxury Header */}
-        <div className="billionaire-card border-b sticky top-0 z-40">
-          <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center space-x-2 sm:space-x-4">
-                <h1 className="text-lg sm:text-2xl font-black font-billionaire tracking-wide" style={{
-                  background: 'linear-gradient(135deg, hsl(0, 0%, 98%) 0%, hsl(262, 90%, 75%) 30%, hsl(335, 78%, 70%) 70%, hsl(213, 92%, 70%) 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
-                }}>
-                  CrypDNA Vault
-                </h1>
-                <div className="hidden sm:block">
-                  <LuxuryTierBadge tier={userTier} />
-                </div>
-              </div>
-              <div className="flex items-center space-x-2 sm:space-x-3">
-                <ThemeToggle />
-                <Button onClick={handleSignOut} variant="outline" size="sm" className="ghost-button text-xs sm:text-sm">
-                  <LogOut className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-                  <span className="hidden sm:inline">Sign Out</span>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Body */}
-        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 space-y-6 sm:space-y-8 lg:space-y-12">
-          {/* Welcome */}
-          <div className="text-center space-y-3 sm:space-y-4 lg:space-y-6 animate-fade-in">
-            <div className="space-y-2">
-              <div className="text-overlay">
-                <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black font-billionaire tracking-wide" style={{
-                  background: 'linear-gradient(135deg, hsl(0, 0%, 98%) 0%, hsl(262, 90%, 75%) 30%, hsl(335, 78%, 70%) 70%, hsl(213, 92%, 70%) 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
-                }}>
-                  Welcome back, {userName}
-                </h2>
-              </div>
-              <div className="text-overlay">
-                <p className="text-luxury-platinum/80 text-sm sm:text-base lg:text-xl font-medium tracking-wide">
-                  Vault ID:{' '}
-                  <span className="font-mono text-luxury-purple text-sm sm:text-lg lg:text-2xl">
-                    {vaultId}
-                  </span>
-                </p>
-              </div>
-              <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-luxury-platinum/70 sm:hidden">
-                <span>Tier:</span>
+      {/* Header */}
+      <div className="luxury-card border-b sticky top-0 z-40 backdrop-blur-xl">
+        <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              <h1 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-luxury-purple to-luxury-gold bg-clip-text text-transparent">
+                CrypDNA Vault
+              </h1>
+              <div className="hidden sm:block">
                 <LuxuryTierBadge tier={userTier} />
               </div>
             </div>
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <ThemeToggle />
+              <Button onClick={handleSignOut} variant="outline" size="sm" className="luxury-button text-xs sm:text-sm">
+                <LogOut className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">Sign Out</span>
+              </Button>
+            </div>
           </div>
+        </div>
+      </div>
+
+      {/* Body */}
+      <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 space-y-6 sm:space-y-8 lg:space-y-12">
+        {/* Welcome */}
+        <div className="text-center space-y-3 sm:space-y-4 lg:space-y-6 animate-fade-in">
+          <div className="space-y-2">
+            <div className="text-overlay">
+              <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black bg-gradient-to-r from-luxury-purple via-luxury-gold to-luxury-blue bg-clip-text text-transparent">
+                Welcome back, {userName}
+              </h2>
+            </div>
+            <div className="text-overlay">
+              <p className="text-muted-foreground text-sm sm:text-base lg:text-xl font-medium">
+                Vault ID:{' '}
+                <span className="font-mono text-luxury-purple text-sm sm:text-lg lg:text-2xl">
+                  {vaultId}
+                </span>
+              </p>
+            </div>
+            <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-muted-foreground sm:hidden">
+              <span>Tier:</span>
+              <LuxuryTierBadge tier={userTier} />
+            </div>
+          </div>
+        </div>
 
         {/* Card */}
         <div className="animate-scale-in">
