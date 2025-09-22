@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
-import { ThemeProvider } from '@/components/ThemeProvider';
+import { useTheme } from '@/components/LuxuryThemeProvider';
 import { Toaster } from '@/components/ui/toaster';
 
 import { Button } from '@/components/ui/button';
@@ -132,8 +132,7 @@ export default function VaultDashboard() {
   if (!user) return null; // redirected by effect
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="min-h-screen bg-background luxury-transition">
+    <div className="min-h-screen bg-background luxury-transition">
 
       {/* Header */}
       <div className="luxury-card border-b sticky top-0 z-40 backdrop-blur-xl">
@@ -254,8 +253,7 @@ export default function VaultDashboard() {
 
         <MobileFloatingNav activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab as TabKey)} />
       </div>
-      </div>
       <Toaster />
-    </ThemeProvider>
+    </div>
   );
 }
