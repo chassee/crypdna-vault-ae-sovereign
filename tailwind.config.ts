@@ -66,6 +66,9 @@ export default {
 				luxury: {
 					purple: 'hsl(var(--luxury-purple))',
 					'purple-dark': 'hsl(var(--luxury-purple-dark))',
+					pink: 'hsl(var(--luxury-pink))',
+					blue: 'hsl(var(--luxury-blue))',
+					cyan: 'hsl(var(--luxury-cyan))',
 					gold: 'hsl(var(--luxury-gold))',
 					platinum: 'hsl(var(--luxury-platinum))',
 					charcoal: 'hsl(var(--luxury-charcoal))'
@@ -79,7 +82,8 @@ export default {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			fontFamily: {
-				'luxury': ['SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+				'luxury': ['SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+				'billionaire': ['Inter', 'SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
 			},
 			backgroundImage: {
 				'gradient-luxury': 'var(--gradient-luxury)',
