@@ -1,10 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { useLanguage } from '@/hooks/useLanguage';
 
 const BalanceBreakdown = () => {
   const [balance, setBalance] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState<string | null>(null);
+  const { t } = useLanguage(userId || undefined);
 
   useEffect(() => {
     fetchBalance();
@@ -14,27 +17,29 @@ const BalanceBreakdown = () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
+      
+      setUserId(user.id);
 
-      // Get balance from balances table and last transaction from vault_transactions
+      // Get balance from balances table
       const { data: balanceData, error: balanceError } = await supabase
         .from('balances')
         .select('*')
         .eq('user_id', user.id)
         .maybeSingle();
 
-      // Get last transaction from transactions table (vault_transactions not in types yet)
+      // Get last transaction from vault_transactions table  
       let lastTransaction = null;
       try {
         const { data: transactionData } = await supabase
-          .from('transactions')
+          .from('vault_transactions')
           .select('*')
           .eq('user_id', user.id)
-          .order('timestamp', { ascending: false })
+          .order('created_at', { ascending: false })
           .limit(1)
           .maybeSingle();
         lastTransaction = transactionData;
       } catch (error) {
-        console.log('Error fetching transactions:', error);
+        console.log('Error fetching vault transactions:', error);
       }
 
       if (balanceError && balanceError.code !== 'PGRST116') {
@@ -73,13 +78,13 @@ const BalanceBreakdown = () => {
       
       <div className="space-y-4">
         <div className="flex justify-between items-center p-4 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-lg border border-green-500/20">
-          <span className="text-foreground font-medium">Available Balance</span>
-          <span className="text-xl font-bold text-green-500">${availableBalance.toLocaleString()}</span>
+          <span className="text-foreground font-medium">{t.available_balance}</span>
+          <span className="text-xl font-bold text-green-500">${(balance?.balance || 0).toLocaleString()}</span>
         </div>
         
         <div className="flex justify-between items-center p-4 bg-gradient-to-r from-orange-500/10 to-yellow-500/10 rounded-lg border border-orange-500/20">
-          <span className="text-foreground font-medium">Pending Balance</span>
-          <span className="text-xl font-bold text-orange-500">${pendingBalance.toLocaleString()}</span>
+          <span className="text-foreground font-medium">{t.pending_balance}</span>
+          <span className="text-xl font-bold text-orange-500">${(balance?.pending_balance || 0).toLocaleString()}</span>
         </div>
         
         <div className="border-t border-border pt-4">
@@ -93,16 +98,16 @@ const BalanceBreakdown = () => {
 
         {balance?.lastTransaction && (
           <div className="border-t border-border pt-4">
-            <h4 className="text-sm font-semibold mb-2 text-foreground">Last Transaction</h4>
+            <h4 className="text-sm font-semibold mb-2 text-foreground">{t.recent_activity}</h4>
             <div className="flex justify-between items-center">
               <div>
                 <span className="text-sm text-foreground font-medium">{balance.lastTransaction.description || 'Transaction'}</span>
-                <p className="text-xs text-muted-foreground">{new Date(balance.lastTransaction.timestamp).toLocaleDateString()}</p>
+                <p className="text-xs text-muted-foreground">{new Date(balance.lastTransaction.created_at).toLocaleDateString()}</p>
               </div>
               <span className={`text-sm font-medium ${
-                balance.lastTransaction.type === 'credit' ? 'text-green-500' : 'text-red-500'
+                balance.lastTransaction.transaction_type === 'credit' ? 'text-green-500' : 'text-red-500'
               }`}>
-                {balance.lastTransaction.type === 'credit' ? '+' : '-'}${balance.lastTransaction.amount.toLocaleString()}
+                {balance.lastTransaction.transaction_type === 'credit' ? '+' : '-'}${balance.lastTransaction.amount.toLocaleString()}
               </span>
             </div>
           </div>

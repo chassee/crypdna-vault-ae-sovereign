@@ -11,7 +11,7 @@ import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { useToast } from '@/hooks/use-toast';
 
 import LuxuryLoadingScreen from '@/components/LuxuryLoadingScreen';
-import LuxuryDebitCard from '@/components/LuxuryDebitCard';
+import LuxuryEliteCard from '@/components/LuxuryEliteCard';
 import DunBradstreetWidget from '@/components/DunBradstreetWidget';
 import LuxuryTierBadge from '@/components/LuxuryTierBadge';
 import BalanceBreakdown from '@/components/BalanceBreakdown';
@@ -22,6 +22,7 @@ import CrypbotsTab from '@/components/tabs/CrypbotsTab';
 import NeuroTechTab from '@/components/tabs/NeuroTechTab';
 import AboutUs from '@/components/AboutUs';
 import MobileFloatingNav from '@/components/MobileFloatingNav';
+import { useLanguage } from '@/hooks/useLanguage';
 
 import { LogOut, Wallet, Rocket, Brain, Waves, Info } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -37,6 +38,8 @@ export default function VaultDashboard() {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [userProfile, setUserProfile] = useState<any>(null);
+  const [vaultMember, setVaultMember] = useState<any>(null);
+  const [dnaScore, setDnaScore] = useState<number>(700);
   const [activeTab, setActiveTab] = useState<TabKey>('balances');
 
   // ---- Auth wiring ----
@@ -65,17 +68,45 @@ export default function VaultDashboard() {
 
   async function fetchUserProfile(userId: string) {
     try {
-      const { data, error } = await supabase
-        .from('users')          // make sure table/column exist
+      // Fetch user profile data
+      const { data: userData, error: userError } = await supabase
+        .from('users')
         .select('*')
-        .eq('user_id', userId)  // change to your column if different
-        .single();
+        .eq('user_id', userId)
+        .maybeSingle();
 
-      if (error && error.code !== 'PGRST116') {
-        console.error('fetchUserProfile error:', error);
-        return;
+      if (userError && userError.code !== 'PGRST116') {
+        console.error('fetchUserProfile error:', userError);
+      } else {
+        setUserProfile(userData);
       }
-      setUserProfile(data ?? null);
+
+      // Fetch vault member data with region
+      const { data: memberData, error: memberError } = await supabase
+        .from('vault_members')
+        .select('*, regions(name, language_code)')
+        .eq('user_id', userId)
+        .eq('status', true)
+        .maybeSingle();
+
+      if (memberError && memberError.code !== 'PGRST116') {
+        console.error('fetchVaultMember error:', memberError);
+      } else {
+        setVaultMember(memberData);
+      }
+
+      // Fetch DNA score
+      const { data: scoreData, error: scoreError } = await supabase
+        .from('crypscore')
+        .select('score')
+        .eq('user_id', userId)
+        .maybeSingle();
+
+      if (scoreError && scoreError.code !== 'PGRST116') {
+        console.error('fetchDnaScore error:', scoreError);
+      } else if (scoreData) {
+        setDnaScore(scoreData.score || 700);
+      }
     } catch (e) {
       console.error('fetchUserProfile exception:', e);
     }
@@ -91,12 +122,14 @@ export default function VaultDashboard() {
     window.location.hash = '/auth';
   }
 
+  const vaultId = vaultMember?.crypdna_id || userProfile?.vault_id || `VAULT-${(user?.id || '').slice(0, 8).toUpperCase()}`;
+  const userName = vaultMember?.full_name || userProfile?.name || user?.email?.split('@')[0] || 'Member';
+  const userTier = vaultMember?.vault_tier || userProfile?.tier || 'Viewer';
+  
+  const { t } = useLanguage(user?.id);
+
   if (loading) return <LuxuryLoadingScreen />;
   if (!user) return null; // redirected by effect
-
-  const vaultId = userProfile?.vault_id ?? `VAULT-${(user.id ?? '').slice(0, 8).toUpperCase()}`;
-  const userName = userProfile?.name ?? user.email?.split('@')[0] ?? 'Member';
-  const userTier = userProfile?.tier ?? 'Viewer';
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -118,7 +151,7 @@ export default function VaultDashboard() {
               <ThemeToggle />
               <Button onClick={handleSignOut} variant="outline" size="sm" className="luxury-button text-xs sm:text-sm">
                 <LogOut className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-                <span className="hidden sm:inline">Sign Out</span>
+                <span className="hidden sm:inline">{t.sign_out}</span>
               </Button>
             </div>
           </div>
@@ -132,27 +165,27 @@ export default function VaultDashboard() {
           <div className="space-y-2">
             <div className="text-overlay">
               <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black bg-gradient-to-r from-luxury-purple via-luxury-gold to-luxury-blue bg-clip-text text-transparent">
-                Welcome back, {userName}
+                {t.welcome_back}, {userName}
               </h2>
             </div>
             <div className="text-overlay">
               <p className="text-muted-foreground text-sm sm:text-base lg:text-xl font-medium">
-                Vault ID:{' '}
+                {t.vault_id}:{' '}
                 <span className="font-mono text-luxury-purple text-sm sm:text-lg lg:text-2xl">
                   {vaultId}
                 </span>
               </p>
             </div>
             <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-muted-foreground sm:hidden">
-              <span>Tier:</span>
+              <span>{t.tier}:</span>
               <LuxuryTierBadge tier={userTier} />
             </div>
           </div>
         </div>
 
-        {/* Card */}
+        {/* Elite Card */}
         <div className="animate-scale-in">
-          <LuxuryDebitCard userName={userName} vaultId={vaultId} />
+          <LuxuryEliteCard userName={userName} vaultId={vaultId} dnaScore={dnaScore} tier={userTier} />
         </div>
 
         {/* Tabs */}
