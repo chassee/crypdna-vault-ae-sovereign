@@ -74,36 +74,6 @@ export type Database = {
         }
         Relationships: []
       }
-      audit_logs: {
-        Row: {
-          action: string
-          actor_id: string | null
-          created_at: string | null
-          details: Json | null
-          id: string
-          target_id: string | null
-          target_table: string | null
-        }
-        Insert: {
-          action: string
-          actor_id?: string | null
-          created_at?: string | null
-          details?: Json | null
-          id?: string
-          target_id?: string | null
-          target_table?: string | null
-        }
-        Update: {
-          action?: string
-          actor_id?: string | null
-          created_at?: string | null
-          details?: Json | null
-          id?: string
-          target_id?: string | null
-          target_table?: string | null
-        }
-        Relationships: []
-      }
       balances: {
         Row: {
           available_credit: number | null
@@ -143,72 +113,6 @@ export type Database = {
           score_boost?: number | null
           updated_at?: string
           user_id?: string
-        }
-        Relationships: []
-      }
-      card_tokens: {
-        Row: {
-          card_brand: string | null
-          card_last_four: string
-          created_at: string
-          expiry_month: number | null
-          expiry_year: number | null
-          id: string
-          status: string
-          token_reference: string | null
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          card_brand?: string | null
-          card_last_four: string
-          created_at?: string
-          expiry_month?: number | null
-          expiry_year?: number | null
-          id?: string
-          status?: string
-          token_reference?: string | null
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          card_brand?: string | null
-          card_last_four?: string
-          created_at?: string
-          expiry_month?: number | null
-          expiry_year?: number | null
-          id?: string
-          status?: string
-          token_reference?: string | null
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
-      country_kyc_rules: {
-        Row: {
-          country_code: string
-          created_at: string | null
-          id: string
-          language: string
-          required_doc_1: string
-          required_doc_2: string | null
-        }
-        Insert: {
-          country_code: string
-          created_at?: string | null
-          id?: string
-          language?: string
-          required_doc_1: string
-          required_doc_2?: string | null
-        }
-        Update: {
-          country_code?: string
-          created_at?: string | null
-          id?: string
-          language?: string
-          required_doc_1?: string
-          required_doc_2?: string | null
         }
         Relationships: []
       }
@@ -418,36 +322,6 @@ export type Database = {
         }
         Relationships: []
       }
-      kyc_uploads: {
-        Row: {
-          created_at: string
-          doc_type: string
-          file_path: string
-          id: string
-          notes: string | null
-          status: string
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          doc_type: string
-          file_path: string
-          id?: string
-          notes?: string | null
-          status?: string
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          doc_type?: string
-          file_path?: string
-          id?: string
-          notes?: string | null
-          status?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
       leaderboards: {
         Row: {
           crypdna_score: number | null
@@ -493,39 +367,6 @@ export type Database = {
           location?: string | null
           tier_access?: string | null
           title?: string
-        }
-        Relationships: []
-      }
-      memberships: {
-        Row: {
-          created_at: string
-          dnb_customer_number: string | null
-          id: string
-          plan_name: string
-          renewal_date: string | null
-          start_date: string
-          status: string
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          dnb_customer_number?: string | null
-          id?: string
-          plan_name: string
-          renewal_date?: string | null
-          start_date?: string
-          status?: string
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          dnb_customer_number?: string | null
-          id?: string
-          plan_name?: string
-          renewal_date?: string | null
-          start_date?: string
-          status?: string
-          user_id?: string
         }
         Relationships: []
       }
@@ -619,6 +460,39 @@ export type Database = {
         }
         Relationships: []
       }
+      paw_debit_card: {
+        Row: {
+          card_number: string
+          created_at: string | null
+          crypdna_score: number | null
+          cvv: string
+          expiry: string
+          id: string
+          status: string | null
+          user_id: string
+        }
+        Insert: {
+          card_number: string
+          created_at?: string | null
+          crypdna_score?: number | null
+          cvv: string
+          expiry: string
+          id?: string
+          status?: string | null
+          user_id: string
+        }
+        Update: {
+          card_number?: string
+          created_at?: string | null
+          crypdna_score?: number | null
+          cvv?: string
+          expiry?: string
+          id?: string
+          status?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       products: {
         Row: {
           category: string | null
@@ -700,27 +574,6 @@ export type Database = {
           status?: string | null
           title?: string
           user_id?: string | null
-        }
-        Relationships: []
-      }
-      regions: {
-        Row: {
-          created_at: string | null
-          id: string
-          language_code: string
-          name: string
-        }
-        Insert: {
-          created_at?: string | null
-          id?: string
-          language_code: string
-          name: string
-        }
-        Update: {
-          created_at?: string | null
-          id?: string
-          language_code?: string
-          name?: string
         }
         Relationships: []
       }
@@ -813,47 +666,6 @@ export type Database = {
         }
         Relationships: []
       }
-      tradeline_reports: {
-        Row: {
-          amount: number
-          bureau: string
-          created_at: string
-          id: string
-          membership_id: string
-          notes: string | null
-          report_month: string
-          status: string
-        }
-        Insert: {
-          amount: number
-          bureau: string
-          created_at?: string
-          id?: string
-          membership_id: string
-          notes?: string | null
-          report_month: string
-          status?: string
-        }
-        Update: {
-          amount?: number
-          bureau?: string
-          created_at?: string
-          id?: string
-          membership_id?: string
-          notes?: string | null
-          report_month?: string
-          status?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "tradeline_reports_membership_id_fkey"
-            columns: ["membership_id"]
-            isOneToOne: false
-            referencedRelation: "memberships"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       transactions: {
         Row: {
           amount: number
@@ -877,51 +689,6 @@ export type Database = {
           id?: string
           timestamp?: string
           type?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
-      user_profiles: {
-        Row: {
-          business_address: string | null
-          business_name: string | null
-          country: string
-          created_at: string | null
-          duns_number: string | null
-          ein_number: string | null
-          email: string | null
-          full_name: string | null
-          phone: string | null
-          preferred_language: string | null
-          updated_at: string | null
-          user_id: string
-        }
-        Insert: {
-          business_address?: string | null
-          business_name?: string | null
-          country: string
-          created_at?: string | null
-          duns_number?: string | null
-          ein_number?: string | null
-          email?: string | null
-          full_name?: string | null
-          phone?: string | null
-          preferred_language?: string | null
-          updated_at?: string | null
-          user_id: string
-        }
-        Update: {
-          business_address?: string | null
-          business_name?: string | null
-          country?: string
-          created_at?: string | null
-          duns_number?: string | null
-          ein_number?: string | null
-          email?: string | null
-          full_name?: string | null
-          phone?: string | null
-          preferred_language?: string | null
-          updated_at?: string | null
           user_id?: string
         }
         Relationships: []
@@ -1041,7 +808,6 @@ export type Database = {
           full_name: string | null
           id: number
           notes: string | null
-          region_id: string | null
           status: boolean
           tally_id: string | null
           user_id: string
@@ -1056,7 +822,6 @@ export type Database = {
           full_name?: string | null
           id?: number
           notes?: string | null
-          region_id?: string | null
           status?: boolean
           tally_id?: string | null
           user_id?: string
@@ -1071,21 +836,12 @@ export type Database = {
           full_name?: string | null
           id?: number
           notes?: string | null
-          region_id?: string | null
           status?: boolean
           tally_id?: string | null
           user_id?: string
           vault_tier?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "vault_members_region_id_fkey"
-            columns: ["region_id"]
-            isOneToOne: false
-            referencedRelation: "regions"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       vault_rewards: {
         Row: {
@@ -1314,4 +1070,4 @@ export const Constants = {
   public: {
     Enums: {},
   },
-} as const
+} as const 
