@@ -1,10 +1,11 @@
+import React from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Auth from '@/pages/Auth';
 import Reset from '@/pages/Reset';
 import VaultDashboard from '@/pages/VaultDashboard';
 import RequirePaid from '@/components/RequirePaid';
 
-export default function App() {
+const App: React.FC = () => {
   return (
     <HashRouter>
       <Routes>
@@ -23,4 +24,6 @@ export default function App() {
       </Routes>
     </HashRouter>
   );
-}
+};
+
+export default App;
