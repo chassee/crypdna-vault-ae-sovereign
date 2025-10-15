@@ -1,23 +1,25 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-http-backend';
+import LanguageDetector from 'i18next-browser-languagedetector';
 
-// 🌍 Auto Language Detection + Dynamic JSON Loader
+// 🌍 Auto-load translations + detect user browser language
 i18n
   .use(Backend)
+  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    lng: navigator.language.split('-')[0], // Auto-detects browser language (e.g. 'en', 'fr', 'ar')
-    fallbackLng: 'en', // Default to English
-    debug: false,
+    fallbackLng: 'en',
+    debug: true,
+    detection: {
+      order: ['querystring', 'localStorage', 'navigator'],
+      caches: ['localStorage'],
+    },
     backend: {
-      loadPath: '/locales/{{lng}}/translation.json', // Loads each language JSON dynamically
+      loadPath: '/locales/{{lng}}/translation.json',
     },
     interpolation: {
-      escapeValue: false, // React already escapes
-    },
-    detection: {
-      order: ['navigator', 'htmlTag', 'path', 'subdomain'],
+      escapeValue: false,
     },
   });
 
