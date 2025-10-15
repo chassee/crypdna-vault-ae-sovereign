@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/supabaseClient';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Toaster } from '@/components/ui/toaster';
 
@@ -39,9 +39,17 @@ export default function VaultDashboard() {
   const [userProfile, setUserProfile] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<TabKey>('balances');
 
-  // ---- Auth wiring ----
+  // ---- Vault Data States ----
+  const [kycData, setKycData] = useState<any>(null);
+  const [verificationData, setVerificationData] = useState<any>(null);
+  const [balances, setBalances] = useState({
+    available: 0,
+    pending: 0,
+    card: 0
+  });
+
+  // ---- Auth Wiring ----
   useEffect(() => {
-    // live auth changes
     const { data } = supabase.auth.onAuthStateChange((_event, nextSession) => {
       setSession(nextSession ?? null);
       const nextUser = nextSession?.user ?? null;
@@ -50,7 +58,6 @@ export default function VaultDashboard() {
       else void fetchUserProfile(nextUser.id);
     });
 
-    // initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session ?? null);
       const initialUser = session?.user ?? null;
@@ -63,12 +70,13 @@ export default function VaultDashboard() {
     return () => data?.subscription?.unsubscribe();
   }, [navigate]);
 
+  // ---- Fetch User Profile ----
   async function fetchUserProfile(userId: string) {
     try {
       const { data, error } = await supabase
-        .from('users')          // make sure table/column exist
+        .from('users')
         .select('*')
-        .eq('user_id', userId)  // change to your column if different
+        .eq('user_id', userId)
         .single();
 
       if (error && error.code !== 'PGRST116') {
@@ -76,8 +84,33 @@ export default function VaultDashboard() {
         return;
       }
       setUserProfile(data ?? null);
+      await fetchVaultData(); // once user is known, load their Vault data
     } catch (e) {
       console.error('fetchUserProfile exception:', e);
+    }
+  }
+
+  // ---- Fetch Vault + KYC Data ----
+  async function fetchVaultData() {
+    try {
+      const { data: kyc, error: kycError } = await supabase.rpc('get_vault_kyc');
+      const { data: verification, error: verError } = await supabase.rpc('get_vault_verification');
+
+      if (kycError) console.error('get_vault_kyc error:', kycError);
+      if (verError) console.error('get_vault_verification error:', verError);
+
+      setKycData(kyc ?? {});
+      setVerificationData(verification ?? {});
+
+      if (kyc && kyc[0]) {
+        setBalances({
+          available: kyc[0].available_balance ?? 0,
+          pending: kyc[0].pending_balance ?? 0,
+          card: kyc[0].card_balance ?? 0
+        });
+      }
+    } catch (err) {
+      console.error('fetchVaultData exception:', err);
     }
   }
 
@@ -92,7 +125,7 @@ export default function VaultDashboard() {
   }
 
   if (loading) return <LuxuryLoadingScreen />;
-  if (!user) return null; // redirected by effect
+  if (!user) return null;
 
   const vaultId = userProfile?.vault_id ?? `VAULT-${(user.id ?? '').slice(0, 8).toUpperCase()}`;
   const userName = userProfile?.name ?? user.email?.split('@')[0] ?? 'Member';
@@ -102,125 +135,126 @@ export default function VaultDashboard() {
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="min-h-screen bg-background luxury-transition">
 
-      {/* Header */}
-      <div className="luxury-card border-b sticky top-0 z-40 backdrop-blur-xl">
-        <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-2 sm:space-x-4">
-              <h1 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-luxury-purple to-luxury-gold bg-clip-text text-transparent">
-                CrypDNA Vault
-              </h1>
-              <div className="hidden sm:block">
+        {/* Header */}
+        <div className="luxury-card border-b sticky top-0 z-40 backdrop-blur-xl">
+          <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center space-x-2 sm:space-x-4">
+                <h1 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-luxury-purple to-luxury-gold bg-clip-text text-transparent">
+                  CrypDNA Vault
+                </h1>
+                <div className="hidden sm:block">
+                  <LuxuryTierBadge tier={userTier} />
+                </div>
+              </div>
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                <ThemeToggle />
+                <Button onClick={handleSignOut} variant="outline" size="sm" className="luxury-button text-xs sm:text-sm">
+                  <LogOut className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="hidden sm:inline">Sign Out</span>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Body */}
+        <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 space-y-6 sm:space-y-8 lg:space-y-12">
+
+          {/* Welcome */}
+          <div className="text-center space-y-3 sm:space-y-4 lg:space-y-6 animate-fade-in">
+            <div className="space-y-2">
+              <div className="text-overlay">
+                <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black bg-gradient-to-r from-luxury-purple via-luxury-gold to-luxury-blue bg-clip-text text-transparent">
+                  Welcome back, {userName}
+                </h2>
+              </div>
+              <div className="text-overlay">
+                <p className="text-muted-foreground text-sm sm:text-base lg:text-xl font-medium">
+                  Vault ID:{' '}
+                  <span className="font-mono text-luxury-purple text-sm sm:text-lg lg:text-2xl">
+                    {vaultId}
+                  </span>
+                </p>
+              </div>
+              <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-muted-foreground sm:hidden">
+                <span>Tier:</span>
                 <LuxuryTierBadge tier={userTier} />
               </div>
             </div>
-            <div className="flex items-center space-x-2 sm:space-x-3">
-              <ThemeToggle />
-              <Button onClick={handleSignOut} variant="outline" size="sm" className="luxury-button text-xs sm:text-sm">
-                <LogOut className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-                <span className="hidden sm:inline">Sign Out</span>
-              </Button>
-            </div>
           </div>
-        </div>
-      </div>
 
-      {/* Body */}
-      <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 space-y-6 sm:space-y-8 lg:space-y-12">
-        {/* Welcome */}
-        <div className="text-center space-y-3 sm:space-y-4 lg:space-y-6 animate-fade-in">
-          <div className="space-y-2">
-            <div className="text-overlay">
-              <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black bg-gradient-to-r from-luxury-purple via-luxury-gold to-luxury-blue bg-clip-text text-transparent">
-                Welcome back, {userName}
-              </h2>
-            </div>
-            <div className="text-overlay">
-              <p className="text-muted-foreground text-sm sm:text-base lg:text-xl font-medium">
-                Vault ID:{' '}
-                <span className="font-mono text-luxury-purple text-sm sm:text-lg lg:text-2xl">
-                  {vaultId}
-                </span>
-              </p>
-            </div>
-            <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-muted-foreground sm:hidden">
-              <span>Tier:</span>
-              <LuxuryTierBadge tier={userTier} />
-            </div>
+          {/* Card */}
+          <div className="animate-scale-in">
+            <LuxuryDebitCard userName={userName} vaultId={vaultId} />
           </div>
-        </div>
 
-        {/* Card */}
-        <div className="animate-scale-in">
-          <LuxuryDebitCard userName={userName} vaultId={vaultId} />
-        </div>
+          {/* Tabs */}
+          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as TabKey)} className="w-full">
+            {!isMobile && (
+              <TabsList className="grid w-full grid-cols-5 luxury-card border-border bg-gradient-to-r from-card/50 to-muted/50 backdrop-blur-xl">
+                <TabsTrigger value="balances" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
+                  <Wallet className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden md:inline">Balance</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
+                </TabsTrigger>
+                <TabsTrigger value="drops" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
+                  <Rocket className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden md:inline">Drops</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
+                </TabsTrigger>
+                <TabsTrigger value="crypbots" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
+                  <Brain className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden md:inline">Crypb0ts</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
+                </TabsTrigger>
+                <TabsTrigger value="neurotech" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
+                  <Waves className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden md:inline">NeuroTech</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
+                </TabsTrigger>
+                <TabsTrigger value="about" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
+                  <Info className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden md:inline">About Us</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
+                </TabsTrigger>
+              </TabsList>
+            )}
 
-        {/* Tabs */}
-        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as TabKey)} className="w-full">
-          {!isMobile && (
-            <TabsList className="grid w-full grid-cols-5 luxury-card border-border bg-gradient-to-r from-card/50 to-muted/50 backdrop-blur-xl">
-              <TabsTrigger value="balances" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
-                <Wallet className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden md:inline">Balance</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
-              </TabsTrigger>
-              <TabsTrigger value="drops" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
-                <Rocket className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden md:inline">Drops</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
-              </TabsTrigger>
-              <TabsTrigger value="crypbots" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
-                <Brain className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden md:inline">Crypb0ts</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
-              </TabsTrigger>
-              <TabsTrigger value="neurotech" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
-                <Waves className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden md:inline">NeuroTech</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
-              </TabsTrigger>
-              <TabsTrigger value="about" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
-                <Info className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden md:inline">About Us</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
-              </TabsTrigger>
-            </TabsList>
-          )}
-
-          <div className="mt-4 sm:mt-6 lg:mt-8">
-            <TabsContent value="balances" className="space-y-4 sm:space-y-6 lg:space-y-8 animate-fade-in">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
-                <div className="space-y-4 sm:space-y-6 lg:space-y-8 animate-slide-up">
-                  <BalanceBreakdown />
-                  <DunBradstreetWidget />
-                  <VaultVerification />
+            <div className="mt-4 sm:mt-6 lg:mt-8">
+              <TabsContent value="balances" className="space-y-4 sm:space-y-6 lg:space-y-8 animate-fade-in">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+                  <div className="space-y-4 sm:space-y-6 lg:space-y-8 animate-slide-up">
+                    <BalanceBreakdown balances={balances} />
+                    <DunBradstreetWidget />
+                    <VaultVerification verification={verificationData} />
+                  </div>
+                  <div className="space-y-4 sm:space-y-6 lg:space-y-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+                    <CreditActivity kyc={kycData} />
+                  </div>
                 </div>
-                <div className="space-y-4 sm:space-y-6 lg:space-y-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
-                  <CreditActivity />
-                </div>
-              </div>
-            </TabsContent>
+              </TabsContent>
 
-            <TabsContent value="drops" className="animate-fade-in">
-              <VaultDrops />
-            </TabsContent>
+              <TabsContent value="drops" className="animate-fade-in">
+                <VaultDrops />
+              </TabsContent>
 
-            <TabsContent value="crypbots" className="animate-fade-in">
-              <CrypbotsTab />
-            </TabsContent>
+              <TabsContent value="crypbots" className="animate-fade-in">
+                <CrypbotsTab />
+              </TabsContent>
 
-            <TabsContent value="neurotech" className="animate-fade-in">
-              <NeuroTechTab />
-            </TabsContent>
+              <TabsContent value="neurotech" className="animate-fade-in">
+                <NeuroTechTab />
+              </TabsContent>
 
-            <TabsContent value="about" className="animate-fade-in">
-              <AboutUs />
-            </TabsContent>
-          </div>
-        </Tabs>
+              <TabsContent value="about" className="animate-fade-in">
+                <AboutUs />
+              </TabsContent>
+            </div>
+          </Tabs>
 
-        <MobileFloatingNav activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab as TabKey)} />
-      </div>
+          <MobileFloatingNav activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab as TabKey)} />
+        </div>
       </div>
       <Toaster />
     </ThemeProvider>
