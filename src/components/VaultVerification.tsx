@@ -1,9 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
-import { Upload, FileText, Home, Building } from 'lucide-react';
+import { FileText, Building } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/lib/supabaseClient';
 import { toast } from '@/hooks/use-toast';
 
 const VaultVerification = () => {
@@ -21,7 +20,7 @@ const VaultVerification = () => {
       if (!user) return;
 
       const { data, error } = await supabase
-        .from('verification')
+        .from('kyc_records')
         .select('*')
         .eq('user_id', user.id)
         .single();
@@ -38,10 +37,10 @@ const VaultVerification = () => {
       setLoading(false);
     }
   };
-  
+
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Approved': return 'bg-green-100 text-green-800';
+      case 'Active': return 'bg-green-100 text-green-800';
       case 'Rejected': return 'bg-red-100 text-red-800';
       default: return 'bg-yellow-100 text-yellow-800';
     }
@@ -49,113 +48,85 @@ const VaultVerification = () => {
 
   const handleFileUpload = async (file: File, docType: string) => {
     setUploading(docType);
-    
-    // SECURITY: Enhanced file validation
+
     const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
-    const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+    const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'application/pdf'];
     const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'pdf'];
 
-    // File size validation
     if (file.size > MAX_FILE_SIZE) {
-      toast({
-        title: "File too large",
-        description: "File must be smaller than 10MB.",
-        variant: "destructive",
-      });
+      toast({ title: "File too large", description: "Must be smaller than 10MB.", variant: "destructive" });
       setUploading(null);
       return;
     }
 
-    // MIME type validation
     if (!ALLOWED_TYPES.includes(file.type)) {
-      toast({
-        title: "Invalid file type",
-        description: "Only JPEG, PNG, and PDF files are allowed.",
-        variant: "destructive",
-      });
+      toast({ title: "Invalid file type", description: "Only JPG, PNG, PDF allowed.", variant: "destructive" });
       setUploading(null);
       return;
     }
 
-    // File extension validation
     const fileExt = file.name.split('.').pop()?.toLowerCase();
     if (!fileExt || !ALLOWED_EXTENSIONS.includes(fileExt)) {
-      toast({
-        title: "Invalid file extension",
-        description: "Only .jpg, .jpeg, .png, and .pdf files are allowed.",
-        variant: "destructive",
-      });
+      toast({ title: "Invalid extension", description: "Only .jpg, .jpeg, .png, .pdf allowed.", variant: "destructive" });
       setUploading(null);
       return;
     }
-
-    // File name sanitization
-    const sanitizedDocType = docType.replace(/[^a-zA-Z0-9_]/g, '');
-    const sanitizedExt = fileExt.replace(/[^a-zA-Z0-9]/g, '');
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      const fileName = `${user.id}/${sanitizedDocType}.${sanitizedExt}`;
+      const folder = docType === 'photo_id' ? 'photo_id' : 'net30_docs';
+      const filePath = `${folder}/${user.id}_${Date.now()}.${fileExt}`;
 
       const { error: uploadError } = await supabase.storage
-        .from('vault-documents')
-        .upload(fileName, file, { upsert: true });
+        .from('vault-uploads')
+        .upload(filePath, file, { upsert: true });
 
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage
-        .from('vault-documents')
-        .getPublicUrl(fileName);
+      const { data } = supabase.storage
+        .from('vault-uploads')
+        .getPublicUrl(filePath);
 
-      // Update verification record
-      const updateData: any = {};
-      if (docType === 'photo_id') updateData.photo_id_url = publicUrl;
-      if (docType === 'net30_docs') updateData.utility_bill_url = publicUrl;
-      if (docType === 'business_docs') updateData.business_docs_url = publicUrl;
+      const fileUrl = data.publicUrl;
+      const column = docType === 'photo_id' ? 'photo_id_url' : 'net30_doc_url';
 
-      const { error } = await supabase
-        .from('verification')
+      const { error: dbError } = await supabase
+        .from('kyc_records')
         .upsert({
           user_id: user.id,
-          ...updateData,
-        });
+          [column]: fileUrl,
+          tradeline_status: 'Pending Integration',
+          reporting_agency: 'D&B',
+        }, { onConflict: 'user_id' });
 
-      if (error) throw error;
+      if (dbError) throw dbError;
 
-      toast({
-        title: "Document Uploaded",
-        description: "Your document has been uploaded successfully.",
-      });
-
+      toast({ title: "Uploaded!", description: `${docType === 'photo_id' ? 'Photo ID' : 'Net-30 Doc'} uploaded successfully.` });
       fetchVerificationStatus();
     } catch (error) {
       console.error('Upload error:', error);
-      toast({
-        title: "Upload Failed",
-        description: "Failed to upload document. Please try again.",
-        variant: "destructive",
-      });
+      toast({ title: "Upload Failed", description: "Try again.", variant: "destructive" });
     } finally {
       setUploading(null);
     }
   };
 
-  const UploadBox = ({ title, icon: Icon, docType, required = true }: { title: string; icon: any; docType: string; required?: boolean }) => {
+  const UploadBox = ({ title, icon: Icon, docType }: { title: string; icon: any; docType: string }) => {
     const hasDocument = verification && verification[`${docType}_url`];
-    
     return (
       <div className="group relative bg-background/40 backdrop-blur-xl border border-border/50 rounded-xl p-6 text-center transition-all duration-300 hover:border-primary/50 hover:shadow-[0_0_30px_rgba(212,175,55,0.15)]">
         <Icon className="w-10 h-10 text-muted-foreground mx-auto mb-3 transition-colors group-hover:text-primary" />
         <p className="text-sm font-semibold text-foreground mb-1">{title}</p>
-        {!required && <p className="text-xs text-muted-foreground">(Optional)</p>}
+
         {hasDocument && (
           <div className="flex items-center justify-center gap-2 mt-2 mb-2 animate-fade-in">
             <span className="text-primary text-xl animate-scale-in">✓</span>
             <p className="text-xs text-primary font-medium">Uploaded</p>
           </div>
         )}
+
         <div className="mt-4">
           <input
             type="file"
@@ -197,7 +168,7 @@ const VaultVerification = () => {
     );
   }
 
-  const kycStatus = verification?.status || 'Pending';
+  const kycStatus = verification?.tradeline_status || 'Pending Integration';
 
   return (
     <div className="bg-background/40 backdrop-blur-xl rounded-2xl p-6 border border-border/50">
@@ -207,10 +178,10 @@ const VaultVerification = () => {
           {kycStatus}
         </Badge>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <UploadBox title="Photo ID (Front)" icon={FileText} docType="photo_id" />
-        <UploadBox title="Net-30 Verification Docs" icon={Building} docType="net30_docs" />
+        <UploadBox title="Net-30 Verification Docs" icon={Building} docType="net30_doc" />
       </div>
     </div>
   );
