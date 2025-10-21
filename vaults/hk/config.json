@@ -1,0 +1,8 @@
+{
+  "region": "HK",
+  "language": "zh",
+  "currency": "HKD",
+  "currency_symbol": "$",
+  "credit_adapter_ref": "standby",
+  "adapter_status": "standby"
+}

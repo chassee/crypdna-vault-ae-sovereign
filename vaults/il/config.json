@@ -1,0 +1,8 @@
+{
+  "region": "IL",
+  "language": "he",
+  "currency": "ILS",
+  "currency_symbol": "\u20aa",
+  "credit_adapter_ref": "standby",
+  "adapter_status": "standby"
+}
