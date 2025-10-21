@@ -4,5 +4,10 @@
   "currency": "KRW",
   "currency_symbol": "\u20a9",
   "credit_adapter_ref": "KCB / NICE",
-  "design_genome_ref": "../../core/design_genome/design_genome.json"
+  "design_genome_ref": "../../core/design_genome/design_genome.json",
+  "aesthetic": {
+    "palette": "Digital pearl",
+    "texture": "AI blue accents",
+    "typography": null
+  }
 }

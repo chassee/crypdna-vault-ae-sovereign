@@ -4,5 +4,10 @@
   "currency": "EUR",
   "currency_symbol": "\u20ac",
   "credit_adapter_ref": "CRIF",
-  "design_genome_ref": "../../core/design_genome/design_genome.json"
+  "design_genome_ref": "../../core/design_genome/design_genome.json",
+  "aesthetic": {
+    "palette": "Marble gray",
+    "texture": "Rose gold",
+    "typography": null
+  }
 }

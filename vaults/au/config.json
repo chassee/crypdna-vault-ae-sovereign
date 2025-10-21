@@ -4,5 +4,10 @@
   "currency": "AUD",
   "currency_symbol": "$",
   "credit_adapter_ref": "Equifax AU",
-  "design_genome_ref": "../../core/design_genome/design_genome.json"
+  "design_genome_ref": "../../core/design_genome/design_genome.json",
+  "aesthetic": {
+    "palette": "Aqua crystal",
+    "texture": "UV shimmer",
+    "typography": null
+  }
 }

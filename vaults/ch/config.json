@@ -4,5 +4,10 @@
   "currency": "CHF",
   "currency_symbol": "CHF",
   "credit_adapter_ref": "ZEK / IKO",
-  "design_genome_ref": "../../core/design_genome/design_genome.json"
+  "design_genome_ref": "../../core/design_genome/design_genome.json",
+  "aesthetic": {
+    "palette": "Carbon frost",
+    "texture": "Silver data lines",
+    "typography": null
+  }
 }

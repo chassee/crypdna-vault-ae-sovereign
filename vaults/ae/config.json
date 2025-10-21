@@ -4,5 +4,10 @@
   "currency": "AED",
   "currency_symbol": "\u062f.\u0625",
   "credit_adapter_ref": "AECB",
-  "design_genome_ref": "../../core/design_genome/design_genome.json"
+  "design_genome_ref": "../../core/design_genome/design_genome.json",
+  "aesthetic": {
+    "palette": "Desert gold",
+    "texture": "Holographic sand glass",
+    "typography": "Arabic typography"
+  }
 }

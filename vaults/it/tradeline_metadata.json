@@ -2,5 +2,7 @@
   "region": "IT",
   "tradeline_schema_version": "1.0",
   "credit_score_model": "CrypDNA-Score-V2-IT",
-  "vault_data_schema": "CrypDNA-Vault-Schema-V3"
+  "vault_data_schema": "CrypDNA-Vault-Schema-V3",
+  "regional_currency": "EUR",
+  "aesthetic_tag": "Marble gray"
 }

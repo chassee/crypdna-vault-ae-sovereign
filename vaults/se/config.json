@@ -4,5 +4,10 @@
   "currency": "SEK",
   "currency_symbol": "kr",
   "credit_adapter_ref": "UC AB",
-  "design_genome_ref": "../../core/design_genome/design_genome.json"
+  "design_genome_ref": "../../core/design_genome/design_genome.json",
+  "aesthetic": {
+    "palette": "Glacier cyan",
+    "texture": "Frost reflection",
+    "typography": null
+  }
 }

@@ -4,5 +4,10 @@
   "currency": "SGD",
   "currency_symbol": "$",
   "credit_adapter_ref": "CBS",
-  "design_genome_ref": "../../core/design_genome/design_genome.json"
+  "design_genome_ref": "../../core/design_genome/design_genome.json",
+  "aesthetic": {
+    "palette": "Platinum white",
+    "texture": "Sapphire glow",
+    "typography": null
+  }
 }
