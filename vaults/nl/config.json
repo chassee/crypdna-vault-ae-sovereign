@@ -3,5 +3,6 @@
   "language": "nl",
   "currency": "EUR",
   "currency_symbol": "\u20ac",
-  "credit_adapter_ref": "BKR"
+  "credit_adapter_ref": "BKR",
+  "design_genome_ref": "../../core/design_genome/design_genome.json"
 }

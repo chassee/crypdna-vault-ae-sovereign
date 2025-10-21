@@ -1,0 +1,62 @@
+{
+  "palette": {
+    "core": {
+      "obsidianBlack": "#0A0A0C",
+      "prismaticBlue": "#4F46E5",
+      "auroraViolet": "#8B5CF6",
+      "iridescentSilver": "#E5E7EB",
+      "carbonGlassGradients": [
+        "linear-gradient(to right, #0A0A0C, #1F2937)",
+        "radial-gradient(circle, #1F2937, #0A0A0C)"
+      ]
+    },
+    "adaptiveTones": {
+      "ae": "#F5C46B",
+      "jp": "#2FAAFF",
+      "uk": "#9966FF",
+      "fr": "#D7BFFF",
+      "de": "#BFC5CC",
+      "ca": "#C7E2FF",
+      "kr": "#2FAAFF",
+      "ch": "#BFC5CC",
+      "it": "#D7BFFF",
+      "es": "#D7BFFF",
+      "sg": "#2FAAFF",
+      "my": "#F5C46B",
+      "nl": "#2FAAFF",
+      "au": "#F5C46B",
+      "nz": "#2FAAFF",
+      "se": "#BFC5CC",
+      "no": "#BFC5CC",
+      "pl": "#D7BFFF",
+      "be": "#D7BFFF",
+      "at": "#BFC5CC",
+      "dk": "#BFC5CC",
+      "ie": "#9966FF",
+      "il": "#2FAAFF",
+      "fi": "#BFC5CC",
+      "pt": "#D7BFFF",
+      "hk": "#F55B5B",
+      "cz": "#BFC5CC"
+    }
+  },
+  "typography": {
+    "fontFamily": "'SF Pro', 'Noto Sans', 'Kufi', 'Gothic', sans-serif",
+    "holographicGradients": [
+      "linear-gradient(to right, #E5E7EB, #8B5CF6)",
+      "linear-gradient(to bottom, #E5E7EB, #4F46E5)"
+    ],
+    "responsiveScripts": true
+  },
+  "lightPhysics": {
+    "motionBlur": "minimal",
+    "holographicSpecularLighting": "high"
+  },
+  "inheritance": {
+    "globalDNA": true,
+    "localizedOverrides": {
+      "accentTones": true,
+      "currencyDisplayElements": true
+    }
+  }
+}

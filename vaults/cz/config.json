@@ -4,5 +4,6 @@
   "currency": "CZK",
   "currency_symbol": "K\u010d",
   "credit_adapter_ref": "standby",
-  "adapter_status": "standby"
+  "adapter_status": "standby",
+  "design_genome_ref": "../../core/design_genome/design_genome.json"
 }

@@ -3,5 +3,6 @@
   "language": "en",
   "currency": "GBP",
   "currency_symbol": "\u00a3",
-  "credit_adapter_ref": "Experian UK"
+  "credit_adapter_ref": "Experian UK",
+  "design_genome_ref": "../../core/design_genome/design_genome.json"
 }

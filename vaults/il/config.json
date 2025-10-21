@@ -4,5 +4,6 @@
   "currency": "ILS",
   "currency_symbol": "\u20aa",
   "credit_adapter_ref": "standby",
-  "adapter_status": "standby"
+  "adapter_status": "standby",
+  "design_genome_ref": "../../core/design_genome/design_genome.json"
 }

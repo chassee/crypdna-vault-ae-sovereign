@@ -3,5 +3,6 @@
   "language": "en",
   "currency": "CAD",
   "currency_symbol": "$",
-  "credit_adapter_ref": "Equifax CA"
+  "credit_adapter_ref": "Equifax CA",
+  "design_genome_ref": "../../core/design_genome/design_genome.json"
 }

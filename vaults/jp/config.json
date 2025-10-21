@@ -3,5 +3,6 @@
   "language": "ja",
   "currency": "JPY",
   "currency_symbol": "\u00a5",
-  "credit_adapter_ref": "CIC / JICC"
+  "credit_adapter_ref": "CIC / JICC",
+  "design_genome_ref": "../../core/design_genome/design_genome.json"
 }

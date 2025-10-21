@@ -3,5 +3,6 @@
   "language": "sv",
   "currency": "SEK",
   "currency_symbol": "kr",
-  "credit_adapter_ref": "UC AB"
+  "credit_adapter_ref": "UC AB",
+  "design_genome_ref": "../../core/design_genome/design_genome.json"
 }

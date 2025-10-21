@@ -3,5 +3,6 @@
   "language": "de",
   "currency": "EUR",
   "currency_symbol": "\u20ac",
-  "credit_adapter_ref": "SCHUFA"
+  "credit_adapter_ref": "SCHUFA",
+  "design_genome_ref": "../../core/design_genome/design_genome.json"
 }

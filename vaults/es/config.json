@@ -3,5 +3,6 @@
   "language": "es",
   "currency": "EUR",
   "currency_symbol": "\u20ac",
-  "credit_adapter_ref": "ASNEF / CIRBE"
+  "credit_adapter_ref": "ASNEF / CIRBE",
+  "design_genome_ref": "../../core/design_genome/design_genome.json"
 }

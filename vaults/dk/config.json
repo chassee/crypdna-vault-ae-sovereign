@@ -4,5 +4,6 @@
   "currency": "DKK",
   "currency_symbol": "kr",
   "credit_adapter_ref": "standby",
-  "adapter_status": "standby"
+  "adapter_status": "standby",
+  "design_genome_ref": "../../core/design_genome/design_genome.json"
 }

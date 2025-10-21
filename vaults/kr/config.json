@@ -3,5 +3,6 @@
   "language": "ko",
   "currency": "KRW",
   "currency_symbol": "\u20a9",
-  "credit_adapter_ref": "KCB / NICE"
+  "credit_adapter_ref": "KCB / NICE",
+  "design_genome_ref": "../../core/design_genome/design_genome.json"
 }
