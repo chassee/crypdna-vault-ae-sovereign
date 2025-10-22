@@ -1,8 +1,9 @@
 {
-  "region": "NZ",
-  "language": "en",
-  "currency": "NZD",
-  "currency_symbol": "$",
-  "credit_adapter_ref": "Centrix",
-  "design_genome_ref": "../../core/design_genome/design_genome.json"
+    "region": "NZ",
+    "language": "en",
+    "currency": "NZD",
+    "currency_symbol": "$",
+    "credit_adapter_ref": "Centrix",
+    "design_genome_ref": "../../core/design_genome/design_genome.json",
+    "credit_adapter_registry": "../../adapter_registry.json"
 }

@@ -1,14 +1,15 @@
 {
-  "region": "IL",
-  "language": "he",
-  "currency": "ILS",
-  "currency_symbol": "\u20aa",
-  "credit_adapter_ref": "standby",
-  "adapter_status": "standby",
-  "design_genome_ref": "../../core/design_genome/design_genome.json",
-  "aesthetic": {
-    "palette": "Desert silver",
-    "texture": "Cyan aether",
-    "typography": null
-  }
+    "region": "IL",
+    "language": "he",
+    "currency": "ILS",
+    "currency_symbol": "\u20aa",
+    "credit_adapter_ref": "standby",
+    "adapter_status": "standby",
+    "design_genome_ref": "../../core/design_genome/design_genome.json",
+    "aesthetic": {
+        "palette": "Desert silver",
+        "texture": "Cyan aether",
+        "typography": null
+    },
+    "credit_adapter_registry": "../../adapter_registry.json"
 }

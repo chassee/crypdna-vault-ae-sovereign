@@ -1,8 +1,9 @@
 {
-  "region": "NO",
-  "language": "no",
-  "currency": "NOK",
-  "currency_symbol": "kr",
-  "credit_adapter_ref": "Experian NO",
-  "design_genome_ref": "../../core/design_genome/design_genome.json"
+    "region": "NO",
+    "language": "no",
+    "currency": "NOK",
+    "currency_symbol": "kr",
+    "credit_adapter_ref": "Experian NO",
+    "design_genome_ref": "../../core/design_genome/design_genome.json",
+    "credit_adapter_registry": "../../adapter_registry.json"
 }

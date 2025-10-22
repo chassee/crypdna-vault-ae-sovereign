@@ -1,13 +1,14 @@
 {
-  "region": "SG",
-  "language": "en",
-  "currency": "SGD",
-  "currency_symbol": "$",
-  "credit_adapter_ref": "CBS",
-  "design_genome_ref": "../../core/design_genome/design_genome.json",
-  "aesthetic": {
-    "palette": "Platinum white",
-    "texture": "Sapphire glow",
-    "typography": null
-  }
+    "region": "SG",
+    "language": "en",
+    "currency": "SGD",
+    "currency_symbol": "$",
+    "credit_adapter_ref": "CBS",
+    "design_genome_ref": "../../core/design_genome/design_genome.json",
+    "aesthetic": {
+        "palette": "Platinum white",
+        "texture": "Sapphire glow",
+        "typography": null
+    },
+    "credit_adapter_registry": "../../adapter_registry.json"
 }

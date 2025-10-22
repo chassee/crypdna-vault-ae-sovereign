@@ -1,0 +1,170 @@
+[
+  {
+    "region": "US",
+    "bureau": "Dun & Bradstreet (D&B)",
+    "status": "live",
+    "endpoint_placeholder": "https://api.dnb.com/v1/tradeline"
+  },
+  {
+    "region": "AE",
+    "bureau": "Credit Bureau (AE)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "JP",
+    "bureau": "Credit Bureau (JP)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "UK",
+    "bureau": "Credit Bureau (UK)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "FR",
+    "bureau": "Credit Bureau (FR)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "DE",
+    "bureau": "Credit Bureau (DE)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "CA",
+    "bureau": "Credit Bureau (CA)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "KR",
+    "bureau": "Credit Bureau (KR)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "CH",
+    "bureau": "Credit Bureau (CH)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "IT",
+    "bureau": "Credit Bureau (IT)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "ES",
+    "bureau": "Credit Bureau (ES)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "SG",
+    "bureau": "Credit Bureau (SG)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "MY",
+    "bureau": "Credit Bureau (MY)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "NL",
+    "bureau": "Credit Bureau (NL)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "AU",
+    "bureau": "Credit Bureau (AU)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "NZ",
+    "bureau": "Credit Bureau (NZ)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "SE",
+    "bureau": "Credit Bureau (SE)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "NO",
+    "bureau": "Credit Bureau (NO)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "PL",
+    "bureau": "Credit Bureau (PL)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "BE",
+    "bureau": "Credit Bureau (BE)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "AT",
+    "bureau": "Credit Bureau (AT)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "DK",
+    "bureau": "Credit Bureau (DK)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "IE",
+    "bureau": "Credit Bureau (IE)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "IL",
+    "bureau": "Credit Bureau (IL)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "FI",
+    "bureau": "Credit Bureau (FI)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "PT",
+    "bureau": "Credit Bureau (PT)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "HK",
+    "bureau": "Credit Bureau (HK)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  },
+  {
+    "region": "CZ",
+    "bureau": "Credit Bureau (CZ)",
+    "status": "locked",
+    "endpoint_placeholder": ""
+  }
+]

@@ -1,13 +1,14 @@
 {
-  "region": "CA",
-  "language": "en",
-  "currency": "CAD",
-  "currency_symbol": "$",
-  "credit_adapter_ref": "Equifax CA",
-  "design_genome_ref": "../../core/design_genome/design_genome.json",
-  "aesthetic": {
-    "palette": "Arctic white",
-    "texture": "Crimson pulse",
-    "typography": null
-  }
+    "region": "CA",
+    "language": "en",
+    "currency": "CAD",
+    "currency_symbol": "$",
+    "credit_adapter_ref": "Equifax CA",
+    "design_genome_ref": "../../core/design_genome/design_genome.json",
+    "aesthetic": {
+        "palette": "Arctic white",
+        "texture": "Crimson pulse",
+        "typography": null
+    },
+    "credit_adapter_registry": "../../adapter_registry.json"
 }

@@ -1,14 +1,15 @@
 {
-  "region": "HK",
-  "language": "zh",
-  "currency": "HKD",
-  "currency_symbol": "$",
-  "credit_adapter_ref": "standby",
-  "adapter_status": "standby",
-  "design_genome_ref": "../../core/design_genome/design_genome.json",
-  "aesthetic": {
-    "palette": "Ruby-chrome",
-    "texture": "Kinetic typography",
-    "typography": null
-  }
+    "region": "HK",
+    "language": "zh",
+    "currency": "HKD",
+    "currency_symbol": "$",
+    "credit_adapter_ref": "standby",
+    "adapter_status": "standby",
+    "design_genome_ref": "../../core/design_genome/design_genome.json",
+    "aesthetic": {
+        "palette": "Ruby-chrome",
+        "texture": "Kinetic typography",
+        "typography": null
+    },
+    "credit_adapter_registry": "../../adapter_registry.json"
 }
