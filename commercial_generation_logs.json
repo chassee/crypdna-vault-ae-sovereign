@@ -1,0 +1,650 @@
+[
+  {
+    "timestamp": "2025-10-22T15:40:18.917272",
+    "region": "AE",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/ae/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.917498",
+    "region": "AE",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/ae/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.917588",
+    "region": "AE",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/ae/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.917831",
+    "region": "JP",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/jp/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.917915",
+    "region": "JP",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/jp/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.917980",
+    "region": "JP",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/jp/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.918269",
+    "region": "UK",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/uk/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.918363",
+    "region": "UK",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/uk/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.918427",
+    "region": "UK",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/uk/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.918629",
+    "region": "FR",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/fr/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.918700",
+    "region": "FR",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/fr/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.918758",
+    "region": "FR",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/fr/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.918918",
+    "region": "DE",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/de/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.918980",
+    "region": "DE",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/de/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.919043",
+    "region": "DE",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/de/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.919201",
+    "region": "CA",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/ca/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.919266",
+    "region": "CA",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/ca/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.919335",
+    "region": "CA",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/ca/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.919491",
+    "region": "KR",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/kr/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.919552",
+    "region": "KR",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/kr/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.919610",
+    "region": "KR",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/kr/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.920125",
+    "region": "CH",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/ch/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.920187",
+    "region": "CH",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/ch/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.920367",
+    "region": "CH",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/ch/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.920544",
+    "region": "IT",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/it/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.920606",
+    "region": "IT",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/it/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.920668",
+    "region": "IT",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/it/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.920821",
+    "region": "ES",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/es/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.920881",
+    "region": "ES",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/es/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.920937",
+    "region": "ES",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/es/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.921083",
+    "region": "SG",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/sg/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.921142",
+    "region": "SG",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/sg/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.921200",
+    "region": "SG",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/sg/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.921360",
+    "region": "MY",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/my/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.921420",
+    "region": "MY",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/my/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.921475",
+    "region": "MY",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/my/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.921622",
+    "region": "NL",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/nl/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.921689",
+    "region": "NL",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/nl/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.921745",
+    "region": "NL",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/nl/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.921899",
+    "region": "AU",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/au/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.921962",
+    "region": "AU",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/au/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.922020",
+    "region": "AU",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/au/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.922166",
+    "region": "NZ",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/nz/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.922229",
+    "region": "NZ",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/nz/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.922285",
+    "region": "NZ",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/nz/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.922461",
+    "region": "SE",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/se/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.922527",
+    "region": "SE",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/se/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:18.922663",
+    "region": "SE",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/se/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.089338",
+    "region": "NO",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/no/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.089544",
+    "region": "NO",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/no/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.089618",
+    "region": "NO",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/no/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.089825",
+    "region": "PL",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/pl/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.089893",
+    "region": "PL",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/pl/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.089954",
+    "region": "PL",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/pl/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.091010",
+    "region": "BE",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/be/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.091089",
+    "region": "BE",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/be/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.091151",
+    "region": "BE",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/be/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.091342",
+    "region": "AT",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/at/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.091410",
+    "region": "AT",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/at/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.091471",
+    "region": "AT",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/at/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.091637",
+    "region": "DK",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/dk/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.091702",
+    "region": "DK",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/dk/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.091760",
+    "region": "DK",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/dk/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.091921",
+    "region": "IE",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/ie/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.091997",
+    "region": "IE",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/ie/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.092058",
+    "region": "IE",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/ie/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.092242",
+    "region": "IL",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/il/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.092329",
+    "region": "IL",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/il/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.092392",
+    "region": "IL",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/il/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.092556",
+    "region": "FI",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/fi/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.092730",
+    "region": "FI",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/fi/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.092789",
+    "region": "FI",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/fi/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.093749",
+    "region": "PT",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/pt/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.093914",
+    "region": "PT",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/pt/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.094060",
+    "region": "PT",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/pt/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.279461",
+    "region": "HK",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/hk/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.279658",
+    "region": "HK",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/hk/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.279745",
+    "region": "HK",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/hk/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.280013",
+    "region": "CZ",
+    "theme": "Painite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/cz/assets/crypmercials/painite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.280084",
+    "region": "CZ",
+    "theme": "Vicu\u00f1a",
+    "status": "Generated and Localized",
+    "output_file": "vaults/cz/assets/crypmercials/vicu\u00f1a_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  },
+  {
+    "timestamp": "2025-10-22T15:40:19.280148",
+    "region": "CZ",
+    "theme": "Meteorite",
+    "status": "Generated and Localized",
+    "output_file": "vaults/cz/assets/crypmercials/meteorite_crypmercial.json",
+    "scheduled_post": "2025-10-29"
+  }
+]
