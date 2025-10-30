@@ -6,7 +6,7 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { Toaster } from '@/components/ui/toaster';
 
 const AUTH_REDIRECT = `${window.location.origin}/#/vault`;
-const RESET_REDIRECT = 'https://vault.crypdawgs.com/#/reset';
+const RESET_REDIRECT = 'https://vault.crypdawgs.com/#/reset-password';
 
 export default function Auth() {
   const [email, setEmail] = useState('');
@@ -113,26 +113,17 @@ export default function Auth() {
 
     setLoading(true);
     try {
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-        options: { emailRedirectTo: AUTH_REDIRECT }
-      });
+      const { error } = await supabase.auth.signInWithOtp({ email });
 
       if (error) throw error;
 
       toast({
         title: 'Magic link sent!',
-        description: 'Check your email for the sign-in link.'
+        description: 'Check your inbox.'
       });
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Failed to send magic link.';
-      toast({ title: 'Error', description: message, variant: 'destructive' });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Password reset (sends email with hash-based redirect)
+      toast({ title: 'Error', descr // Password reset (sends email with hash-based redirect)
   const handleReset = async () => {
     if (!email) {
       toast({ title: 'Email required', description: 'Enter your email to reset password.' });
@@ -147,9 +138,10 @@ export default function Auth() {
 
       if (error) throw error;
 
+      // Show confirmation: "If this email is registered, a reset link has been sent."
       toast({
-        title: 'Reset email sent!',
-        description: 'Check your email for the password reset link.'
+        title: 'Reset link sent',
+        description: 'If this email is registered, a reset link has been sent.'
       });
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Failed to send reset email.';
