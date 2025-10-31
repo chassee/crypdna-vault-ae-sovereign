@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Toaster } from '@/components/ui/toaster';
+import GuestLandingScreen from '@/vault_experience_layers/guest_mode_v1/GuestLandingScreen';
+
 
 const AUTH_REDIRECT = `${window.location.origin}/#/vault`;
 const RESET_REDIRECT = 'https://vault.crypdawgs.com/#/reset-password';
@@ -284,6 +286,16 @@ export default function Auth() {
             >
               {isSignUp ? 'Already have access? Sign In' : 'Create Account'}
             </button>
+
+<div className="mt-4 flex justify-center">
+  <button
+    type="button"
+    onClick={() => navigate('/guest')}
+    className="text-xs opacity-60 hover:opacity-100 transition"
+  >
+    Enter as Guest (No Login)
+  </button>
+</div>
 
             <button
               onClick={handleReset}
