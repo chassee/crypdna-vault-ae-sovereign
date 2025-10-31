@@ -123,7 +123,13 @@ export default function Auth() {
       });
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Failed to send magic link.';
-      toast({ title: 'Error', descr // Password reset (sends email with hash-based redirect)
+      toast({ title: 'Error', description: message, variant: 'destructive' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Password reset (sends email with hash-based redirect)
   const handleReset = async () => {
     if (!email) {
       toast({ title: 'Email required', description: 'Enter your email to reset password.' });
