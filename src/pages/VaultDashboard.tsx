@@ -22,6 +22,7 @@ import CrypbotsTab from '@/components/tabs/CrypbotsTab';
 import NeuroTechTab from '@/components/tabs/NeuroTechTab';
 import AboutUs from '@/components/AboutUs';
 import MobileFloatingNav from '@/components/MobileFloatingNav';
+import PrestigeRankDisplay from '@/components/PrestigeRankDisplay';
 
 import { LogOut, Wallet, Rocket, Brain, Waves, Info } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -182,6 +183,11 @@ export default function VaultDashboard() {
                 <LuxuryTierBadge tier={userTier} />
               </div>
             </div>
+          </div>
+
+          {/* Prestige Rank System */}
+          <div className="animate-fade-in">
+            <PrestigeRankDisplay />
           </div>
 
           {/* Card */}
