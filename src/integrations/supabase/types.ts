@@ -1065,6 +1065,8 @@ export type Database = {
           notes: string | null
           prestige_level: number
           prestige_xp: number | null
+          referral_code: string | null
+          referrals_count: number | null
           region_id: string | null
           status: boolean
           tally_id: string | null
@@ -1082,6 +1084,8 @@ export type Database = {
           notes?: string | null
           prestige_level?: number
           prestige_xp?: number | null
+          referral_code?: string | null
+          referrals_count?: number | null
           region_id?: string | null
           status?: boolean
           tally_id?: string | null
@@ -1099,6 +1103,8 @@ export type Database = {
           notes?: string | null
           prestige_level?: number
           prestige_xp?: number | null
+          referral_code?: string | null
+          referrals_count?: number | null
           region_id?: string | null
           status?: boolean
           tally_id?: string | null

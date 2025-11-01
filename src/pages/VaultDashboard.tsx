@@ -23,11 +23,12 @@ import NeuroTechTab from '@/components/tabs/NeuroTechTab';
 import AboutUs from '@/components/AboutUs';
 import MobileFloatingNav from '@/components/MobileFloatingNav';
 import PrestigeRankDisplay from '@/components/PrestigeRankDisplay';
+import InvitePage from '@/pages/InvitePage';
 
-import { LogOut, Wallet, Rocket, Brain, Waves, Info } from 'lucide-react';
+import { LogOut, Wallet, Rocket, Brain, Waves, Info, Share2 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-type TabKey = 'balances' | 'drops' | 'crypbots' | 'neurotech' | 'about';
+type TabKey = 'balances' | 'drops' | 'crypbots' | 'neurotech' | 'invite' | 'about';
 
 export default function VaultDashboard() {
   const navigate = useNavigate();
@@ -198,7 +199,7 @@ export default function VaultDashboard() {
           {/* Tabs */}
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as TabKey)} className="w-full">
             {!isMobile && (
-              <TabsList className="grid w-full grid-cols-5 luxury-card border-border bg-gradient-to-r from-card/50 to-muted/50 backdrop-blur-xl">
+              <TabsList className="grid w-full grid-cols-6 luxury-card border-border bg-gradient-to-r from-card/50 to-muted/50 backdrop-blur-xl">
                 <TabsTrigger value="balances" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
                   <Wallet className="w-3 h-3 sm:w-4 sm:h-4" />
                   <span className="hidden md:inline">Balance</span>
@@ -217,6 +218,11 @@ export default function VaultDashboard() {
                 <TabsTrigger value="neurotech" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
                   <Waves className="w-3 h-3 sm:w-4 sm:h-4" />
                   <span className="hidden md:inline">NeuroTech</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
+                </TabsTrigger>
+                <TabsTrigger value="invite" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
+                  <Share2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden md:inline">Invite</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
                 </TabsTrigger>
                 <TabsTrigger value="about" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
@@ -251,6 +257,10 @@ export default function VaultDashboard() {
 
               <TabsContent value="neurotech" className="animate-fade-in">
                 <NeuroTechTab />
+              </TabsContent>
+
+              <TabsContent value="invite" className="animate-fade-in">
+                <InvitePage />
               </TabsContent>
 
               <TabsContent value="about" className="animate-fade-in">
