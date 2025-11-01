@@ -186,7 +186,7 @@ export default function VaultDashboard() {
           </div>
 
           {/* Prestige Rank System */}
-          <div className="animate-fade-in">
+          <div className="animate-fade-in -mt-2 sm:-mt-4">
             <PrestigeRankDisplay />
           </div>
 
