@@ -278,7 +278,12 @@ export default function Auth() {
             >
               Send Magic Link
             </button>
-
+ <button
+  onClick={() => window.location.href = '/vault?guest=true'}
+  className="w-full mt-3 text-sm text-gray-400 underline hover:text-gray-200 transition"
+>
+  Browse as Guest
+</button>
             <button
               onClick={() => setIsSignUp(!isSignUp)}
               disabled={loading}
