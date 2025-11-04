@@ -286,14 +286,7 @@ export default function Auth() {
             >
               {isSignUp ? 'Already have access? Sign In' : 'Create Account'}
             </button>
-<div className="mt-4 text-center">
-  <button
-    onClick={() => window.location.href = '/vault?guest=true'}
-    className="text-sm text-gray-400 underline hover:text-gray-200 transition"
-  >
-    Browse as Guest
-  </button>
-</div>
+
 
             <button
               onClick={handleReset}
@@ -302,6 +295,16 @@ export default function Auth() {
             >
               Reset Password
             </button>
+
+            <div className="mt-3 text-center">
+  <button
+    type="button"
+    onClick={() => (window.location.href = '/vault?guest=true')}
+    className="text-sm text-gray-400 underline hover:text-gray-200 transition"
+  >
+    Browse as Guest
+  </button>
+</div>
           </div>
 
           {/* Footer */}
