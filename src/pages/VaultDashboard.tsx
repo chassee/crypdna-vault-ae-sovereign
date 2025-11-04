@@ -183,7 +183,7 @@ export default function VaultDashboard() {
               </div>
             </div>
           </div>
-
+<PrestigePanel user={userProfile  user  session?.user} />
           {/* Card */}
           <div className="animate-scale-in">
             <LuxuryDebitCard userName={userName} vaultId={vaultId} />
