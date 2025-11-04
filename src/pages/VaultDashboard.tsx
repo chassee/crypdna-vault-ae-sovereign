@@ -4,7 +4,6 @@ import type { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/supabaseClient';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Toaster } from '@/components/ui/toaster';
-import PrestigePanel from '@/components/PrestigePanel'
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
@@ -177,13 +176,9 @@ export default function VaultDashboard() {
                   </span>
                 </p>
               </div>
-              <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-muted-foreground sm:hidden">
-                <span>Tier:</span>
-                <LuxuryTierBadge tier={userTier} />
-              </div>
             </div>
           </div>
-<PrestigePanel user={userProfile  user  session?.user} />
+
           {/* Card */}
           <div className="animate-scale-in">
             <LuxuryDebitCard userName={userName} vaultId={vaultId} />

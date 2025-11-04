@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Toaster } from '@/components/ui/toaster';
-import GuestLandingScreen from '@/vault_experience_layers/guest_mode_v1/GuestLandingScreen';
 
 
 const AUTH_REDIRECT = `${window.location.origin}/#/vault`;
@@ -287,7 +286,6 @@ export default function Auth() {
               {isSignUp ? 'Already have access? Sign In' : 'Create Account'}
             </button>
 
-
             <button
               onClick={handleReset}
               disabled={loading}
@@ -296,15 +294,15 @@ export default function Auth() {
               Reset Password
             </button>
 
-            <div className="mt-3 text-center">
-  <button
-    type="button"
-    onClick={() => (window.location.href = '/vault?guest=true')}
-    className="text-sm text-gray-400 underline hover:text-gray-200 transition"
-  >
-    Browse as Guest
-  </button>
-</div>
+            <div className="w-full text-center">
+              <button
+                type="button"
+                onClick={() => (window.location.href = '/vault?guest=true')}
+                className="text-sm text-gray-300 underline hover:text-gray-100 transition"
+              >
+                Browse as Guest
+              </button>
+            </div>
           </div>
 
           {/* Footer */}
