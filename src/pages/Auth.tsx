@@ -268,6 +268,13 @@ export default function Auth() {
                 {loading ? 'Accessing...' : 'Access Billionaire Vault'}
               </span>
             </button>
+
+             <button
+              className="w-full mt-3 px-4 py-2 rounded-md border border-zinc-600 text-zinc-200 hover:bg-zinc-800 transition"
+              onClick={() => navigate('/VaultDashboard?guest=true')}
+                                            >
+                 Browse as Guest
+                      </button>
           </form>
 
           {/* Alternative actions with high contrast */}
