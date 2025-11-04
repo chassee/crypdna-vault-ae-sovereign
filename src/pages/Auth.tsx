@@ -278,12 +278,7 @@ export default function Auth() {
             >
               Send Magic Link
             </button>
- <button
-  onClick={() => window.location.href = '/vault?guest=true'}
-  className="w-full mt-3 text-sm text-gray-400 underline hover:text-gray-200 transition"
->
-  Browse as Guest
-</button>
+
             <button
               onClick={() => setIsSignUp(!isSignUp)}
               disabled={loading}
@@ -291,14 +286,12 @@ export default function Auth() {
             >
               {isSignUp ? 'Already have access? Sign In' : 'Create Account'}
             </button>
-
-<div className="mt-4 flex justify-center">
+<div className="mt-4 text-center">
   <button
-    type="button"
-    onClick={() => navigate('/guest')}
-    className="text-xs opacity-60 hover:opacity-100 transition"
+    onClick={() => window.location.href = '/vault?guest=true'}
+    className="text-sm text-gray-400 underline hover:text-gray-200 transition"
   >
-    Enter as Guest (No Login)
+    Browse as Guest
   </button>
 </div>
 
