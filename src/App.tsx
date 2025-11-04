@@ -10,7 +10,10 @@ export default function App() {
         <Route path="/" element={<Navigate to="/auth" replace />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/reset-password" element={<Reset />} />
-        <Route path="/vault" element={<VaultDashboard />} />
+
+        <Route path="/VaultDashboard" element={<VaultDashboard />} />
+        <Route path="/vault" element={<Navigate to="/VaultDashboard" replace />} />
+
         <Route path="*" element={<Navigate to="/auth" replace />} />
       </Routes>
     </HashRouter>
