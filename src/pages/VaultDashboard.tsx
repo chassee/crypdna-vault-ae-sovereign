@@ -21,7 +21,8 @@ import CrypbotsTab from '@/components/tabs/CrypbotsTab';
 import NeuroTechTab from '@/components/tabs/NeuroTechTab';
 import AboutUs from '@/components/AboutUs';
 import MobileFloatingNav from '@/components/MobileFloatingNav';
-
+import PrestigePanel from '@/components/PrestigePanel';
+import InviteTab from '@/components/tabs/InviteTab';
 import { LogOut, Wallet, Rocket, Brain, Waves, Info } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -83,6 +84,21 @@ export default function VaultDashboard() {
         return;
       }
       setUserProfile(data ?? null);
+// --- Guest Mode Logic ---
+const isGuest = new URLSearchParams(location.search).get('guest') === 'true';
+
+let vaultId = data?.vault_id || 'VAULT-UNKNOWN';
+let tierDisplay = data?.tier || 'Initiate';
+
+if (isGuest) {
+  const fallback = localStorage.getItem('guest_vault_id') ??
+    GUEST-${Math.random().toString(36).slice(-6).toUpperCase()};
+  localStorage.setItem('guest_vault_id', fallback);
+
+  vaultId = fallback;
+  tierDisplay = "Viewer";
+}
+      
       await fetchVaultData(); // once user is known, load their Vault data
     } catch (e) {
       console.error('fetchUserProfile exception:', e);
