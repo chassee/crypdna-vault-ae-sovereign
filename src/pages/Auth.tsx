@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Toaster } from '@/components/ui/toaster';
-
+import GuestLandingScreen from '@/vault_experience_layers/guest_mode_v1/GuestLandingScreen';
 
 
 const AUTH_REDIRECT = `${window.location.origin}/#/vault`;
@@ -17,7 +17,6 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
-  
 
   // Parse email from URL params (?email=...)
   useEffect(() => {
@@ -268,13 +267,6 @@ export default function Auth() {
                 {loading ? 'Accessing...' : 'Access Billionaire Vault'}
               </span>
             </button>
-
-             <button
-              className="w-full mt-3 px-4 py-2 rounded-md border border-zinc-600 text-zinc-200 hover:bg-zinc-800 transition"
-              onClick={() => navigate('/VaultDashboard?guest=true')}
-                                            >
-                 Browse as Guest
-                      </button>
           </form>
 
           {/* Alternative actions with high contrast */}
@@ -295,6 +287,16 @@ export default function Auth() {
               {isSignUp ? 'Already have access? Sign In' : 'Create Account'}
             </button>
 
+<div className="mt-4 flex justify-center">
+  <button
+    type="button"
+    onClick={() => navigate('/guest')}
+    className="text-xs opacity-60 hover:opacity-100 transition"
+  >
+    Enter as Guest (No Login)
+  </button>
+</div>
+
             <button
               onClick={handleReset}
               disabled={loading}
@@ -302,16 +304,6 @@ export default function Auth() {
             >
               Reset Password
             </button>
-
-            <div className="w-full text-center">
-              <button
-                type="button"
-                onClick={() => (window.location.href = '/vault?guest=true')}
-                className="text-sm text-gray-300 underline hover:text-gray-100 transition"
-              >
-                Browse as Guest
-              </button>
-            </div>
           </div>
 
           {/* Footer */}
