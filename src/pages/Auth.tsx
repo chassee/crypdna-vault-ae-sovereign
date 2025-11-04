@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import { Toaster } from '@/components/ui/toaster';
 
 
+
 const AUTH_REDIRECT = `${window.location.origin}/#/vault`;
 const RESET_REDIRECT = 'https://vault.crypdawgs.com/#/reset-password';
 
@@ -16,6 +17,7 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  
 
   // Parse email from URL params (?email=...)
   useEffect(() => {
