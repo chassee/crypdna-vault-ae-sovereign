@@ -19,14 +19,14 @@ import VaultVerification from '@/components/VaultVerification';
 import CreditActivity from '@/components/CreditActivity';
 import VaultDrops from '@/components/VaultDrops';
 import CrypbotsTab from '@/components/tabs/CrypbotsTab';
-import NeuroTechTab from '@/components/tabs/NeuroTechTab';
 import AboutUs from '@/components/AboutUs';
+import ID from '@/pages/ID';
 import MobileFloatingNav from '@/components/MobileFloatingNav';
 
-import { LogOut, Wallet, Rocket, Brain, Waves, Info } from 'lucide-react';
+import { LogOut, Wallet, Rocket, Brain, CreditCard, Info } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-type TabKey = 'balances' | 'drops' | 'crypbots' | 'neurotech' | 'about';
+type TabKey = 'balances' | 'drops' | 'crypbots' | 'id' | 'about';
 
 export default function VaultDashboard() {
   const navigate = useNavigate();
@@ -208,9 +208,9 @@ export default function VaultDashboard() {
                   <span className="hidden md:inline">Crypb0ts</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
                 </TabsTrigger>
-                <TabsTrigger value="neurotech" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
-                  <Waves className="w-3 h-3 sm:w-4 sm:h-4" />
-                  <span className="hidden md:inline">NeuroTech</span>
+                <TabsTrigger value="id" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
+                  <CreditCard className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden md:inline">ID</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
                 </TabsTrigger>
                 <TabsTrigger value="about" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
@@ -243,8 +243,8 @@ export default function VaultDashboard() {
                 <CrypbotsTab />
               </TabsContent>
 
-              <TabsContent value="neurotech" className="animate-fade-in">
-                <NeuroTechTab />
+              <TabsContent value="id" className="animate-fade-in">
+                <ID />
               </TabsContent>
 
               <TabsContent value="about" className="animate-fade-in">
