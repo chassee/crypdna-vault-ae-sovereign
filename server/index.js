@@ -46,6 +46,158 @@ const verifyShopifyWebhook = (req, res, next) => {
 
 app.use(bodyParser.json({ verify: (req, res, buf) => { req.rawBody = buf; } }));
 
+// Utility function to calculate rank
+async function calculateRank(userInvites, userTier) {
+    const { data: rankRules, error } = await supabase
+        .from('rank_rules')
+        .select('*')
+        .order('required_invites', { ascending: false });
+
+    if (error) {
+        console.error('Error fetching rank rules:', error);
+        return 'Ghost'; // Default to lowest rank on error
+    }
+
+    // Find the highest rank the user qualifies for
+    for (const rule of rankRules) {
+        if (userInvites >= rule.required_invites || userTier === rule.required_tier) {
+            return rule.rank_name;
+        }
+    }
+
+    return 'Ghost'; // Default if no rules match
+}
+
+// API Endpoints for ID Tab
+app.post('/api/generate_invite_code', async (req, res) => {
+    const { inviter_id } = req.body; // Assuming inviter_id is passed in the body or derived from auth
+
+    if (!inviter_id) {
+        return res.status(400).json({ error: 'Inviter ID is required.' });
+    }
+
+    // Simple random code generation (e.g., 8 alphanumeric characters)
+    const invite_code = crypto.randomBytes(4).toString('hex').toUpperCase();
+
+    const { data, error } = await supabase
+        .from('invites')
+        .insert([{ inviter_id, invite_code }])
+        .select();
+
+    if (error) {
+        console.error('Error generating invite code:', error);
+        // Handle unique constraint violation if necessary, though randomBytes should be highly unique
+        return res.status(500).json({ error: 'Failed to generate invite code.' });
+    }
+
+    res.status(200).json({ invite_code: data[0].invite_code });
+});
+
+app.post('/api/record_invite_join', async (req, res) => {
+    const { invite_code, invitee_email } = req.body;
+
+    if (!invite_code) {
+        return res.status(400).json({ error: 'Invite code is required.' });
+    }
+
+    // 1. Find the invite and inviter
+    const { data: inviteData, error: inviteError } = await supabase
+        .from('invites')
+        .select('inviter_id')
+        .eq('invite_code', invite_code)
+        .single();
+
+    if (inviteError || !inviteData) {
+        console.error('Invite not found or error:', inviteError);
+        return res.status(404).json({ error: 'Invalid or expired invite code.' });
+    }
+
+    const inviter_id = inviteData.inviter_id;
+
+    // 2. Update invite status
+    const { error: updateInviteError } = await supabase
+        .from('invites')
+        .update({ status: 'joined', invitee_email: invitee_email || null })
+        .eq('invite_code', invite_code);
+
+    if (updateInviteError) {
+        console.error('Error updating invite status:', updateInviteError);
+        return res.status(500).json({ error: 'Failed to update invite status.' });
+    }
+
+    // 3. Increment inviter's invite_count
+    const { data: inviterProfile, error: profileError } = await supabase
+        .rpc('increment_invite_count', { user_id: inviter_id });
+
+    if (profileError) {
+        console.error('Error incrementing invite count:', profileError);
+        // Continue, as the main action (recording join) was successful
+    }
+
+    // 4. Re-run rank evaluation for the inviter
+    // Fetch updated profile data
+    const { data: updatedProfile, error: fetchError } = await supabase
+        .from('profiles')
+        .select('invite_count, tier')
+        .eq('id', inviter_id)
+        .single();
+
+    if (fetchError || !updatedProfile) {
+        console.error('Error fetching updated profile for rank update:', fetchError);
+        return res.status(200).json({ message: 'Invite recorded, but rank update failed to fetch profile.' });
+    }
+
+    const newRank = await calculateRank(updatedProfile.invite_count, updatedProfile.tier);
+
+    const { error: rankUpdateError } = await supabase
+        .from('profiles')
+        .update({ rank: newRank })
+        .eq('id', inviter_id);
+
+    if (rankUpdateError) {
+        console.error('Error updating inviter rank:', rankUpdateError);
+        // Continue
+    }
+
+    res.status(200).json({ message: 'Invite recorded and inviter rank updated.', inviter_new_rank: newRank });
+});
+
+app.post('/api/update_rank', async (req, res) => {
+    const { user_id } = req.body;
+
+    if (!user_id) {
+        return res.status(400).json({ error: 'User ID is required.' });
+    }
+
+    // 1. Fetch user profile data
+    const { data: profile, error: fetchError } = await supabase
+        .from('profiles')
+        .select('invite_count, tier')
+        .eq('id', user_id)
+        .single();
+
+    if (fetchError || !profile) {
+        console.error('Error fetching profile for rank update:', fetchError);
+        return res.status(404).json({ error: 'User profile not found.' });
+    }
+
+    // 2. Calculate new rank
+    const newRank = await calculateRank(profile.invite_count, profile.tier);
+
+    // 3. Update profile rank
+    const { error: updateError } = await supabase
+        .from('profiles')
+        .update({ rank: newRank })
+        .eq('id', user_id);
+
+    if (updateError) {
+        console.error('Error updating user rank:', updateError);
+        return res.status(500).json({ error: 'Failed to update user rank.' });
+    }
+
+    res.status(200).json({ message: 'User rank updated successfully.', new_rank: newRank });
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
     res.json({ status: 'ok', mode: COMMUNICATION_MODE, email_enabled: EMAIL_ENABLED });

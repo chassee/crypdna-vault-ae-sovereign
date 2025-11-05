@@ -250,6 +250,11 @@ export type Database = {
           score: number | null
           status: string | null
           updated_at: string | null
+          rank: string | null
+          vault_id: string | null
+          join_date: string | null
+          invite_count: number | null
+          tier: string | null
           user_id: string | null
         }
         Insert: {
@@ -257,6 +262,11 @@ export type Database = {
           score?: number | null
           status?: string | null
           updated_at?: string | null
+          rank?: string | null
+          vault_id?: string | null
+          join_date?: string | null
+          invite_count?: number | null
+          tier?: string | null
           user_id?: string | null
         }
         Update: {
@@ -264,6 +274,11 @@ export type Database = {
           score?: number | null
           status?: string | null
           updated_at?: string | null
+          rank?: string | null
+          vault_id?: string | null
+          join_date?: string | null
+          invite_count?: number | null
+          tier?: string | null
           user_id?: string | null
         }
         Relationships: []
@@ -531,6 +546,11 @@ export type Database = {
           id: string
           is_member: boolean | null
           updated_at: string | null
+          rank: string | null
+          vault_id: string | null
+          join_date: string | null
+          invite_count: number | null
+          tier: string | null
         }
         Insert: {
           avatar_url?: string | null
@@ -539,6 +559,11 @@ export type Database = {
           id: string
           is_member?: boolean | null
           updated_at?: string | null
+          rank?: string | null
+          vault_id?: string | null
+          join_date?: string | null
+          invite_count?: number | null
+          tier?: string | null
         }
         Update: {
           avatar_url?: string | null
@@ -547,6 +572,11 @@ export type Database = {
           id?: string
           is_member?: boolean | null
           updated_at?: string | null
+          rank?: string | null
+          vault_id?: string | null
+          join_date?: string | null
+          invite_count?: number | null
+          tier?: string | null
         }
         Relationships: []
       }
@@ -849,6 +879,11 @@ export type Database = {
           points: number | null
           redeemed_items: string[] | null
           updated_at: string | null
+          rank: string | null
+          vault_id: string | null
+          join_date: string | null
+          invite_count: number | null
+          tier: string | null
           user_id: string | null
         }
         Insert: {
@@ -856,6 +891,11 @@ export type Database = {
           points?: number | null
           redeemed_items?: string[] | null
           updated_at?: string | null
+          rank?: string | null
+          vault_id?: string | null
+          join_date?: string | null
+          invite_count?: number | null
+          tier?: string | null
           user_id?: string | null
         }
         Update: {
@@ -863,6 +903,11 @@ export type Database = {
           points?: number | null
           redeemed_items?: string[] | null
           updated_at?: string | null
+          rank?: string | null
+          vault_id?: string | null
+          join_date?: string | null
+          invite_count?: number | null
+          tier?: string | null
           user_id?: string | null
         }
         Relationships: []
