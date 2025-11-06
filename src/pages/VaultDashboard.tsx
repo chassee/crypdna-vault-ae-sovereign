@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useUserProfile } from '@/hooks/useUserProfile';
 import { useNavigate } from 'react-router-dom';
 import type { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/supabaseClient';
@@ -36,7 +37,7 @@ export default function VaultDashboard() {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const [userProfile, setUserProfile] = useState<any>(null);
+  const { profile, inviteCount, getPrestigeRank, getInviteLink, loading: profileLoading } = useUserProfile(user);
   const [activeTab, setActiveTab] = useState<TabKey>('balances');
 
   // ---- Vault Data States ----
