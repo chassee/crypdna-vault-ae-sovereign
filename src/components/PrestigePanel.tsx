@@ -20,7 +20,7 @@ export default function PrestigePanel({ user, userProfile }: PrestigePanelProps)
   const inviteCount = userProfile?.invite_count || 0;
   const currentIndex = RANK_ORDER.indexOf(currentRank);
   const nextRank = currentIndex < RANK_ORDER.length - 1 ? RANK_ORDER[currentIndex + 1] : null;
-  
+
   // Simple progress calculation (3 invites per rank)
   const invitesForNextRank = (currentIndex + 1) * 3;
   const progress = nextRank ? Math.min((inviteCount / invitesForNextRank) * 100, 100) : 100;
@@ -70,7 +70,7 @@ export default function PrestigePanel({ user, userProfile }: PrestigePanelProps)
             <span className="text-foreground font-semibold">{Math.round(progress)}%</span>
           </div>
           <div className="h-2 bg-muted rounded-full overflow-hidden">
-            <div 
+            <div
               className="h-full bg-gradient-to-r from-purple-500 to-cyan-500 transition-all duration-500"
               style={{ width: `${progress}%` }}
             />
