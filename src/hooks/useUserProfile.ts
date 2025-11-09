@@ -42,7 +42,7 @@ export function useUserProfile(user: any) {
   function getInviteLink() {
     if (!user) return '';
     const key = user.id.slice(0, 8).toUpperCase();
-    return ${window.location.origin}/auth?ref=${key};
+    return `${window.location.origin}/auth?ref=${key}`;
   }
 
   return { profile, inviteCount, getPrestigeRank, getInviteLink, loading };
