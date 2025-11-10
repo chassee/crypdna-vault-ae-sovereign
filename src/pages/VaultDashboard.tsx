@@ -35,6 +35,7 @@ export default function VaultDashboard() {
   const { toast } = useToast();
 
   const [user, setUser] = useState<User | null>(null);
+  const [userProfile, setUserProfile] = useState<any>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const { profile, inviteCount, getPrestigeRank, getInviteLink, loading: profileLoading } = useUserProfile(user);
