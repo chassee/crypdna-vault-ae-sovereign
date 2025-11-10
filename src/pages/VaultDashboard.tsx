@@ -81,12 +81,12 @@ export default function VaultDashboard() {
         .eq('user_id', userId)
         .single();
 
+setUserProfile(data || {}); // <-- THIS is our fix
+
       if (error && error.code !== 'PGRST116') {
         console.error('fetchUserProfile error:', error);
         return;
       }
-      setUserProfile(data ?? null);
-      await fetchVaultData(); // once user is known, load their Vault data
     } catch (e) {
       console.error('fetchUserProfile exception:', e);
     }
@@ -127,7 +127,7 @@ export default function VaultDashboard() {
   }
 
   if (loading) return <LuxuryLoadingScreen />;
-  if (!user) return null;
+  if (!userProfile) return null;
 
   const vaultId = userProfile?.vault_id ?? `VAULT-${(user.id ?? '').slice(0, 8).toUpperCase()}`;
   const userName = userProfile?.name ?? user.email?.split('@')[0] ?? 'Member';
