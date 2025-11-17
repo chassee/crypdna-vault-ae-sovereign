@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
 import { Copy, Gift, Users, TrendingUp, Sparkles } from 'lucide-react';
+
+// ✅ NEW WORKING API IMPORT (you already created this file)
+import { createInvite } from "@/lib/api/createInvite";
 
 interface InviteRewardsProps {
   user: any;
@@ -18,8 +20,8 @@ export default function InviteRewards({ user, userProfile, isGuest }: InviteRewa
   const [loading, setLoading] = useState(false);
 
   const inviteCount = userProfile?.invite_count || 0;
-  const joinedCount = Math.floor(inviteCount * 0.7); // Estimate
-  const upgradedCount = Math.floor(inviteCount * 0.3); // Estimate
+  const joinedCount = Math.floor(inviteCount * 0.7); 
+  const upgradedCount = Math.floor(inviteCount * 0.3);
 
   useEffect(() => {
     if (userProfile?.invite_code) {
@@ -28,38 +30,49 @@ export default function InviteRewards({ user, userProfile, isGuest }: InviteRewa
     }
   }, [userProfile]);
 
+  // ✅ FIXED — Now uses your new API wrapper (NOT supabase.invoke)
   const handleGenerateInvite = async () => {
     if (isGuest) {
-      toast({ 
-        title: 'Guest Access', 
-        description: 'Please create an account to generate invite links.', 
-        variant: 'destructive' 
+      toast({
+        title: 'Guest Access',
+        description: 'Please create an account to generate invite links.',
+        variant: 'destructive'
       });
       return;
     }
 
     if (!user) {
-      toast({ title: 'Error', description: 'Please log in to generate invite codes.', variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: 'Please log in to generate invite codes.',
+        variant: 'destructive'
+      });
       return;
     }
 
     setLoading(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('generate-invite-code', {
-        body: { user_id: user.id }
-      });
 
-      if (error) throw error;
+    try {
+      // 🔥 This hits your Edge Function through the wrapper
+      const data = await createInvite(user.id);
 
       if (data?.invite_code) {
         setInviteCode(data.invite_code);
         const link = `${window.location.origin}/#/auth?invite=${data.invite_code}`;
         setInviteLink(link);
-        toast({ title: 'Success!', description: 'Your invite link has been generated.' });
+
+        toast({
+          title: 'Success!',
+          description: 'Your invite link has been generated.'
+        });
       }
     } catch (err: any) {
       console.error('Generate invite error:', err);
-      toast({ title: 'Error', description: err.message || 'Failed to generate invite code.', variant: 'destructive' });
+      toast({
+        title: 'Error',
+        description: err.message || 'Failed to generate invite code.',
+        variant: 'destructive'
+      });
     } finally {
       setLoading(false);
     }
@@ -68,7 +81,10 @@ export default function InviteRewards({ user, userProfile, isGuest }: InviteRewa
   const handleCopyLink = () => {
     if (inviteLink) {
       navigator.clipboard.writeText(inviteLink);
-      toast({ title: 'Copied!', description: 'Invite link copied to clipboard.' });
+      toast({
+        title: 'Copied!',
+        description: 'Invite link copied to clipboard.'
+      });
     }
   };
 
@@ -91,7 +107,7 @@ export default function InviteRewards({ user, userProfile, isGuest }: InviteRewa
           className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500"
         >
           <Sparkles className="w-4 h-4 mr-2" />
-          Generate Invite Link
+          {loading ? "Generating..." : "Generate Invite Link"}
         </Button>
       ) : (
         <div className="space-y-3">
@@ -99,11 +115,7 @@ export default function InviteRewards({ user, userProfile, isGuest }: InviteRewa
             <p className="text-xs text-muted-foreground mb-2">Your Invite Link</p>
             <p className="text-sm font-mono text-foreground break-all">{inviteLink}</p>
           </div>
-          <Button
-            onClick={handleCopyLink}
-            variant="outline"
-            className="w-full"
-          >
+          <Button onClick={handleCopyLink} variant="outline" className="w-full">
             <Copy className="w-4 h-4 mr-2" />
             Copy Invite Link
           </Button>
