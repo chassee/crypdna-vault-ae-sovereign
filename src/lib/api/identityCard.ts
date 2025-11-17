@@ -1,5 +1,5 @@
 export async function getIdentityCard(userId: string) {
-  const url = ${import.meta.env.VITE_SUPABASE_FUNCTIONS_URL}/Identity-Card;
+  const url = ${import.meta.env.VITE_SUPABASE_FUNCTIONS_URL}/Identity-Card-;
 
   const response = await fetch(url, {
     method: "POST",
