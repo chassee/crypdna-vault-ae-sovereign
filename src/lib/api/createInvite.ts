@@ -1,5 +1,5 @@
 export async function createInvite(userId: string) {
-  const url = ${import.meta.env.VITE_SUPABASE_FUNCTIONS_URL}/create-invite;
+  const url = `${import.meta.env.VITE_SUPABASE_FUNCTIONS_URL}/create-invite`;
 
   const response = await fetch(url, {
     method: "POST",

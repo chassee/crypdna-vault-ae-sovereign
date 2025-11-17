@@ -1,5 +1,5 @@
 export async function recalcPrestige(userId: string) {
-  const url = ${import.meta.env.VITE_SUPABASE_FUNCTIONS_URL}/Recalc_prestige;
+  const url = `${import.meta.env.VITE_SUPABASE_FUNCTIONS_URL}/Recalc_prestige`;
 
   const response = await fetch(url, {
     method: "POST",
