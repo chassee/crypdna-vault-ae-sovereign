@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { RefreshCw, TrendingUp } from 'lucide-react';
-import { recalcPrestige } from "@/lib/api/recalculatePrestige";
+import { Recalc_prestige } from "@/lib/api/recalculatePrestige";
 
 interface PrestigePanelProps {
   user: any;
@@ -45,7 +45,7 @@ export default function PrestigePanel({ user, userProfile }: PrestigePanelProps)
       setLoading(true);
 
       // Real call to Edge Function via your new API layer
-      await recalcPrestige(user.id);
+      await Recalc_prestige(user.id);
 
       toast({
         title: 'Rank Updated',
