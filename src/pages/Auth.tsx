@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Toaster } from '@/components/ui/toaster';
@@ -14,7 +13,6 @@ export default function Auth() {
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const { toast } = useToast();
   
   // ✅ FIX: useRef OUTSIDE useEffect so it persists across renders
@@ -48,10 +46,10 @@ export default function Auth() {
           return;
         }
         
-        // If session exists, redirect to vault ONCE
+        // If session exists, redirect to vault ONCE using window.location
         if (session) {
           console.log('Auth: Session found, redirecting to vault');
-          navigate('/vault', { replace: true });
+          window.location.hash = '/vault';  // ✅ USE window.location.hash instead of navigate
         } else {
           console.log('Auth: No session found, showing login form');
         }
@@ -61,7 +59,7 @@ export default function Auth() {
     };
 
     checkExistingSession();
-  }, [navigate]);
+  }, []);
 
   // Email + password sign-in WITH SESSION PERSISTENCE WAIT
   const handleSignIn = async (e: React.FormEvent) => {
@@ -82,13 +80,13 @@ export default function Auth() {
         toast({ title: 'Welcome back!', description: 'Logged in successfully.' });
         
         // ✅ FIX: Wait for session to be persisted to localStorage before navigating
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 800));
         
         // Verify session is actually persisted
         const { data: { session } } = await supabase.auth.getSession();
         if (session) {
-          console.log('Auth: Session persisted, navigating to vault');
-          navigate('/vault', { replace: true });
+          console.log('Auth: Session persisted, redirecting to vault');
+          window.location.hash = '/vault';  // ✅ USE window.location.hash
         } else {
           throw new Error('Session not persisted');
         }
@@ -130,11 +128,11 @@ export default function Auth() {
         toast({ title: 'Welcome!', description: 'Account created and logged in.' });
         
         // ✅ FIX: Wait for session persistence
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 800));
         
         const { data: { session } } = await supabase.auth.getSession();
         if (session) {
-          navigate('/vault', { replace: true });
+          window.location.hash = '/vault';  // ✅ USE window.location.hash
         } else {
           throw new Error('Session not persisted');
         }
@@ -328,7 +326,7 @@ export default function Auth() {
             </button>
 
             <button
-              onClick={() => { window.location.href = '/vault?guest=true'; }}
+              onClick={() => { window.location.hash = '/vault?guest=true'; }}
               disabled={loading}
               className="w-full text-sm text-gray-300 underline hover:text-gray-100 transition-colors disabled:opacity-50 text-center"
             >

@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import LuxuryLoadingScreen from '@/components/LuxuryLoadingScreen';
 
@@ -8,58 +7,55 @@ import LuxuryLoadingScreen from '@/components/LuxuryLoadingScreen';
  * 
  * Rules:
  * 1. Process session ONCE per mount with proper hydration wait
- * 2. Redirect to /vault or /auth ONCE
+ * 2. Redirect to /vault or /auth ONCE using window.location.hash
  * 3. NO loops, NO re-execution
  * 
- * FIX: Added session persistence wait to ensure localStorage is updated
+ * FIX: Use window.location.hash instead of React Router navigate
  */
 export default function AuthCallback() {
-  const navigate = useNavigate();
   const hasProcessed = useRef(false);
 
   useEffect(() => {
-    // Guard: Only process callback ONCE per mount
-    if (hasProcessed.current) return;
-    hasProcessed.current = true;
+    const handleCallback = async () => {
+      // ✅ FIX: Guard using useRef that persists across renders
+      if (hasProcessed.current) {
+        console.log('AuthCallback: Already processed, skipping');
+        return;
+      }
+      hasProcessed.current = true;
+      console.log('AuthCallback: Processing auth callback...');
 
-    const handleAuthCallback = async () => {
       try {
-        console.log('AuthCallback: Processing auth callback...');
-        
         // ✅ FIX: Wait for Supabase to process the hash and persist session
-        // This ensures the session is fully hydrated before we check it
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        // Supabase automatically processes the auth hash
+        await new Promise(resolve => setTimeout(resolve, 800));
+
         const { data: { session }, error } = await supabase.auth.getSession();
-        
+
         if (error) {
-          console.error('AuthCallback session error:', error);
-          navigate('/auth', { replace: true });
+          console.error('AuthCallback error:', error);
+          window.location.hash = '/auth';  // ✅ USE window.location.hash
           return;
         }
 
         if (session) {
-          // Session established - redirect to vault ONCE
           console.log('AuthCallback: Session established, redirecting to vault');
           
           // ✅ FIX: Add another small delay to ensure session is persisted
-          await new Promise(resolve => setTimeout(resolve, 200));
+          await new Promise(resolve => setTimeout(resolve, 300));
           
-          navigate('/vault', { replace: true });
+          window.location.hash = '/vault';  // ✅ USE window.location.hash
         } else {
-          // No session - redirect to auth ONCE
-          console.log('AuthCallback: No session, redirecting to auth');
-          navigate('/auth', { replace: true });
+          console.log('AuthCallback: No session found, redirecting to auth');
+          window.location.hash = '/auth';  // ✅ USE window.location.hash
         }
       } catch (err) {
         console.error('AuthCallback unexpected error:', err);
-        navigate('/auth', { replace: true });
+        window.location.hash = '/auth';  // ✅ USE window.location.hash
       }
     };
 
-    handleAuthCallback();
-  }, [navigate]);
+    handleCallback();
+  }, []);
 
   return <LuxuryLoadingScreen />;
 }

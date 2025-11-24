@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from 'react';
-import { Navigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import LuxuryLoadingScreen from '@/components/LuxuryLoadingScreen';
 
@@ -12,58 +11,69 @@ interface ProtectedRouteProps {
  * 
  * Rules:
  * 1. Check session ONCE per mount with proper hydration wait
- * 2. If no session → redirect to /auth ONCE
+ * 2. If no session → redirect to /auth ONCE using window.location.hash
  * 3. If session exists → render children
  * 4. NO repeated checks, NO loops, NO re-renders
  * 
- * FIX: Added session hydration delay to ensure localStorage is fully loaded
+ * FIX: Use window.location.hash instead of React Router Navigate
  */
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const hasChecked = useRef(false);
 
   useEffect(() => {
-    // Guard: Only check session ONCE per mount
-    if (hasChecked.current) return;
-    hasChecked.current = true;
-
     const checkSession = async () => {
+      // ✅ FIX: Guard using useRef that persists across renders
+      if (hasChecked.current) {
+        console.log('ProtectedRoute: Session already checked, skipping');
+        return;
+      }
+      hasChecked.current = true;
+      console.log('ProtectedRoute: Checking session...');
+
       try {
         // ✅ FIX: Add small delay to ensure session is hydrated from localStorage
-        // This prevents race condition where ProtectedRoute checks before Auth.tsx finishes persisting
-        await new Promise(resolve => setTimeout(resolve, 100));
+        await new Promise(resolve => setTimeout(resolve, 200));
         
         const { data: { session }, error } = await supabase.auth.getSession();
         
         if (error) {
-          console.error('ProtectedRoute session check error:', error);
+          console.error('ProtectedRoute session error:', error);
           setIsAuthenticated(false);
+          window.location.hash = '/auth';  // ✅ USE window.location.hash
           return;
         }
-
+        
         console.log('ProtectedRoute session check:', session ? 'AUTHENTICATED' : 'NOT AUTHENTICATED');
-        setIsAuthenticated(!!session);
+        
+        if (!session) {
+          setIsAuthenticated(false);
+          console.log('ProtectedRoute: No session, redirecting to /auth');
+          window.location.hash = '/auth';  // ✅ USE window.location.hash
+        } else {
+          setIsAuthenticated(true);
+          console.log('ProtectedRoute: Session valid, rendering protected content');
+        }
       } catch (err) {
         console.error('ProtectedRoute unexpected error:', err);
         setIsAuthenticated(false);
+        window.location.hash = '/auth';  // ✅ USE window.location.hash
       }
     };
 
     checkSession();
   }, []);
 
-  // Loading state - show loading screen
+  // Show loading while checking authentication
   if (isAuthenticated === null) {
     return <LuxuryLoadingScreen />;
   }
 
-  // Not authenticated - redirect to /auth (ONLY ONCE)
+  // If not authenticated, show loading (redirect will happen)
   if (!isAuthenticated) {
-    console.log('ProtectedRoute: Redirecting to /auth');
-    return <Navigate to="/auth" replace />;
+    return <LuxuryLoadingScreen />;
   }
 
-  // Authenticated - render protected content
-  console.log('ProtectedRoute: Rendering protected content');
+  // Render protected content
   return <>{children}</>;
 }
