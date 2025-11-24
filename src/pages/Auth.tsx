@@ -28,25 +28,31 @@ export default function Auth() {
 
   // Check if user is already authenticated - ONLY ONCE per mount
   useEffect(() => {
-    let isMounted = true;
-    let hasRedirected = false;
+    const hasChecked = { current: false };
 
     const checkExistingSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!isMounted || hasRedirected) return;
-      
-      if (session) {
-        hasRedirected = true;
-        navigate('/vault', { replace: true });
+      // Guard: prevent multiple executions
+      if (hasChecked.current) return;
+      hasChecked.current = true;
+
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error('Auth page session check error:', error);
+          return;
+        }
+        
+        // If session exists, redirect to vault ONCE
+        if (session) {
+          navigate('/vault', { replace: true });
+        }
+      } catch (err) {
+        console.error('Auth page unexpected error:', err);
       }
     };
 
     checkExistingSession();
-
-    return () => {
-      isMounted = false;
-    };
   }, [navigate]);
 
   // Email + password sign-in

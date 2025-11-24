@@ -15,24 +15,35 @@ export default function ResetPage() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
 
-  // 1) Check if we landed here with a reset token session
+  // Check if we landed here with a reset token session - ONCE
   useEffect(() => {
-    let alive = true;
+    const hasChecked = { current: false };
 
-    supabase.auth.getSession().then(({ data }) => {
-      if (!alive) return;
-      if (data.session) setStage('ready'); // user has reset session, show password form
-      else setStage('email'); // fallback: show request reset email form
-    });
+    const checkResetSession = async () => {
+      if (hasChecked.current) return;
+      hasChecked.current = true;
 
-    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'PASSWORD_RECOVERY' || session) setStage('ready');
-    });
-
-    return () => {
-      alive = false;
-      sub.subscription.unsubscribe();
+      try {
+        const { data, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error('Reset page session error:', error);
+          setStage('email');
+          return;
+        }
+        
+        if (data.session) {
+          setStage('ready'); // user has reset session, show password form
+        } else {
+          setStage('email'); // fallback: show request reset email form
+        }
+      } catch (err) {
+        console.error('Reset page unexpected error:', err);
+        setStage('email');
+      }
     };
+
+    checkResetSession();
   }, []);
 
   // 2) Fallback: allow sending reset email manually

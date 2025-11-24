@@ -3,39 +3,45 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import LuxuryLoadingScreen from '@/components/LuxuryLoadingScreen';
 
+/**
+ * AuthCallback - Processes Supabase auth callback ONCE
+ * 
+ * Rules:
+ * 1. Process session ONCE per mount
+ * 2. Redirect to /vault or /auth ONCE
+ * 3. NO loops, NO re-execution
+ */
 export default function AuthCallback() {
   const navigate = useNavigate();
   const hasProcessed = useRef(false);
 
   useEffect(() => {
-    // Only process callback ONCE per mount - prevent redirect loops
+    // Guard: Only process callback ONCE per mount
     if (hasProcessed.current) return;
     hasProcessed.current = true;
 
     const handleAuthCallback = async () => {
       try {
-        // Get the session from the URL hash (Supabase automatically processes it)
+        // Supabase automatically processes the auth hash
         const { data: { session }, error } = await supabase.auth.getSession();
         
         if (error) {
-          console.error('Auth callback error:', error);
-          // Redirect to auth on error - ONLY ONCE
+          console.error('AuthCallback session error:', error);
           navigate('/auth', { replace: true });
           return;
         }
 
         if (session) {
-          // Session established successfully - redirect to vault - ONLY ONCE
-          console.log('Session established, redirecting to vault');
+          // Session established - redirect to vault ONCE
+          console.log('AuthCallback: Session established, redirecting to vault');
           navigate('/vault', { replace: true });
         } else {
-          // No session found - redirect to auth - ONLY ONCE
-          console.log('No session found, redirecting to auth');
+          // No session - redirect to auth ONCE
+          console.log('AuthCallback: No session, redirecting to auth');
           navigate('/auth', { replace: true });
         }
       } catch (err) {
-        console.error('Unexpected error in auth callback:', err);
-        // Redirect to auth on exception - ONLY ONCE
+        console.error('AuthCallback unexpected error:', err);
         navigate('/auth', { replace: true });
       }
     };

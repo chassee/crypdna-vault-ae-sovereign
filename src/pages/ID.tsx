@@ -1,13 +1,20 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import type { User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import PrestigePanel from '@/components/PrestigePanel';
 import IdentityCard from '@/components/IdentityCard';
 import InviteRewards from '@/components/InviteRewards';
 
+/**
+ * ID Page - NO REDIRECTS
+ * 
+ * Rules:
+ * 1. Supports guest mode (no auth required)
+ * 2. If not guest, loads user data but NO redirects
+ * 3. ProtectedRoute handles auth if this page needs protection
+ */
 export default function ID() {
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [user, setUser] = useState<User | null>(null);
   const [userProfile, setUserProfile] = useState<any>(null);
@@ -16,46 +23,72 @@ export default function ID() {
   const isGuest = searchParams.get('guest') === 'true';
 
   useEffect(() => {
-    if (isGuest) {
-      // Guest mode: mock user data
-      setUser(null);
-      setUserProfile({
-        name: 'Guest',
-        vault_id: `GUEST-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
-        tier: 'Viewer',
-        rank: 'Ghost',
-        invite_count: 0,
-        join_date: new Date().toISOString()
-      });
-      setLoading(false);
-      return;
-    }
+    let isMounted = true;
 
-    // Check auth
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      const currentUser = session?.user ?? null;
-      setUser(currentUser);
-      
-      if (!currentUser) {
-        navigate('/auth', { replace: true });
-      } else {
-        fetchUserProfile(currentUser.id);
+    const loadData = async () => {
+      if (isGuest) {
+        // Guest mode: mock user data
+        if (!isMounted) return;
+        setUser(null);
+        setUserProfile({
+          name: 'Guest',
+          vault_id: `GUEST-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
+          tier: 'Viewer',
+          rank: 'Ghost',
+          invite_count: 0,
+          join_date: new Date().toISOString()
+        });
+        setLoading(false);
+        return;
       }
-      setLoading(false);
-    });
 
+      // Not guest mode: load real user data (NO REDIRECTS)
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (!isMounted) return;
+
+        if (error) {
+          console.error('ID page session error:', error);
+          setLoading(false);
+          return;
+        }
+        
+        const currentUser = session?.user ?? null;
+        setUser(currentUser);
+        
+        if (currentUser) {
+          await fetchUserProfile(currentUser.id);
+        }
+        
+        setLoading(false);
+      } catch (err) {
+        console.error('ID page unexpected error:', err);
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadData();
+
+    // Listen for auth changes (NO REDIRECTS - just update state)
     const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!isMounted || isGuest) return;
+      
       const nextUser = session?.user ?? null;
       setUser(nextUser);
-      if (!nextUser && !isGuest) {
-        navigate('/auth', { replace: true });
-      } else if (nextUser) {
-        fetchUserProfile(nextUser.id);
+      
+      if (nextUser) {
+        void fetchUserProfile(nextUser.id);
       }
     });
 
-    return () => data?.subscription?.unsubscribe();
-  }, [navigate, isGuest]);
+    return () => {
+      isMounted = false;
+      data?.subscription?.unsubscribe();
+    };
+  }, [isGuest]);
 
   async function fetchUserProfile(userId: string) {
     try {
@@ -98,21 +131,20 @@ export default function ID() {
         <p className="text-muted-foreground">Your unique identity in the CrypDNA ecosystem</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-slide-up">
-        <div className="space-y-6">
-          <PrestigePanel user={user} userProfile={userProfile} />
-          <InviteRewards user={user} userProfile={userProfile} isGuest={isGuest} />
-        </div>
-        <div>
-          <IdentityCard
-            userName={userName}
-            vaultId={vaultId}
-            rank={userRank}
-            tier={userTier}
-            joinDate={joinDate}
-          />
-        </div>
+      <div className="grid gap-6 md:grid-cols-2">
+        <IdentityCard
+          vaultId={vaultId}
+          userName={userName}
+          userTier={userTier}
+          joinDate={joinDate}
+        />
+        <PrestigePanel
+          userId={user?.id}
+          currentRank={userRank}
+        />
       </div>
+
+      {user && <InviteRewards userId={user.id} />}
     </div>
   );
 }
