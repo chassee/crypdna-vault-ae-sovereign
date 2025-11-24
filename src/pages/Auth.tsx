@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
@@ -16,6 +16,9 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  
+  // ✅ FIX: useRef OUTSIDE useEffect so it persists across renders
+  const hasCheckedSession = useRef(false);
 
   // Parse email from URL params (?email=...)
   useEffect(() => {
@@ -28,12 +31,14 @@ export default function Auth() {
 
   // Check if user is already authenticated - ONLY ONCE per mount
   useEffect(() => {
-    const hasChecked = { current: false };
-
     const checkExistingSession = async () => {
-      // Guard: prevent multiple executions
-      if (hasChecked.current) return;
-      hasChecked.current = true;
+      // ✅ FIX: Guard using useRef that persists across renders
+      if (hasCheckedSession.current) {
+        console.log('Auth: Session already checked, skipping');
+        return;
+      }
+      hasCheckedSession.current = true;
+      console.log('Auth: Checking existing session...');
 
       try {
         const { data: { session }, error } = await supabase.auth.getSession();
@@ -45,7 +50,10 @@ export default function Auth() {
         
         // If session exists, redirect to vault ONCE
         if (session) {
+          console.log('Auth: Session found, redirecting to vault');
           navigate('/vault', { replace: true });
+        } else {
+          console.log('Auth: No session found, showing login form');
         }
       } catch (err) {
         console.error('Auth page unexpected error:', err);
@@ -65,19 +73,21 @@ export default function Auth() {
 
     setLoading(true);
     try {
+      console.log('Auth: Attempting sign in...');
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
 
       if (data?.user && data?.session) {
+        console.log('Auth: Sign in successful, waiting for session persistence...');
         toast({ title: 'Welcome back!', description: 'Logged in successfully.' });
         
         // ✅ FIX: Wait for session to be persisted to localStorage before navigating
-        // Supabase persists session asynchronously - give it time to complete
         await new Promise(resolve => setTimeout(resolve, 500));
         
         // Verify session is actually persisted
         const { data: { session } } = await supabase.auth.getSession();
         if (session) {
+          console.log('Auth: Session persisted, navigating to vault');
           navigate('/vault', { replace: true });
         } else {
           throw new Error('Session not persisted');
@@ -85,6 +95,7 @@ export default function Auth() {
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Sign in failed.';
+      console.error('Auth: Sign in error:', message);
       toast({ title: 'Error', description: message, variant: 'destructive' });
       setLoading(false);
     }
