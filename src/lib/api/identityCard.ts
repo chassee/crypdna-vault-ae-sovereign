@@ -1,5 +1,5 @@
 export async function getIdentityCard(userId: string) {
-  const url = ${import.meta.env.VITE_SUPABASE_FUNCTIONS_URL}/Identity-Card;
+  const url = 'https://jkrwyotrdlucyynnotpd.supabase.co/functions/v1/identity_card';
 
   const response = await fetch(url, {
     method: "POST",

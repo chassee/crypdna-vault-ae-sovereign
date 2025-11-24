@@ -1,5 +1,5 @@
 export async function recalcPrestige(userId: string) {
-  const url = ${import.meta.env.VITE_SUPABASE_FUNCTIONS_URL}/Recalc_prestige;
+  const url = 'https://jkrwyotrdlucyynnotpd.supabase.co/functions/v1/recalc_prestige';
 
   const response = await fetch(url, {
     method: "POST",
