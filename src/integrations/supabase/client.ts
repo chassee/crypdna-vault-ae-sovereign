@@ -16,7 +16,8 @@ export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, 
     detectSessionInUrl: true,
     flowType: 'pkce',
     storageKey: 'crypdna-vault-auth',
-    // Redirect URLs for vault.crypdawgs.com
-    redirectTo: typeof window !== 'undefined' ? `${window.location.origin}/#/vault` : undefined,
+    // Redirect URLs for vault.crypdawgs.com and localhost
+    // Supports both production (https://vault.crypdawgs.com) and local dev (http://localhost:5173)
+    redirectTo: typeof window !== 'undefined' ? `${window.location.origin}/#/auth/callback` : undefined,
   }
 });
