@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import { RefreshCw, TrendingUp } from 'lucide-react';
-import { recalcPrestige } from "@/lib/api/recalculatePrestige";
 
 interface PrestigePanelProps {
   user: any;
@@ -19,48 +19,31 @@ export default function PrestigePanel({ user, userProfile }: PrestigePanelProps)
   const currentRank = userProfile?.rank || 'Ghost';
   const inviteCount = userProfile?.invite_count || 0;
   const currentIndex = RANK_ORDER.indexOf(currentRank);
-  const nextRank =
-    currentIndex < RANK_ORDER.length - 1
-      ? RANK_ORDER[currentIndex + 1]
-      : null;
+  const nextRank = currentIndex < RANK_ORDER.length - 1 ? RANK_ORDER[currentIndex + 1] : null;
 
   // Simple progress calculation (3 invites per rank)
   const invitesForNextRank = (currentIndex + 1) * 3;
-  const progress = nextRank
-    ? Math.min((inviteCount / invitesForNextRank) * 100, 100)
-    : 100;
+  const progress = nextRank ? Math.min((inviteCount / invitesForNextRank) * 100, 100) : 100;
 
-  // --- FIXED REAL BACKEND CALL ---
   const handleRecalculate = async () => {
     if (!user) {
-      toast({
-        title: 'Error',
-        description: 'Please log in to recalculate rank.',
-        variant: 'destructive',
-      });
+      toast({ title: 'Error', description: 'Please log in to recalculate rank.', variant: 'destructive' });
       return;
     }
 
+    setLoading(true);
     try {
-      setLoading(true);
-
-      // Real call to Edge Function via your new API layer
-      await recalcPrestige(user.id);
-
-      toast({
-        title: 'Rank Updated',
-        description: 'Your prestige rank has been recalculated.',
+      const { data, error } = await supabase.functions.invoke('update-rank', {
+        body: { user_id: user.id }
       });
 
+      if (error) throw error;
+
+      toast({ title: 'Rank Updated', description: 'Your prestige rank has been recalculated.' });
       window.location.reload();
     } catch (err: any) {
       console.error('Recalculate rank error:', err);
-
-      toast({
-        title: 'Error',
-        description: err.message || 'Failed to recalculate rank.',
-        variant: 'destructive',
-      });
+      toast({ title: 'Error', description: err.message || 'Failed to recalculate rank.', variant: 'destructive' });
     } finally {
       setLoading(false);
     }
@@ -84,9 +67,7 @@ export default function PrestigePanel({ user, userProfile }: PrestigePanelProps)
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Progress to {nextRank}</span>
-            <span className="text-foreground font-semibold">
-              {Math.round(progress)}%
-            </span>
+            <span className="text-foreground font-semibold">{Math.round(progress)}%</span>
           </div>
           <div className="h-2 bg-muted rounded-full overflow-hidden">
             <div
