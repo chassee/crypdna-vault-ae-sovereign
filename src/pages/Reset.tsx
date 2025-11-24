@@ -1,6 +1,6 @@
 // src/pages/Reset.tsx
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { ThemeProvider } from '@/components/ThemeProvider';
@@ -15,35 +15,24 @@ export default function ResetPage() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
 
-  // Check if we landed here with a reset token session - ONCE
+  // 1) Check if we landed here with a reset token session
   useEffect(() => {
-    const hasChecked = { current: false };
+    let alive = true;
 
-    const checkResetSession = async () => {
-      if (hasChecked.current) return;
-      hasChecked.current = true;
+    supabase.auth.getSession().then(({ data }) => {
+      if (!alive) return;
+      if (data.session) setStage('ready'); // user has reset session, show password form
+      else setStage('email'); // fallback: show request reset email form
+    });
 
-      try {
-        const { data, error } = await supabase.auth.getSession();
-        
-        if (error) {
-          console.error('Reset page session error:', error);
-          setStage('email');
-          return;
-        }
-        
-        if (data.session) {
-          setStage('ready'); // user has reset session, show password form
-        } else {
-          setStage('email'); // fallback: show request reset email form
-        }
-      } catch (err) {
-        console.error('Reset page unexpected error:', err);
-        setStage('email');
-      }
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'PASSWORD_RECOVERY' || session) setStage('ready');
+    });
+
+    return () => {
+      alive = false;
+      sub.subscription.unsubscribe();
     };
-
-    checkResetSession();
   }, []);
 
   // 2) Fallback: allow sending reset email manually

@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import React, { useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Toaster } from '@/components/ui/toaster';
@@ -13,10 +14,8 @@ export default function Auth() {
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const { toast } = useToast();
-  
-  // ✅ FIX: useRef OUTSIDE useEffect so it persists across renders
-  const hasCheckedSession = useRef(false);
 
   // Parse email from URL params (?email=...)
   useEffect(() => {
@@ -27,41 +26,26 @@ export default function Auth() {
     }
   }, []);
 
-  // Check if user is already authenticated - ONLY ONCE per mount
+  // If user is already authenticated (session or magic-link), go straight to /vault
   useEffect(() => {
-    const checkExistingSession = async () => {
-      // ✅ FIX: Guard using useRef that persists across renders
-      if (hasCheckedSession.current) {
-        console.log('Auth: Session already checked, skipping');
-        return;
-      }
-      hasCheckedSession.current = true;
-      console.log('Auth: Checking existing session...');
+    let alive = true;
 
-      try {
-        const { data: { session }, error } = await supabase.auth.getSession();
-        
-        if (error) {
-          console.error('Auth page session check error:', error);
-          return;
-        }
-        
-        // If session exists, redirect to vault ONCE using window.location
-        if (session) {
-          console.log('Auth: Session found, redirecting to vault');
-          window.location.hash = '/vault';  // ✅ USE window.location.hash instead of navigate
-        } else {
-          console.log('Auth: No session found, showing login form');
-        }
-      } catch (err) {
-        console.error('Auth page unexpected error:', err);
-      }
+    supabase.auth.getSession().then(({ data }) => {
+      if (!alive) return;
+      if (data.session) navigate('/vault', { replace: true });
+    });
+
+    const { data: sub } = supabase.auth.onAuthStateChange((_evt, session) => {
+      if (session) navigate('/vault', { replace: true });
+    });
+
+    return () => {
+      alive = false;
+      sub?.subscription?.unsubscribe();
     };
+  }, [navigate]);
 
-    checkExistingSession();
-  }, []);
-
-  // Email + password sign-in WITH SESSION PERSISTENCE WAIT
+  // Email + password sign-in
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
@@ -71,33 +55,19 @@ export default function Auth() {
 
     setLoading(true);
     try {
-      console.log('Auth: Attempting sign in...');
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
 
-      if (data?.user && data?.session) {
-        console.log('Auth: Sign in successful, waiting for session persistence...');
+      if (data?.user) {
         toast({ title: 'Welcome back!', description: 'Logged in successfully.' });
-        
-        // ✅ FIX: Wait for session to be persisted to localStorage before navigating
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        // Verify session is actually persisted
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session) {
-          console.log('Auth: Session persisted, redirecting to vault');
-          window.location.hash = '/vault';  // ✅ USE window.location.hash
-        } else {
-          throw new Error('Session not persisted');
-        }
+        navigate('/vault', { replace: true });
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Sign in failed.';
-      console.error('Auth: Sign in error:', message);
       toast({ title: 'Error', description: message, variant: 'destructive' });
+    } finally {
       setLoading(false);
     }
-    // Don't set loading to false here - let the navigation happen
   };
 
   // Email + password sign-up (verification email returns to /#/auth)
@@ -123,23 +93,14 @@ export default function Auth() {
           title: 'Check your email',
           description: 'Please check your email for a verification link.'
         });
-        setLoading(false);
       } else if (data?.session) {
         toast({ title: 'Welcome!', description: 'Account created and logged in.' });
-        
-        // ✅ FIX: Wait for session persistence
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session) {
-          window.location.hash = '/vault';  // ✅ USE window.location.hash
-        } else {
-          throw new Error('Session not persisted');
-        }
+        navigate('/vault', { replace: true });
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Sign up failed.';
       toast({ title: 'Error', description: message, variant: 'destructive' });
+    } finally {
       setLoading(false);
     }
   };
@@ -302,7 +263,7 @@ export default function Auth() {
                 <path d="M6 2L18 2L22 6L18 10L16 12L18 14L22 18L18 22L6 22L2 18L6 14L8 12L6 10L2 6L6 2Z" />
               </svg>
               <span>
-                {loading ? 'Accessing Vault...' : 'Access Billionaire Vault'}
+                {loading ? 'Accessing...' : 'Access Billionaire Vault'}
               </span>
             </button>
           </form>
@@ -326,7 +287,7 @@ export default function Auth() {
             </button>
 
             <button
-              onClick={() => { window.location.hash = '/vault?guest=true'; }}
+              onClick={() => { window.location.href = '/vault?guest=true'; }}
               disabled={loading}
               className="w-full text-sm text-gray-300 underline hover:text-gray-100 transition-colors disabled:opacity-50 text-center"
             >

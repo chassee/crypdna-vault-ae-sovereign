@@ -1,47 +1,55 @@
-/**
- * ProtectedRoute - Simplified Authentication Guard
- * 
- * Uses the global AuthProvider for authentication state.
- * No duplicate session checks, no manual redirects.
- * 
- * Features:
- * - Uses centralized auth state from AuthProvider
- * - Shows loading screen while checking auth
- * - Redirects to /auth if not authenticated
- * - Renders children if authenticated
- */
-
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/components/AuthProvider';
-import LuxuryLoadingScreen from '@/components/LuxuryLoadingScreen';
+import React, { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import LoadingScreen from '@/components/LoadingScreen';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
+  redirectTo?: string;
 }
 
-export default function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const { user, loading } = useAuth();
-  const navigate = useNavigate();
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ 
+  children, 
+  redirectTo = '/vault-login' 
+}) => {
+  const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Only redirect if we're done loading and there's no user
-    if (!loading && !user) {
-      console.log('ProtectedRoute: No user found, redirecting to /auth');
-      navigate('/auth', { replace: true });
-    }
-  }, [user, loading, navigate]);
+    const checkAuth = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        setIsAuthenticated(!!session);
+      } catch (error) {
+        console.error('Auth check error:', error);
+        setIsAuthenticated(false);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  // Show loading screen while checking authentication
+    checkAuth();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setIsAuthenticated(!!session);
+        setLoading(false);
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   if (loading) {
-    return <LuxuryLoadingScreen />;
+    return <LoadingScreen />;
   }
 
-  // Show loading screen while redirecting
-  if (!user) {
-    return <LuxuryLoadingScreen />;
+  if (!isAuthenticated) {
+    return <Navigate to={redirectTo} replace />;
   }
 
-  // User is authenticated, render protected content
   return <>{children}</>;
-}
+};
+
+export default ProtectedRoute;
