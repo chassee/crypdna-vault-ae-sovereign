@@ -40,7 +40,7 @@ export const supabase = createClient<Database>(
       // 🔥 THIS WAS THE BROKEN PART — FIXED
       redirectTo:
         typeof window !== 'undefined'
-          ? ${window.location.origin}/#/auth/callback
+          ? `${window.location.origin}/#/auth/callback`
           : undefined,
     },
   }
