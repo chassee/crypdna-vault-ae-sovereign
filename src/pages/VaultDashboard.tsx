@@ -1,25 +1,24 @@
 import { useState, useEffect } from 'react';
-import type { User } from '@supabase/supabase-js';
-import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/components/AuthProvider';
+import { supabase } from '@/lib/supabaseClient';
 import { useToast } from '@/hooks/use-toast';
 import Navigation from '@/components/Navigation';
 import LuxuryLoadingScreen from '@/components/LuxuryLoadingScreen';
 import TabsPanel from '@/components/TabsPanel';
 
 /**
- * VaultDashboard - ZERO REDIRECTS
+ * VaultDashboard - Uses AuthProvider for auth state
  * 
  * Rules:
- * 1. NO navigate() calls - ProtectedRoute handles auth redirects
- * 2. Only load session and user data
- * 3. Display loading states cleanly
- * 4. Let ProtectedRoute handle authentication
+ * 1. NO auth state management - AuthProvider handles it
+ * 2. NO navigate() calls - ProtectedRoute handles auth redirects
+ * 3. Only load vault-specific data (KYC, verification, balances)
+ * 4. Display loading states cleanly
  */
 export default function VaultDashboard() {
   const { toast } = useToast();
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<any>(null);
-  const [userProfile, setUserProfile] = useState<any>(null);
+  const { user, userProfile, signOut, loading: authLoading } = useAuth();
+  
   const [loading, setLoading] = useState(true);
   const [kycData, setKycData] = useState<any>({});
   const [verificationData, setVerificationData] = useState<any>({});
@@ -29,83 +28,17 @@ export default function VaultDashboard() {
     card: 0
   });
 
-  // ---- Auth Wiring ---- (NO REDIRECTS - ProtectedRoute handles all auth)
-  useEffect(() => {
-    let isMounted = true;
-
-    const loadSession = async () => {
-      try {
-        const { data: { session }, error } = await supabase.auth.getSession();
-        
-        if (!isMounted) return;
-
-        if (error) {
-          console.error('VaultDashboard session error:', error);
-          setLoading(false);
-          return;
-        }
-        
-        setSession(session ?? null);
-        const initialUser = session?.user ?? null;
-        setUser(initialUser);
-        
-        if (initialUser) {
-          await fetchUserProfile(initialUser.id);
-        }
-        
-        setLoading(false);
-      } catch (err) {
-        console.error('VaultDashboard unexpected error:', err);
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    };
-
-    loadSession();
-
-    // Listen for auth changes (NO REDIRECTS - just update state)
-    const { data } = supabase.auth.onAuthStateChange((_event, nextSession) => {
-      if (!isMounted) return;
-      
-      setSession(nextSession ?? null);
-      const nextUser = nextSession?.user ?? null;
-      setUser(nextUser);
-      
-      if (nextUser) {
-        void fetchUserProfile(nextUser.id);
-      }
-    });
-
-    return () => {
-      isMounted = false;
-      data?.subscription?.unsubscribe();
-    };
-  }, []);
-
-  // ---- Fetch User Profile ----
-  async function fetchUserProfile(userId: string) {
-    try {
-      const { data, error } = await supabase
-        .from('users')
-        .select('*')
-        .eq('user_id', userId)
-        .single();
-
-      setUserProfile(data || {});
-
-      if (error && error.code !== 'PGRST116') {
-        console.error('fetchUserProfile error:', error);
-        return;
-      }
-    } catch (e) {
-      console.error('fetchUserProfile exception:', e);
-    }
-  }
-
   // ---- Fetch Vault + KYC Data ----
+  useEffect(() => {
+    if (user) {
+      fetchVaultData();
+    }
+  }, [user]);
+
   async function fetchVaultData() {
     try {
+      setLoading(true);
+      
       const { data: kyc, error: kycError } = await supabase.rpc('get_vault_kyc');
       const { data: verification, error: verError } = await supabase.rpc('get_vault_verification');
 
@@ -124,22 +57,33 @@ export default function VaultDashboard() {
       }
     } catch (err) {
       console.error('fetchVaultData exception:', err);
+    } finally {
+      setLoading(false);
     }
   }
 
   async function handleSignOut() {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      toast({ title: 'Error', description: 'Failed to sign out. Try again.', variant: 'destructive' });
-      return;
+    try {
+      await signOut();
+      toast({ title: 'Signed out', description: 'You have been signed out.' });
+    } catch (error) {
+      toast({ 
+        title: 'Error', 
+        description: 'Failed to sign out. Try again.', 
+        variant: 'destructive' 
+      });
     }
-    toast({ title: 'Signed out', description: 'You have been signed out.' });
-    // Use window.location.hash for logout (safe, non-loop redirect)
-    window.location.hash = '/auth';
   }
 
-  if (loading) return <LuxuryLoadingScreen />;
-  if (!user) return <LuxuryLoadingScreen />;
+  // Show loading while auth is initializing or vault data is loading
+  if (authLoading || loading) {
+    return <LuxuryLoadingScreen />;
+  }
+
+  // Guard against null user (should never happen due to ProtectedRoute, but TypeScript safety)
+  if (!user) {
+    return <LuxuryLoadingScreen />;
+  }
 
   return (
     <div className="min-h-screen bg-background">

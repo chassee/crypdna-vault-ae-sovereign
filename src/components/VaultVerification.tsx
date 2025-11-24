@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FileText, Building } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/lib/supabaseClient';
 import { toast } from '@/hooks/use-toast';
 
 const VaultVerification = () => {

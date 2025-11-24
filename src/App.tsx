@@ -11,32 +11,31 @@ export default function App() {
     <AuthProvider>
       <HashRouter>
         <Routes>
-          {/* Public */}
+          {/* Public routes */}
           <Route path="/" element={<Navigate to="/auth" replace />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/auth/callback" element={<AuthCallback />} />
           <Route path="/reset-password" element={<Reset />} />
-
-          {/* Protected */}
+          
+          {/* Protected routes - require authentication */}
           <Route 
             path="/vault" 
             element={
               <ProtectedRoute>
                 <VaultDashboard />
               </ProtectedRoute>
-            }
+            } 
           />
-
           <Route 
             path="/vault/*" 
             element={
               <ProtectedRoute>
                 <VaultDashboard />
               </ProtectedRoute>
-            }
+            } 
           />
-
-          {/* Catch-all */}
+          
+          {/* Catch-all redirect */}
           <Route path="*" element={<Navigate to="/auth" replace />} />
         </Routes>
       </HashRouter>

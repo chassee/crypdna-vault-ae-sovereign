@@ -22,6 +22,11 @@ if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
 
 /**
  * Single unified Supabase client instance
+ * Configured with:
+ * - Persistent session storage in localStorage
+ * - Auto token refresh
+ * - PKCE flow for enhanced security
+ * - Session detection from URL (for OAuth callbacks)
  */
 export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: {
@@ -31,27 +36,35 @@ export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, 
     detectSessionInUrl: true,
     flowType: 'pkce',
     storageKey: 'crypdna-vault-auth',
+    // Dynamic redirect URL based on current origin
+    // Supports both production (https://vault.crypdawgs.com) and local dev (http://localhost:5173)
     redirectTo: typeof window !== 'undefined' 
-      ? ${window.location.origin}/#/auth/callback 
+      ? `${window.location.origin}/#/auth/callback` 
       : undefined,
   }
 });
 
 /**
- * Get current session
+ * Helper function to get current session
+ * Returns null if no session exists
  */
 export async function getCurrentSession() {
   try {
     const { data: { session }, error } = await supabase.auth.getSession();
-    if (error) return null;
+    if (error) {
+      console.error('Error fetching session:', error);
+      return null;
+    }
     return session;
-  } catch {
+  } catch (err) {
+    console.error('Unexpected error fetching session:', err);
     return null;
   }
 }
 
 /**
- * Get current user
+ * Helper function to get current user
+ * Returns null if no user is authenticated
  */
 export async function getCurrentUser() {
   const session = await getCurrentSession();

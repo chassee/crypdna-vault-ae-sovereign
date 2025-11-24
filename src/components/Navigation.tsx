@@ -2,29 +2,21 @@ import React from 'react';
 import { User, Vault, FileText, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/components/AuthProvider';
 import { useToast } from '@/hooks/use-toast';
 
 const Navigation = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { signOut } = useAuth();
 
   const handleLogout = async () => {
     try {
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        toast({
-          title: "Error",
-          description: "Failed to sign out. Please try again.",
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          title: "Signed Out",
-          description: "You have been successfully signed out.",
-        });
-        window.location.hash = '/auth';
-      }
+      await signOut();
+      toast({
+        title: "Signed Out",
+        description: "You have been successfully signed out.",
+      });
     } catch (error) {
       console.error('Sign out error:', error);
       toast({

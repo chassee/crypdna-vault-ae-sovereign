@@ -1,0 +1,45 @@
+# Files Modified in Supabase Refactor
+
+## New Files Created:
+1. src/lib/supabaseClient.ts - Consolidated Supabase client
+2. src/components/AuthProvider.tsx - Global auth context provider
+3. SUPABASE_REFACTOR_SUMMARY.md - Complete refactor documentation
+
+## Files Refactored (Major Changes):
+1. src/App.tsx - Wrapped with AuthProvider
+2. src/components/ProtectedRoute.tsx - Now uses AuthProvider
+3. src/pages/VaultDashboard.tsx - Now uses AuthProvider
+4. src/components/Navigation.tsx - Now uses AuthProvider
+
+## Files Updated (Import Path Changes Only):
+1. src/pages/Auth.tsx
+2. src/pages/AuthCallback.tsx
+3. src/pages/Reset.tsx
+4. src/pages/ID.tsx
+5. src/components/BalanceBreakdown.tsx
+6. src/components/CreditActivity.tsx
+7. src/components/CrypbotManagement.tsx
+8. src/components/VaultVerification.tsx
+9. src/components/tabs/CrypbotsTab.tsx
+10. src/components/tabs/LeaderboardTab.tsx
+11. src/components/tabs/LifestyleConciergeTab.tsx
+12. src/components/tabs/NeuroDropTab.tsx
+13. src/components/tabs/QuestsTab.tsx
+14. src/components/tabs/VaultRewardsTab.tsx
+15. src/hooks/useUserProfile.ts
+16. src/lib/api/createInvite.ts
+17. src/lib/api/identityCard.ts
+18. src/lib/api/recalculatePrestige.ts
+19. src/lib/api/uploadVerification.ts
+
+## Files Deprecated (No Longer Used):
+1. src/integrations/supabase/client.ts - Replaced by src/lib/supabaseClient.ts
+   (Backup created at: src/integrations/supabase/client.ts.backup)
+
+## Files Unchanged:
+1. src/integrations/supabase/types.ts - Still used for Database types
+2. server/index.js - Server-side client is separate and correct
+3. All styling files - No changes to styles per requirements
+
+Total files modified: 23
+Total files created: 3

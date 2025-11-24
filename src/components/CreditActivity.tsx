@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Activity, ArrowUpCircle, ArrowDownCircle, CreditCard, Gift, TrendingUp, Lock } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/lib/supabaseClient';
 
 const CreditActivity = () => {
   const [activities, setActivities] = useState<any[]>([]);
