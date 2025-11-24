@@ -50,27 +50,45 @@ export default function VaultDashboard() {
     card: 0
   });
 
-  // ---- Auth Wiring ----
+  // ---- Auth Wiring ---- (NO REDIRECTS - ProtectedRoute handles auth)
   useEffect(() => {
-    const { data } = supabase.auth.onAuthStateChange((_event, nextSession) => {
-      setSession(nextSession ?? null);
-      const nextUser = nextSession?.user ?? null;
-      setUser(nextUser);
-      if (!nextUser) navigate('/auth', { replace: true });
-      else void fetchUserProfile(nextUser.id);
-    });
+    let isMounted = true;
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    const loadSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!isMounted) return;
+      
       setSession(session ?? null);
       const initialUser = session?.user ?? null;
       setUser(initialUser);
-      if (!initialUser) navigate('/auth', { replace: true });
-      else void fetchUserProfile(initialUser.id);
+      
+      if (initialUser) {
+        await fetchUserProfile(initialUser.id);
+      }
+      
       setLoading(false);
+    };
+
+    loadSession();
+
+    // Listen for auth changes (but don't redirect - ProtectedRoute handles that)
+    const { data } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      if (!isMounted) return;
+      
+      setSession(nextSession ?? null);
+      const nextUser = nextSession?.user ?? null;
+      setUser(nextUser);
+      
+      if (nextUser) {
+        void fetchUserProfile(nextUser.id);
+      }
     });
 
-    return () => data?.subscription?.unsubscribe();
-  }, [navigate]);
+    return () => {
+      isMounted = false;
+      data?.subscription?.unsubscribe();
+    };
+  }, []);
 
   // ---- Fetch User Profile ----
   async function fetchUserProfile(userId: string) {

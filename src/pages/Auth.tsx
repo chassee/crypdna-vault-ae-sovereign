@@ -26,22 +26,26 @@ export default function Auth() {
     }
   }, []);
 
-  // If user is already authenticated (session or magic-link), go straight to /vault
+  // Check if user is already authenticated - ONLY ONCE per mount
   useEffect(() => {
-    let alive = true;
+    let isMounted = true;
+    let hasRedirected = false;
 
-    supabase.auth.getSession().then(({ data }) => {
-      if (!alive) return;
-      if (data.session) navigate('/vault', { replace: true });
-    });
+    const checkExistingSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!isMounted || hasRedirected) return;
+      
+      if (session) {
+        hasRedirected = true;
+        navigate('/vault', { replace: true });
+      }
+    };
 
-    const { data: sub } = supabase.auth.onAuthStateChange((_evt, session) => {
-      if (session) navigate('/vault', { replace: true });
-    });
+    checkExistingSession();
 
     return () => {
-      alive = false;
-      sub?.subscription?.unsubscribe();
+      isMounted = false;
     };
   }, [navigate]);
 
