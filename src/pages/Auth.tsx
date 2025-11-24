@@ -55,7 +55,7 @@ export default function Auth() {
     checkExistingSession();
   }, [navigate]);
 
-  // Email + password sign-in
+  // Email + password sign-in WITH SESSION PERSISTENCE WAIT
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
@@ -68,16 +68,27 @@ export default function Auth() {
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
 
-      if (data?.user) {
+      if (data?.user && data?.session) {
         toast({ title: 'Welcome back!', description: 'Logged in successfully.' });
-        navigate('/vault', { replace: true });
+        
+        // ✅ FIX: Wait for session to be persisted to localStorage before navigating
+        // Supabase persists session asynchronously - give it time to complete
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        // Verify session is actually persisted
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          navigate('/vault', { replace: true });
+        } else {
+          throw new Error('Session not persisted');
+        }
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Sign in failed.';
       toast({ title: 'Error', description: message, variant: 'destructive' });
-    } finally {
       setLoading(false);
     }
+    // Don't set loading to false here - let the navigation happen
   };
 
   // Email + password sign-up (verification email returns to /#/auth)
@@ -103,14 +114,23 @@ export default function Auth() {
           title: 'Check your email',
           description: 'Please check your email for a verification link.'
         });
+        setLoading(false);
       } else if (data?.session) {
         toast({ title: 'Welcome!', description: 'Account created and logged in.' });
-        navigate('/vault', { replace: true });
+        
+        // ✅ FIX: Wait for session persistence
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          navigate('/vault', { replace: true });
+        } else {
+          throw new Error('Session not persisted');
+        }
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Sign up failed.';
       toast({ title: 'Error', description: message, variant: 'destructive' });
-    } finally {
       setLoading(false);
     }
   };
@@ -273,7 +293,7 @@ export default function Auth() {
                 <path d="M6 2L18 2L22 6L18 10L16 12L18 14L22 18L18 22L6 22L2 18L6 14L8 12L6 10L2 6L6 2Z" />
               </svg>
               <span>
-                {loading ? 'Accessing...' : 'Access Billionaire Vault'}
+                {loading ? 'Accessing Vault...' : 'Access Billionaire Vault'}
               </span>
             </button>
           </form>
