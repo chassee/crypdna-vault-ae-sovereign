@@ -9,8 +9,14 @@ max_rows = 1000
 
 [auth]
 enabled = true
-site_url = "https://jkrwyotrdlucyynnotpd.vercel.app"
-additional_redirect_urls = ["https://jkrwyotrdlucyynnotpd.vercel.app/vault-dashboard"]
+site_url = "https://vault.crypdawgs.com"
+additional_redirect_urls = [
+  "https://vault.crypdawgs.com/*",
+  "https://vault.crypdawgs.com/auth/callback",
+  "https://vault.crypdawgs.com/#/vault",
+  "http://localhost:5173/*",
+  "http://localhost:5173/#/vault"
+]
 jwt_expiry = 3600
 enable_signup = false
 enable_anonymous_sign_ins = false

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { useNavigate } from 'react-router-dom';
 import type { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/integrations/supabase/supabaseClient';
+import { supabase } from '@/integrations/supabase/client';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Toaster } from '@/components/ui/toaster';
 
@@ -127,7 +127,8 @@ setUserProfile(data || {}); // <-- THIS is our fix
   }
 
   if (loading) return <LuxuryLoadingScreen />;
-  if (!userProfile) return null;
+  if (!user) return <LuxuryLoadingScreen />;
+  if (!userProfile) return <LuxuryLoadingScreen />;
 
   const vaultId = userProfile?.vault_id ?? `VAULT-${(user.id ?? '').slice(0, 8).toUpperCase()}`;
   const userName = userProfile?.name ?? user.email?.split('@')[0] ?? 'Member';

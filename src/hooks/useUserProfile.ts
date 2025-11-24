@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/supabaseClient';
+import { supabase } from '@/integrations/supabase/client';
 
 export function useUserProfile(user: any) {
   const [profile, setProfile] = useState<any>(null);
