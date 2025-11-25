@@ -17,9 +17,9 @@ export default function InviteRewards({ user, userProfile, isGuest }: InviteRewa
   const [inviteLink, setInviteLink] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const inviteCount = userProfile?.invite_count || 0;
-  const joinedCount = Math.floor(inviteCount * 0.7); // Estimate
-  const upgradedCount = Math.floor(inviteCount * 0.3); // Estimate
+  const inviteCount = userProfile?.invite_count || userProfile?.invites_sent || 0;
+  const joinedCount = userProfile?.invites_joined || Math.floor(inviteCount * 0.7);
+  const upgradedCount = userProfile?.invites_upgraded || Math.floor(inviteCount * 0.3);
 
   useEffect(() => {
     if (userProfile?.invite_code) {
