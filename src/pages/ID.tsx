@@ -59,38 +59,17 @@ export default function ID() {
 
   async function fetchUserProfile(userId: string) {
     try {
-      // Fetch from vault_users which has prestige_rank, invites_sent, etc.
-      const { data: vaultUser, error: vaultError } = await supabase
-        .from('vault_users')
+      const { data, error } = await supabase
+        .from('users')
         .select('*')
         .eq('user_id', userId)
         .single();
 
-      if (vaultError && vaultError.code !== 'PGRST116') {
-        console.error('fetchUserProfile (vault_users) error:', vaultError);
+      if (error && error.code !== 'PGRST116') {
+        console.error('fetchUserProfile error:', error);
+        return;
       }
-
-      // Also fetch from profiles for additional user data
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', userId)
-        .single();
-
-      // Merge data, prioritizing vault_users for prestige fields
-      const mergedProfile = {
-        ...profile,
-        ...vaultUser,
-        // Map vault_users fields to expected names
-        rank: vaultUser?.prestige_rank || 'Ghost',
-        invite_count: vaultUser?.invites_sent || 0,
-        join_date: vaultUser?.joined_at || profile?.updated_at,
-        vault_id: `VAULT-${userId.slice(0, 8).toUpperCase()}`,
-        name: profile?.full_name || profile?.email?.split('@')[0],
-        tier: 'Member' // Default tier
-      };
-
-      setUserProfile(mergedProfile);
+      setUserProfile(data ?? null);
     } catch (e) {
       console.error('fetchUserProfile exception:', e);
     }

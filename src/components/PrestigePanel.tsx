@@ -33,7 +33,8 @@ export default function PrestigePanel({ user, userProfile }: PrestigePanelProps)
 
     setLoading(true);
     try {
-      const response = await fetch('/.netlify/functions/recalc_prestige', {
+      const functionsUrl = import.meta.env.VITE_NETLIFY_FUNCTIONS_URL || 'https://vault.crypdawgs.com/.netlify/functions';
+      const response = await fetch(`${functionsUrl}/recalc_prestige`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
