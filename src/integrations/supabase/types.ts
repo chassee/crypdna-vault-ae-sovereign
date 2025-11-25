@@ -1349,6 +1349,7 @@ export type Database = {
         Args: { p_user_id: string; xp_amount: number }
         Returns: Json
       }
+      get_vault_id: { Args: never; Returns: string }
       get_vault_kyc: {
         Args: never
         Returns: {
