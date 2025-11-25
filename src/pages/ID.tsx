@@ -59,17 +59,43 @@ export default function ID() {
 
   async function fetchUserProfile(userId: string) {
     try {
-      const { data, error } = await supabase
-        .from('users')
+      // Try vault_members first, fall back to profiles
+      const { data: memberData, error: memberError } = await supabase
+        .from('vault_members')
         .select('*')
         .eq('user_id', userId)
-        .single();
+        .maybeSingle();
 
-      if (error && error.code !== 'PGRST116') {
-        console.error('fetchUserProfile error:', error);
+      if (memberData) {
+        setUserProfile({
+          ...memberData,
+          name: memberData.full_name,
+          vault_id: memberData.crypdna_id,
+          tier: memberData.vault_tier,
+          rank: memberData.prestige_level,
+          invite_count: memberData.referrals_count || 0,
+          join_date: memberData.created_at
+        });
         return;
       }
-      setUserProfile(data ?? null);
+
+      // Fallback to profiles table
+      const { data: profileData, error: profileError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .maybeSingle();
+
+      if (profileData) {
+        setUserProfile({
+          name: profileData.full_name || profileData.email?.split('@')[0],
+          vault_id: `VAULT-${userId.slice(0, 8).toUpperCase()}`,
+          tier: 'Viewer',
+          rank: 'Ghost',
+          invite_count: 0,
+          join_date: profileData.updated_at || new Date().toISOString()
+        });
+      }
     } catch (e) {
       console.error('fetchUserProfile exception:', e);
     }
