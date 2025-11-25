@@ -73,46 +73,39 @@ const VaultVerification = () => {
     }
 
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError || !user) {
         toast({ title: "Error", description: "User not authenticated.", variant: "destructive" });
         setUploading(null);
         return;
       }
 
-      // Get vault_id from vault_members
-      const { data: memberData, error: memberError } = await supabase
-        .from('vault_members')
-        .select('crypdna_id')
-        .eq('user_id', user.id)
-        .single();
+      // Determine bucket and file path using user_id directly
+      const bucket = docType === 'photo_id' ? 'vault-ids' : 'vault-net30';
+      const fileName = docType === 'photo_id' ? 'photo_id_front' : 'docs';
+      const filePath = `${user.id}/${fileName}`;
 
-      if (memberError || !memberData?.crypdna_id) {
-        throw new Error('Unable to retrieve vault ID');
-      }
-
-      const vaultId = memberData.crypdna_id;
-      const fileFolder = docType === 'photo_id' ? 'photo_id_front' : 'net30_docs';
-      const filePath = `vaults/${vaultId}/${fileFolder}`;
-
-      // Upload to verification_docs bucket
+      // Upload to Supabase Storage
       const { error: uploadError } = await supabase.storage
-        .from('verification_docs')
-        .upload(filePath, file, { upsert: true });
+        .from(bucket)
+        .upload(filePath, file, { upsert: true, contentType: file.type });
 
       if (uploadError) {
+        if (uploadError.message.includes('not found')) {
+          throw new Error(`Storage bucket "${bucket}" not found. Please contact support.`);
+        }
         throw new Error(`Upload failed: ${uploadError.message}`);
       }
 
       // Get public URL
       const { data: urlData } = supabase.storage
-        .from('verification_docs')
+        .from(bucket)
         .getPublicUrl(filePath);
 
       const fileUrl = urlData.publicUrl;
       const column = docType === 'photo_id' ? 'photo_id_url' : 'net30_doc_url';
 
-      // Insert/update into vault_verification table
+      // Insert/update into kyc_records table
       const { error: dbError } = await supabase
         .from('kyc_records')
         .upsert({
