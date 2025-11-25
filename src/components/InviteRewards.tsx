@@ -45,8 +45,7 @@ export default function InviteRewards({ user, userProfile, isGuest }: InviteRewa
 
     setLoading(true);
     try {
-      const functionsUrl = import.meta.env.VITE_NETLIFY_FUNCTIONS_URL || 'https://vault.crypdawgs.com/.netlify/functions';
-      const response = await fetch(`${functionsUrl}/create_invite`, {
+      const response = await fetch('/.netlify/functions/create_invite', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
