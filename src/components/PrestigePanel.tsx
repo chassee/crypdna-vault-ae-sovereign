@@ -33,11 +33,20 @@ export default function PrestigePanel({ user, userProfile }: PrestigePanelProps)
 
     setLoading(true);
     try {
-      const { data, error } = await supabase.functions.invoke('update-rank', {
-        body: { user_id: user.id }
+      const functionsUrl = import.meta.env.VITE_NETLIFY_FUNCTIONS_URL || 'https://vault.crypdawgs.com/.netlify/functions';
+      const response = await fetch(`${functionsUrl}/recalc_prestige`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user_id: user.id })
       });
 
-      if (error) throw error;
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to recalculate rank');
+      }
 
       toast({ title: 'Rank Updated', description: 'Your prestige rank has been recalculated.' });
       window.location.reload();

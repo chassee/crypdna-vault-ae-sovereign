@@ -45,11 +45,20 @@ export default function InviteRewards({ user, userProfile, isGuest }: InviteRewa
 
     setLoading(true);
     try {
-      const { data, error } = await supabase.functions.invoke('generate-invite-code', {
-        body: { user_id: user.id }
+      const functionsUrl = import.meta.env.VITE_NETLIFY_FUNCTIONS_URL || 'https://vault.crypdawgs.com/.netlify/functions';
+      const response = await fetch(`${functionsUrl}/create_invite`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user_id: user.id })
       });
 
-      if (error) throw error;
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to generate invite code');
+      }
 
       if (data?.invite_code) {
         setInviteCode(data.invite_code);
