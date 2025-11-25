@@ -74,24 +74,45 @@ const VaultVerification = () => {
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      if (!user) {
+        toast({ title: "Error", description: "User not authenticated.", variant: "destructive" });
+        setUploading(null);
+        return;
+      }
 
-      const folder = docType === 'photo_id' ? 'photo_id' : 'net30_docs';
-      const filePath = `${folder}/${user.id}_${Date.now()}.${fileExt}`;
+      // Get vault_id from vault_members
+      const { data: memberData, error: memberError } = await supabase
+        .from('vault_members')
+        .select('crypdna_id')
+        .eq('user_id', user.id)
+        .single();
 
+      if (memberError || !memberData?.crypdna_id) {
+        throw new Error('Unable to retrieve vault ID');
+      }
+
+      const vaultId = memberData.crypdna_id;
+      const fileFolder = docType === 'photo_id' ? 'photo_id_front' : 'net30_docs';
+      const filePath = `vaults/${vaultId}/${fileFolder}`;
+
+      // Upload to verification_docs bucket
       const { error: uploadError } = await supabase.storage
-        .from('vault-uploads')
+        .from('verification_docs')
         .upload(filePath, file, { upsert: true });
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        throw new Error(`Upload failed: ${uploadError.message}`);
+      }
 
-      const { data } = supabase.storage
-        .from('vault-uploads')
+      // Get public URL
+      const { data: urlData } = supabase.storage
+        .from('verification_docs')
         .getPublicUrl(filePath);
 
-      const fileUrl = data.publicUrl;
+      const fileUrl = urlData.publicUrl;
       const column = docType === 'photo_id' ? 'photo_id_url' : 'net30_doc_url';
 
+      // Insert/update into vault_verification table
       const { error: dbError } = await supabase
         .from('kyc_records')
         .upsert({
@@ -101,13 +122,23 @@ const VaultVerification = () => {
           reporting_agency: 'D&B',
         }, { onConflict: 'user_id' });
 
-      if (dbError) throw dbError;
+      if (dbError) {
+        throw new Error(`Database update failed: ${dbError.message}`);
+      }
 
-      toast({ title: "Uploaded!", description: `${docType === 'photo_id' ? 'Photo ID' : 'Net-30 Doc'} uploaded successfully.` });
+      toast({ 
+        title: "Upload successful!", 
+        description: `${docType === 'photo_id' ? 'Photo ID' : 'Net-30 Doc'} has been uploaded and verified.` 
+      });
+      
       fetchVerificationStatus();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Upload error:', error);
-      toast({ title: "Upload Failed", description: "Try again.", variant: "destructive" });
+      toast({ 
+        title: "Upload failed", 
+        description: error.message || "Please try again or contact support.", 
+        variant: "destructive" 
+      });
     } finally {
       setUploading(null);
     }
