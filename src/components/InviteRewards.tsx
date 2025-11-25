@@ -45,27 +45,20 @@ export default function InviteRewards({ user, userProfile, isGuest }: InviteRewa
 
     setLoading(true);
     try {
-      const functionsUrl = import.meta.env.VITE_NETLIFY_FUNCTIONS_URL || 'https://vault.crypdawgs.com/.netlify/functions';
-      const response = await fetch(`${functionsUrl}/create_invite`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ user_id: user.id })
-      });
+      // Generate a simple invite code and store in vault_members
+      const inviteCode = `INV-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
+      
+      const { error } = await supabase
+        .from('vault_members')
+        .update({ referral_code: inviteCode })
+        .eq('user_id', user.id);
 
-      const data = await response.json();
+      if (error) throw error;
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to generate invite code');
-      }
-
-      if (data?.invite_code) {
-        setInviteCode(data.invite_code);
-        const link = `${window.location.origin}/#/auth?invite=${data.invite_code}`;
-        setInviteLink(link);
-        toast({ title: 'Success!', description: 'Your invite link has been generated.' });
-      }
+      setInviteCode(inviteCode);
+      const link = `${window.location.origin}/#/auth?invite=${inviteCode}`;
+      setInviteLink(link);
+      toast({ title: 'Success!', description: 'Your invite link has been generated.' });
     } catch (err: any) {
       console.error('Generate invite error:', err);
       toast({ title: 'Error', description: err.message || 'Failed to generate invite code.', variant: 'destructive' });
