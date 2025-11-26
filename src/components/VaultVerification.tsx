@@ -106,9 +106,10 @@ const VaultVerification = () => {
       const column = docType === 'photo_id' ? 'photo_id_url' : 'net30_doc_url';
 
       // Insert/update into kyc_records table
-      const { error: dbError } = await supabase
+      const { data: dbError } = await supabase
         .from('kyc_records')
-        .upsert({
+        .upsert(
+          {
           user_id: user.id,
           [column]: fileUrl,
           tradeline_status: 'Pending Integration',
