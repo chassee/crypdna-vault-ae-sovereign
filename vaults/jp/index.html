@@ -1,25 +1,419 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>crypdna-vault-genesis</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrypDNA Japan Vault - Elite Credit Empire</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.179.1/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.fog.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+            background: linear-gradient(135deg, #BC002D 0%, #FF0000 50%, #FFFFFF 100%);
+            overflow-x: hidden;
+        }
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFD700 0%, #BC002D 50%, #FFFFFF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .glow-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .tokyo-neon {
+            background: linear-gradient(45deg, #BC002D, #FF0000, #FFFFFF, #BC002D);
+            background-size: 400% 400%;
+            animation: tokyo-glow 8s ease infinite;
+        }
+        @keyframes tokyo-glow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 215, 0, 0.4);
+        }
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes pulse-glow {
+            from { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
+            to { box-shadow: 0 0 40px rgba(255, 215, 0, 0.8); }
+        }
+        .vault-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .credit-adapter {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(188, 0, 45, 0.2));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        .rank-badge {
+            background: linear-gradient(135deg, #FFD700, #BC002D);
+            color: #FFFFFF;
+            font-weight: 700;
+        }
+        .japanese-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(188, 0, 45, 0.1) 0%, transparent 50%);
+        }
+        .torii-gate {
+            background: linear-gradient(135deg, #BC002D, #FF0000);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-white japanese-pattern">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-black bg-opacity-20 backdrop-blur-md border-b border-yellow-400 border-opacity-20">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 torii-gate flex items-center justify-center">
+                        <i class="fas fa-dna text-white text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-bold text-glow">CrypDNA Japan Vault</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#elite-credit" class="hover:text-yellow-400 transition-colors">エリートクレジット</a>
+                    <a href="#rewards" class="hover:text-yellow-400 transition-colors">インスタント報酬</a>
+                    <a href="#security" class="hover:text-yellow-400 transition-colors">軍用グレード</a>
+                    <a href="#login" class="bg-gradient-to-r from-yellow-400 to-red-500 text-black px-6 py-2 rounded-full font-semibold hover:shadow-lg transition-all">会員ログイン</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-    <meta property="og:title" content="crypdna-vault-genesis" />
-    <meta property="og:description" content="Lovable Generated Project" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center tokyo-neon">
+        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
+            <div class="floating">
+                <h1 class="hero-title text-6xl md:text-8xl font-black mb-6 leading-tight">
+                    東京<br>金融<br>ハブ
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                    日本のエリートクレジットアクセス。JICC統合で億万長者の特権を。
+                </p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
+                <button class="bg-gradient-to-r from-yellow-400 to-red-500 text-black px-8 py-4 rounded-full font-bold text-lg card-hover pulse-glow">
+                    <i class="fas fa-crown mr-2"></i>
+                    エリートクレジット
+                </button>
+                <button class="border-2 border-yellow-400 text-yellow-400 px-8 py-4 rounded-full font-bold text-lg card-hover">
+                    <i class="fas fa-torii-gate mr-2"></i>
+                    JICC統合
+                </button>
+            </div>
+            
+            <!-- Prestige Rank Display -->
+            <div class="glow-card rounded-2xl p-6 max-w-md mx-auto">
+                <div class="flex items-center justify-center space-x-4 mb-4">
+                    <div class="rank-badge px-4 py-2 rounded-full text-sm">
+                        プレステージランク
+                    </div>
+                    <div class="text-3xl font-bold text-yellow-400">ゴドラゴン</div>
+                </div>
+                <div class="text-sm text-gray-400">無制限クレジットアクセス • 1.7% APR • 東京特権</div>
+            </div>
+        </div>
+    </section>
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-    <script type="module" crossorigin src="/assets/index-CU9jfmMt.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BJb_i1nI.css">
-  </head>
+    <!-- JICC Integration -->
+    <section class="py-20 bg-gradient-to-b from-transparent to-black to-opacity-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="glow-card rounded-3xl p-12 text-center mb-16">
+                <div class="w-20 h-20 bg-gradient-to-r from-yellow-400 to-red-500 rounded-3xl flex items-center justify-center mx-auto mb-8">
+                    <i class="fas fa-university text-black text-3xl"></i>
+                </div>
+                <h2 class="text-4xl font-bold mb-6">JICC統合</h2>
+                <p class="text-xl text-gray-400 mb-8 max-w-3xl mx-auto">
+                    日本信用情報機構との直接統合で、シームレスな信用報告と即座の承認を実現。
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-yellow-400 mb-2">瞬時</div>
+                        <div class="text-gray-400">クレジット決定</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-red-400 mb-2">リアルタイム</div>
+                        <div class="text-gray-400">機関更新</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-white-400 mb-2">安全</div>
+                        <div class="text-gray-400">データ交換</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <body>
-    <div id="root"></div>
-  </body>
+    <!-- Core Functions Grid -->
+    <section id="elite-credit" class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 hero-title">
+                中核金融インフラ
+            </h2>
+            
+            <div class="vault-grid mb-16">
+                <!-- CrypDNA Card -->
+                <div class="glow-card rounded-3xl p-8 card-hover">
+                    <div class="w-16 h-16 bg-gradient-to-r from-yellow-400 to-red-500 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-credit-card text-black text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">CrypDNAカード</h3>
+                    <p class="text-gray-400 mb-6">無制限の購買力とグローバル受け入れを持つエリート会員カード</p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">クレジット限度:</span>
+                            <span class="text-yellow-400 font-semibold">無制限</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">APR:</span>
+                            <span class="text-yellow-400 font-semibold">1.7%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">報酬:</span>
+                            <span class="text-yellow-400 font-semibold">8%キャッシュバック</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CrypDNA Debit Card -->
+                <div class="glow-card rounded-3xl p-8 card-hover">
+                    <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-paw text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">CrypDNAデビット</h3>
+                    <p class="text-gray-400 mb-6">足形デザインのウルトラミニマル金属デビットカード</p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">素材:</span>
+                            <span class="text-purple-400 font-semibold">チタン</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">デザイン:</span>
+                            <span class="text-purple-400 font-semibold">足形</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">ATMアクセス:</span>
+                            <span class="text-purple-400 font-semibold">グローバル</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Net-30 Tradeline Engine -->
+                <div class="glow-card rounded-3xl p-8 card-hover">
+                    <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-teal-500 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-line text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Net-30エンジン</h3>
+                    <p class="text-gray-400 mb-6">ビジネスクレジット構築のための自動報告トレッドラインシステム</p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">報告:</span>
+                            <span class="text-blue-400 font-semibold">自動</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">機関:</span>
+                            <span class="text-blue-400 font-semibold">JICC + すべての主要</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">頻度:</span>
+                            <span class="text-blue-400 font-semibold">月次</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI-Driven Vault Interface -->
+                <div class="glow-card rounded-3xl p-8 card-hover">
+                    <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-brain text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">AIヴォルトインターフェース</h3>
+                    <p class="text-gray-400 mb-6">予測分析を備えたインテリジェントクレジット管理</p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">分析:</span>
+                            <span class="text-green-400 font-semibold">リアルタイム</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">予測:</span>
+                            <span class="text-green-400 font-semibold">AI搭載</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">洞察:</span>
+                            <span class="text-green-400 font-semibold">パーソナライズ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tokyo Financial District -->
+    <section class="py-20 bg-black bg-opacity-30">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="glow-card rounded-3xl p-12 text-center">
+                <div class="w-20 h-20 bg-gradient-to-r from-yellow-400 to-red-500 rounded-3xl flex items-center justify-center mx-auto mb-8">
+                    <i class="fas fa-building text-black text-3xl"></i>
+                </div>
+                <h2 class="text-4xl font-bold mb-6">東京金融区</h2>
+                <p class="text-xl text-gray-400 mb-8 max-w-3xl mx-auto">
+                    東京の独占的金融エコシステムへのプレミアムアクセス。スカイツリーの眺望から私設銀行業務まで。
+                </p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-yellow-400 mb-2">三菱</div>
+                        <div class="text-gray-400 text-sm">UFJ</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-red-400 mb-2">三井住友</div>
+                        <div class="text-gray-400 text-sm">銀行</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-blue-400 mb-2">みずほ</div>
+                        <div class="text-gray-400 text-sm">銀行</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-green-400 mb-2">楽天</div>
+                        <div class="text-gray-400 text-sm">銀行</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Panel -->
+    <section id="security" class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="glow-card rounded-3xl p-12 text-center">
+                <div class="w-20 h-20 bg-gradient-to-r from-red-500 to-yellow-400 rounded-3xl flex items-center justify-center mx-auto mb-8">
+                    <i class="fas fa-shield-alt text-black text-3xl"></i>
+                </div>
+                <h2 class="text-4xl font-bold mb-6">軍用グレードセキュリティ</h2>
+                <p class="text-xl text-gray-400 mb-8 max-w-3xl mx-auto">
+                    量子耐性暗号化、生体認証、リアルタイム脅威監視で金融帝国を保護。
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-green-400 mb-2">256ビット</div>
+                        <div class="text-gray-400">AES暗号化</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-blue-400 mb-2">24/7</div>
+                        <div class="text-gray-400">脅威監視</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-purple-400 mb-2">ゼロ</div>
+                        <div class="text-gray-400">データ侵害</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-yellow-400 border-opacity-20">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="flex items-center justify-center space-x-3 mb-6">
+                <div class="w-8 h-8 torii-gate flex items-center justify-center">
+                    <i class="fas fa-dna text-white"></i>
+                </div>
+                <span class="text-xl font-bold text-glow">CrypDNA Japan Vault</span>
+            </div>
+            <p class="text-gray-400 mb-4">© 2025 CrypDNA Vault. All rights reserved.</p>
+            <p class="text-sm text-gray-500">JICC統合 • 東京金融ハブ • エリートアクセス</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling and interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Add particle effect to hero section
+            const hero = document.querySelector('.tokyo-neon');
+            if (hero) {
+                for (let i = 0; i < 50; i++) {
+                    const particle = document.createElement('div');
+                    particle.style.cssText = `
+                        position: absolute;
+                        width: 2px;
+                        height: 2px;
+                        background: rgba(255, 215, 0, 0.4);
+                        border-radius: 50%;
+                        left: ${Math.random() * 100}%;
+                        top: ${Math.random() * 100}%;
+                        animation: float ${3 + Math.random() * 4}s ease-in-out infinite;
+                        animation-delay: ${Math.random() * 2}s;
+                    `;
+                    hero.appendChild(particle);
+                }
+            }
+
+            // Add intersection observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all cards for animation
+            document.querySelectorAll('.glow-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
 </html>
