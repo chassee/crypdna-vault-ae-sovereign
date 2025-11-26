@@ -40,7 +40,7 @@ export default function ResetPage() {
     e.preventDefault();
     setLoading(true);
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin + (window.location.hash ? '/#/reset-password' : '/reset-password'),
+      redirectTo: `${window.location.origin}/#/reset-password`,
     });
     setLoading(false);
     if (error) toast({ title: 'Error', description: error.message, variant: 'destructive' });

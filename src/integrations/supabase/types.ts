@@ -74,6 +74,36 @@ export type Database = {
         }
         Relationships: []
       }
+      audit_logs: {
+        Row: {
+          action: string
+          actor_id: string | null
+          created_at: string | null
+          details: Json | null
+          id: string
+          target_id: string | null
+          target_table: string | null
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          created_at?: string | null
+          details?: Json | null
+          id?: string
+          target_id?: string | null
+          target_table?: string | null
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          created_at?: string | null
+          details?: Json | null
+          id?: string
+          target_id?: string | null
+          target_table?: string | null
+        }
+        Relationships: []
+      }
       balances: {
         Row: {
           available_credit: number | null
@@ -113,6 +143,72 @@ export type Database = {
           score_boost?: number | null
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      card_tokens: {
+        Row: {
+          card_brand: string | null
+          card_last_four: string
+          created_at: string
+          expiry_month: number | null
+          expiry_year: number | null
+          id: string
+          status: string
+          token_reference: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          card_brand?: string | null
+          card_last_four: string
+          created_at?: string
+          expiry_month?: number | null
+          expiry_year?: number | null
+          id?: string
+          status?: string
+          token_reference?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          card_brand?: string | null
+          card_last_four?: string
+          created_at?: string
+          expiry_month?: number | null
+          expiry_year?: number | null
+          id?: string
+          status?: string
+          token_reference?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      country_kyc_rules: {
+        Row: {
+          country_code: string
+          created_at: string | null
+          id: string
+          language: string
+          required_doc_1: string
+          required_doc_2: string | null
+        }
+        Insert: {
+          country_code: string
+          created_at?: string | null
+          id?: string
+          language?: string
+          required_doc_1: string
+          required_doc_2?: string | null
+        }
+        Update: {
+          country_code?: string
+          created_at?: string | null
+          id?: string
+          language?: string
+          required_doc_1?: string
+          required_doc_2?: string | null
         }
         Relationships: []
       }
@@ -250,11 +346,6 @@ export type Database = {
           score: number | null
           status: string | null
           updated_at: string | null
-          rank: string | null
-          vault_id: string | null
-          join_date: string | null
-          invite_count: number | null
-          tier: string | null
           user_id: string | null
         }
         Insert: {
@@ -262,11 +353,6 @@ export type Database = {
           score?: number | null
           status?: string | null
           updated_at?: string | null
-          rank?: string | null
-          vault_id?: string | null
-          join_date?: string | null
-          invite_count?: number | null
-          tier?: string | null
           user_id?: string | null
         }
         Update: {
@@ -274,11 +360,6 @@ export type Database = {
           score?: number | null
           status?: string | null
           updated_at?: string | null
-          rank?: string | null
-          vault_id?: string | null
-          join_date?: string | null
-          invite_count?: number | null
-          tier?: string | null
           user_id?: string | null
         }
         Relationships: []
@@ -337,6 +418,69 @@ export type Database = {
         }
         Relationships: []
       }
+      kyc_records: {
+        Row: {
+          created_at: string | null
+          id: string
+          net30_doc_url: string | null
+          photo_id_url: string | null
+          report_date: string | null
+          reporting_agency: string | null
+          tradeline_status: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          net30_doc_url?: string | null
+          photo_id_url?: string | null
+          report_date?: string | null
+          reporting_agency?: string | null
+          tradeline_status?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          net30_doc_url?: string | null
+          photo_id_url?: string | null
+          report_date?: string | null
+          reporting_agency?: string | null
+          tradeline_status?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      kyc_uploads: {
+        Row: {
+          created_at: string
+          doc_type: string
+          file_path: string
+          id: string
+          notes: string | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          doc_type: string
+          file_path: string
+          id?: string
+          notes?: string | null
+          status?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          doc_type?: string
+          file_path?: string
+          id?: string
+          notes?: string | null
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       leaderboards: {
         Row: {
           crypdna_score: number | null
@@ -382,6 +526,39 @@ export type Database = {
           location?: string | null
           tier_access?: string | null
           title?: string
+        }
+        Relationships: []
+      }
+      memberships: {
+        Row: {
+          created_at: string
+          dnb_customer_number: string | null
+          id: string
+          plan_name: string
+          renewal_date: string | null
+          start_date: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          dnb_customer_number?: string | null
+          id?: string
+          plan_name: string
+          renewal_date?: string | null
+          start_date?: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          dnb_customer_number?: string | null
+          id?: string
+          plan_name?: string
+          renewal_date?: string | null
+          start_date?: string
+          status?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -475,39 +652,6 @@ export type Database = {
         }
         Relationships: []
       }
-      paw_debit_card: {
-        Row: {
-          card_number: string
-          created_at: string | null
-          crypdna_score: number | null
-          cvv: string
-          expiry: string
-          id: string
-          status: string | null
-          user_id: string
-        }
-        Insert: {
-          card_number: string
-          created_at?: string | null
-          crypdna_score?: number | null
-          cvv: string
-          expiry: string
-          id?: string
-          status?: string | null
-          user_id: string
-        }
-        Update: {
-          card_number?: string
-          created_at?: string | null
-          crypdna_score?: number | null
-          cvv?: string
-          expiry?: string
-          id?: string
-          status?: string | null
-          user_id?: string
-        }
-        Relationships: []
-      }
       products: {
         Row: {
           category: string | null
@@ -544,39 +688,21 @@ export type Database = {
           email: string | null
           full_name: string | null
           id: string
-          is_member: boolean | null
           updated_at: string | null
-          rank: string | null
-          vault_id: string | null
-          join_date: string | null
-          invite_count: number | null
-          tier: string | null
         }
         Insert: {
           avatar_url?: string | null
           email?: string | null
           full_name?: string | null
           id: string
-          is_member?: boolean | null
           updated_at?: string | null
-          rank?: string | null
-          vault_id?: string | null
-          join_date?: string | null
-          invite_count?: number | null
-          tier?: string | null
         }
         Update: {
           avatar_url?: string | null
           email?: string | null
           full_name?: string | null
           id?: string
-          is_member?: boolean | null
           updated_at?: string | null
-          rank?: string | null
-          vault_id?: string | null
-          join_date?: string | null
-          invite_count?: number | null
-          tier?: string | null
         }
         Relationships: []
       }
@@ -604,6 +730,27 @@ export type Database = {
           status?: string | null
           title?: string
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      regions: {
+        Row: {
+          created_at: string | null
+          id: string
+          language_code: string
+          name: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          language_code: string
+          name: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          language_code?: string
+          name?: string
         }
         Relationships: []
       }
@@ -696,6 +843,39 @@ export type Database = {
         }
         Relationships: []
       }
+      tradeline_reports: {
+        Row: {
+          amount: number
+          bureau: string
+          created_at: string
+          id: string
+          membership_id: string
+          notes: string | null
+          report_month: string
+          status: string
+        }
+        Insert: {
+          amount: number
+          bureau: string
+          created_at?: string
+          id?: string
+          membership_id: string
+          notes?: string | null
+          report_month: string
+          status?: string
+        }
+        Update: {
+          amount?: number
+          bureau?: string
+          created_at?: string
+          id?: string
+          membership_id?: string
+          notes?: string | null
+          report_month?: string
+          status?: string
+        }
+        Relationships: []
+      }
       transactions: {
         Row: {
           amount: number
@@ -719,6 +899,51 @@ export type Database = {
           id?: string
           timestamp?: string
           type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_profiles: {
+        Row: {
+          business_address: string | null
+          business_name: string | null
+          country: string
+          created_at: string | null
+          duns_number: string | null
+          ein_number: string | null
+          email: string | null
+          full_name: string | null
+          phone: string | null
+          preferred_language: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          business_address?: string | null
+          business_name?: string | null
+          country: string
+          created_at?: string | null
+          duns_number?: string | null
+          ein_number?: string | null
+          email?: string | null
+          full_name?: string | null
+          phone?: string | null
+          preferred_language?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          business_address?: string | null
+          business_name?: string | null
+          country?: string
+          created_at?: string | null
+          duns_number?: string | null
+          ein_number?: string | null
+          email?: string | null
+          full_name?: string | null
+          phone?: string | null
+          preferred_language?: string | null
+          updated_at?: string | null
           user_id?: string
         }
         Relationships: []
@@ -828,6 +1053,27 @@ export type Database = {
         }
         Relationships: []
       }
+      vault_invites: {
+        Row: {
+          created_at: string | null
+          id: string
+          invitee_id: string
+          inviter_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          invitee_id: string
+          inviter_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          invitee_id?: string
+          inviter_id?: string
+        }
+        Relationships: []
+      }
       vault_members: {
         Row: {
           approved: string | null
@@ -838,6 +1084,11 @@ export type Database = {
           full_name: string | null
           id: number
           notes: string | null
+          prestige_level: number
+          prestige_xp: number | null
+          referral_code: string | null
+          referrals_count: number | null
+          region_id: string | null
           status: boolean
           tally_id: string | null
           user_id: string
@@ -852,6 +1103,11 @@ export type Database = {
           full_name?: string | null
           id?: number
           notes?: string | null
+          prestige_level?: number
+          prestige_xp?: number | null
+          referral_code?: string | null
+          referrals_count?: number | null
+          region_id?: string | null
           status?: boolean
           tally_id?: string | null
           user_id?: string
@@ -866,12 +1122,25 @@ export type Database = {
           full_name?: string | null
           id?: number
           notes?: string | null
+          prestige_level?: number
+          prestige_xp?: number | null
+          referral_code?: string | null
+          referrals_count?: number | null
+          region_id?: string | null
           status?: boolean
           tally_id?: string | null
           user_id?: string
           vault_tier?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "vault_members_region_id_fkey"
+            columns: ["region_id"]
+            isOneToOne: false
+            referencedRelation: "regions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       vault_rewards: {
         Row: {
@@ -879,11 +1148,6 @@ export type Database = {
           points: number | null
           redeemed_items: string[] | null
           updated_at: string | null
-          rank: string | null
-          vault_id: string | null
-          join_date: string | null
-          invite_count: number | null
-          tier: string | null
           user_id: string | null
         }
         Insert: {
@@ -891,11 +1155,6 @@ export type Database = {
           points?: number | null
           redeemed_items?: string[] | null
           updated_at?: string | null
-          rank?: string | null
-          vault_id?: string | null
-          join_date?: string | null
-          invite_count?: number | null
-          tier?: string | null
           user_id?: string | null
         }
         Update: {
@@ -903,11 +1162,6 @@ export type Database = {
           points?: number | null
           redeemed_items?: string[] | null
           updated_at?: string | null
-          rank?: string | null
-          vault_id?: string | null
-          join_date?: string | null
-          invite_count?: number | null
-          tier?: string | null
           user_id?: string | null
         }
         Relationships: []
@@ -942,6 +1196,51 @@ export type Database = {
           transaction_type?: string | null
           user_id?: string | null
           vault_id?: string | null
+        }
+        Relationships: []
+      }
+      vault_users: {
+        Row: {
+          email: string | null
+          invite_code: string | null
+          invites_joined: number | null
+          invites_sent: number | null
+          invites_upgraded: number | null
+          joined_at: string | null
+          kyc_status: string | null
+          last_seen_at: string | null
+          prestige_rank: string | null
+          profile_image_url: string | null
+          referred_by: string | null
+          user_id: string
+        }
+        Insert: {
+          email?: string | null
+          invite_code?: string | null
+          invites_joined?: number | null
+          invites_sent?: number | null
+          invites_upgraded?: number | null
+          joined_at?: string | null
+          kyc_status?: string | null
+          last_seen_at?: string | null
+          prestige_rank?: string | null
+          profile_image_url?: string | null
+          referred_by?: string | null
+          user_id: string
+        }
+        Update: {
+          email?: string | null
+          invite_code?: string | null
+          invites_joined?: number | null
+          invites_sent?: number | null
+          invites_upgraded?: number | null
+          joined_at?: string | null
+          kyc_status?: string | null
+          last_seen_at?: string | null
+          prestige_rank?: string | null
+          profile_image_url?: string | null
+          referred_by?: string | null
+          user_id?: string
         }
         Relationships: []
       }
@@ -980,10 +1279,115 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      vault_kyc: {
+        Row: {
+          created_at: string | null
+          doc_type: string | null
+          file_path: string | null
+          id: string | null
+          notes: string | null
+          status: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          doc_type?: string | null
+          file_path?: string | null
+          id?: string | null
+          notes?: string | null
+          status?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          doc_type?: string | null
+          file_path?: string | null
+          id?: string | null
+          notes?: string | null
+          status?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      vault_verification: {
+        Row: {
+          created_at: string | null
+          id: string | null
+          net30_doc_url: string | null
+          photo_id_url: string | null
+          report_date: string | null
+          reporting_agency: string | null
+          tradeline_status: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string | null
+          net30_doc_url?: string | null
+          photo_id_url?: string | null
+          report_date?: string | null
+          reporting_agency?: string | null
+          tradeline_status?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string | null
+          net30_doc_url?: string | null
+          photo_id_url?: string | null
+          report_date?: string | null
+          reporting_agency?: string | null
+          tradeline_status?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
-      [_ in never]: never
+      award_my_prestige_xp: { Args: { xp_amount: number }; Returns: Json }
+      award_prestige_xp: {
+        Args: { p_user_id: string; xp_amount: number }
+        Returns: Json
+      }
+      get_vault_id: { Args: never; Returns: string }
+      get_vault_kyc: {
+        Args: never
+        Returns: {
+          created_at: string | null
+          doc_type: string | null
+          file_path: string | null
+          id: string | null
+          notes: string | null
+          status: string | null
+          user_id: string | null
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "vault_kyc"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      get_vault_verification: {
+        Args: never
+        Returns: {
+          created_at: string | null
+          id: string | null
+          net30_doc_url: string | null
+          photo_id_url: string | null
+          report_date: string | null
+          reporting_agency: string | null
+          tradeline_status: string | null
+          user_id: string | null
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "vault_verification"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      recalc_prestige: { Args: never; Returns: undefined }
     }
     Enums: {
       [_ in never]: never

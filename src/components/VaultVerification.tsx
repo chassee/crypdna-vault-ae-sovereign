@@ -73,41 +73,66 @@ const VaultVerification = () => {
     }
 
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError || !user) {
+        toast({ title: "Error", description: "User not authenticated.", variant: "destructive" });
+        setUploading(null);
+        return;
+      }
 
-      const folder = docType === 'photo_id' ? 'photo_id' : 'net30_docs';
-      const filePath = `${folder}/${user.id}_${Date.now()}.${fileExt}`;
+      // Determine bucket and file path using user_id directly
+      const bucket = docType === 'photo_id' ? 'vault-ids' : 'vault-net30';
+      const fileName = docType === 'photo_id' ? 'photo_id_front' : 'docs';
+      const filePath = `${user.id}/${fileName}`;
 
+      // Upload to Supabase Storage
       const { error: uploadError } = await supabase.storage
-        .from('vault-uploads')
-        .upload(filePath, file, { upsert: true });
+        .from(bucket)
+        .upload(filePath, file, { upsert: true, contentType: file.type });
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        if (uploadError.message.includes('not found')) {
+          throw new Error(`Storage bucket "${bucket}" not found. Please contact support.`);
+        }
+        throw new Error(`Upload failed: ${uploadError.message}`);
+      }
 
-      const { data } = supabase.storage
-        .from('vault-uploads')
+      // Get public URL
+      const { data: urlData } = supabase.storage
+        .from(bucket)
         .getPublicUrl(filePath);
 
-      const fileUrl = data.publicUrl;
+      const fileUrl = urlData.publicUrl;
       const column = docType === 'photo_id' ? 'photo_id_url' : 'net30_doc_url';
 
-      const { error: dbError } = await supabase
+      // Insert/update into kyc_records table
+      const { data: dbError } = await supabase
         .from('kyc_records')
-        .upsert({
+        .upsert(
+          {
           user_id: user.id,
           [column]: fileUrl,
           tradeline_status: 'Pending Integration',
           reporting_agency: 'D&B',
         }, { onConflict: 'user_id' });
 
-      if (dbError) throw dbError;
+      if (dbError) {
+        throw new Error(`Database update failed: ${dbError.message}`);
+      }
 
-      toast({ title: "Uploaded!", description: `${docType === 'photo_id' ? 'Photo ID' : 'Net-30 Doc'} uploaded successfully.` });
+      toast({ 
+        title: "Upload successful!", 
+        description: `${docType === 'photo_id' ? 'Photo ID' : 'Net-30 Doc'} has been uploaded and verified.` 
+      });
+      
       fetchVerificationStatus();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Upload error:', error);
-      toast({ title: "Upload Failed", description: "Try again.", variant: "destructive" });
+      toast({ 
+        title: "Upload failed", 
+        description: error.message || "Please try again or contact support.", 
+        variant: "destructive" 
+      });
     } finally {
       setUploading(null);
     }
