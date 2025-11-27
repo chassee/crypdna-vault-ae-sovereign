@@ -42,25 +42,21 @@
 
     --radius: 1.2rem;
 
-    /* Light Mode Design Tokens - Premium Dubai Aesthetics */
+    /* Light Mode Design Tokens */
     --luxury-purple: 262 90% 60%;
     --luxury-purple-dark: 262 90% 45%;
     --luxury-purple-light: 262 90% 75%;
-    --luxury-gold: 43 96% 56%;
-    --luxury-gold-dark: 38 92% 50%;
-    --luxury-gold-light: 48 100% 67%;
+    --luxury-gold: 45 100% 60%;
     --luxury-platinum: 0 0% 70%;
     --luxury-charcoal: 0 0% 13%;
-    --luxury-black: 0 0% 8%;
     --luxury-glass: 0 0% 0% / 0.05;
     --luxury-glass-dark: 0 0% 0% / 0.1;
     --luxury-diamond: 262 80% 85%;
 
-    /* Light Mode Gradients - Premium Gold Accents */
+    /* Light Mode Gradients */
     --gradient-background: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 98%) 100%);
     --gradient-primary: linear-gradient(135deg, hsl(var(--luxury-purple)), hsl(var(--luxury-purple-dark)));
-    --gradient-luxury: linear-gradient(135deg, hsl(var(--luxury-purple)) 0%, hsl(var(--luxury-gold)) 50%, hsl(var(--luxury-gold-light)) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(var(--luxury-gold-dark)) 0%, hsl(var(--luxury-gold)) 50%, hsl(var(--luxury-gold-light)) 100%);
+    --gradient-luxury: linear-gradient(135deg, hsl(var(--luxury-purple)) 0%, hsl(var(--luxury-gold)) 50%, hsl(var(--luxury-purple-light)) 100%);
     --gradient-glassmorphism: linear-gradient(135deg, hsla(0, 0%, 100%, 0.9), hsla(0, 0%, 100%, 0.7));
     --gradient-card: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 99%) 100%);
     --gradient-panel: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 98%) 100%);
@@ -87,13 +83,13 @@
   }
 
   .dark {
-    /* Dark Mode - Luxury Deep Gradient with Premium Black */
-    --background: 0 0% 5%;
-    --background-secondary: 0 0% 8%;
+    /* Dark Mode - Luxury Deep Gradient */
+    --background: 0 0% 3.9%;
+    --background-secondary: 0 0% 7.1%;
     --foreground: 0 0% 98%;
     --foreground-secondary: 0 0% 87.8%;
     --warm-white: 0 0% 98%;
-    --dark-grey: 0 0% 5%;
+    --dark-grey: 0 0% 3.9%;
 
     --card: 0 0% 9%;
     --card-foreground: 0 0% 100%;
@@ -122,25 +118,21 @@
 
     --radius: 1.2rem;
 
-    /* Premium Dubai Design Tokens - Dark Mode Optimized */
+    /* Apple x Amex Luxury Design Tokens - Dark Mode Optimized */
     --luxury-purple: 262 90% 60%;
     --luxury-purple-dark: 262 90% 45%;
     --luxury-purple-light: 262 90% 75%;
-    --luxury-gold: 43 96% 56%;
-    --luxury-gold-dark: 38 92% 50%;
-    --luxury-gold-light: 48 100% 67%;
+    --luxury-gold: 45 100% 60%;
     --luxury-platinum: 0 0% 70%;
     --luxury-charcoal: 0 0% 7%;
-    --luxury-black: 0 0% 5%;
     --luxury-glass: 0 0% 100% / 0.05;
     --luxury-glass-dark: 0 0% 0% / 0.5;
     --luxury-diamond: 262 80% 85%;
 
-    /* Premium Global Dark Mode Gradients - Deep Luxury Background */
-    --gradient-background: linear-gradient(135deg, hsl(0, 0%, 5%) 0%, hsl(0, 0%, 8%) 100%);
+    /* Premium Global Dark Mode Gradients - Deep Background */
+    --gradient-background: linear-gradient(135deg, hsl(0, 0%, 4%) 0%, hsl(0, 0%, 7.1%) 100%);
     --gradient-primary: linear-gradient(135deg, hsl(var(--luxury-purple)), hsl(var(--luxury-purple-dark)));
-    --gradient-luxury: linear-gradient(135deg, hsl(var(--luxury-purple)) 0%, hsl(var(--luxury-gold)) 50%, hsl(var(--luxury-gold-light)) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(var(--luxury-gold-dark)) 0%, hsl(var(--luxury-gold)) 50%, hsl(var(--luxury-gold-light)) 100%);
+    --gradient-luxury: linear-gradient(135deg, hsl(var(--luxury-purple)) 0%, hsl(var(--luxury-gold)) 50%, hsl(var(--luxury-purple-light)) 100%);
     --gradient-glassmorphism: linear-gradient(135deg, hsla(0, 0%, 15%, 0.8), hsla(0, 0%, 12%, 0.6));
     --gradient-card: linear-gradient(135deg, hsl(0, 0%, 9%) 0%, hsl(0, 0%, 12%) 100%);
     --gradient-panel: linear-gradient(135deg, hsl(0, 0%, 9%) 0%, hsl(0, 0%, 6%) 100%);

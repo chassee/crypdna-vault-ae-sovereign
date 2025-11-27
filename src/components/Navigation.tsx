@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import PawLogo from '@/components/PawLogo';
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -40,15 +39,15 @@ const Navigation = () => {
     <nav className="luxury-card border-b border-border sticky top-0 z-50 luxury-transition backdrop-blur-xl">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-luxury-gold-dark via-luxury-gold to-luxury-gold-light rounded-2xl flex items-center justify-center shadow-xl shadow-luxury-gold/30 transform hover:scale-105 transition-all duration-300">
-              <PawLogo className="w-7 h-7 text-luxury-black" size={28} />
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-gradient-to-r from-luxury-purple to-luxury-gold rounded-xl flex items-center justify-center diamond-logo shadow-lg">
+              <Vault className="w-6 h-6 text-white" />
             </div>
-            <div className="flex flex-col">
-              <h1 className="text-xl font-bold bg-gradient-to-r from-luxury-gold via-white to-luxury-gold-light bg-clip-text text-transparent tracking-tight">
-                CrypDNA
+            <div>
+              <h1 className="text-xl font-bold bg-gradient-to-r from-luxury-purple to-luxury-gold bg-clip-text text-transparent sparkle-animation">
+                CrypDNA Vault
               </h1>
-              <p className="text-xs text-foreground-secondary font-medium tracking-wide">Elite Vault</p>
+              <p className="text-xs text-foreground-secondary">Billionaire Membership Portal</p>
             </div>
           </div>
           
@@ -57,10 +56,10 @@ const Navigation = () => {
               onClick={handleLogout}
               variant="outline"
               size="sm"
-              className="text-sm font-semibold luxury-transition hover:bg-destructive/90 hover:text-destructive-foreground border-border/50 hover:border-destructive/50 text-foreground-secondary px-4 py-2"
+              className="text-sm luxury-transition hover:bg-red-600 hover:text-white border-border text-foreground-secondary"
             >
               <LogOut className="h-4 w-4 mr-2" />
-              Sign Out
+              Logout
             </Button>
           </div>
         </div>

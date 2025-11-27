@@ -108,8 +108,7 @@ const VaultVerification = () => {
       // Insert/update into kyc_records table
       const { error: dbError } = await supabase
         .from('kyc_records')
-        .upsert(
-          {
+        .upsert({
           user_id: user.id,
           [column]: fileUrl,
           tradeline_status: 'Pending Integration',
