@@ -3,7 +3,7 @@ import { useUserProfile } from '@/hooks/useUserProfile';
 import { useNavigate } from 'react-router-dom';
 import type { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/supabaseClient';
-import { ThemeProvider } from '@/components/ThemeProvider';
+
 import { Toaster } from '@/components/ui/toaster';
 
 import { Button } from '@/components/ui/button';
