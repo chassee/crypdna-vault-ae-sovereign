@@ -6,7 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Toaster } from '@/components/ui/toaster';
 
-
+const { region } = useRegion();
 const AUTH_REDIRECT = `${window.location.origin}/#/vault`;
 const RESET_REDIRECT = 'https://vault.crypdawgs.com/#/reset-password';
 
