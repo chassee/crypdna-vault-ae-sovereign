@@ -134,7 +134,7 @@ export default function VaultDashboard() {
   const userTier = userProfile?.tier ?? 'Viewer';
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    
       <div className="min-h-screen bg-background luxury-transition">
 
         {/* Header */}
