@@ -1,0 +1,170 @@
+[
+    {
+        "region": "us",
+        "bureau": "D&B",
+        "status": "active",
+        "endpoint": "https://api.crypdna.com/credit/us/dnb"
+    },
+    {
+        "region": "ae",
+        "bureau": "AECB",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/ae/aecb"
+    },
+    {
+        "region": "jp",
+        "bureau": "CIC/JICC",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/jp/cic-jicc"
+    },
+    {
+        "region": "uk",
+        "bureau": "Experian UK",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/uk/experian"
+    },
+    {
+        "region": "fr",
+        "bureau": "Banque de France",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/fr/banque-de-france"
+    },
+    {
+        "region": "de",
+        "bureau": "SCHUFA",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/de/schufa"
+    },
+    {
+        "region": "ca",
+        "bureau": "Equifax Canada",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/ca/equifax"
+    },
+    {
+        "region": "kr",
+        "bureau": "NICE Information Service",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/kr/nice"
+    },
+    {
+        "region": "ch",
+        "bureau": "CRIF",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/ch/crif"
+    },
+    {
+        "region": "it",
+        "bureau": "CRIF",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/it/crif"
+    },
+    {
+        "region": "es",
+        "bureau": "Experian Spain",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/es/experian"
+    },
+    {
+        "region": "sg",
+        "bureau": "Credit Bureau Singapore",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/sg/cbs"
+    },
+    {
+        "region": "my",
+        "bureau": "CTOS",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/my/ctos"
+    },
+    {
+        "region": "nl",
+        "bureau": "BKR",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/nl/bkr"
+    },
+    {
+        "region": "au",
+        "bureau": "Equifax Australia",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/au/equifax"
+    },
+    {
+        "region": "nz",
+        "bureau": "Centrix",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/nz/centrix"
+    },
+    {
+        "region": "se",
+        "bureau": "UC",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/se/uc"
+    },
+    {
+        "region": "no",
+        "bureau": "Experian Norway",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/no/experian"
+    },
+    {
+        "region": "pl",
+        "bureau": "BIK",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/pl/bik"
+    },
+    {
+        "region": "be",
+        "bureau": "Centrale des Cr\u00e9dits aux Particuliers",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/be/ccp"
+    },
+    {
+        "region": "at",
+        "bureau": "KSV1870",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/at/ksv1870"
+    },
+    {
+        "region": "dk",
+        "bureau": "Experian Denmark",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/dk/experian"
+    },
+    {
+        "region": "ie",
+        "bureau": "Irish Credit Bureau",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/ie/icb"
+    },
+    {
+        "region": "il",
+        "bureau": "BDI Code",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/il/bdi"
+    },
+    {
+        "region": "fi",
+        "bureau": "Suomen Asiakastieto Oy",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/fi/asiakastieto"
+    },
+    {
+        "region": "pt",
+        "bureau": "Banco de Portugal",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/pt/banco-de-portugal"
+    },
+    {
+        "region": "hk",
+        "bureau": "TransUnion Hong Kong",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/hk/transunion"
+    },
+    {
+        "region": "cz",
+        "bureau": "CRIF Czech Republic",
+        "status": "locked",
+        "endpoint": "https://api.crypdna.com/credit/cz/crif"
+    }
+]

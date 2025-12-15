@@ -1,0 +1,10 @@
+{
+  "adapter_name": "Credit Bureau (MY)",
+  "region": "MY",
+  "status": "locked",
+  "schema_version": "1.0",
+  "endpoint": "",
+  "api_key_env_var": "",
+  "mapping": {},
+  "compliance_note": "Local regulations require specific approval before activation."
+}

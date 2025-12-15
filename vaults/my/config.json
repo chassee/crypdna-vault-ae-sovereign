@@ -1,0 +1,9 @@
+{
+    "region": "MY",
+    "language": "ms",
+    "currency": "MYR",
+    "currency_symbol": "RM",
+    "credit_adapter_ref": "CCRIS",
+    "design_genome_ref": "../../core/design_genome/design_genome.json",
+    "credit_adapter_registry": "../../adapter_registry.json"
+}

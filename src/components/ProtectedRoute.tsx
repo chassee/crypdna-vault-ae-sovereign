@@ -16,6 +16,16 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
+    // Check for guest mode
+    const urlParams = new URLSearchParams(window.location.search);
+    const isGuest = urlParams.get('guest') === 'true';
+    
+    if (isGuest) {
+      setIsAuthenticated(true);
+      setLoading(false);
+      return;
+    }
+
     const checkAuth = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession();

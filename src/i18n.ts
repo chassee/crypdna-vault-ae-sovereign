@@ -3,24 +3,29 @@ import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-// 🌍 Auto-load translations + detect user browser language
+// 🌍 Auto-detect + dynamically load all 19 CrypDNA Vault languages
 i18n
   .use(Backend)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     fallbackLng: 'en',
-    debug: true,
+    debug: false,
+    supportedLngs: [
+      'en', 'fr', 'es', 'de', 'it', 'ja', 'ko', 'zh', 'ar', 'hi', 'ru', 'pt',
+      'nl', 'tr', 'sv', 'pl', 'th', 'id', 'vi'
+    ],
     detection: {
       order: ['querystring', 'localStorage', 'navigator'],
-      caches: ['localStorage'],
+      caches: ['localStorage']
     },
     backend: {
-      loadPath: '/locales/{{lng}}/translation.json',
+      // ⚡️ Pull translations live from your GitHub repo (raw format)
+      loadPath: 'https://raw.githubusercontent.com/chassee/crypdna-translations/main/{{lng}}.json',
     },
     interpolation: {
-      escapeValue: false,
-    },
+      escapeValue: false
+    }
   });
 
 export default i18n;

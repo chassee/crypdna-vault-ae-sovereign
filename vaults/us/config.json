@@ -1,0 +1,4 @@
+{
+    "credit_adapter_registry": "../../adapter_registry.json",
+    "active_credit_adapter": "D&B"
+}

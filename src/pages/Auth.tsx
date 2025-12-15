@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { useRegion } from '@/contexts/RegionContext';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Toaster } from '@/components/ui/toaster';
 
+const { region } = useRegion();
 const AUTH_REDIRECT = `${window.location.origin}/#/vault`;
-const RESET_REDIRECT = 'https://vault.crypdawgs.com/#/reset';
+const RESET_REDIRECT = 'https://vault.crypdawgs.com/#/reset-password';
 
 export default function Auth() {
   const [email, setEmail] = useState('');
@@ -113,16 +115,18 @@ export default function Auth() {
 
     setLoading(true);
     try {
-      const { error } = await supabase.auth.signInWithOtp({
+      const { error } = await supabase.auth.signInWithOtp({ 
         email,
-        options: { emailRedirectTo: AUTH_REDIRECT }
+        options: {
+          emailRedirectTo: AUTH_REDIRECT
+        }
       });
 
       if (error) throw error;
 
       toast({
         title: 'Magic link sent!',
-        description: 'Check your email for the sign-in link.'
+        description: 'Check your inbox.'
       });
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Failed to send magic link.';
@@ -147,9 +151,10 @@ export default function Auth() {
 
       if (error) throw error;
 
+      // Show confirmation: "If this email is registered, a reset link has been sent."
       toast({
-        title: 'Reset email sent!',
-        description: 'Check your email for the password reset link.'
+        title: 'Reset link sent',
+        description: 'If this email is registered, a reset link has been sent.'
       });
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Failed to send reset email.';
@@ -285,6 +290,14 @@ export default function Auth() {
               className="w-full py-4 border-2 border-purple-600 bg-purple-900/30 rounded-xl text-white text-base font-semibold hover:bg-purple-800/40 hover:border-purple-500 transition-all disabled:opacity-50"
             >
               {isSignUp ? 'Already have access? Sign In' : 'Create Account'}
+            </button>
+
+            <button
+              onClick={() => { window.location.href = '/vault?guest=true'; }}
+              disabled={loading}
+              className="w-full text-sm text-gray-300 underline hover:text-gray-100 transition-colors disabled:opacity-50 text-center"
+            >
+              Browse as Guest
             </button>
 
             <button

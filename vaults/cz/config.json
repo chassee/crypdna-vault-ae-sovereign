@@ -1,0 +1,15 @@
+{
+    "region": "CZ",
+    "language": "cs",
+    "currency": "CZK",
+    "currency_symbol": "K\u010d",
+    "credit_adapter_ref": "standby",
+    "adapter_status": "standby",
+    "design_genome_ref": "../../core/design_genome/design_genome.json",
+    "aesthetic": {
+        "palette": "Bronze gradient",
+        "texture": "Matte violet",
+        "typography": null
+    },
+    "credit_adapter_registry": "../../adapter_registry.json"
+}

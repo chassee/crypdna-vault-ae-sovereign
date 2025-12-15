@@ -1,0 +1,14 @@
+{
+    "region": "PL",
+    "language": "pl",
+    "currency": "PLN",
+    "currency_symbol": "z\u0142",
+    "credit_adapter_ref": "BIK",
+    "design_genome_ref": "../../core/design_genome/design_genome.json",
+    "aesthetic": {
+        "palette": "White frost",
+        "texture": "Crimson flux",
+        "typography": null
+    },
+    "credit_adapter_registry": "../../adapter_registry.json"
+}

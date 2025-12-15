@@ -1,0 +1,8 @@
+{
+  "region": "AU",
+  "tradeline_schema_version": "1.0",
+  "credit_score_model": "CrypDNA-Score-V2-AU",
+  "vault_data_schema": "CrypDNA-Vault-Schema-V3",
+  "regional_currency": "AUD",
+  "aesthetic_tag": "Aqua crystal"
+}

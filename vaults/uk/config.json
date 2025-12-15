@@ -1,0 +1,14 @@
+{
+    "region": "UK",
+    "language": "en",
+    "currency": "GBP",
+    "currency_symbol": "\u00a3",
+    "credit_adapter_ref": "Experian UK",
+    "design_genome_ref": "../../core/design_genome/design_genome.json",
+    "aesthetic": {
+        "palette": "Monolith gray",
+        "texture": "Royal blue accents",
+        "typography": null
+    },
+    "credit_adapter_registry": "../../adapter_registry.json"
+}

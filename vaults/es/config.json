@@ -1,0 +1,14 @@
+{
+    "region": "ES",
+    "language": "es",
+    "currency": "EUR",
+    "currency_symbol": "\u20ac",
+    "credit_adapter_ref": "ASNEF / CIRBE",
+    "design_genome_ref": "../../core/design_genome/design_genome.json",
+    "aesthetic": {
+        "palette": "Sunset gold",
+        "texture": "Obsidian",
+        "typography": null
+    },
+    "credit_adapter_registry": "../../adapter_registry.json"
+}

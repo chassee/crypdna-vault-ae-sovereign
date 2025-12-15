@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useUserProfile } from '@/hooks/useUserProfile';
 import { useNavigate } from 'react-router-dom';
 import type { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/supabaseClient';
-import { ThemeProvider } from '@/components/ThemeProvider';
+
 import { Toaster } from '@/components/ui/toaster';
 
 import { Button } from '@/components/ui/button';
@@ -19,14 +20,14 @@ import VaultVerification from '@/components/VaultVerification';
 import CreditActivity from '@/components/CreditActivity';
 import VaultDrops from '@/components/VaultDrops';
 import CrypbotsTab from '@/components/tabs/CrypbotsTab';
-import NeuroTechTab from '@/components/tabs/NeuroTechTab';
 import AboutUs from '@/components/AboutUs';
+import ID from '@/pages/ID';
 import MobileFloatingNav from '@/components/MobileFloatingNav';
 
-import { LogOut, Wallet, Rocket, Brain, Waves, Info } from 'lucide-react';
+import { LogOut, Wallet, Rocket, Brain, CreditCard, Info } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-type TabKey = 'balances' | 'drops' | 'crypbots' | 'neurotech' | 'about';
+type TabKey = 'balances' | 'drops' | 'crypbots' | 'id' | 'about';
 
 export default function VaultDashboard() {
   const navigate = useNavigate();
@@ -34,9 +35,10 @@ export default function VaultDashboard() {
   const { toast } = useToast();
 
   const [user, setUser] = useState<User | null>(null);
+  const [userProfile, setUserProfile] = useState<any>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const [userProfile, setUserProfile] = useState<any>(null);
+  const { profile, inviteCount, getPrestigeRank, getInviteLink, loading: profileLoading } = useUserProfile(user);
   const [activeTab, setActiveTab] = useState<TabKey>('balances');
 
   // ---- Vault Data States ----
@@ -132,7 +134,7 @@ export default function VaultDashboard() {
   const userTier = userProfile?.tier ?? 'Viewer';
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    
       <div className="min-h-screen bg-background luxury-transition">
 
         {/* Header */}
@@ -208,9 +210,9 @@ export default function VaultDashboard() {
                   <span className="hidden md:inline">Crypb0ts</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
                 </TabsTrigger>
-                <TabsTrigger value="neurotech" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
-                  <Waves className="w-3 h-3 sm:w-4 sm:h-4" />
-                  <span className="hidden md:inline">NeuroTech</span>
+                <TabsTrigger value="id" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
+                  <CreditCard className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden md:inline">ID</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
                 </TabsTrigger>
                 <TabsTrigger value="about" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
@@ -225,12 +227,12 @@ export default function VaultDashboard() {
               <TabsContent value="balances" className="space-y-4 sm:space-y-6 lg:space-y-8 animate-fade-in">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
                   <div className="space-y-4 sm:space-y-6 lg:space-y-8 animate-slide-up">
-                    <BalanceBreakdown balances={balances} />
+                    <BalanceBreakdown />
                     <DunBradstreetWidget />
-                    <VaultVerification verification={verificationData} />
+                    <VaultVerification />
                   </div>
                   <div className="space-y-4 sm:space-y-6 lg:space-y-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
-                    <CreditActivity kyc={kycData} />
+                    <CreditActivity />
                   </div>
                 </div>
               </TabsContent>
@@ -243,8 +245,8 @@ export default function VaultDashboard() {
                 <CrypbotsTab />
               </TabsContent>
 
-              <TabsContent value="neurotech" className="animate-fade-in">
-                <NeuroTechTab />
+              <TabsContent value="id" className="animate-fade-in">
+                <ID />
               </TabsContent>
 
               <TabsContent value="about" className="animate-fade-in">
@@ -257,6 +259,6 @@ export default function VaultDashboard() {
         </div>
       </div>
       <Toaster />
-    </ThemeProvider>
+    
   );
 }
