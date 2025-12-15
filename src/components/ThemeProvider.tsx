@@ -8,11 +8,13 @@ interface ThemeProviderContextType {
   actualTheme: 'dark' | 'light';
 }
 
-const ThemeProviderContext = createContext<ThemeProviderContextType | undefined>(undefined);
+const ThemeProviderContext = createContext<ThemeProviderContextType | undefined>(
+  undefined
+);
 
 export function useTheme() {
   const context = useContext(ThemeProviderContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useTheme must be used within a ThemeProvider');
   }
   return context;
@@ -27,45 +29,53 @@ interface ThemeProviderProps {
 export function ThemeProvider({
   children,
   defaultTheme = 'system',
-  storageKey = 'vite-ui-theme',
+  storageKey = 'crypdna-theme',
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
-  );
+  const [theme, setThemeState] = useState<Theme>(() => {
+    try {
+      return (localStorage.getItem(storageKey) as Theme) || defaultTheme;
+    } catch {
+      return defaultTheme;
+    }
+  });
 
   const [actualTheme, setActualTheme] = useState<'dark' | 'light'>('dark');
 
   useEffect(() => {
-    const root = window.document.documentElement;
+    const root = document.documentElement;
 
     root.classList.remove('light', 'dark');
 
+    let resolvedTheme: 'dark' | 'light';
+
     if (theme === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+      resolvedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
         ? 'dark'
         : 'light';
-      
-      root.classList.add(systemTheme);
-      setActualTheme(systemTheme);
-      return;
+    } else {
+      resolvedTheme = theme;
     }
 
-    root.classList.add(theme);
-    setActualTheme(theme);
+    root.classList.add(resolvedTheme);
+    setActualTheme(resolvedTheme);
   }, [theme]);
 
-  const value = {
-    theme,
-    setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
-      setTheme(theme);
-    },
-    actualTheme,
+  const setTheme = (newTheme: Theme) => {
+    try {
+      localStorage.setItem(storageKey, newTheme);
+    } catch {}
+    setThemeState(newTheme);
   };
 
   return (
-    <ThemeProviderContext.Provider value={value}>
+    <ThemeProviderContext.Provider
+      value={{
+        theme,
+        setTheme,
+        actualTheme,
+      }}
+    >
       {children}
     </ThemeProviderContext.Provider>
   );
-}
+    }
