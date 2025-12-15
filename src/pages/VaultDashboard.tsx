@@ -259,6 +259,6 @@ export default function VaultDashboard() {
         </div>
       </div>
       <Toaster />
-    </ThemeProvider>
+    
   );
 }
