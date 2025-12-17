@@ -19,15 +19,22 @@ import BalanceBreakdown from '@/components/BalanceBreakdown';
 import VaultVerification from '@/components/VaultVerification';
 import CreditActivity from '@/components/CreditActivity';
 import VaultDrops from '@/components/VaultDrops';
-import CrypbotsTab from '@/components/tabs/CrypbotsTab';
+// CrypbotsTab removed from navigation - available in future features section
 import AboutUs from '@/components/AboutUs';
 import ID from '@/pages/ID';
 import MobileFloatingNav from '@/components/MobileFloatingNav';
 
-import { LogOut, Wallet, Rocket, Brain, CreditCard, Info } from 'lucide-react';
+import { LogOut, Wallet, Rocket, CreditCard, Info, Activity } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-type TabKey = 'balances' | 'drops' | 'crypbots' | 'id' | 'about';
+// ═══════════════════════════════════════════════════════════════════════════════
+// 🔒 VAULT TAB CONFIGURATION — HARD-LOCKED
+// ═══════════════════════════════════════════════════════════════════════════════
+// ⚠️  DO NOT REMOVE OR REPLACE THE ID TAB — CORE VAULT IDENTITY
+// ⚠️  DO NOT ADD NEURO/WAVES TO THIS TYPE — ALPHA FEATURE ONLY
+// ⚠️  Navigation order: balances → drops → id → activity → about
+// ═══════════════════════════════════════════════════════════════════════════════
+type TabKey = 'balances' | 'drops' | 'id' | 'activity' | 'about';
 
 export default function VaultDashboard() {
   const navigate = useNavigate();
@@ -205,14 +212,15 @@ export default function VaultDashboard() {
                   <span className="hidden md:inline">Drops</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
                 </TabsTrigger>
-                <TabsTrigger value="crypbots" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
-                  <Brain className="w-3 h-3 sm:w-4 sm:h-4" />
-                  <span className="hidden md:inline">Crypb0ts</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
-                </TabsTrigger>
+                {/* 🔒 DO NOT REMOVE OR REPLACE ID TAB — CORE VAULT IDENTITY */}
                 <TabsTrigger value="id" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
                   <CreditCard className="w-3 h-3 sm:w-4 sm:h-4" />
                   <span className="hidden md:inline">ID</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
+                </TabsTrigger>
+                <TabsTrigger value="activity" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
+                  <Activity className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden md:inline">Activity</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-md" />
                 </TabsTrigger>
                 <TabsTrigger value="about" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white luxury-transition hover:bg-accent/50 relative group hover-card text-xs sm:text-sm">
@@ -241,12 +249,13 @@ export default function VaultDashboard() {
                 <VaultDrops />
               </TabsContent>
 
-              <TabsContent value="crypbots" className="animate-fade-in">
-                <CrypbotsTab />
-              </TabsContent>
-
+              {/* 🔒 DO NOT REMOVE OR REPLACE ID TAB — CORE VAULT IDENTITY */}
               <TabsContent value="id" className="animate-fade-in">
                 <ID />
+              </TabsContent>
+
+              <TabsContent value="activity" className="animate-fade-in">
+                <CreditActivity />
               </TabsContent>
 
               <TabsContent value="about" className="animate-fade-in">

@@ -1,0 +1,51 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 🔒 CrypDNA Vault Navigation Protection Hook
+# ═══════════════════════════════════════════════════════════════════════════════
+# This pre-commit hook prevents unauthorized modifications to navigation structure.
+
+echo "🔍 Checking navigation integrity..."
+
+# Files to check
+NAV_FILES="src/components/MobileFloatingNav.tsx src/pages/VaultDashboard.tsx"
+
+# Check for Neuro/Waves injection in navigation files
+for file in $NAV_FILES; do
+  if git diff --cached --name-only | grep -q "$file"; then
+    echo "⚠️  Detected changes to $file"
+    
+    # Check if Neuro or Waves is being added to navigation
+    if git diff --cached "$file" | grep -E "^\+.*(\bneuro\b|\bNeuro\b|\bwaves\b|\bWaves\b)" | grep -v "// " | grep -v "/\*"; then
+      echo ""
+      echo "❌ COMMIT BLOCKED: Neuro/Waves injection detected in navigation!"
+      echo ""
+      echo "📋 Navigation Lock Policy:"
+      echo "   - Neuro/Waves MUST NOT appear in bottom navigation"
+      echo "   - See NAVIGATION_LOCK.md for details"
+      echo ""
+      echo "🔧 If this change is authorized:"
+      echo "   1. Update NAVIGATION_LOCK.md with justification"
+      echo "   2. Get approval from product leadership"
+      echo "   3. Use: git commit --no-verify (with caution)"
+      echo ""
+      exit 1
+    fi
+    
+    # Check if ID tab is being removed
+    if git diff --cached "$file" | grep -E "^-.*\bid\b.*CreditCard"; then
+      echo ""
+      echo "❌ COMMIT BLOCKED: ID tab removal detected!"
+      echo ""
+      echo "📋 Navigation Lock Policy:"
+      echo "   - ID tab is CORE VAULT IDENTITY"
+      echo "   - Cannot be removed or replaced"
+      echo "   - See NAVIGATION_LOCK.md for details"
+      echo ""
+      exit 1
+    fi
+  fi
+done
+
+echo "✅ Navigation integrity verified"
