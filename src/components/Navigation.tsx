@@ -23,7 +23,7 @@ const Navigation = () => {
           title: "Signed Out",
           description: "You have been successfully signed out.",
         });
-        window.location.href = '/';
+        window.location.hash = '/auth';
       }
     } catch (error) {
       console.error('Sign out error:', error);

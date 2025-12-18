@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Wallet, CreditCard, Rocket, Info, Activity } from 'lucide-react';
+import { Wallet, Brain, CreditCard, Rocket, Info } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface MobileFloatingNavProps {
@@ -13,38 +13,12 @@ const MobileFloatingNav: React.FC<MobileFloatingNavProps> = ({ activeTab, onTabC
 
   if (!isMobile) return null;
 
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 🔒 VAULT BOTTOM NAVIGATION — HARD-LOCKED CONFIGURATION
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // 
-  // ⚠️  DO NOT REMOVE OR REPLACE THE ID TAB — CORE VAULT IDENTITY
-  // ⚠️  DO NOT ADD NEURO/WAVES TO BOTTOM NAVIGATION — ALPHA FEATURE ONLY
-  // ⚠️  DO NOT MODIFY THIS ORDER WITHOUT EXPLICIT AUTHORIZATION
-  // 
-  // This navigation order is PERMANENT and applies to ALL regions:
-  // vault.crypdawgs.com, ae.crypdawgs.com, jp.crypdawgs.com, etc.
-  // 
-  // Navigation Order (LEFT → RIGHT):
-  // 1. Balance (Wallet)     — Financial overview, balances, tradelines
-  // 2. Drops (Rocket)       — Limited releases, exclusive items
-  // 3. ID (CreditCard)      — Prestige Rank, CrypDNA Card, Invite Rewards
-  // 4. Activity (Activity)  — Credit monitoring, transaction history
-  // 5. Info (Info)          — About, support, documentation
-  // 
-  // Neuro/Waves belongs ONLY in:
-  // - NeuroTech Laboratory section (Alpha/Coming Soon)
-  // - NOT in bottom navigation under any condition
-  // 
-  // Region Safety: This configuration is IDENTICAL across all deployments.
-  // No feature flags, no environment overrides, no conditional rendering.
-  // ═══════════════════════════════════════════════════════════════════════════════
-
   const navItems = [
     { id: 'balances', icon: Wallet, label: 'Balance' },
     { id: 'drops', icon: Rocket, label: 'Drops' },
+    { id: 'crypbots', icon: Brain, label: 'Crypb0ts' },
     { id: 'id', icon: CreditCard, label: 'ID' },
-    { id: 'activity', icon: Activity, label: 'Activity' },
-    { id: 'about', icon: Info, label: 'Info' }
+    { id: 'about', icon: Info, label: 'About Us' }
   ];
 
   return (

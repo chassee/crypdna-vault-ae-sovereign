@@ -7,209 +7,208 @@
   NODE_VERSION = "18"
 
 ########################################
-# CrypDNA GLOBAL VAULT ROUTING (28 regions)
-# MASTER VAULT: vault.crypdawgs.com (NO REDIRECT HERE)
+# CrypDNA Global Vault Region Routing
 ########################################
 
 # UAE (AE)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/ae/:splat"
+  from = "/"
+  to = "/vaults/ae/"
   status = 200
   force = true
-  conditions = {Host = ["ae.crypdawgs.com"]}
+  conditions = { Host = ["ae.crypdawgs.com"] }
 
 # Argentina (AR)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/ar/:splat"
+  from = "/"
+  to = "/vaults/ar/"
   status = 200
   force = true
-  conditions = {Host = ["ar.crypdawgs.com"]}
+  conditions = { Host = ["ar.crypdawgs.com"] }
 
 # Australia (AU)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/au/:splat"
+  from = "/"
+  to = "/vaults/au/"
   status = 200
   force = true
-  conditions = {Host = ["au.crypdawgs.com"]}
+  conditions = { Host = ["au.crypdawgs.com"] }
 
 # Brazil (BR)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/br/:splat"
+  from = "/"
+  to = "/vaults/br/"
   status = 200
   force = true
-  conditions = {Host = ["br.crypdawgs.com"]}
+  conditions = { Host = ["br.crypdawgs.com"] }
 
 # Canada (CA)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/ca/:splat"
+  from = "/"
+  to = "/vaults/ca/"
   status = 200
   force = true
-  conditions = {Host = ["ca.crypdawgs.com"]}
+  conditions = { Host = ["ca.crypdawgs.com"] }
 
 # Colombia (CO)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/co/:splat"
+  from = "/"
+  to = "/vaults/co/"
   status = 200
   force = true
-  conditions = {Host = ["co.crypdawgs.com"]}
+  conditions = { Host = ["co.crypdawgs.com"] }
 
 # Germany (DE)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/de/:splat"
+  from = "/"
+  to = "/vaults/de/"
   status = 200
   force = true
-  conditions = {Host = ["de.crypdawgs.com"]}
+  conditions = { Host = ["de.crypdawgs.com"] }
 
 # Denmark (DK)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/dk/:splat"
+  from = "/"
+  to = "/vaults/dk/"
   status = 200
   force = true
-  conditions = {Host = ["dk.crypdawgs.com"]}
+  conditions = { Host = ["dk.crypdawgs.com"] }
 
 # Spain (ES)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/es/:splat"
+  from = "/"
+  to = "/vaults/es/"
   status = 200
   force = true
-  conditions = {Host = ["es.crypdawgs.com"]}
+  conditions = { Host = ["es.crypdawgs.com"] }
 
 # France (FR)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/fr/:splat"
+  from = "/"
+  to = "/vaults/fr/"
   status = 200
   force = true
-  conditions = {Host = ["fr.crypdawgs.com"]}
+  conditions = { Host = ["fr.crypdawgs.com"] }
 
 # Hong Kong (HK)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/hk/:splat"
+  from = "/"
+  to = "/vaults/hk/"
   status = 200
   force = true
-  conditions = {Host = ["hk.crypdawgs.com"]}
+  conditions = { Host = ["hk.crypdawgs.com"] }
 
 # India (IN)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/in/:splat"
+  from = "/"
+  to = "/vaults/in/"
   status = 200
   force = true
-  conditions = {Host = ["in.crypdawgs.com"]}
+  conditions = { Host = ["in.crypdawgs.com"] }
 
 # Italy (IT)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/it/:splat"
+  from = "/"
+  to = "/vaults/it/"
   status = 200
   force = true
-  conditions = {Host = ["it.crypdawgs.com"]}
+  conditions = { Host = ["it.crypdawgs.com"] }
 
 # Japan (JP)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/jp/:splat"
+  from = "/"
+  to = "/vaults/jp/"
   status = 200
   force = true
-  conditions = {Host = ["jp.crypdawgs.com"]}
+  conditions = { Host = ["jp.crypdawgs.com"] }
 
 # Kenya (KE)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/ke/:splat"
+  from = "/"
+  to = "/vaults/ke/"
   status = 200
   force = true
-  conditions = {Host = ["ke.crypdawgs.com"]}
+  conditions = { Host = ["ke.crypdawgs.com"] }
 
 # South Korea (KR)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/kr/:splat"
+  from = "/"
+  to = "/vaults/kr/"
   status = 200
   force = true
-  conditions = {Host = ["kr.crypdawgs.com"]}
+  conditions = { Host = ["kr.crypdawgs.com"] }
 
 # Mexico (MX)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/mx/:splat"
+  from = "/"
+  to = "/vaults/mx/"
   status = 200
   force = true
-  conditions = {Host = ["mx.crypdawgs.com"]}
+  conditions = { Host = ["mx.crypdawgs.com"] }
 
 # Nigeria (NG)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/ng/:splat"
+  from = "/"
+  to = "/vaults/ng/"
   status = 200
   force = true
-  conditions = {Host = ["ng.crypdawgs.com"]}
+  conditions = { Host = ["ng.crypdawgs.com"] }
 
 # Netherlands (NL)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/nl/:splat"
+  from = "/"
+  to = "/vaults/nl/"
   status = 200
   force = true
-  conditions = {Host = ["nl.crypdawgs.com"]}
+  conditions = { Host = ["nl.crypdawgs.com"] }
 
 # New Zealand (NZ)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/nz/:splat"
+  from = "/"
+  to = "/vaults/nz/"
   status = 200
   force = true
-  conditions = {Host = ["nz.crypdawgs.com"]}
+  conditions = { Host = ["nz.crypdawgs.com"] }
 
 # Philippines (PH)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/ph/:splat"
+  from = "/"
+  to = "/vaults/ph/"
   status = 200
   force = true
-  conditions = {Host = ["ph.crypdawgs.com"]}
+  conditions = { Host = ["ph.crypdawgs.com"] }
 
 # Qatar (QA)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/qa/:splat"
+  from = "/"
+  to = "/vaults/qa/"
   status = 200
   force = true
-  conditions = {Host = ["qa.crypdawgs.com"]}
+  conditions = { Host = ["qa.crypdawgs.com"] }
 
 # Singapore (SG)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/sg/:splat"
+  from = "/"
+  to = "/vaults/sg/"
   status = 200
   force = true
-  conditions = {Host = ["sg.crypdawgs.com"]}
+  conditions = { Host = ["sg.crypdawgs.com"] }
 
 # South Africa (ZA)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/za/:splat"
+  from = "/"
+  to = "/vaults/za/"
   status = 200
   force = true
-  conditions = {Host = ["za.crypdawgs.com"]}
+  conditions = { Host = ["za.crypdawgs.com"] }
 
 # United Kingdom (UK)
 [[redirects]]
-  from = "/*"
-  to = "/vaults/uk/:splat"
+  from = "/"
+  to = "/vaults/uk/"
   status = 200
   force = true
-  conditions = {Host = ["uk.crypdawgs.com"]}
+  conditions = { Host = ["uk.crypdawgs.com"] }
 
 
 [[redirects]]
