@@ -86,18 +86,55 @@ const DIYCreditTab: React.FC = () => {
 
     setGenerating(true);
     try {
+      // Get the current session to forward authorization
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      
+      if (sessionError || !session) {
+        console.error('Session error:', sessionError);
+        throw new Error('You must be logged in to generate dispute letters.');
+      }
+
+      console.info('Invoking generate-dispute-letter Edge Function with auth');
+      
+      // Map template type to the label expected by Edge Function
+      const templateLabel = DISPUTE_TEMPLATES.find(t => t.value === templateType)?.label || templateType;
+      
       const { data, error } = await supabase.functions.invoke('generate-dispute-letter', {
         body: {
-          template_type: templateType,
+          disputeType: templateLabel,
           bureau,
-          creditor_name: creditorName,
-          account_number: accountNumber,
-          dispute_reason: disputeReason,
+          creditorName: creditorName,
+          accountNumber: accountNumber,
+          additionalDetails: disputeReason,
+        },
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
         },
       });
 
       if (error) {
+        console.error('Edge Function error:', error);
         throw error;
+      }
+
+      console.info('Letter generated successfully:', data);
+      
+      // Save the letter to the database
+      if (data?.letter) {
+        const { error: saveError } = await (supabase as any)
+          .from('dispute_letters')
+          .insert({
+            user_id: session.user.id,
+            template_type: templateType,
+            bureau,
+            letter_content: data.letter,
+            status: 'completed',
+          });
+        
+        if (saveError) {
+          console.error('Error saving letter to database:', saveError);
+          // Don't throw - letter was generated, just not saved
+        }
       }
 
       toast({
@@ -116,9 +153,10 @@ const DIYCreditTab: React.FC = () => {
       fetchLetters();
     } catch (err: any) {
       console.error('Generate letter error:', err);
+      const errorMessage = err.message || 'Failed to send a request to the Edge Function';
       toast({
         title: 'Generation Failed',
-        description: err.message || 'Failed to generate letter. Please try again.',
+        description: errorMessage,
         variant: 'destructive',
       });
     } finally {
