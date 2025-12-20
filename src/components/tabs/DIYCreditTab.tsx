@@ -99,18 +99,40 @@ const DIYCreditTab: React.FC = () => {
       // Map template type to the label expected by Edge Function
       const templateLabel = DISPUTE_TEMPLATES.find(t => t.value === templateType)?.label || templateType;
       
-      const { data, error } = await supabase.functions.invoke('generate-dispute-letter', {
-        body: {
-          disputeType: templateLabel,
-          bureau,
-          creditorName: creditorName,
-          accountNumber: accountNumber,
-          additionalDetails: disputeReason,
-        },
-        headers: {
-          Authorization: `Bearer ${session.access_token}`,
-        },
-      });
+    const { data: sessionData, error: sessionError } =
+  await supabase.auth.getSession();
+
+if (!sessionData?.session) {
+  throw new Error('No active session');
+}
+
+const accessToken = sessionData.session.access_token;
+
+const response = await fetch(
+  ${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-dispute-letter,
+  {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: Bearer ${accessToken},
+    },
+    body: JSON.stringify({
+      disputeType: templateLabel,
+      bureau,
+      creditorName: creditorName || null,
+      accountNumber: accountNumber || null,
+      additionalDetails: disputeReason || null,
+    }),
+  }
+);
+
+if (!response.ok) {
+  const errText = await response.text();
+  console.error('Edge Function error:', errText);
+  throw new Error('Edge Function request failed');
+}
+
+const data = await response.json();
 
       if (error) {
         console.error('Edge Function error:', error);
