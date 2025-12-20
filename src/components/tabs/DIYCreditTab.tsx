@@ -42,8 +42,7 @@ const DIYCreditTab: React.FC = () => {
   const [letters, setLetters] = useState<DisputeLetter[]>([]);
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
-  
-  // Form state
+
   const [templateType, setTemplateType] = useState('');
   const [bureau, setBureau] = useState('');
   const [creditorName, setCreditorName] = useState('');
@@ -56,19 +55,14 @@ const DIYCreditTab: React.FC = () => {
 
   async function fetchLetters() {
     try {
-      // Using type assertion since dispute_letters table exists but isn't in generated types
-      const { data, error } = await (supabase as any)
+      const { data } = await (supabase as any)
         .from('dispute_letters')
         .select('*')
         .order('created_at', { ascending: false });
 
-      if (error) {
-        console.error('Error fetching letters:', error);
-      } else {
-        setLetters(data || []);
-      }
+      setLetters(data || []);
     } catch (err) {
-      console.error('fetchLetters exception:', err);
+      console.error('fetchLetters error:', err);
     } finally {
       setLoading(false);
     }
@@ -78,107 +72,81 @@ const DIYCreditTab: React.FC = () => {
     if (!templateType || !bureau) {
       toast({
         title: 'Missing Information',
-        description: 'Please select a template type and credit bureau.',
+        description: 'Please select a dispute type and credit bureau.',
         variant: 'destructive',
       });
       return;
     }
 
     setGenerating(true);
+
     try {
-      // Get the current session to forward authorization
-      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      
-      if (sessionError || !session) {
-        console.error('Session error:', sessionError);
-        throw new Error('You must be logged in to generate dispute letters.');
+      const { data: sessionData, error: sessionError } =
+        await supabase.auth.getSession();
+
+      if (sessionError || !sessionData?.session) {
+        throw new Error('You must be logged in.');
       }
 
-      console.info('Invoking generate-dispute-letter Edge Function with auth');
-      
-      // Map template type to the label expected by Edge Function
-      const templateLabel = DISPUTE_TEMPLATES.find(t => t.value === templateType)?.label || templateType;
-      
-    const { data: sessionData, error: sessionError } =
-  await supabase.auth.getSession();
+      const accessToken = sessionData.session.access_token;
 
-if (!sessionData?.session) {
-  throw new Error('No active session');
-}
+      const templateLabel =
+        DISPUTE_TEMPLATES.find(t => t.value === templateType)?.label ||
+        templateType;
 
-const accessToken = sessionData.session.access_token;
-
-const response = await fetch(
-  ${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-dispute-letter,
-  {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: Bearer ${accessToken},
-    },
-    body: JSON.stringify({
-      disputeType: templateLabel,
-      bureau,
-      creditorName: creditorName || null,
-      accountNumber: accountNumber || null,
-      additionalDetails: disputeReason || null,
-    }),
-  }
-);
-
-if (!response.ok) {
-  const errText = await response.text();
-  console.error('Edge Function error:', errText);
-  throw new Error('Edge Function request failed');
-}
-
-const data = await response.json();
-
-      if (error) {
-        console.error('Edge Function error:', error);
-        throw error;
-      }
-
-      console.info('Letter generated successfully:', data);
-      
-      // Save the letter to the database
-      if (data?.letter) {
-        const { error: saveError } = await (supabase as any)
-          .from('dispute_letters')
-          .insert({
-            user_id: session.user.id,
-            template_type: templateType,
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/generate-dispute-letter`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            disputeType: templateLabel,
             bureau,
-            letter_content: data.letter,
-            status: 'completed',
-          });
-        
-        if (saveError) {
-          console.error('Error saving letter to database:', saveError);
-          // Don't throw - letter was generated, just not saved
+            creditorName: creditorName || null,
+            accountNumber: accountNumber || null,
+            additionalDetails: disputeReason || null,
+          }),
         }
+      );
+
+      if (!response.ok) {
+        const errText = await response.text();
+        console.error('Edge Function error:', errText);
+        throw new Error('Edge Function request failed');
+      }
+
+      const data = await response.json();
+
+      if (data?.letter) {
+        await (supabase as any).from('dispute_letters').insert({
+          user_id: sessionData.session.user.id,
+          template_type: templateType,
+          bureau,
+          letter_content: data.letter,
+          status: 'completed',
+        });
       }
 
       toast({
         title: 'Letter Generated',
-        description: 'Your dispute letter has been created successfully.',
+        description: 'Your dispute letter has been created.',
       });
 
-      // Reset form
       setTemplateType('');
       setBureau('');
       setCreditorName('');
       setAccountNumber('');
       setDisputeReason('');
 
-      // Refresh letters list
       fetchLetters();
     } catch (err: any) {
       console.error('Generate letter error:', err);
-      const errorMessage = err.message || 'Failed to send a request to the Edge Function';
       toast({
         title: 'Generation Failed',
-        description: errorMessage,
+        description: err.message || 'Failed to generate letter.',
         variant: 'destructive',
       });
     } finally {
@@ -187,198 +155,56 @@ const data = await response.json();
   }
 
   function getStatusIcon(status: string) {
-    switch (status) {
-      case 'completed':
-        return <CheckCircle className="w-4 h-4 text-green-500" />;
-      case 'pending':
-        return <Clock className="w-4 h-4 text-yellow-500" />;
-      default:
-        return <AlertCircle className="w-4 h-4 text-muted-foreground" />;
-    }
-  }
-
-  function getStatusBadgeVariant(status: string) {
-    switch (status) {
-      case 'completed':
-        return 'default';
-      case 'pending':
-        return 'secondary';
-      default:
-        return 'outline';
-    }
+    if (status === 'completed') return <CheckCircle className="w-4 h-4 text-green-500" />;
+    if (status === 'pending') return <Clock className="w-4 h-4 text-yellow-500" />;
+    return <AlertCircle className="w-4 h-4 text-muted-foreground" />;
   }
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="text-center space-y-2">
-        <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-luxury-purple to-luxury-gold bg-clip-text text-transparent">
+        <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
           DIY Credit Repair
         </h2>
-        <p className="text-muted-foreground text-sm sm:text-base">
-          Generate professional dispute letters to repair your credit
+        <p className="text-muted-foreground">
+          Generate professional dispute letters instantly
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Generate Letter Form */}
-        <Card className="luxury-card border-border">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <FileText className="w-5 h-5 text-luxury-purple" />
-              Generate New Letter
-            </CardTitle>
-            <CardDescription>
-              Select a template and provide details to generate your dispute letter
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="template">Dispute Type</Label>
-              <Select value={templateType} onValueChange={setTemplateType}>
-                <SelectTrigger id="template">
-                  <SelectValue placeholder="Select dispute type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {DISPUTE_TEMPLATES.map((template) => (
-                    <SelectItem key={template.value} value={template.value}>
-                      {template.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Generate Letter</CardTitle>
+          <CardDescription>Select dispute type and bureau</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <Select value={templateType} onValueChange={setTemplateType}>
+            <SelectTrigger><SelectValue placeholder="Dispute Type" /></SelectTrigger>
+            <SelectContent>
+              {DISPUTE_TEMPLATES.map(t => (
+                <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
 
-            <div className="space-y-2">
-              <Label htmlFor="bureau">Credit Bureau</Label>
-              <Select value={bureau} onValueChange={setBureau}>
-                <SelectTrigger id="bureau">
-                  <SelectValue placeholder="Select credit bureau" />
-                </SelectTrigger>
-                <SelectContent>
-                  {CREDIT_BUREAUS.map((b) => (
-                    <SelectItem key={b.value} value={b.value}>
-                      {b.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+          <Select value={bureau} onValueChange={setBureau}>
+            <SelectTrigger><SelectValue placeholder="Credit Bureau" /></SelectTrigger>
+            <SelectContent>
+              {CREDIT_BUREAUS.map(b => (
+                <SelectItem key={b.value} value={b.value}>{b.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
 
-            <div className="space-y-2">
-              <Label htmlFor="creditor">Creditor Name (Optional)</Label>
-              <Input
-                id="creditor"
-                placeholder="e.g., Capital One"
-                value={creditorName}
-                onChange={(e) => setCreditorName(e.target.value)}
-              />
-            </div>
+          <Input placeholder="Creditor Name (optional)" value={creditorName} onChange={e => setCreditorName(e.target.value)} />
+          <Input placeholder="Account Number (optional)" value={accountNumber} onChange={e => setAccountNumber(e.target.value)} />
+          <Textarea placeholder="Additional details (optional)" value={disputeReason} onChange={e => setDisputeReason(e.target.value)} />
 
-            <div className="space-y-2">
-              <Label htmlFor="account">Account Number (Optional)</Label>
-              <Input
-                id="account"
-                placeholder="Last 4 digits recommended"
-                value={accountNumber}
-                onChange={(e) => setAccountNumber(e.target.value)}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="reason">Additional Details (Optional)</Label>
-              <Textarea
-                id="reason"
-                placeholder="Provide any additional context for your dispute..."
-                value={disputeReason}
-                onChange={(e) => setDisputeReason(e.target.value)}
-                rows={3}
-              />
-            </div>
-
-            <Button
-              onClick={handleGenerateLetter}
-              disabled={generating || !templateType || !bureau}
-              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
-            >
-              {generating ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Generating...
-                </>
-              ) : (
-                <>
-                  <FileText className="mr-2 h-4 w-4" />
-                  Generate Letter
-                </>
-              )}
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* Letter History */}
-        <Card className="luxury-card border-border">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Clock className="w-5 h-5 text-luxury-gold" />
-              Letter History
-            </CardTitle>
-            <CardDescription>
-              Your previously generated dispute letters
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <div className="flex items-center justify-center py-8">
-                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-              </div>
-            ) : letters.length === 0 ? (
-              <div className="text-center py-8 text-muted-foreground">
-                <FileText className="w-12 h-12 mx-auto mb-3 opacity-50" />
-                <p>No letters generated yet</p>
-                <p className="text-sm">Generate your first dispute letter to get started</p>
-              </div>
-            ) : (
-              <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
-                {letters.map((letter) => (
-                  <div
-                    key={letter.id}
-                    className="flex items-center justify-between p-3 rounded-lg bg-muted/50 border border-border hover:bg-muted/70 transition-colors"
-                  >
-                    <div className="flex items-center gap-3">
-                      {getStatusIcon(letter.status)}
-                      <div>
-                        <p className="font-medium text-sm">
-                          {DISPUTE_TEMPLATES.find((t) => t.value === letter.template_type)?.label ||
-                            letter.template_type}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {CREDIT_BUREAUS.find((b) => b.value === letter.bureau)?.label || letter.bureau} •{' '}
-                          {new Date(letter.created_at).toLocaleDateString()}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant={getStatusBadgeVariant(letter.status) as any}>
-                        {letter.status}
-                      </Badge>
-                      {letter.pdf_url && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => window.open(letter.pdf_url, '_blank')}
-                        >
-                          <Download className="w-4 h-4" />
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
+          <Button onClick={handleGenerateLetter} disabled={generating}>
+            {generating ? <Loader2 className="animate-spin mr-2" /> : <FileText className="mr-2" />}
+            Generate Letter
+          </Button>
+        </CardContent>
+      </Card>
     </div>
   );
 };
