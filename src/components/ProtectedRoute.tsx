@@ -10,22 +10,12 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ 
   children, 
-  redirectTo = '/vault-login' 
+  redirectTo = '/auth' 
 }) => {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Check for guest mode
-    const urlParams = new URLSearchParams(window.location.search);
-    const isGuest = urlParams.get('guest') === 'true';
-    
-    if (isGuest) {
-      setIsAuthenticated(true);
-      setLoading(false);
-      return;
-    }
-
     const checkAuth = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession();

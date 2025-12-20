@@ -340,6 +340,42 @@ export type Database = {
         }
         Relationships: []
       }
+      dispute_letters: {
+        Row: {
+          account_last4: string | null
+          additional_details: string | null
+          created_at: string | null
+          credit_bureau: string
+          creditor_name: string | null
+          dispute_type: string
+          id: string
+          letter_body: string
+          user_id: string
+        }
+        Insert: {
+          account_last4?: string | null
+          additional_details?: string | null
+          created_at?: string | null
+          credit_bureau: string
+          creditor_name?: string | null
+          dispute_type: string
+          id?: string
+          letter_body: string
+          user_id: string
+        }
+        Update: {
+          account_last4?: string | null
+          additional_details?: string | null
+          created_at?: string | null
+          credit_bureau?: string
+          creditor_name?: string | null
+          dispute_type?: string
+          id?: string
+          letter_body?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       dnb_tracking: {
         Row: {
           id: string
@@ -498,6 +534,24 @@ export type Database = {
           crypdna_score?: number | null
           rank?: number | null
           rewards_points?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      letter_usage: {
+        Row: {
+          last_generated_at: string | null
+          paid_override: boolean | null
+          user_id: string
+        }
+        Insert: {
+          last_generated_at?: string | null
+          paid_override?: boolean | null
+          user_id: string
+        }
+        Update: {
+          last_generated_at?: string | null
+          paid_override?: boolean | null
           user_id?: string
         }
         Relationships: []

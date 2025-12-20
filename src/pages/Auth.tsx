@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { Toaster } from '@/components/ui/toaster';
-
+import { Lock, Shield, Mail, Key } from 'lucide-react';
 
 const AUTH_REDIRECT = `${window.location.origin}/#/vault`;
 const RESET_REDIRECT = 'https://vault.crypdawgs.com/#/reset-password';
@@ -12,7 +12,6 @@ const RESET_REDIRECT = 'https://vault.crypdawgs.com/#/reset-password';
 export default function Auth() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isSignUp, setIsSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -45,7 +44,7 @@ export default function Auth() {
     };
   }, [navigate]);
 
-  // Email + password sign-in
+  // Email + password sign-in (for pre-approved accounts only)
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
@@ -64,42 +63,7 @@ export default function Auth() {
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Sign in failed.';
-      toast({ title: 'Error', description: message, variant: 'destructive' });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Email + password sign-up (verification email returns to /#/auth)
-  const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || !password) {
-      toast({ title: 'Missing info', description: 'Enter email and password.' });
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: { emailRedirectTo: AUTH_REDIRECT }
-      });
-
-      if (error) throw error;
-
-      if (data?.user && !data.session) {
-        toast({
-          title: 'Check your email',
-          description: 'Please check your email for a verification link.'
-        });
-      } else if (data?.session) {
-        toast({ title: 'Welcome!', description: 'Account created and logged in.' });
-        navigate('/vault', { replace: true });
-      }
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Sign up failed.';
-      toast({ title: 'Error', description: message, variant: 'destructive' });
+      toast({ title: 'Access Denied', description: message, variant: 'destructive' });
     } finally {
       setLoading(false);
     }
@@ -117,7 +81,8 @@ export default function Auth() {
       const { error } = await supabase.auth.signInWithOtp({ 
         email,
         options: {
-          emailRedirectTo: AUTH_REDIRECT
+          emailRedirectTo: AUTH_REDIRECT,
+          shouldCreateUser: false // Prevent new account creation via magic link
         }
       });
 
@@ -125,11 +90,14 @@ export default function Auth() {
 
       toast({
         title: 'Magic link sent!',
-        description: 'Check your inbox.'
+        description: 'If your account exists, check your inbox for access.'
       });
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Failed to send magic link.';
-      toast({ title: 'Error', description: message, variant: 'destructive' });
+      // Generic message to prevent email enumeration
+      toast({
+        title: 'Request processed',
+        description: 'If this email is registered, a magic link has been sent.'
+      });
     } finally {
       setLoading(false);
     }
@@ -150,14 +118,16 @@ export default function Auth() {
 
       if (error) throw error;
 
-      // Show confirmation: "If this email is registered, a reset link has been sent."
       toast({
         title: 'Reset link sent',
         description: 'If this email is registered, a reset link has been sent.'
       });
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Failed to send reset email.';
-      toast({ title: 'Error', description: message, variant: 'destructive' });
+      // Generic message to prevent email enumeration
+      toast({
+        title: 'Request processed',
+        description: 'If this email is registered, a reset link has been sent.'
+      });
     } finally {
       setLoading(false);
     }
@@ -181,9 +151,7 @@ export default function Auth() {
                   </svg>
                 </div>
                 <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-yellow-400 to-yellow-300 rounded-full flex items-center justify-center shadow-lg">
-                  <svg className="w-4 h-4 text-black" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" />
-                  </svg>
+                  <Lock className="w-4 h-4 text-black" />
                 </div>
               </div>
             </div>
@@ -193,8 +161,16 @@ export default function Auth() {
                 CrypDNA Vault
               </h1>
               <p className="text-gray-300 text-base font-medium">
-                Enter the billionaire-class financial ecosystem
+                Invite-Only Access • Verified Members
               </p>
+            </div>
+
+            {/* Invite-only notice banner */}
+            <div className="flex items-center justify-center gap-2 py-3 px-4 bg-yellow-900/30 border border-yellow-500/40 rounded-xl">
+              <Shield className="w-5 h-5 text-yellow-400" />
+              <span className="text-yellow-200 text-sm font-medium">
+                This vault is restricted to verified members only
+              </span>
             </div>
 
             {/* High-contrast feature cards */}
@@ -229,9 +205,10 @@ export default function Auth() {
           </div>
 
           {/* Large, high-contrast form */}
-          <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className="space-y-6">
+          <form onSubmit={handleSignIn} className="space-y-6">
             <div className="space-y-3">
-              <label className="text-base font-bold text-white">
+              <label className="text-base font-bold text-white flex items-center gap-2">
+                <Mail className="w-4 h-4 text-purple-400" />
                 Email Address
               </label>
               <input
@@ -239,13 +216,14 @@ export default function Auth() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-6 py-4 text-lg bg-gray-900/70 border-2 border-gray-700 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:ring-4 focus:ring-purple-500/50 focus:border-purple-500 transition-all"
-                placeholder="Enter your exclusive email"
+                placeholder="Enter your verified email"
                 disabled={loading}
               />
             </div>
 
             <div className="space-y-3">
-              <label className="text-base font-bold text-white">
+              <label className="text-base font-bold text-white flex items-center gap-2">
+                <Key className="w-4 h-4 text-purple-400" />
                 Vault Password
               </label>
               <input
@@ -264,11 +242,9 @@ export default function Auth() {
               disabled={loading}
               className="w-full py-5 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 hover:from-purple-500 hover:via-pink-500 hover:to-cyan-500 text-white text-lg font-bold rounded-xl transition-all duration-300 disabled:opacity-50 flex items-center justify-center space-x-3 shadow-2xl shadow-purple-500/50 hover:shadow-purple-400/60 hover:scale-[1.02]"
             >
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M6 2L18 2L22 6L18 10L16 12L18 14L22 18L18 22L6 22L2 18L6 14L8 12L6 10L2 6L6 2Z" />
-              </svg>
+              <Lock className="w-6 h-6" />
               <span>
-                {loading ? 'Accessing...' : 'Access Billionaire Vault'}
+                {loading ? 'Verifying Access...' : 'Access Vault'}
               </span>
             </button>
           </form>
@@ -278,25 +254,10 @@ export default function Auth() {
             <button
               onClick={handleMagicLink}
               disabled={loading}
-              className="w-full py-4 border-2 border-gray-600 bg-gray-800/50 rounded-xl text-white text-base font-semibold hover:bg-gray-700/50 hover:border-gray-500 transition-all disabled:opacity-50"
+              className="w-full py-4 border-2 border-gray-600 bg-gray-800/50 rounded-xl text-white text-base font-semibold hover:bg-gray-700/50 hover:border-gray-500 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
             >
+              <Mail className="w-5 h-5" />
               Send Magic Link
-            </button>
-
-            <button
-              onClick={() => setIsSignUp(!isSignUp)}
-              disabled={loading}
-              className="w-full py-4 border-2 border-purple-600 bg-purple-900/30 rounded-xl text-white text-base font-semibold hover:bg-purple-800/40 hover:border-purple-500 transition-all disabled:opacity-50"
-            >
-              {isSignUp ? 'Already have access? Sign In' : 'Create Account'}
-            </button>
-
-            <button
-              onClick={() => { window.location.href = '/vault?guest=true'; }}
-              disabled={loading}
-              className="w-full text-sm text-gray-300 underline hover:text-gray-100 transition-colors disabled:opacity-50 text-center"
-            >
-              Browse as Guest
             </button>
 
             <button
@@ -309,9 +270,12 @@ export default function Auth() {
           </div>
 
           {/* Footer */}
-          <div className="text-center">
+          <div className="text-center space-y-2">
             <p className="text-sm text-gray-400 font-medium">
-              Access is restricted to verified billionaire-class members only.
+              Access is invite-only. Contact your sponsor for membership.
+            </p>
+            <p className="text-xs text-gray-500">
+              Unauthorized access attempts are logged and monitored.
             </p>
           </div>
         </div>
