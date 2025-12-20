@@ -86,15 +86,25 @@ const DIYCreditTab: React.FC = () => {
 
     setGenerating(true);
     try {
-      const { data, error } = await supabase.functions.invoke('generate-dispute-letter', {
-        body: {
-          template_type: templateType,
-          bureau,
-          creditor_name: creditorName,
-          account_number: accountNumber,
-          dispute_reason: disputeReason,
-        },
-      });
+     const {
+  data: { session },
+} = await supabase.auth.getSession();
+
+const { data, error } = await supabase.functions.invoke(
+  'generate-dispute-letter',
+  {
+    body: {
+      template_type: templateType,
+      bureau,
+      creditor_name: creditorName,
+      account_number: accountNumber,
+      dispute_reason: disputeReason,
+    },
+    headers: {
+      Authorization: `Bearer ${session?.access_token}`,
+    },
+  }
+);
 
       if (error) {
         throw error;
