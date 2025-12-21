@@ -1,0 +1,14 @@
+{
+    "region": "CO",
+    "language": "es",
+    "currency": "COP",
+    "currency_symbol": "$",
+    "credit_adapter_ref": "DataCrédito",
+    "design_genome_ref": "../../core/design_genome/design_genome.json",
+    "aesthetic": {
+        "palette": "Tropical Amber",
+        "texture": "Emerald flux gradients",
+        "typography": null
+    },
+    "credit_adapter_registry": "../../adapter_registry.json"
+}

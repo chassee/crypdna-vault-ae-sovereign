@@ -3,10 +3,12 @@ import Auth from '@/pages/Auth';
 import Reset from '@/pages/Reset';
 import VaultDashboard from '@/pages/VaultDashboard';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import { RegionalProvider } from '@/contexts/RegionalContext';
 
 export default function App() {
   return (
-    <HashRouter>
+    <RegionalProvider>
+      <HashRouter>
       <Routes>
         <Route path="/" element={<Navigate to="/auth" replace />} />
         <Route path="/auth" element={<Auth />} />
@@ -30,6 +32,7 @@ export default function App() {
         {/* Catch-all redirects to auth - prevents URL bypass attempts */}
         <Route path="*" element={<Navigate to="/auth" replace />} />
       </Routes>
-    </HashRouter>
+      </HashRouter>
+    </RegionalProvider>
   );
 }

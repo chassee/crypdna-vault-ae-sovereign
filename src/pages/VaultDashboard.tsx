@@ -3,7 +3,9 @@ import { useUserProfile } from '@/hooks/useUserProfile';
 import { useNavigate } from 'react-router-dom';
 import type { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/supabaseClient';
-import { ThemeProvider } from '@/components/ThemeProvider';
+import { RegionalLuxuryThemeProvider } from '@/components/RegionalLuxuryThemeProvider';
+import { useRegionalConfig } from '@/contexts/RegionalContext';
+import { RegionalAccentStyles } from '@/components/RegionalAccentStyles';
 import { Toaster } from '@/components/ui/toaster';
 
 import { Button } from '@/components/ui/button';
@@ -34,6 +36,7 @@ export default function VaultDashboard() {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const { toast } = useToast();
+  const { config: regionalConfig } = useRegionalConfig();
 
   const [user, setUser] = useState<User | null>(null);
   const [userProfile, setUserProfile] = useState<any>(null);
@@ -135,7 +138,8 @@ export default function VaultDashboard() {
   const userTier = userProfile?.tier ?? 'Viewer';
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <RegionalLuxuryThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <RegionalAccentStyles />
       <div className="min-h-screen bg-background luxury-transition">
 
         {/* Header */}
@@ -144,7 +148,7 @@ export default function VaultDashboard() {
             <div className="flex justify-between items-center">
               <div className="flex items-center space-x-2 sm:space-x-4">
                 <h1 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-luxury-purple to-luxury-gold bg-clip-text text-transparent">
-                  CrypDNA Vault
+                  CrypDNA Vault {regionalConfig?.region && `· ${regionalConfig.region}`}
                 </h1>
                 <div className="hidden sm:block">
                   <LuxuryTierBadge tier={userTier} />
@@ -269,6 +273,6 @@ export default function VaultDashboard() {
         </div>
       </div>
       <Toaster />
-    </ThemeProvider>
+    </RegionalLuxuryThemeProvider>
   );
 }
