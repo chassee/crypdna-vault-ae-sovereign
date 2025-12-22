@@ -36,12 +36,33 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 const REGIONAL_ACCENT_MAP: Record<string, string> = {
   global: 'luxury-purple',
-  us: 'luxury-blue',
   ae: 'luxury-gold',
   jp: 'luxury-red',
   co: 'luxury-emerald',
+  fr: 'luxury-indigo',
+  de: 'luxury-slate',
+  gb: 'luxury-royal',
+  it: 'luxury-marble',
+  es: 'luxury-crimson',
+  br: 'luxury-jade',
+  mx: 'luxury-obsidian',
+  ca: 'luxury-ice',
+  au: 'luxury-sand',
+  sg: 'luxury-neon',
+  kr: 'luxury-carbon',
+  in: 'luxury-saffron',
+  sa: 'luxury-emerald-dark',
+  za: 'luxury-onyx',
+  ng: 'luxury-bronze',
+  eg: 'luxury-desert',
+  tr: 'luxury-ottoman',
+  ru: 'luxury-frost',
+  cn: 'luxury-imperial',
+  hk: 'luxury-neon-blue',
+  tw: 'luxury-jade-light',
+  th: 'luxury-gold-light',
+  id: 'luxury-volcanic',
 };
-const accentClass = REGIONAL_ACCENTS[regionCode] ?? REGIONAL_ACCENTS.global;
 
 /* ================================ */
 type TabKey = 'balances' | 'drops' | 'crypbots' | 'id' | 'diycredit' | 'about';
@@ -53,6 +74,7 @@ export default function VaultDashboard() {
   const { config: regionalConfig } = useRegionalConfig();
   const region = useRegionalConfig();
   const regionCode = region?.code || 'global';
+  const accentClass = REGIONAL_ACCENT_MAP[regionCode] ?? REGIONAL_ACCENT_MAP.global;
   const [user, setUser] = useState<User | null>(null);
   const [userProfile, setUserProfile] = useState<any>(null);
   const [session, setSession] = useState<Session | null>(null);
@@ -152,10 +174,12 @@ export default function VaultDashboard() {
   const userName = userProfile?.name ?? user.email?.split('@')[0] ?? 'Member';
   const userTier = userProfile?.tier ?? 'Viewer';
 
-  return (
-    <RegionalLuxuryThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <RegionalAccentStyles />
-      <div className="min-h-screen bg-background luxury-transition">
+ return (
+  <RegionalLuxuryThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <RegionalAccentStyles accent={accentClass} />
+    <div
+      className={`min-h-screen bg-background luxury-transition ${accentClass}`}
+    >
 
         {/* Header */}
         <div className="luxury-card border-b sticky top-0 z-40 backdrop-blur-xl">
