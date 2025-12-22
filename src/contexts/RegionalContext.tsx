@@ -1,6 +1,6 @@
 /**
  * Regional Configuration Context
- * Provides regional config and theme to all components
+ * Provides regional config, region code, and UI accent to all components
  */
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
@@ -13,12 +13,53 @@ import {
 interface RegionalContextType {
   config: RegionalConfig | null;
   region: string;
+  accentClass: string;
   loading: boolean;
 }
 
+/**
+ * 🔥 SINGLE SOURCE OF TRUTH FOR UI ACCENTS
+ * Add all 28+ regions here
+ */
+const REGIONAL_ACCENT_MAP: Record<string, string> = {
+  global: 'luxury-purple',
+
+  us: 'luxury-blue',
+  co: 'luxury-emerald',
+  ae: 'luxury-gold',
+  jp: 'luxury-red',
+  fr: 'luxury-indigo',
+  de: 'luxury-slate',
+  gb: 'luxury-royal',
+  it: 'luxury-marble',
+  es: 'luxury-crimson',
+
+  br: 'luxury-jade',
+  mx: 'luxury-obsidian',
+  ca: 'luxury-ice',
+  au: 'luxury-sand',
+  sg: 'luxury-neon',
+  kr: 'luxury-carbon',
+  in: 'luxury-saffron',
+
+  sa: 'luxury-emerald-dark',
+  za: 'luxury-onyx',
+  ng: 'luxury-bronze',
+  eg: 'luxury-desert',
+  tr: 'luxury-ottoman',
+
+  ru: 'luxury-frost',
+  cn: 'luxury-imperial',
+  hk: 'luxury-neon-blue',
+  tw: 'luxury-jade-light',
+  th: 'luxury-gold-light',
+  id: 'luxury-volcanic',
+};
+
 const RegionalContext = createContext<RegionalContextType>({
   config: null,
-  region: 'us',
+  region: 'global',
+  accentClass: REGIONAL_ACCENT_MAP.global,
   loading: true,
 });
 
@@ -32,17 +73,24 @@ interface RegionalProviderProps {
 
 export function RegionalProvider({ children }: RegionalProviderProps) {
   const [config, setConfig] = useState<RegionalConfig | null>(null);
-  const [region, setRegion] = useState<string>('us');
+  const [region, setRegion] = useState<string>('global');
+  const [accentClass, setAccentClass] = useState<string>(REGIONAL_ACCENT_MAP.global);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadConfig() {
       setLoading(true);
-      const detectedRegion = detectRegion();
+
+      const detectedRegion = detectRegion() || 'global';
       setRegion(detectedRegion);
-      
+
       const regionalConfig = await initializeRegionalConfig();
       setConfig(regionalConfig);
+
+      const accent =
+        REGIONAL_ACCENT_MAP[detectedRegion] ?? REGIONAL_ACCENT_MAP.global;
+      setAccentClass(accent);
+
       setLoading(false);
     }
 
@@ -50,7 +98,14 @@ export function RegionalProvider({ children }: RegionalProviderProps) {
   }, []);
 
   return (
-    <RegionalContext.Provider value={{ config, region, loading }}>
+    <RegionalContext.Provider
+      value={{
+        config,
+        region,
+        accentClass,
+        loading,
+      }}
+    >
       {children}
     </RegionalContext.Provider>
   );
