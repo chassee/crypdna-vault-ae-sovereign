@@ -74,7 +74,7 @@ export default function VaultDashboard() {
   const { config: regionalConfig } = useRegionalConfig();
   const region = useRegionalConfig();
   const regionCode = region?.code || 'global';
-  const accentClass = REGIONAL_ACCENT_MAP[regionCode] ?? REGIONAL_ACCENT_MAP.global;
+  
   const [user, setUser] = useState<User | null>(null);
   const [userProfile, setUserProfile] = useState<any>(null);
   const [session, setSession] = useState<Session | null>(null);
@@ -176,7 +176,7 @@ export default function VaultDashboard() {
 
  return (
   <RegionalLuxuryThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-    <RegionalAccentStyles accent={accentClass} />
+    
     <div
       className={`min-h-screen bg-background luxury-transition ${accentClass}`}
     >
