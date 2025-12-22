@@ -29,7 +29,21 @@ import MobileFloatingNav from '@/components/MobileFloatingNav';
 
 import { LogOut, Wallet, Rocket, Brain, CreditCard, Info, FileEdit } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+/* ================================
+   STEP 2B — REGIONAL ACCENT MAP
+   (PASTE HERE — TOP LEVEL)
+================================ */
 
+const REGIONAL_ACCENT_MAP: Record<string, string> = {
+  global: 'luxury-purple',
+  us: 'luxury-blue',
+  ae: 'luxury-gold',
+  jp: 'luxury-red',
+  co: 'luxury-emerald',
+};
+const accentClass = REGIONAL_ACCENTS[regionCode] ?? REGIONAL_ACCENTS.global;
+
+/* ================================ */
 type TabKey = 'balances' | 'drops' | 'crypbots' | 'id' | 'diycredit' | 'about';
 
 export default function VaultDashboard() {
@@ -37,7 +51,8 @@ export default function VaultDashboard() {
   const isMobile = useIsMobile();
   const { toast } = useToast();
   const { config: regionalConfig } = useRegionalConfig();
-
+  const region = useRegionalConfig();
+  const regionCode = region?.code || 'global';
   const [user, setUser] = useState<User | null>(null);
   const [userProfile, setUserProfile] = useState<any>(null);
   const [session, setSession] = useState<Session | null>(null);
