@@ -1,14 +1,20 @@
 import { createContext, useContext } from "react";
 import { DUBAI } from "@/config/dubai";
 
-const RegionContext = createContext(DUBAI);
+type RegionalConfig = typeof DUBAI;
 
-export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
+const RegionalContext = createContext<RegionalConfig>(DUBAI);
+
+export const RegionalProvider = ({ children }: { children: React.ReactNode }) => {
   return (
-    <RegionContext.Provider value={DUBAI}>
+    <RegionalContext.Provider value={DUBAI}>
       {children}
-    </RegionContext.Provider>
+    </RegionalContext.Provider>
   );
 };
 
-export const useRegion = () => useContext(RegionContext);
+/**
+ * Legacy-compatible hook
+ * Keeps older components from breaking
+ */
+export const useRegionalConfig = () => useContext(RegionalContext);
