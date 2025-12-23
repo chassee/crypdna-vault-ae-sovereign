@@ -779,3 +779,65 @@
 iframe[src*="lovableproject.com"] + div[style*="position: fixed"] {
   display: none !important;
 }
+
+
+/* =========================================
+   🇦🇪 DUBAI SOVEREIGN OVERRIDE (FORCED)
+   This block overrides ALL previous styles
+   ========================================= */
+
+html[data-region="AE"],
+body[data-region="AE"],
+html[data-city="Dubai"],
+body[data-city="Dubai"] {
+  --background: 0 0% 3%;
+  --foreground: 0 0% 100%;
+
+  --card: 0 0% 6%;
+  --card-foreground: 0 0% 100%;
+
+  --border: 45 70% 55%;
+  --input: 45 70% 55%;
+
+  --primary: 45 70% 55%; /* GOLD */
+  --primary-foreground: 0 0% 5%;
+
+  --accent: 190 100% 50%; /* NEON BLUE */
+  --accent-foreground: 0 0% 5%;
+}
+
+/* HARD FORCE BACKGROUND */
+html[data-region="AE"] body {
+  background:
+    radial-gradient(circle at top right, rgba(212,175,55,0.18), transparent 40%),
+    linear-gradient(180deg, #050505 0%, #0b0f1a 100%) !important;
+}
+
+/* HARD FORCE CARDS */
+html[data-region="AE"] .card,
+html[data-region="AE"] [data-card],
+html[data-region="AE"] .auth-card {
+  background: rgba(255,215,0,0.06) !important;
+  border: 1px solid rgba(212,175,55,0.45) !important;
+  backdrop-filter: blur(18px);
+  box-shadow: 0 0 35px rgba(212,175,55,0.25);
+}
+
+/* HARD FORCE BUTTONS */
+html[data-region="AE"] button {
+  background: linear-gradient(135deg, #d4af37, #b8962e) !important;
+  color: #050505 !important;
+  box-shadow: 0 0 25px rgba(212,175,55,0.35);
+}
+
+/* KILL US / DEFAULT THEMES */
+.us-theme,
+.default-theme,
+[data-region="US"] {
+  all: unset !important;
+}
+
+
+
+
+
