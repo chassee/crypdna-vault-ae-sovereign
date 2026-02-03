@@ -1,6 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+<!-- =========================================================
+     CRYPDAWGS — GLOBAL FAVICON + BRAND OVERRIDE (FINAL)
+     PURPOSE:
+     • Kill ALL Manus / Lovable branding
+     • Force ONE Crypdawgs favicon everywhere
+     • Override browser + CDN cache
+     • SPA-safe (React / HashRouter / Netlify)
+========================================================= -->
+<!-- Primary favicon -->
+<link rel="icon" href="/assets/favicon.png?v=crypdawgs-v1" type="image/png" />
+<link rel="shortcut icon" href="/assets/favicon.png?v=crypdawgs-v1" type="image/png" />
+<!-- Apple / iOS -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.png?v=crypdawgs-v1" />
+<!-- Android / PWA -->
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#0B0F1A" />
+<!-- HARD KILL any leftover Manus / Lovable icons -->
+<script>
+  (function () {
+    const kill = [
+      'link[rel="icon"]',
+      'link[rel="shortcut icon"]',
+      'link[rel="apple-touch-icon"]'
+    ];
+    kill.forEach(sel => {
+      document.querySelectorAll(sel).forEach(el => {
+        if (
+          el.href &&
+          (el.href.includes('manus') ||
+           el.href.includes('lovable') ||
+           el.href.includes('lovable.dev'))
+        ) {
+          el.remove();
+        }
+      });
+    });
+    // Re-inject Crypdawgs favicon at runtime (cache nuke)
+    const link = document.createElement('link');
+    link.rel = 'icon';
+    link.type = 'image/png';
+    link.href = '/assets/favicon.png?v=' + Date.now();
+    document.head.appendChild(link);
+  })();
+</script>
+<!-- BRAND LOCK -->
+<meta name="application-name" content="Crypdawgs" />
+<meta name="apple-mobile-web-app-title" content="Crypdawgs" />
+<meta name="generator" content="Crypdawgs Infrastructure" />
+<!-- =========================================================
+     END — NOTHING BELOW THIS TOUCHES FAVICONS
+========================================================= -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>crypdna-vault-genesis</title>
